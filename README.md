@@ -21,7 +21,8 @@ See Contributing.md for how to contribute or get in touch.
 
 Usage
 ---------
-By default synaptic uses pkexec to obtain root privileges needed.
+By default synaptic uses pkexec to obtain root privileges, with run0 as a
+fallback when available.
 
 Synaptic is used very much like apt/apt-get. Aside from a graphical interface, another key difference is it let's you stage several changes and only applies package changes when you click apply.
 

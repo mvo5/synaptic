@@ -20,21 +20,28 @@
  * USA
  */
 
+#pragma once
 
-#ifndef _RGLOGVIEW_H_
-#define _RGLOGVIEW_H_
+#include "config.h" // IWYU pragma: associated
 
 #include "rggtkbuilderwindow.h"
 
+#include <glib.h>
+#include <gtk/gtk.h>
+#include <string>
 
-class RGLogView : public RGGtkBuilderWindow {
+class RGWindow;
+
+class RGLogView : public RGGtkBuilderWindow
+{
  protected:
    static void cbCloseClicked(GtkWidget *self, void *data);
    static void cbButtonFind(GtkWidget *self, void *data);
-   static void cbTreeSelectionChanged(GtkTreeSelection *selection, 
-				      gpointer data);
-   static gboolean filter_func(GtkTreeModel *model, GtkTreeIter *iter,
-			       gpointer data);
+   static void cbTreeSelectionChanged(GtkTreeSelection *selection,
+                                      gpointer data);
+   static gboolean filter_func(GtkTreeModel *model,
+                               GtkTreeIter *iter,
+                               gpointer data);
 
    // some widgets
    GtkWidget *_treeView;
@@ -48,7 +55,7 @@ class RGLogView : public RGGtkBuilderWindow {
 
    // set new logbuffer text
    void clearLogBuf();
-   void appendLogBuf(string text);
+   void appendLogBuf(std::string text);
 
  public:
    RGLogView(RGWindow *parent);
@@ -58,6 +65,3 @@ class RGLogView : public RGGtkBuilderWindow {
 
    virtual ~RGLogView() {};
 };
-
-
-#endif

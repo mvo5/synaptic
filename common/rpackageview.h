@@ -22,73 +22,86 @@
  * USA
  */
 
+#pragma once
 
-#ifndef RPACKAGEVIEW_H
-#define RPACKAGEVIEW_H
-
-#include <string>
-#include <map>
-
-#ifdef WITH_EPT
-#include <ept/axi/axi.h>
-#endif
-
-#include "rpackage.h"
-#include "rpackagefilter.h"
+#include "config.h" // IWYU pragma: associated
 
 #include "i18n.h"
+#include "rpackage.h"
 
-using namespace std;
+#include <cctype>
+#include <cstddef>
+#include <map>
+#include <set>
+#include <string>
+#include <vector>
 
+class OpProgress;
 struct RFilter;
 
-enum {PACKAGE_VIEW_SECTION,
-      PACKAGE_VIEW_STATUS,
-      PACKAGE_VIEW_ORIGIN,
-      PACKAGE_VIEW_CUSTOM,
-      PACKAGE_VIEW_SEARCH,
-      PACKAGE_VIEW_ARCHITECTURE,
-      N_PACKAGE_VIEWS
+enum {
+   PACKAGE_VIEW_SECTION,
+   PACKAGE_VIEW_STATUS,
+   PACKAGE_VIEW_ORIGIN,
+   PACKAGE_VIEW_CUSTOM,
+   PACKAGE_VIEW_SEARCH,
+   PACKAGE_VIEW_ARCHITECTURE,
+   N_PACKAGE_VIEWS
 };
 
-class RPackageView {
+class RPackageView
+{
  protected:
-
-   map<string, vector<RPackage *> > _view;
+   std::map<std::string, std::vector<RPackage *>> _view;
 
    bool _hasSelection;
-   string _selectedName;
+   std::string _selectedName;
 
    // packages in selected
-   vector<RPackage *> _selectedView;
+   std::vector<RPackage *> _selectedView;
 
    // all packages in current global filter
-   vector<RPackage *> &_all;
+   std::vector<RPackage *> &_all;
 
  public:
-   RPackageView(vector<RPackage *> &allPackages): _all(allPackages) {}
-   virtual ~RPackageView() {}
+   RPackageView(std::vector<RPackage *> &allPackages) : _all(allPackages)
+   {}
+   virtual ~RPackageView()
+   {}
 
-   bool hasSelection() { return _hasSelection; }
-   string getSelected() { return _selectedName; }
+   bool hasSelection()
+   {
+      return _hasSelection;
+   }
+   std::string getSelected()
+   {
+      return _selectedName;
+   }
    bool hasPackage(RPackage *pkg);
-   virtual bool setSelected(string name);
+   virtual bool setSelected(std::string name);
 
-   void showAll() {
+   void showAll()
+   {
       _selectedView = _all;
       _hasSelection = false;
       _selectedName.clear();
    }
 
-   virtual vector<string> getSubViews();
+   virtual std::vector<std::string> getSubViews() const;
 
-   virtual string getName() = 0;
+   virtual std::string getName() const = 0;
    virtual void addPackage(RPackage *package) = 0;
 
-   typedef vector<RPackage *>::iterator iterator;
+   typedef std::vector<RPackage *>::iterator iterator;
 
-   virtual iterator begin() { return _selectedView.begin(); }
-   virtual iterator end() { return _selectedView.end(); }
+   virtual iterator begin()
+   {
+      return _selectedView.begin();
+   }
+   virtual iterator end()
+   {
+      return _selectedView.end();
+   }
 
    virtual void clear();
    virtual void clearSelection();
@@ -97,107 +110,132 @@ class RPackageView {
 };
 
 
-
-class RPackageViewSections : public RPackageView {
+class RPackageViewSections : public RPackageView
+{
  public:
-   RPackageViewSections(vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {}
+   RPackageViewSections(std::vector<RPackage *> &allPkgs)
+      : RPackageView(allPkgs)
+   {}
 
-   string getName() {
+   std::string getName() const
+   {
       return _("Sections");
    };
 
    void addPackage(RPackage *package);
 };
 
-class RPackageViewAlphabetic : public RPackageView {
+class RPackageViewAlphabetic : public RPackageView
+{
  public:
-   RPackageViewAlphabetic(vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {}
-   string getName() {
+   RPackageViewAlphabetic(std::vector<RPackage *> &allPkgs)
+      : RPackageView(allPkgs)
+   {}
+   std::string getName() const
+   {
       return _("Alphabetic");
    }
 
-   void addPackage(RPackage *package) {
-      char letter[2] = { ' ', '\0' };
+   void addPackage(RPackage *package)
+   {
+      char letter[2] = {' ', '\0'};
       letter[0] = toupper(package->name()[0]);
       _view[letter].push_back(package);
    }
 };
 
-class RPackageViewArchitecture : public RPackageView {
+class RPackageViewArchitecture : public RPackageView
+{
  public:
-   RPackageViewArchitecture(vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {}
-   string getName() {
+   RPackageViewArchitecture(std::vector<RPackage *> &allPkgs)
+      : RPackageView(allPkgs)
+   {}
+   std::string getName() const
+   {
       return _("Architecture");
    }
 
    void addPackage(RPackage *package);
 };
 
-class RPackageViewOrigin : public RPackageView {
+class RPackageViewOrigin : public RPackageView
+{
  public:
-   RPackageViewOrigin(vector<RPackage *> &allPkgs) : RPackageView(allPkgs) {}
-   string getName() {
+   RPackageViewOrigin(std::vector<RPackage *> &allPkgs) : RPackageView(allPkgs)
+   {}
+   std::string getName() const
+   {
       return _("Origin");
    }
 
    void addPackage(RPackage *package);
 };
 
-class RPackageViewStatus:public RPackageView {
+class RPackageViewStatus : public RPackageView
+{
  protected:
    // mark the software as unsupported in status view
    bool markUnsupported;
-   vector<string> supportedComponents;
+   std::vector<std::string> supportedComponents;
 
  public:
-   RPackageViewStatus(vector<RPackage *> &allPkgs);
+   RPackageViewStatus(std::vector<RPackage *> &allPkgs);
 
-   string getName() {
+   std::string getName() const
+   {
       return _("Status");
    }
 
    void addPackage(RPackage *package);
 };
 
-class RPackageViewSearch : public RPackageView {
-   struct searchItem {
-      vector<string> searchStrings;
-      string searchName;
+class RPackageViewSearch : public RPackageView
+{
+   struct searchItem
+   {
+      std::vector<std::string> searchStrings;
+      std::string searchName;
       int searchType;
    };
    // the search history
-   map<string, searchItem> searchHistory;
+   std::map<std::string, searchItem> searchHistory;
    searchItem _currentSearchItem;
    int found; // nr of found pkgs for the last search
 
    bool xapianSearch();
 
  public:
- RPackageViewSearch(vector<RPackage *> &allPkgs)
-    : RPackageView(allPkgs), found(0) {}
+   RPackageViewSearch(std::vector<RPackage *> &allPkgs)
+      : RPackageView(allPkgs), found(0)
+   {}
 
-   int setSearch(string searchName, int type, string searchString,
-		 OpProgress &searchProgress);
+   int setSearch(std::string searchName,
+                 int type,
+                 std::string searchString,
+                 OpProgress &searchProgress);
 
-   string getName() {
+   std::string getName() const
+   {
       return _("Search History");
    }
 
    // return search history here
-   virtual vector<string> getSubViews();
-   virtual bool setSelected(string name);
+   virtual std::vector<std::string> getSubViews() const;
+   virtual bool setSelected(std::string name);
 
    void addPackage(RPackage *package);
 
    // no-op
-   virtual void refresh() {}
+   virtual void refresh()
+   {}
 };
 
 
-class RPackageViewFilter : public RPackageView {
+class RPackageViewFilter : public RPackageView
+{
  protected:
-   vector<RFilter *> _filterL;
-   set<string> _sectionList;   // list of all available package sections
+   std::vector<RFilter *> _filterL;
+   std::set<std::string> _sectionList; // list of all available package sections
 
  public:
    void storeFilters();
@@ -211,9 +249,13 @@ class RPackageViewFilter : public RPackageView {
 
    void makePresetFilters();
 
-   RFilter* findFilter(string name);
-   unsigned int nrOfFilters() { return _filterL.size(); }
-   RFilter *findFilter(unsigned int index) {
+   RFilter *findFilter(std::string name);
+   unsigned int nrOfFilters()
+   {
+      return _filterL.size();
+   }
+   RFilter *findFilter(unsigned int index)
+   {
       if (index > _filterL.size())
          return NULL;
       else
@@ -223,25 +265,24 @@ class RPackageViewFilter : public RPackageView {
    // used by kynaptic
    int getFilterIndex(RFilter *filter);
 
-   vector<string> getFilterNames();
-   const set<string> &getSections();
+   std::vector<std::string> getFilterNames();
+   const std::set<std::string> &getSections();
 
-   RPackageViewFilter(vector<RPackage *> &allPkgs);
+   RPackageViewFilter(std::vector<RPackage *> &allPkgs);
 
    // build packages list on "demand"
    virtual iterator begin();
 
    // we never need to clear because we build the view "on-demand"
-   virtual void clear() { clearSelection(); }
+   virtual void clear()
+   {
+      clearSelection();
+   }
 
-   string getName() {
+   std::string getName() const
+   {
       return _("Custom");
    }
 
    void addPackage(RPackage *package);
 };
-
-
-#endif
-
-// vim:sts=3:sw=3

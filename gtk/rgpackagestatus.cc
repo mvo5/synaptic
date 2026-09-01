@@ -1,11 +1,11 @@
 /* rgpackagestatus.cc  - package status UI stuff
- * 
+ *
  * Copyright (c) 2003 Michael Vogt
- * 
+ *
  * Author: Michael Vogt <mvo@debian.org>
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -20,57 +20,53 @@
  * USA
  */
 
-#include <gtk/gtk.h>
-#include <string>
-#include <stdio.h>
-#include <cstdlib>
-#include <cstring>
+#include "config.h" // IWYU pragma: associated
+
+#include "rgpackagestatus.h"
 
 #include "rgutils.h"
-#include "rgpackagestatus.h"
+#include "rpackagestatus.h"
+
+#include <apt-pkg/configuration.h>
+#include <cassert>
+#include <cstdio>
+#include <gtk/gtk.h>
+#include <string>
+
+class RPackage;
 
 // RPackageStatus stuff
 RGPackageStatus RGPackageStatus::pkgStatus;
 
-void RGPackageStatus::initColors()
+void RGPackageStatus::initColorsAndIcons()
 {
    const char *default_status_colors[N_STATUS_COUNT] = {
-      "#8ae234",  // install
-      "#4e9a06",  // re-install
-      "#fce94f",  // upgrade
-      "#ad7fa8",  // downgrade
-      "#ef2929",  // remove
-      "#a40000",  // purge
-      NULL,       // available
-      "#a40000",  // available-locked
-      NULL,       // installed-updated
-      NULL,       // installed-outdated
-      "#a40000",  // installed-locked 
-      NULL,       // broken
-      NULL        // new
+      "#8ae234", // install
+      "#4e9a06", // re-install
+      "#fce94f", // upgrade
+      "#ad7fa8", // downgrade
+      "#ef2929", // remove
+      "#a40000", // purge
+      NULL,      // available
+      "#a40000", // available-locked
+      NULL,      // installed-updated
+      NULL,      // installed-outdated
+      "#a40000", // installed-locked
+      NULL,      // broken
+      NULL       // new
    };
 
    gchar *config_string;
    for (int i = 0; i < N_STATUS_COUNT; i++) {
-      config_string = g_strdup_printf("Synaptic::color-%s",
-                                      PackageStatusShortString[i]);
-      gtk_get_color_from_string(_config->
-                                Find(config_string,
-                                     default_status_colors[i]).c_str(),
-                                &StatusColors[i]);
+      config_string =
+         g_strdup_printf("Synaptic::color-%s", PackageStatusShortString[i]);
+      gtk_get_color_from_string(
+         _config->Find(config_string, default_status_colors[i]).c_str(),
+         &StatusColors[i]);
       g_free(config_string);
-   }
-}
 
-void RGPackageStatus::initPixbufs()
-{
-   const int statusPixbufSize = 22;
-
-   for (int i = 0; i < N_STATUS_COUNT; i++) {
-      gchar *s = g_strdup_printf("package-%s", PackageStatusShortString[i]);
-      StatusPixbuf[i] = get_gdk_pixbuf(s, statusPixbufSize);
+      StatusIcons[i] = std::string("package-") + PackageStatusShortString[i];
    }
-   supportedPix = get_gdk_pixbuf("package-supported", statusPixbufSize);
 }
 
 // class that finds out what do display to get user
@@ -78,30 +74,34 @@ void RGPackageStatus::init()
 {
    RPackageStatus::init();
 
-   initColors();
-   initPixbufs();
+   initColorsAndIcons();
 }
-
 
 GdkRGBA *RGPackageStatus::getBgColor(RPackage *pkg)
 {
    return StatusColors[getStatus(pkg)];
 }
 
-GdkPixbuf *RGPackageStatus::getSupportedPix(RPackage *pkg)
+const char *RGPackageStatus::getSupportedIconName(RPackage *pkg)
 {
-   if(isSupported(pkg))
-      return supportedPix;
+   if (isSupported(pkg))
+      return "package-supported";
    else
       return NULL;
 }
 
-GdkPixbuf *RGPackageStatus::getPixbuf(RPackage *pkg)
+const char *RGPackageStatus::getIconName(RPackage *pkg)
 {
-   return StatusPixbuf[getStatus(pkg)];
+   return getIconName(getStatus(pkg));
 }
 
-void RGPackageStatus::setColor(int i, GdkRGBA * new_color)
+const char *RGPackageStatus::getIconName(int i)
+{
+   assert(0 <= i && i < N_STATUS_COUNT);
+   return StatusIcons[i].c_str();
+}
+
+void RGPackageStatus::setColor(int i, GdkRGBA *new_color)
 {
    StatusColors[i] = new_color;
 }
@@ -111,8 +111,8 @@ void RGPackageStatus::saveColors()
    gchar *color_string, *config_string;
    for (int i = 0; i < N_STATUS_COUNT; i++) {
       color_string = gtk_get_string_from_color(StatusColors[i]);
-      config_string = g_strdup_printf("Synaptic::color-%s",
-                                      PackageStatusShortString[i]);
+      config_string =
+         g_strdup_printf("Synaptic::color-%s", PackageStatusShortString[i]);
 
       _config->Set(config_string, color_string);
       g_free(config_string);

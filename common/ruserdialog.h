@@ -21,10 +21,12 @@
  * USA
  */
 
-#ifndef RUSERDIALOG_H
-#define RUSERDIALOG_H
+#pragma once
 
-class RUserDialog {
+#include "config.h" // IWYU pragma: associated
+
+class RUserDialog
+{
  public:
    enum ButtonsType {
       ButtonsDefault,
@@ -33,39 +35,33 @@ class RUserDialog {
       ButtonsYesNo
    };
 
-   enum DialogType {
-      DialogInfo,
-      DialogWarning,
-      DialogQuestion,
-      DialogError
-   };
+   enum DialogType { DialogInfo, DialogWarning, DialogQuestion, DialogError };
 
    virtual bool message(const char *msg,
                         DialogType dialog = DialogInfo,
                         ButtonsType buttons = ButtonsDefault,
-                        bool defres = true) = 0;
+                        bool defaultResponse = true) = 0;
 
-   virtual bool confirm(const char *msg, bool defres = true) {
-      return message(msg, DialogQuestion, ButtonsYesNo, defres);
+   virtual bool confirm(const char *msg, bool defaultResponse = true)
+   {
+      return message(msg, DialogQuestion, ButtonsYesNo, defaultResponse);
    }
 
-   virtual bool proceed(const char *msg, bool defres = true) {
-      return message(msg, DialogInfo, ButtonsOkCancel, defres);
+   virtual bool proceed(const char *msg, bool defaultResponse = true)
+   {
+      return message(msg, DialogInfo, ButtonsOkCancel, defaultResponse);
    }
 
-   virtual bool warning(const char *msg, bool nocancel = true) {
+   virtual bool warning(const char *msg, bool nocancel = true)
+   {
       return nocancel ? message(msg, DialogWarning)
-         : message(msg, DialogWarning, ButtonsOkCancel, false);
+                      : message(msg, DialogWarning, ButtonsOkCancel, false);
    }
 
-   virtual void error(const char *msg) {
+   virtual void error(const char *msg)
+   {
       message(msg, DialogError);
    }
 
    virtual bool showErrors();
-
 };
-
-#endif
-
-// vim:sts=4:sw=4

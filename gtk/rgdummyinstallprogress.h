@@ -20,24 +20,19 @@
  * USA
  */
 
+#pragma once
 
-#ifndef _RGDUMMYINSTALLPROGRESS_H_
-#define _RGDUMMYINSTALLPROGRESS_H_
-
+#include "config.h" // IWYU pragma: associated
 
 #include "rinstallprogress.h"
-#include "rgwindow.h"
 
-
-class RGDummyInstallProgress:public RInstallProgress {
- protected:
-   virtual void startUpdate();
-   virtual void updateInterface();
-   virtual void finishUpdate();
-
+class RGDummyInstallProgress : public RInstallProgress
+{
  public:
-   RGDummyInstallProgress():RInstallProgress() {};
-   virtual ~ RGDummyInstallProgress() {};
-};
+   RGDummyInstallProgress() : RInstallProgress() {};
+   virtual ~RGDummyInstallProgress() {};
 
-#endif
+   virtual void startUpdate() override;
+   virtual void updateInterface() override;
+   virtual void finishUpdate() override;
+};

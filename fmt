@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Auto-format all C++ source and header files
+
+set -euo pipefail
+
+PROJECT_ROOT="$(cd "$(dirname "$0")" && pwd)"
+
+# Find all C++ files under the project root
+FILES=$(find "$PROJECT_ROOT/common" "$PROJECT_ROOT/gtk" "$PROJECT_ROOT/tests" -type f -regextype posix-extended -regex '.*\.(c|cc|cpp|cxx|h|hpp|hxx)')
+
+if [ -z "$FILES" ]; then
+    echo "No C++ files found."
+    exit 1
+fi
+
+# Run clang-format in-place on all files
+echo "$FILES" | xargs -P "$(nproc)" clang-format -i

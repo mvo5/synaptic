@@ -20,51 +20,54 @@
  * USA
  */
 
+#pragma once
 
-#ifndef _RGTERMNSTALLPROGRESS_H_
-#define _RGTERMINSTALLPROGRESS_H_
+#include "config.h" // IWYU pragma: associated
 
 #ifdef HAVE_TERMINAL
 
-#include "rgmainwindow.h"
-#include "rinstallprogress.h"
-#include "rgwindow.h"
+#   include "rggtkbuilderwindow.h"
+#   include "rinstallprogress.h"
 
-#include <vte/vte.h>
+#   include <apt-pkg/packagemanager.h>
+#   include <gtk/gtk.h>
+#   include <optional>
+#   include <sys/types.h>
+#   include <vte/vte.h>
 
-class RGTermInstallProgress : public RInstallProgress, public RGGtkBuilderWindow {
-  GtkWidget *_term;
-  GtkWidget *_scrollbar;
-  GtkWidget *_statusL;
-  GtkWidget *_closeB;
-  GtkWidget *_closeOnF;
-  GtkWidget *_sock;
+class RGMainWindow;
 
-  pkgPackageManager::OrderResult res;
-  static gboolean zvtFocus (GtkWidget *widget, GdkEventButton *event, gpointer user_data);
+class RGTermInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
+{
+   GtkWidget *_term;
+   GtkWidget *_scrollbar;
+   GtkWidget *_statusL;
+   GtkWidget *_closeB;
+   GtkWidget *_closeOnF;
 
-protected:
-  bool child_has_exited;
-  static void child_exited(VteTerminal *vteterminal, gint ret,
-			   gpointer data);
-  virtual void startUpdate();
-  virtual void updateInterface();
-  virtual void finishUpdate();
-  static void stopShell(GtkWidget *self, void* data);
-  virtual bool close();
+   int master;
+   pkgPackageManager::OrderResult res;
 
-  pid_t _child_id;
+ protected:
+   bool child_has_exited;
+   static void child_exited(VteTerminal *vteterminal, gint ret, gpointer data);
+   static void stopShell(GtkWidget *self, void *data);
+   virtual void close() override;
 
-public:
+ public:
    RGTermInstallProgress(RGMainWindow *main);
    ~RGTermInstallProgress() {};
 
-   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
-		   				int numPackages = 0,
-						int totalPackages = 0);
+   virtual std::optional<pkgPackageManager::OrderResult> start(
+      pkgPackageManager *pm,
+      int numPackages = 0,
+      int totalPackages = 0) override;
+   virtual std::optional<pkgPackageManager::OrderResult> poll() override;
+   virtual void finish() override;
 
+   virtual void startUpdate() override;
+   virtual void updateInterface() override;
+   virtual void finishUpdate() override;
 };
 
 #endif /* HAVT_TERMINAL */
-
-#endif

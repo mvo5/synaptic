@@ -1,0 +1,34 @@
+option(
+  'scripts',
+  type: 'boolean',
+  value: false,
+  description: 'Enable the extension system',
+)
+
+option(
+  'dpkg_progress',
+  type: 'feature',
+  value: 'enabled',
+  description: 'Build with support for the dpkg progress bar',
+)
+
+option(
+  'launchpad_integration',
+  type: 'boolean',
+  value: false,
+  description: 'Build with launchpad-integration support',
+)
+
+option(
+  'pkg_hold',
+  type: 'boolean',
+  value: false,
+  description: 'Build with the experimental package hold feature',
+)
+
+option(
+  'apt_multiarch_support',
+  type: 'boolean',
+  value: true,
+  description: 'Build with apt multiarch support',
+)

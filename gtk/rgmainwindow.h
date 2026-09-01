@@ -1,14 +1,14 @@
 /* rgmainwindow.h - main window of application
- * 
+ *
  * Copyright (c) 2001 Alfredo K. Kojima
  *               2002 Michael Vogt <mvo@debian.org>
- * 
+ *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>
  *         Gustavo Niemeyer <niemeyer@conectiva.com>
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -23,39 +23,49 @@
  * USA
  */
 
+#pragma once
 
-#ifndef _RGMAINWINDOW_H_
-#define _RGMAINWINDOW_H_
+#include "config.h" // IWYU pragma: associated
 
-using namespace std;
-
-#include "rpackagelister.h"
-
-#include <gtk/gtk.h>
-#include <vector>
-#include <set>
-
-#include "rgtaskswin.h"
-#include "rgfetchprogress.h"
-#include "rinstallprogress.h"
 #include "rggtkbuilderwindow.h"
-#include "rgiconlegend.h"
-#include "gtkpkglist.h"
-#include "rgpkgdetails.h"
-#include "rglogview.h"
+#include "rpackagelister.h"
+#include "rpackageview.h"
 
-#define TOOLBAR_HIDE -1
+#include <apt-pkg/pkgcache.h>
+#include <cstddef>
+#include <gdk/gdk.h>
+#include <gio/gio.h>
+#include <gio/gmenu.h>
+#include <glib.h>
+#include <glib/gtypes.h>
+#include <gtk/gtk.h>
+#include <gtk/gtkcssprovider.h>
+#include <string>
+#include <vector>
 
-class RGSourcesWindow;
-class RGPreferencesWindow;
+typedef enum {
+   RG_TOOLBAR_HIDE = -1,
+   RG_TOOLBAR_ICONS = 0,
+   RG_TOOLBAR_TEXT = 1,
+   RG_TOOLBAR_BOTH = 2,
+   RG_TOOLBAR_BOTH_HORIZ = 3
+} RGToolbarStyle;
+
+class RGAboutPanel;
+class RGFetchProgress;
 class RGFilterManagerWindow;
 class RGFilterWindow;
 class RGFindWindow;
+class RGIconLegendPanel;
+class RGLogView;
+class RGPkgDetailsWindow;
+class RGPreferencesWindow;
 class RGSetOptWindow;
-class RGAboutPanel;
-
+class RGSourcesWindow;
+class RGTasksWin;
 class RGUserDialog;
-class RGCacheProgress;
+class RGWindow;
+class RPackage;
 
 typedef enum {
    PKG_KEEP,
@@ -69,7 +79,8 @@ typedef enum {
 
 extern const char *relOptions[];
 
-class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
+class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver
+{
 
    typedef enum {
       UPGRADE_ASK = -1,
@@ -77,44 +88,21 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
       UPGRADE_DIST = 1
    } UpgradeType;
 
-
    bool _unsavedChanges;
-   bool _blockActions;        // block signals from the action and hold buttons
-   int _interfaceLocked;      
+   bool _blockActions; // block signals from the action and hold buttons
+   int _interfaceLocked;
 
    // the central class that has all the package information
    RPackageLister *_lister;
 
    // interface stuff
-   GtkToolbarStyle _toolbarStyle; // hide, small, normal toolbar
+   RGToolbarStyle _toolbarStyle; // hide, small, normal toolbar
 
-   GtkTreeModel *_pkgList;   // the custom list model for the packages
-   GtkWidget *_treeView;     // the display widget
+   GtkTreeModel *_pkgList; // the custom list model for the packages
+   GtkWidget *_treeView;   // the display widget
 
    // the left-side view
    GtkWidget *_subViewList;
-
-
-   // menu items 
-   GtkWidget *_keepM, *_installM, *_reinstallM, *_pkgupgradeM, *_removeM;
-   GtkWidget *_remove_w_depsM, *_purgeM;
-   GtkWidget *_dl_changelogM, *_detailsM;
-
-   GtkWidget *_pinM;
-   GtkWidget *_autoM;
-   GtkWidget *_overrideVersionM;
-   GtkWidget *_pkgHelpM;
-   GtkWidget *_pkgReconfigureM;
-
-   GtkWidget *_proceedB;
-   GtkWidget *_proceedM;
-   GtkWidget *_upgradeB;
-   GtkWidget *_upgradeM;
-   GtkWidget *_propertiesB;
-   GtkWidget *_fixBrokenM;
-
-   // popup-menu in the treeview
-   GtkWidget *_popupMenu;
 
    // the description buffer
    GtkTextBuffer *_pkgCommonTextBuffer;
@@ -142,17 +130,34 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
    // the buttons for the various views
    GtkWidget *_viewButtons[N_PACKAGE_VIEWS];
 
-   // init stuff 
+   // init stuff
    void buildInterface();
    void buildTreeView();
+   bool isActionEnabled(const char *action_name);
+   void setActionEnabled(const char *action_name, bool enabled);
+   void setActionState(const char *action_name, GVariant *value);
+
+   void setActionStateBool(const char *action_name, bool value)
+   {
+      setActionState(action_name, g_variant_new_boolean(value));
+   }
+
+   void setActionStateInt(const char *action_name, int value)
+   {
+      setActionState(action_name, g_variant_new_int32(value));
+   }
+
+ public:
+   void activateAction(const char *action_name, GVariant *value);
 
  private:
    // display/table releated
    void refreshSubViewList();
 
-   virtual bool close();
-   static bool closeWin(GtkWidget *self, void *me) {
-      return ((RGMainWindow *) me)->close();
+   virtual void close() override;
+   static void closeWin(GSimpleAction *action, GVariant *parameter, gpointer me)
+   {
+      ((RGMainWindow *)me)->close();
    };
 
    // misc
@@ -161,52 +166,59 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
    // package info
    void updatePackageInfo(RPackage *pkg);
    RPackage *selectedPackage();
-   string selectedSubView();
+   std::string selectedSubView();
 
    // helpers
    void pkgAction(RGPkgAction action);
-   bool askStateChange(RPackageLister::pkgState, 
-                       const vector<RPackage *> &exclude = vector<RPackage*>());
-   bool checkForFailedInst(vector<RPackage *> instPkgs);
-   void pkgInstallHelper(RPackage *pkg, bool fixBroken = true, 
-			 bool reInstall = false);
-   void pkgRemoveHelper(RPackage *pkg, bool purge = false,
-		   	bool withDeps = false);
+   bool askStateChange(
+      RPackageLister::pkgState,
+      const std::vector<RPackage *> &exclude = std::vector<RPackage *>());
+   bool checkForFailedInst(std::vector<RPackage *> instPkgs);
+   void pkgInstallHelper(RPackage *pkg,
+                         bool fixBroken = true,
+                         bool reInstall = false);
+   void pkgRemoveHelper(RPackage *pkg,
+                        bool purge = false,
+                        bool withDeps = false);
    void pkgKeepHelper(RPackage *pkg);
 
-   // helper for recommends/suggests 
-   // (data is the name of the pkg, self needs to have a pointer to "me" )
-   static void pkgInstallByNameHelper(GtkWidget *self, void *data);
-   // install a non-standard version (data is a char* of the version)
-   static void cbInstallFromVersion(GtkWidget *self, void *data);
+   // helper for recommends/suggests
+   static void pkgInstallByNameHelper(GSimpleAction *action,
+                                      GVariant *parameter,
+                                      gpointer data);
+   // install a non-standard version
+   static void cbInstallFromVersion(GSimpleAction *action,
+                                    GVariant *parameter,
+                                    gpointer data);
 
-   // helpers for search-as-you-type 
+   // helpers for search-as-you-type
    static void cbSearchEntryChanged(GtkWidget *editable, void *data);
-   static void xapianIndexUpdateFinished(GPid pid, gint status, void* data);
+   static void xapianIndexUpdateFinished(GPid pid, gint status, void *data);
    static gboolean xapianDoSearch(void *data);
    static gboolean xapianDoIndexUpdate(void *data);
 
    // RPackageObserver
    virtual void notifyChange(RPackage *pkg);
-   virtual void notifyPreFilteredChange() {
-   };
-   virtual void notifyPostFilteredChange() {
-   };
+   virtual void notifyPreFilteredChange() {};
+   virtual void notifyPostFilteredChange() {};
 
  public:
-   RGMainWindow(RPackageLister *packLister, string name);
+   RGMainWindow(GtkApplication *app,
+                RPackageLister *packLister,
+                std::string name);
    virtual ~RGMainWindow() {};
 
-   void refreshTable(RPackage *selectedPkg = NULL,bool setAdjustments=true);
+   void refreshTable(RPackage *selectedPkg = NULL, bool setAdjustments = true);
 
-   void changeView(int view, string subView="");
+   void changeView(int view, std::string subView = "");
 
    // install the list of packagenames and display a changes window
-   void selectToInstall(vector<string> packagenames);
+   void selectToInstall(std::vector<std::string> packagenames);
 
    void setInterfaceLocked(bool flag);
    void setTreeLocked(bool flag);
-   void rebuildTreeView() {
+   void rebuildTreeView()
+   {
       buildTreeView();
    };
 
@@ -220,7 +232,7 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
 
    bool showErrors();
 
-   GtkWidget* buildWeakDependsMenu(RPackage *pkg, pkgCache::Dep::DepType);
+   GMenu *buildWeakDependsMenu(RPackage *pkg, pkgCache::Dep::DepType);
 
 
    // --------------------------------------------------------------------
@@ -229,7 +241,28 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
 
    static void cbDependsMenuChanged(GtkWidget *self, void *data);
 
-   static void cbPkgAction(GtkWidget *self, void *data);
+   void cbPkgAction(RGPkgAction action);
+   static void cbPkgActionUnmark(GSimpleAction *action,
+                                 GVariant *parameter,
+                                 gpointer data);
+   static void cbPkgActionMarkInstall(GSimpleAction *action,
+                                      GVariant *parameter,
+                                      gpointer data);
+   static void cbPkgActionMarkReinstall(GSimpleAction *action,
+                                        GVariant *parameter,
+                                        gpointer data);
+   static void cbPkgActionMarkUpgrade(GSimpleAction *action,
+                                      GVariant *parameter,
+                                      gpointer data);
+   static void cbPkgActionMarkDelete(GSimpleAction *action,
+                                     GVariant *parameter,
+                                     gpointer data);
+   static void cbPkgActionMarkPurge(GSimpleAction *action,
+                                    GVariant *parameter,
+                                    gpointer data);
+   static void cbPkgActionDefault(GSimpleAction *action,
+                                  GVariant *parameter,
+                                  gpointer data);
 
    static gboolean cbPackageListClicked(GtkWidget *treeview,
                                         GdkEventButton *event,
@@ -238,9 +271,11 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
    static void cbTreeviewPopupMenu(GtkWidget *treeview,
                                    GdkEventButton *event,
                                    RGMainWindow *me,
-                                   vector<RPackage *> selected_pkgs);
+                                   std::vector<RPackage *> selected_pkgs);
 
-   static void cbChangelogDialog(GtkWidget *self, void *data);
+   static void cbChangelogDialog(GSimpleAction *action,
+                                 GVariant *parameter,
+                                 gpointer data);
 
    static void cbSelectedRow(GtkTreeSelection *selection, gpointer data);
    static void cbPackageListRowActivated(GtkTreeView *treeview,
@@ -251,59 +286,115 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver {
    static void cbChangedView(GtkWidget *self, void *);
    static void cbChangedSubView(GtkTreeSelection *selection, gpointer data);
 
-   static void cbDetailsWindow(GtkWidget *self, void *data);
+   static void cbDetailsWindow(GSimpleAction *action,
+                               GVariant *parameter,
+                               gpointer data);
 
    // file menu
-   static void cbTasksClicked(GtkWidget *self, void *data);
-   static void cbOpenClicked(GtkWidget *self, void *data);
-   static void cbSaveClicked(GtkWidget *self, void *data);
-   static void cbSaveAsClicked(GtkWidget *self, void *data);
-   string selectionsFilename;
+   static void cbTasksClicked(GSimpleAction *action,
+                              GVariant *parameter,
+                              gpointer data);
+   static void cbOpenClicked(GSimpleAction *action,
+                             GVariant *parameter,
+                             gpointer data);
+   static void cbSaveClicked(GSimpleAction *action,
+                             GVariant *parameter,
+                             gpointer data);
+   static void cbSaveAsClicked(GSimpleAction *action,
+                               GVariant *parameter,
+                               gpointer data);
+   std::string selectionsFilename;
    bool saveFullState;
-   static void cbGenerateDownloadScriptClicked(GtkWidget *self, void *data);
-   static void cbAddDownloadedFilesClicked(GtkWidget *self, void *data);
-   static void cbViewLogClicked(GtkWidget *self, void *data);
+   static void cbGenerateDownloadScriptClicked(GSimpleAction *action,
+                                               GVariant *parameter,
+                                               gpointer data);
+   static void cbAddDownloadedFilesClicked(GSimpleAction *action,
+                                           GVariant *parameter,
+                                           gpointer data);
+   static void cbViewLogClicked(GSimpleAction *action,
+                                GVariant *parameter,
+                                gpointer data);
 
    // actions menu
-   static void cbUndoClicked(GtkWidget *self, void *data);
-   static void cbRedoClicked(GtkWidget *self, void *data);
-   static void cbClearAllChangesClicked(GtkWidget *self, void *data);
-   static void cbUpdateClicked(GtkWidget *self, void *data);
-   static void cbAddCDROM(GtkWidget *self, void *data);
-   static void cbFixBrokenClicked(GtkWidget *self, void *data);
-   static void cbUpgradeClicked(GtkWidget *self, void *data);
-   static void cbProceedClicked(GtkWidget *self, void *data);
+   static void cbUndoClicked(GSimpleAction *action,
+                             GVariant *parameter,
+                             gpointer data);
+   static void cbRedoClicked(GSimpleAction *action,
+                             GVariant *parameter,
+                             gpointer data);
+   static void cbClearAllChangesClicked(GSimpleAction *action,
+                                        GVariant *parameter,
+                                        gpointer data);
+   static void cbUpdateClicked(GSimpleAction *action,
+                               GVariant *parameter,
+                               gpointer data);
+   static void cbAddCDROM(GSimpleAction *action,
+                          GVariant *parameter,
+                          gpointer data);
+   static void cbFixBrokenClicked(GSimpleAction *action,
+                                  GVariant *parameter,
+                                  gpointer data);
+   static void cbUpgradeClicked(GSimpleAction *action,
+                                GVariant *parameter,
+                                gpointer data);
+   static void cbProceedClicked(GSimpleAction *action,
+                                GVariant *parameter,
+                                gpointer data);
 
    // packages menu
-   static void cbMenuPinClicked(GtkWidget *self, void *data);
-   static void cbMenuAutoInstalledClicked(GtkWidget *self, void *data);
+   static void cbMenuPinClicked(GSimpleAction *action,
+                                GVariant *parameter,
+                                gpointer data);
+   static void cbMenuAutoInstalledClicked(GSimpleAction *action,
+                                          GVariant *parameter,
+                                          gpointer data);
 
    // filter menu
-   static void cbShowFilterManagerWindow(GtkWidget *self, void *data);
-   static void cbSaveFilterAction(void *self, RGFilterWindow * rwin);
-   static void cbCloseFilterAction(void *self, RGFilterWindow * rwin);
+   static void cbShowFilterManagerWindow(GSimpleAction *action,
+                                         GVariant *parameter,
+                                         gpointer data);
+   static void cbSaveFilterAction(void *self, RGFilterWindow *rwin);
+   static void cbCloseFilterAction(void *self, RGFilterWindow *rwin);
    static void cbCloseFilterManagerAction(void *self, bool okcancel);
 
    // search menu
-   static void cbFindToolClicked(GtkWidget *self, void *data);
+   static void cbFindToolClicked(GSimpleAction *action,
+                                 GVariant *parameter,
+                                 gpointer data);
 
    // preferences menu
-   static void cbShowConfigWindow(GtkWidget *self, void *data);
-   static void cbShowSetOptWindow(GtkWidget *self, void *data);
-   static void cbShowSourcesWindow(GtkWidget *self, void *data);
-   static void cbMenuToolbarClicked(GtkWidget *self, void *data);
+   static void cbShowConfigWindow(GSimpleAction *action,
+                                  GVariant *parameter,
+                                  gpointer data);
+   static void cbShowSetOptWindow(GSimpleAction *action,
+                                  GVariant *parameter,
+                                  gpointer data);
+   static void cbShowSourcesWindow(GSimpleAction *action,
+                                   GVariant *parameter,
+                                   gpointer data);
+   static void cbMenuToolbarClicked(GSimpleAction *action,
+                                    GVariant *parameter,
+                                    gpointer data);
 
    // help menu
-   static void cbHelpAction(GtkWidget *self, void *data);
-   static void cbShowIconLegendPanel(GtkWidget *self, void *data);
-   static void cbShowAboutPanel(GtkWidget *self, void *data);
-   static void cbShowWelcomeDialog(GtkWidget *self, void *data);
+   static void cbHelpAction(GSimpleAction *action,
+                            GVariant *parameter,
+                            gpointer data);
+   static void cbShowIconLegendPanel(GSimpleAction *action,
+                                     GVariant *parameter,
+                                     gpointer data);
+   static void cbShowAboutPanel(GSimpleAction *action,
+                                GVariant *parameter,
+                                gpointer data);
+   static void cbShowWelcomeDialog(GSimpleAction *action,
+                                   GVariant *parameter,
+                                   gpointer data);
 
-   // the buttons 
-   static void cbPkgHelpClicked(GtkWidget *self, void *data);
-   static void cbPkgReconfigureClicked(GtkWidget *self, void *data);
-
+   // the buttons
+   static void cbPkgHelpClicked(GSimpleAction *action,
+                                GVariant *parameter,
+                                gpointer data);
+   static void cbPkgReconfigureClicked(GSimpleAction *action,
+                                       GVariant *parameter,
+                                       gpointer data);
 };
-
-
-#endif

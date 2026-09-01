@@ -22,20 +22,24 @@
  * USA
  */
 
-#ifndef RGPKGCDROM_H
-#define RGPKGCDROM_H
+#pragma once
 
-#include <config.h>
+#include "config.h" // IWYU pragma: associated
+
 #ifdef HAVE_APTPKG_CDROM
 
-#include "rggtkbuilderwindow.h"
-#include <apt-pkg/cdrom.h>
+#   include "rgwindow.h"
+
+#   include <apt-pkg/cdrom.h>
+#   include <gtk/gtk.h>
+#   include <string>
 
 class RGMainWindow;
+class RUserDialog;
 
-class RGCDScanner:public pkgCdromStatus, public RGWindow {
+class RGCDScanner : public pkgCdromStatus, public RGWindow
+{
  protected:
-
    GtkWidget *_label;
    GtkWidget *_pbar;
 
@@ -45,12 +49,10 @@ class RGCDScanner:public pkgCdromStatus, public RGWindow {
    RGCDScanner(RGMainWindow *main, RUserDialog *userDialog);
 
    bool ChangeCdrom();
-   bool AskCdromName(string &defaultName);
-   void Update(string text, int current);
+   bool AskCdromName(std::string &defaultName);
+   void Update(std::string text, int current);
 
    bool run();
-
 };
 
-#endif
 #endif

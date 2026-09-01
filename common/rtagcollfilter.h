@@ -1,5 +1,6 @@
-#ifndef RTAGCOLFILTER_H
-#define RTAGCOLFILTER_H
+#pragma once
+
+#include "config.h" // IWYU pragma: associated
 
 #ifdef HAVE_DEBTAG
 
@@ -23,26 +24,26 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
  */
 
-//#pragma interface
+// #pragma interface
 
-#include <TagcollConsumer.h>
-#include <TagcollFilter.h>
+#   include <TagcollConsumer.h>
+#   include <TagcollFilter.h>
 
-#include <map>
-#include <string>
-#include "rpackage.h"
-#include "rpackagelister.h"
+#   include <string>
+#   include "rpackage.h"
+#   include "rpackagelister.h"
 
-class RTagcollFilter:public TagcollFilter<std::string> {
+class RTagcollFilter : public TagcollFilter<std::string>
+{
  protected:
    RPackageLister *_lister;
 
  public:
-   RTagcollFilter(RPackageLister *lister) throw()
- :   _lister(lister) {
-   }
+   RTagcollFilter(RPackageLister *lister) throw() : _lister(lister)
+   {}
 
-   virtual void consume(const std::string &item) throw() {
+   virtual void consume(const std::string &item) throw()
+   {
       // make sure that only elements we know about are displayed
       // this should really use getElementInDisplayList
       if (_lister->getElement(item) != NULL)
@@ -50,7 +51,8 @@ class RTagcollFilter:public TagcollFilter<std::string> {
    }
 
    virtual void consume(const std::string &item,
-                        const OpSet<std::string> &tags) throw() {
+                        const OpSet<std::string> &tags) throw()
+   {
       // make sure that only elements we know about are displayed
       // this should really use getElementInDisplayList
       if (_lister->getElement(item) != NULL)
@@ -61,4 +63,3 @@ class RTagcollFilter:public TagcollFilter<std::string> {
 // vim:set ts=4 sw=4:
 
 #endif // HAVE_DEBTAGS
-#endif

@@ -205,7 +205,7 @@ bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, SourcesList:
     // Set sections
     if (!sections.empty()) {
         record.NumSections = sections.size();
-        record.Sections = new string[record.NumSections];
+        record.Sections = new std::string[record.NumSections];
         for (unsigned short i = 0; i < record.NumSections; i++) {
             record.Sections[i] = sections[i];
         }

@@ -22,59 +22,63 @@
  * USA
  */
 
-#include "config.h"
-
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <iostream>
-#include <cstdio>
-#include <apt-pkg/error.h>
-#include <apt-pkg/install-progress.h>
-#ifdef HAVE_RPM
-#include <apt-pkg/configuration.h>
-#endif
+#include "config.h" // IWYU pragma: associated
 
 #include "rinstallprogress.h"
 
 #include "i18n.h"
-std::string RInstallProgress::finishMsg = _("\nSuccessfully applied all changes. You can close the window now.");
-std::string RInstallProgress::errorMsg = _("\nNot all changes and updates succeeded. For further details of the failure, please expand the 'Details' panel below.");
-std::string RInstallProgress::incompleteMsg = 
-      _("\nSuccessfully installed all packages of the current medium. "
-	"To continue the installation with the next medium close "
-	"this window.");
 
-const char* RInstallProgress::getResultStr(pkgPackageManager::OrderResult res)
+#include <apt-pkg/install-progress.h>
+#include <apt-pkg/packagemanager.h>
+#include <optional>
+#include <stdlib.h>
+#include <string>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+
+#ifdef HAVE_RPM
+#   include <apt-pkg/configuration.h>
+#   include <fcntl.h>
+#endif
+
+using namespace std;
+
+string RInstallProgress::finishMsg =
+   _("\nSuccessfully applied all changes. You can close the window now.");
+string RInstallProgress::errorMsg =
+   _("\nNot all changes and updates succeeded. For further details of the "
+     "failure, please expand the 'Details' panel below.");
+string RInstallProgress::incompleteMsg =
+   _("\nSuccessfully installed all packages of the current medium. "
+     "To continue the installation with the next medium close "
+     "this window.");
+
+const char *RInstallProgress::getResultStr(pkgPackageManager::OrderResult res)
 {
-   int size;
-   switch( res ) {
-   case 0: // completed
-      return finishMsg.c_str();
-      break;
-   case 1: // failed 
-      return errorMsg.c_str();
-      break;
-   case 2: // incomplete
-      return incompleteMsg.c_str();
-      break;
+   switch (res) {
+      case 0: // completed
+         return finishMsg.c_str();
+         break;
+      case 1: // failed
+         return errorMsg.c_str();
+         break;
+      case 2: // incomplete
+         return incompleteMsg.c_str();
+         break;
    }
 
    return "Unknown install result.";
 }
 
-
-pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
-                                                       int numPackages,
-                                                       int numPackagesTotal)
+std::optional<pkgPackageManager::OrderResult> RInstallProgress::start(
+   pkgPackageManager *pm,
+   int numPackages,
+   int numPackagesTotal)
 {
-   void *dummy;
    pkgPackageManager::OrderResult res;
-   int ret;
-   pid_t _child_id;
 
-   //cout << "RInstallProgress::start()" << endl;
+   // cout << "RInstallProgress::start()" << endl;
 
 #ifdef HAVE_RPM
 
@@ -82,7 +86,7 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
 
    res = pm->DoInstallPreFork();
    if (res == pkgPackageManager::Failed)
-       return res;
+      return res;
 
    /*
     * This will make a pipe from where we can read child's output
@@ -93,7 +97,7 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
    _child_id = fork();
 
    if (_child_id == 0) {
-      // make the write end of the pipe to the child become the new stdout 
+      // make the write end of the pipe to the child become the new stdout
       // and stderr (for the child)
       dup2(fd[1], 1);
       dup2(1, 2);
@@ -102,7 +106,7 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
 
       APT::Progress::PackageManagerProgressFd progress(-1);
       res = pm->DoInstallPostFork(&progress);
-      // dump errors into cerr (pass it to the parent process)	
+      // dump errors into cerr (pass it to the parent process)
       _error->DumpErrors();
       _exit(res);
    }
@@ -121,7 +125,7 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
 
    res = pm->DoInstallPreFork();
    if (res == pkgPackageManager::Failed)
-       return res;
+      return res;
 
    _child_id = fork();
 
@@ -132,13 +136,22 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
    }
 #endif
 
-   startUpdate();
-   while (waitpid(_child_id, &ret, WNOHANG) == 0)
-      updateInterface();
+   return std::nullopt;
+}
 
-   res = (pkgPackageManager::OrderResult) WEXITSTATUS(ret);
+std::optional<pkgPackageManager::OrderResult> RInstallProgress::poll()
+{
+   int ret = 0;
+   pid_t pid = waitpid(_child_id, &ret, WNOHANG);
+   if (pid == 0) {
+      return std::nullopt;
+   }
 
-   finishUpdate();
+   // WEXITSTATUS of a signal-killed child is 0, i.e. Completed
+   pkgPackageManager::OrderResult res =
+      (pid > 0 && WIFEXITED(ret))
+         ? (pkgPackageManager::OrderResult)WEXITSTATUS(ret)
+         : pkgPackageManager::Failed;
 
 #ifdef HAVE_RPM
    close(_childin);
@@ -146,5 +159,3 @@ pkgPackageManager::OrderResult RInstallProgress::start(pkgPackageManager *pm,
 
    return res;
 }
-
-// vim:sts=4:sw=4

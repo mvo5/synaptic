@@ -22,42 +22,46 @@
  * USA
  */
 
+#pragma once
 
-#ifndef _RGWINDOW_H_
-#define _RGWINDOW_H_
+#include "config.h" // IWYU pragma: associated
 
 #include <gtk/gtk.h>
 #include <string>
 
-using namespace std;
-
-class RGWindow {
+class RGWindow
+{
  protected:
    GtkWidget *_win;
-   GtkWidget *_topBox;
 
-   static bool windowCloseCallback(GtkWidget *widget, GdkEvent * event);
-   virtual bool close();
+   static gboolean windowCloseCallback(GtkWidget *widget,
+                                       GdkEvent *event,
+                                       gpointer data);
+   virtual void close();
+
+   void init();
+
+   RGWindow() : _win(nullptr)
+   {}
 
  public:
-   inline virtual GtkWidget *window() {
+   inline virtual GtkWidget *window()
+   {
       return _win;
-   };
+   }
 
-   virtual void setTitle(string title);
+   virtual void setTitle(std::string title);
 
-   inline virtual void hide() {
+   inline virtual void hide()
+   {
       gtk_widget_hide(_win);
-   };
-   inline virtual void show() {
-      gtk_widget_show(_win);
-   };
+   }
 
-   RGWindow() : _win(0), _topBox(0) {};
-   RGWindow(string name, bool makeBox = true);
-   RGWindow(RGWindow *parent, string name, bool makeBox = true,
-            bool closable = true);
+   inline virtual void show()
+   {
+      gtk_widget_show(_win);
+   }
+
+   explicit RGWindow(RGWindow *parent, std::string name);
    virtual ~RGWindow();
 };
-
-#endif

@@ -20,26 +20,23 @@
  * USA
  */
 
+#pragma once
 
-#ifndef _RAPTOPTIONS_H_
-#define _RAPTOPTIONS_H_
+#include "config.h" // IWYU pragma: associated
 
 #include <map>
+#include <iostream>
 #include <string>
-#include <apt-pkg/configuration.h>
 
-using namespace std;
-
-class RAPTOptions {
+class RAPTOptions
+{
  public:
-
-   class packageOptions {
+   class packageOptions
+   {
     public:
       packageOptions()
-    :
-      isLocked(false), isOrphaned(false), isNew(false),
-      isDebconf(false) {
-      }
+         : isLocked(false), isOrphaned(false), isNew(false), isDebconf(false)
+      {}
       bool isLocked;
       bool isOrphaned;
       bool isNew;
@@ -65,21 +62,20 @@ class RAPTOptions {
    void forgetNewPackages();
 
    bool getFlag(const char *key);
-   string getString(const char *key);
+   std::string getString(const char *key);
 
    void setFlag(const char *key, bool value);
-   void setString(const char *key, string value);
+   void setString(const char *key, std::string value);
 
  private:
-   map<string, packageOptions> _packageOptions;
-   map<string, string> _options;
+   std::map<std::string, packageOptions> _packageOptions;
+   std::map<std::string, std::string> _options;
 };
 
 extern RAPTOptions *_roptions;
 
-typedef map<string, RAPTOptions::packageOptions>::iterator packageOptionsIter;
+typedef std::map<std::string, RAPTOptions::packageOptions>::iterator
+   packageOptionsIter;
 
-ostream &operator<<(ostream &os, const RAPTOptions::packageOptions &);
-istream &operator>>(istream &is, RAPTOptions::packageOptions &o);
-
-#endif
+std::ostream &operator<<(std::ostream &os, const RAPTOptions::packageOptions &);
+std::istream &operator>>(std::istream &is, RAPTOptions::packageOptions &o);

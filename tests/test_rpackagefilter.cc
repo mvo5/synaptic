@@ -1,11 +1,19 @@
-#include <apt-pkg/init.h>
-#include <apt-pkg/error.h>
-#include <iostream>
-#include <cstdlib>
+#include "config.h" // IWYU pragma: associated
 
-#include "config.h"
-#include "rpackagelister.h"
-#include "rpackage.h"
+#include "rconfiguration.h"
+#include "rpackageview.h"
+#include "rpackagefilter.h"
+
+#include <apt-pkg/configuration.h>
+#include <apt-pkg/error.h>
+#include <apt-pkg/init.h>
+#include <apt-pkg/pkgsystem.h>
+#include <cstdlib>
+#include <iostream>
+#include <string>
+#include <vector>
+
+class RPackage;
 
 using namespace std;
 
@@ -14,18 +22,21 @@ int main(int argc, char **argv)
    pkgInitConfig(*_config);
    pkgInitSystem(*_config, _system);
    if (!RInitConfiguration("synaptic.conf")) {
+      // build chroots have no writable HOME; skip rather than fail (77 = skip)
       _error->DumpErrors();
-      std::exit(1);
+      std::cerr << "SKIP: could not initialize synaptic configuration "
+                   "(no writable HOME?)"
+                << std::endl;
+      std::exit(77);
    }
 
    RFilter *filter, *filter_copy;
    vector<RPackage *> pkgs;
    RPackageViewFilter filter_view(pkgs);
-   for(int i=0; i < filter_view.nrOfFilters(); i++) {
+   for (int i = 0; i < filter_view.nrOfFilters(); i++) {
       filter = filter_view.findFilter(i);
       std::cerr << "orig: " << filter->getName()
-                << " and-mode: " << filter->pattern.getAndMode()
-                << std::endl;
+                << " and-mode: " << filter->pattern.getAndMode() << std::endl;
       filter_copy = new RFilter(*filter);
       std::cerr << "copy: " << filter_copy->getName()
                 << " and-mode: " << filter_copy->pattern.getAndMode()
@@ -35,8 +46,6 @@ int main(int argc, char **argv)
       delete filter_copy;
       filter = filter_view.findFilter(i);
       std::cerr << "orig: " << filter->getName()
-                << " and-mode: " << filter->pattern.getAndMode()
-                << std::endl;
+                << " and-mode: " << filter->pattern.getAndMode() << std::endl;
    }
-      
 }

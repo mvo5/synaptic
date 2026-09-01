@@ -1,14 +1,14 @@
 /* rgrepositorywin.h - gtk editor for the sources.list file
- * 
+ *
  * Copyright (c) (c) 1999 Patrick Cole <z@amused.net>
- *               (c) 2002 Synaptic development team 
+ *               (c) 2002 Synaptic development team
  *
  * Author: Patrick Cole <z@amused.net>
  *         Michael Vogt <mvo@debian.org>
  *         Gustavo Niemeyer <niemeyer@conectiva.com>
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -23,20 +23,29 @@
  * USA
  */
 
+#pragma once
 
-#ifndef _RGREPOSITORYWIN_H
-#define _RGREPOSITORYWIN_H
+#include "config.h" // IWYU pragma: associated
 
-#include <gtk/gtk.h>
-#include "rsources.h"
 #include "rggtkbuilderwindow.h"
 #include "rguserdialog.h"
+#include "rsources.h"
+
 #include <apt-pkg/configuration.h>
+#include <gdk/gdk.h>
+#include <glib.h>
+#include <gtk/gtk.h>
+#include <list>
+#include <string>
 
-typedef list<SourcesList::SourceRecord *>::iterator SourcesListIter;
-typedef list<SourcesList::VendorRecord *>::iterator VendorsListIter;
+class RGUserDialog;
+class RGWindow;
 
-class RGRepositoryEditor:RGGtkBuilderWindow {
+typedef std::list<SourcesList::SourceRecord *>::iterator SourcesListIter;
+typedef std::list<SourcesList::VendorRecord *>::iterator VendorsListIter;
+
+class RGRepositoryEditor : RGGtkBuilderWindow
+{
    SourcesList _lst, _savedList;
 
    int _selectedRow;
@@ -54,8 +63,8 @@ class RGRepositoryEditor:RGGtkBuilderWindow {
    GtkWidget *_optType;
    GtkListStore *_optTypeMenu;
    GtkWidget *_entryDist;
-   //GtkWidget *_cbEnabled;
-   
+   // GtkWidget *_cbEnabled;
+
    GtkWidget *_upBut;
    GtkWidget *_downBut;
    GtkWidget *_deleteBut;
@@ -64,13 +73,13 @@ class RGRepositoryEditor:RGGtkBuilderWindow {
 
    bool _applied;
    bool _dirty;
-   GdkColor _gray;
+   const GdkRGBA _gray = {0xAA00, 0xAA00, 0xAA00, 1.0};
 
    // Configuration
    Configuration *_config;
 
    void UpdateVendorMenu();
-   int VendorMenuIndex(string VendorID);
+   int VendorMenuIndex(std::string VendorID);
 
    // static event handlers
    static void DoClear(GtkWidget *, gpointer);
@@ -83,9 +92,9 @@ class RGRepositoryEditor:RGGtkBuilderWindow {
    static void SelectionChanged(GtkTreeSelection *selection, gpointer data);
 
    // treeview item toggled
-   static void item_toggled(GtkCellRendererToggle *cell, 
-			    gchar *path_str, 
-			    gpointer data);
+   static void item_toggled(GtkCellRendererToggle *cell,
+                            gchar *path_str,
+                            gpointer data);
    // get values
    void doEdit();
 
@@ -107,5 +116,3 @@ public:
 private:
     // ... existing private members ...
 };
-
-#endif

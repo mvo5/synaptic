@@ -22,17 +22,19 @@
  * USA
  */
 
+#pragma once
 
-#ifndef _RGSUMMARYWINDOW_H_
-#define _RGSUMMARYWINDOW_H_
+#include "config.h" // IWYU pragma: associated
 
 #include "rggtkbuilderwindow.h"
 
+#include <gtk/gtk.h>
 
+class RGWindow;
 class RPackageLister;
 
-
-class RGSummaryWindow:public RGGtkBuilderWindow {
+class RGSummaryWindow : public RGGtkBuilderWindow
+{
    GtkWidget *_topF;
    GtkWidget *_middleF;
    GtkWidget *_summaryL;
@@ -42,10 +44,7 @@ class RGSummaryWindow:public RGGtkBuilderWindow {
    GtkWidget *_dlonlyB;
    GtkWidget *_checkSigsB;
 
-   enum {
-      PKG_COLUMN,
-      N_COLUMNS
-   };
+   enum { PKG_COLUMN, N_COLUMNS };
    GtkWidget *_tree;
    GtkTreeStore *_treeStore;
 
@@ -58,5 +57,3 @@ class RGSummaryWindow:public RGGtkBuilderWindow {
 
    bool showAndConfirm();
 };
-
-#endif

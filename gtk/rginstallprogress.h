@@ -20,18 +20,24 @@
  * USA
  */
 
+#pragma once
 
-#ifndef _RGINSTALLPROGRESS_H_
-#define _RGINSTALLPROGRESS_H_
+#include "config.h" // IWYU pragma: associated
 
-
-#include "rinstallprogress.h"
 #include "rggtkbuilderwindow.h"
-#include "rgslideshow.h"
+#include "rinstallprogress.h"
+
+#include <gtk/gtk.h>
+#include <map>
+#include <string>
 
 class RGMainWindow;
+class RGSlideShow;
+class RGWindow;
+class RPackageLister;
 
-class RGInstallProgressMsgs:public RGGtkBuilderWindow {
+class RGInstallProgressMsgs : public RGGtkBuilderWindow
+{
 
    GtkTextBuffer *_textBuffer;
    static void onCloseClicked(GtkWidget *self, void *data);
@@ -50,13 +56,14 @@ class RGInstallProgressMsgs:public RGGtkBuilderWindow {
 
    virtual bool empty();
    virtual void run();
-   virtual bool close();
+   virtual void close() override;
 
    RGInstallProgressMsgs(RGWindow *win);
    ~RGInstallProgressMsgs();
 };
 
-class RGInstallProgress:public RInstallProgress, public RGGtkBuilderWindow {
+class RGInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
+{
 
    GtkWidget *_label;
    GtkWidget *_labelSummary;
@@ -68,7 +75,7 @@ class RGInstallProgress:public RInstallProgress, public RGGtkBuilderWindow {
 
    bool _startCounting;
 
-   map<string, string> _summaryMap;
+   std::map<std::string, std::string> _summaryMap;
 
    RGInstallProgressMsgs _msgs;
 
@@ -78,15 +85,13 @@ class RGInstallProgress:public RInstallProgress, public RGGtkBuilderWindow {
    GtkCssProvider *_cssProviderBold;
 
  protected:
-   virtual void startUpdate();
-   virtual void updateInterface();
-   virtual void finishUpdate();
-
    virtual void prepare(RPackageLister *lister);
 
  public:
    RGInstallProgress(RGMainWindow *main, RPackageLister *lister);
    ~RGInstallProgress();
-};
 
-#endif
+   virtual void startUpdate() override;
+   virtual void updateInterface() override;
+   virtual void finishUpdate() override;
+};

@@ -1,5 +1,5 @@
 /* gtkpkglist.h
- * Copyright (C) 2003  Michael Vogt 
+ * Copyright (C) 2003  Michael Vogt
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -17,28 +17,37 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef GTKPKGLIST_H
-#define GTKPKGLIST_H
+#pragma once
 
-#include <gtk/gtk.h>
-#include "rpackagelister.h"
+#include "config.h" // IWYU pragma: associated
+
 #include "rcacheactor.h"
-#include "rpackagelistactor.h"
 #include "rgutils.h"
+#include "rpackagelistactor.h"
 
+#include <glib-object.h>
+#include <glib.h>
+#include <gtk/gtk.h>
 
-#define GTK_TYPE_PKG_LIST			(gtk_pkg_list_get_type ())
-#define GTK_PKG_LIST(obj)			(G_TYPE_CHECK_INSTANCE_CAST ((obj), GTK_TYPE_PKG_LIST, GtkPkgList))
-#define GTK_PKG_LIST_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST ((klass), GTK_TYPE_PKG_LIST, GtkPkgListClass))
-#define GTK_IS_PKG_LIST(obj)			(G_TYPE_CHECK_INSTANCE_TYPE ((obj), GTK_TYPE_PKG_LIST))
-#define GTK_IS_PKG_LIST_CLASS(klass)		(G_TYPE_CHECK_CLASS_TYPE ((klass), GTK_TYPE_PKG_LIST))
-#define GTK_PKG_LIST_GET_CLASS(obj)		(G_TYPE_INSTANCE_GET_CLASS ((obj), GTK_TYPE_PKG_LIST, GtkPkgListClass))
+#define GTK_TYPE_PKG_LIST (gtk_pkg_list_get_type())
+#define GTK_PKG_LIST(obj)                                                      \
+   (G_TYPE_CHECK_INSTANCE_CAST((obj), GTK_TYPE_PKG_LIST, GtkPkgList))
+#define GTK_PKG_LIST_CLASS(klass)                                              \
+   (G_TYPE_CHECK_CLASS_CAST((klass), GTK_TYPE_PKG_LIST, GtkPkgListClass))
+#define GTK_IS_PKG_LIST(obj)                                                   \
+   (G_TYPE_CHECK_INSTANCE_TYPE((obj), GTK_TYPE_PKG_LIST))
+#define GTK_IS_PKG_LIST_CLASS(klass)                                           \
+   (G_TYPE_CHECK_CLASS_TYPE((klass), GTK_TYPE_PKG_LIST))
+#define GTK_PKG_LIST_GET_CLASS(obj)                                            \
+   (G_TYPE_INSTANCE_GET_CLASS((obj), GTK_TYPE_PKG_LIST, GtkPkgListClass))
+
+class RPackageLister;
 
 typedef struct _GtkPkgList GtkPkgList;
 typedef struct _GtkPkgListClass GtkPkgListClass;
 
-
-struct _GtkPkgList {
+struct _GtkPkgList
+{
    GObject parent;
 
    RPackageLister *_lister;
@@ -50,24 +59,23 @@ struct _GtkPkgList {
    GtkSortType order;
 };
 
-struct _GtkPkgListClass {
+struct _GtkPkgListClass
+{
    GObjectClass parent_class;
 };
-
 
 GType gtk_pkg_list_get_type();
 GtkPkgList *gtk_pkg_list_new(RPackageLister *lister);
 
-class RCacheActorPkgList : public RCacheActor {
+class RCacheActorPkgList : public RCacheActor
+{
 
-   protected:
-
+ protected:
    GtkPkgList *_pkgList;
    GtkTreeView *_pkgView;
 
-   public:
-
-   virtual void run(vector<RPackage *> &List, int Action);
+ public:
+   virtual void run(std::vector<RPackage *> &List, int Action);
 
    RCacheActorPkgList(RPackageLister *lister,
                       GtkPkgList *pkgList,
@@ -75,24 +83,18 @@ class RCacheActorPkgList : public RCacheActor {
       : RCacheActor(lister), _pkgList(pkgList), _pkgView(pkgView) {};
 };
 
+class RPackageListActorPkgList : public RPackageListActor
+{
 
-class RPackageListActorPkgList:public RPackageListActor {
-
-   protected:
-
+ protected:
    GtkPkgList *_pkgList;
    GtkTreeView *_pkgView;
 
-   public:
-
-   virtual void run(vector<RPackage *> &List, int listEvent);
+ public:
+   virtual void run(std::vector<RPackage *> &List, int listEvent);
 
    RPackageListActorPkgList(RPackageLister *lister,
                             GtkPkgList *pkgList,
                             GtkTreeView *pkgView)
       : RPackageListActor(lister), _pkgList(pkgList), _pkgView(pkgView) {};
 };
-
-#endif /* GTKPKGLIST_H */
-
-// vim:ts=3:sw=3:et

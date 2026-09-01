@@ -1,9 +1,9 @@
 /* rgchangelogdialog.h - main window of application
- * 
+ *
  * Copyright (c) 2010 Michael Vogt <mvo@ubuntu.com>
- * 
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -18,10 +18,11 @@
  * USA
  */
 
-#include <rgwindow.h>
-#include <rpackage.h>
-#include <rgfetchprogress.h>
-#include <rguserdialog.h>
-#include <cassert>
+#pragma once
+
+#include "config.h" // IWYU pragma: associated
+
+class RGWindow;
+class RPackage;
 
 void ShowChangelogDialog(RGWindow *me, RPackage *pkg);

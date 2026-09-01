@@ -20,52 +20,50 @@
  * USA
  */
 
-#ifndef RPACKAGELISTACTOR_H
-#define RPACKAGELISTACTOR_H
+#pragma once
+
+#include "config.h" // IWYU pragma: associated
 
 #include "rpackagelister.h"
-#include <iostream>
 
-class RPackageListActor : public RPackageObserver {
+#include <vector>
 
-   public:
+class RPackage;
 
-   enum listEvent {
-      PKG_ADDED,
-      PKG_REMOVED
-   };
+class RPackageListActor : public RPackageObserver
+{
 
-   protected:
+ public:
+   enum listEvent { PKG_ADDED, PKG_REMOVED };
 
+ protected:
    RPackageLister *_lister;
-   vector<RPackage *> _lastDisplayList;
+   std::vector<RPackage *> _lastDisplayList;
 
-   public:
+ public:
+   virtual void run(std::vector<RPackage *> &List, int listEvent) = 0;
 
-   virtual void run(vector<RPackage *> &List, int listEvent) = 0;
-
-   virtual void notifyPreFilteredChange() {
+   virtual void notifyPreFilteredChange()
+   {
       updateState();
    }
 
    virtual void notifyPostFilteredChange();
-   virtual void notifyChange(RPackage *pkg) {}
+   virtual void notifyChange(RPackage *pkg)
+   {}
 
-   virtual void updateState() {
+   virtual void updateState()
+   {
       _lastDisplayList = _lister->getPackages();
    }
 
-   RPackageListActor(RPackageLister *lister)
-         : _lister(lister) {
+   RPackageListActor(RPackageLister *lister) : _lister(lister)
+   {
       _lister->registerObserver(this);
    }
 
-   virtual ~RPackageListActor() {
+   virtual ~RPackageListActor()
+   {
       _lister->unregisterObserver(this);
    }
 };
-
-
-#endif
-
-// vim:sts=3:sw=3

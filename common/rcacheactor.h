@@ -1,13 +1,13 @@
 /* rcacheactor.h
- * 
- * Copyright (c) 2000-2003 Conectiva S/A 
+ *
+ * Copyright (c) 2000-2003 Conectiva S/A
  *               2002 Michael Vogt <mvo@debian.org>
- * 
+ *
  * Author: Alfredo K. Kojima <kojima@conectiva.com.br>
  *         Michael Vogt <mvo@debian.org>
- * 
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -22,73 +22,77 @@
  * USA
  */
 
-#ifndef RCACHEACTOR_H
-#define RCACHEACTOR_H
+#pragma once
 
+#include "config.h" // IWYU pragma: associated
+
+#include "rpackage.h"
 #include "rpackagelister.h"
+
+#include <cstddef>
+#include <map>
 #include <regex.h>
+#include <string>
+#include <vector>
 
-class RCacheActor:public RCacheObserver {
+class RCacheActor : public RCacheObserver
+{
  public:
-
-   enum Action {
-      ACTION_KEEP,
-      ACTION_INSTALL,
-      ACTION_REINSTALL,
-      ACTION_REMOVE
-   };
+   enum Action { ACTION_KEEP, ACTION_INSTALL, ACTION_REINSTALL, ACTION_REMOVE };
 
  protected:
-
    RPackageLister *_lister;
    RPackageLister::pkgState *_laststate;
 
  public:
+   virtual void run(std::vector<RPackage *> &List, int Action) = 0;
 
-   virtual void run(vector<RPackage *> &List, int Action) = 0;
-
-   virtual void notifyCachePreChange() {
+   virtual void notifyCachePreChange()
+   {
       updateState();
    }
 
    virtual void notifyCachePostChange();
 
-   virtual void notifyCacheOpen() {
-   }
+   virtual void notifyCacheOpen()
+   {}
 
-   virtual void updateState() {
+   virtual void updateState()
+   {
       delete _laststate;
       _laststate = new RPackageLister::pkgState;
       _lister->saveState(*_laststate);
    }
 
-   RCacheActor(RPackageLister *lister)
- :   _lister(lister), _laststate(0) {
+   RCacheActor(RPackageLister *lister) : _lister(lister), _laststate(0)
+   {
       _lister->registerCacheObserver(this);
    }
 
-   virtual ~ RCacheActor() {
+   virtual ~RCacheActor()
+   {
       _lister->unregisterCacheObserver(this);
    }
 };
 
-class RCacheActorRecommends:public RCacheActor {
+class RCacheActorRecommends : public RCacheActor
+{
  protected:
-
-   typedef vector<string> ListType;
-   typedef map<string, ListType> MapType;
-   typedef map<regex_t *, ListType> RegexMapType;
+   typedef std::vector<std::string> ListType;
+   typedef std::map<std::string, ListType> MapType;
+   typedef std::map<regex_t *, ListType> RegexMapType;
 
    MapType _map;
    MapType _map_wildcard;
    RegexMapType _map_regex;
 
-   string _langLast;
+   std::string _langLast;
    ListType _langCache;
 
    void setLanguageCache();
 
-   inline bool actOnPkg(string name, int Action) {
+   inline bool actOnPkg(std::string name, int Action)
+   {
       RPackage *Pkg = _lister->getPackage(name);
       if (Pkg != NULL) {
          switch (Action) {
@@ -109,15 +113,10 @@ class RCacheActorRecommends:public RCacheActor {
 
 
  public:
-
-   virtual void run(vector<RPackage *> &List, int Action);
+   virtual void run(std::vector<RPackage *> &List, int Action);
 
    virtual void notifyCachePostChange();
 
-   RCacheActorRecommends(RPackageLister *lister, string FileName);
+   RCacheActorRecommends(RPackageLister *lister, std::string fileName);
    virtual ~RCacheActorRecommends();
 };
-
-#endif
-
-// vim:sts=3:sw=3

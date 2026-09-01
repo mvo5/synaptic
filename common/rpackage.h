@@ -26,119 +26,116 @@
  * USA
  */
 
+#pragma once
 
+#include "config.h" // IWYU pragma: associated
 
-#ifndef _RPACKAGE_H_
-#define _RPACKAGE_H_
-
-#include <vector>
-
-#include <apt-pkg/pkgcache.h>
-#include <apt-pkg/acquire.h>
-#include "rconfiguration.h"
 #include "i18n.h"
 
-using namespace std;
+#include <apt-pkg/pkgcache.h>
+#include <cstring>
+#include <string>
+#include <utility>
+#include <vector>
 
-class pkgDepCache;
 class RPackageLister;
+class pkgAcquire;
+class pkgDepCache;
 class pkgRecords;
 
 enum { NO_PARSER, DEB_PARSER, STRIP_WS_PARSER, RPM_PARSER };
 
 // taken from apt (pkgcache.cc) to make our life easier
 // (and added "RDepends" as last element)
-static const char *DepTypeStr[] =
-   {"",
-    _("Depends"),
-    _("PreDepends"),
-    _("Suggests"),
-    _("Recommends"),
-    _("Conflicts"),
-    _("Replaces"),
-    _("Obsoletes"),
-    _("Breaks"),
-    _("Enhances"),
-    /* padding */
-    "",
-    "",
-    "",
-    "",
-    "",
-    // make sure this is always the last member
-    _("Dependency of"),
+static const char *DepTypeStr[] = {
+   "",
+   _("Depends"),
+   _("PreDepends"),
+   _("Suggests"),
+   _("Recommends"),
+   _("Conflicts"),
+   _("Replaces"),
+   _("Obsoletes"),
+   _("Breaks"),
+   _("Enhances"),
+   /* padding */
+   "",
+   "",
+   "",
+   "",
+   "",
+   // make sure this is always the last member
+   _("Dependency of"),
 };
 
-typedef struct  {
+typedef struct
+{
    pkgCache::Dep::DepType type; // type as enum
-   const char* name;            // target pkg name
-   const char* version;         // target version
-   const char* versionComp;     // target version compare type ( << , > etc)
+   const char *name;            // target pkg name
+   const char *version;         // target version
+   const char *versionComp;     // target version compare type ( << , > etc)
    bool isSatisfied;            // dependecy is satified
    bool isVirtual;              // package is virtual
    bool isOr;                   // or dependency (with next pkg)
 } DepInformation;
 
 
-class RPackage {
+class RPackage
+{
 
  public:
    RPackageLister *_lister;
 
-   protected:
-
-   string fullname;
+ protected:
+   std::string fullname;
    pkgRecords *_records;
    pkgDepCache *_depcache;
    pkgCache::PkgIterator *_package;
 
    // save the default candidate version to undo version selection
-   string _defaultCandVer;
+   std::string _defaultCandVer;
 
    bool _notify;
 
    // Virtual pkgs provided by this one.
    // FIXME: broken right now
-   //bool isShallowDependency(RPackage *pkg);
+   // bool isShallowDependency(RPackage *pkg);
    int _boolFlags;
 
  public:
-
    enum Flags {
-      FKeep             = 1 << 0,
-      FInstall          = 1 << 1,
-      FNewInstall       = 1 << 2,
-      FReInstall        = 1 << 3,
-      FUpgrade          = 1 << 4,
-      FDowngrade        = 1 << 5,
-      FRemove           = 1 << 6,
-      FHeld             = 1 << 7,
-      FInstalled        = 1 << 8,
-      FOutdated         = 1 << 9,
-      FNowBroken        = 1 << 10,
-      FInstBroken       = 1 << 11,
-      FOrphaned         = 1 << 12,
-      FPinned           = 1 << 13,
-      FNew              = 1 << 14,
-      FResidualConfig   = 1 << 15,
-      FNotInstallable   = 1 << 16,
-      FPurge            = 1 << 17,
-      FImportant        = 1 << 18,
-      FOverrideVersion  = 1 << 19,
-      FIsAuto           = 1 << 20,
-      FIsGarbage        = 1 << 21,
-      FNowPolicyBroken  = 1 << 22,
-      FInstPolicyBroken  = 1 << 23,
+      FKeep = 1 << 0,
+      FInstall = 1 << 1,
+      FNewInstall = 1 << 2,
+      FReInstall = 1 << 3,
+      FUpgrade = 1 << 4,
+      FDowngrade = 1 << 5,
+      FRemove = 1 << 6,
+      FHeld = 1 << 7,
+      FInstalled = 1 << 8,
+      FOutdated = 1 << 9,
+      FNowBroken = 1 << 10,
+      FInstBroken = 1 << 11,
+      FOrphaned = 1 << 12,
+      FPinned = 1 << 13,
+      FNew = 1 << 14,
+      FResidualConfig = 1 << 15,
+      FNotInstallable = 1 << 16,
+      FPurge = 1 << 17,
+      FImportant = 1 << 18,
+      FOverrideVersion = 1 << 19,
+      FIsAuto = 1 << 20,
+      FIsGarbage = 1 << 21,
+      FNowPolicyBroken = 1 << 22,
+      FInstPolicyBroken = 1 << 23,
    };
 
-   enum UpdateImportance {
-      IUnknown,
-      INormal,
-      ICritical,
-      ISecurity
-   };
+   enum UpdateImportance { IUnknown, INormal, ICritical, ISecurity };
 
-   pkgCache::PkgIterator *package() { return _package; }
+   pkgCache::PkgIterator *package()
+   {
+      return _package;
+   }
 
    const char *name();
 
@@ -147,42 +144,45 @@ class RPackage {
 
    const char *summary();
    const char *description();
-   const char *installedFiles();
 
-   string arch();
+#ifndef HAVE_RPM
+   std::string installedFiles();
+#endif
+
+   std::string arch();
 
    // package is also available for the native architecture
    // (note that packages installed are never considered a duplicate
    bool isMultiArchDuplicate();
 
    // get changelog file from the debian server
-   string getChangelogFile(pkgAcquire *fetcher);
+   std::string getChangelogFile(pkgAcquire *fetcher);
    // get screenshot file from the debian server
-   string getScreenshotFile(pkgAcquire *fetcher, bool thumb = true);
+   std::string getScreenshotFile(pkgAcquire *fetcher, bool thumb = true);
 
-   vector<string> provides();
+   std::vector<std::string> provides();
 
    // get all available versions (version, release)
-   vector<pair<string, string> > getAvailableVersions();
+   std::vector<std::pair<std::string, std::string>> getAvailableVersions();
 
    // get origins url of the package (e.g. http://security.ubuntu.com)
-   vector<string> getCandidateOriginSiteUrls();
+   std::vector<std::string> getCandidateOriginSiteUrls();
    // get origin "archive" release header (e.g. karmic, karmic-updates)
-   vector<string> getCandidateOriginSuites();
+   std::vector<std::string> getCandidateOriginSuites();
    // get origin "origin" release header (e.g. Ubuntu,
-   string getCandidateOriginStr();
+   std::string getCandidateOriginStr();
 
    // get the release file for the givel origin label string
-   string getReleaseFileForOrigin(string label, string release);
+   std::string getReleaseFileForOrigin(std::string label, std::string release);
 
    // get installed component (like main, contrib, non-free)
-   string component();
+   std::string component();
 
    // get label of download site
-   string label();
+   std::string label();
 
    // get origin (Origin tag from the release file)
-   string origin();
+   std::string origin();
 
    const char *maintainer();
    const char *homepage();
@@ -192,10 +192,10 @@ class RPackage {
    long installedSize();
 
    // get tag from pkg record
-   string findTagFromPkgRecord(const char *tag);
+   std::string findTagFromPkgRecord(const char *tag);
 
    // get the raw package record
-   string getRawRecord(bool useCandidateVersion=true);
+   std::string getRawRecord(bool useCandidateVersion = true);
 
    // sourcepkg
    const char *srcPackage();
@@ -210,10 +210,10 @@ class RPackage {
    bool dependsOn(const char *pkgname);
 
    // getDeps of installed pkg
-   vector<DepInformation> enumDeps(bool useCanidateVersion=false);
+   std::vector<DepInformation> enumDeps(bool useCanidateVersion = false);
 
    // reverse dependencies
-   vector<DepInformation> enumRDeps();
+   std::vector<DepInformation> enumRDeps();
 
    int getFlags();
 
@@ -228,10 +228,12 @@ class RPackage {
 
    void setPinned(bool flag);
 
-   void setNew(bool flag = true) {
+   void setNew(bool flag = true)
+   {
       _boolFlags = flag ? (_boolFlags | FNew) : (_boolFlags & ~FNew);
    }
-   void setOrphaned(bool flag = true) {
+   void setOrphaned(bool flag = true)
+   {
       _boolFlags = flag ? (_boolFlags | FOrphaned) : (_boolFlags & ~FOrphaned);
    }
 
@@ -244,19 +246,22 @@ class RPackage {
    void setRemoveWithDeps(bool shallow, bool purge = false);
 
    // mainpulate the candiate version
-   bool setVersion(string verTag);
+   bool setVersion(std::string verTag);
    void unsetVersion();
-   string showWhyInstBroken();
+   std::string showWhyInstBroken();
 
-   RPackage(RPackageLister *lister, pkgDepCache *depcache,
-            pkgRecords *records, pkgCache::PkgIterator &pkg);
+   // Custom sort comparator to be used with std::sort.
+   inline static bool byNameAscending(RPackage *a, RPackage *b)
+   {
+      return strcmp(a->name(), b->name()) < 0;
+   };
+
+   RPackage(RPackageLister *lister,
+            pkgDepCache *depcache,
+            pkgRecords *records,
+            pkgCache::PkgIterator &pkg);
    ~RPackage();
 
-   private:
-   string getChangelogURI();
+ private:
+   std::string getChangelogURI();
 };
-
-
-#endif
-
-// vim:ts=3:sw=3:et

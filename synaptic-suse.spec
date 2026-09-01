@@ -58,7 +58,7 @@ make
 %install
 
 # Replace gksu by kdesu
-sed -ie "s/^Exec=gksu -u root \/usr\/sbin\/synaptic/Exec=kdesu -u root -c synaptic/" data/%{name}.desktop
+sed -ie "s/^Exec=gksu -u root \/usr\/bin\/synaptic/Exec=kdesu -u root -c synaptic/" data/%{name}.desktop
 
 make DESTDIR=%{buildroot} install
 
@@ -77,7 +77,7 @@ scrollkeeper-update -q
 %files
 %defattr(-, root, root)
 %doc AUTHORS ChangeLog COPYING NEWS README TODO
-%{_sbindir}/%{name}
+%{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/omf/%{name}
 %{_datadir}/gnome/help/%{name}

@@ -20,15 +20,29 @@
  * USA
  */
 
-#include "rggtkbuilderwindow.h"
-#include "rgmainwindow.h"
+#pragma once
 
-class RGPreferencesWindow:public RGGtkBuilderWindow {
+#include "config.h" // IWYU pragma: associated
+
+#include "rggtkbuilderwindow.h"
+
+#include "gtk/gtkcssprovider.h"
+#include <glib.h>
+#include <gtk/gtk.h>
+#include <string>
+
+class RGMainWindow;
+class RGWindow;
+class RPackageLister;
+
+class RGPreferencesWindow : public RGGtkBuilderWindow
+{
    bool _blockAction;
 
-   enum {TREE_CHECKBOX_COLUMN, TREE_VISIBLE_NAME_COLUMN, TREE_NAME_COLUMN};
+   enum { TREE_CHECKBOX_COLUMN, TREE_VISIBLE_NAME_COLUMN, TREE_NAME_COLUMN };
 
-   struct column_struct {
+   struct column_struct
+   {
       gboolean visible;
       const char *name;
       const char *visible_name;
@@ -75,7 +89,7 @@ class RGPreferencesWindow:public RGGtkBuilderWindow {
 
    // policy settings
    GtkWidget *_comboDefaultDistro;
-   string _defaultDistro;
+   std::string _defaultDistro;
 
    bool _dirty;
 
@@ -99,8 +113,7 @@ class RGPreferencesWindow:public RGGtkBuilderWindow {
    // callbacks
    static void changeFontAction(GtkWidget *self, void *data);
    static void checkbuttonUserFontToggled(GtkWidget *self, void *data);
-   static void checkbuttonUserTerminalFontToggled(GtkWidget *self,
-                                                  void *data);
+   static void checkbuttonUserTerminalFontToggled(GtkWidget *self, void *data);
 
    static void saveAction(GtkWidget *self, void *data);
    void saveGeneral();
@@ -116,7 +129,6 @@ class RGPreferencesWindow:public RGGtkBuilderWindow {
    void readFiles();
    void readNetwork();
    void readDistribution();
-
 
    static void closeAction(GtkWidget *self, void *data);
    static void doneAction(GtkWidget *self, void *data);

@@ -22,15 +22,20 @@
  * USA
  */
 
+#pragma once
 
-#ifndef _RINSTALLPROGRESS_H_
-#define _RINSTALLPROGRESS_H_
+#include "config.h" // IWYU pragma: associated
 
 #include <apt-pkg/packagemanager.h>
-#include "config.h"
 
-class RInstallProgress {
+#include <optional>
+#include <string>
+
+class RInstallProgress
+{
  protected:
+   pid_t _child_id;
+
    int _stdout;
    int _stderr;
    int _childin;
@@ -47,23 +52,29 @@ class RInstallProgress {
    static std::string errorMsg;
    static std::string incompleteMsg;
 
-   virtual void startUpdate() {
-   }
-   virtual void updateInterface() {
-   }
-   virtual void finishUpdate() {
-   }
+   // get a str feed to the user with the result of the install run
+   virtual const char *getResultStr(pkgPackageManager::OrderResult);
 
  public:
-   // get a str feed to the user with the result of the install run
-   virtual const char* getResultStr(pkgPackageManager::OrderResult);
-   virtual pkgPackageManager::OrderResult start(pkgPackageManager *pm,
-                                                int numPackages = 0,
-                                                int numPackagesTotal = 0);
+   // std::nullopt means the child is still running; a plain OrderResult
+   // would be ambiguous here as Incomplete is a real child result
+   // (media swap needed)
+   virtual std::optional<pkgPackageManager::OrderResult> start(
+      pkgPackageManager *pm,
+      int numPackages = 0,
+      int numPackagesTotal = 0);
+   virtual std::optional<pkgPackageManager::OrderResult> poll();
+   virtual void finish()
+   {}
 
+   virtual void startUpdate()
+   {}
+   virtual void updateInterface()
+   {}
+   virtual void finishUpdate()
+   {}
 
-   RInstallProgress():_donePackagesTotal(0), _numPackagesTotal(0),_updateFinished(false) {}
+   RInstallProgress()
+      : _donePackagesTotal(0), _numPackagesTotal(0), _updateFinished(false)
+   {}
 };
-
-
-#endif

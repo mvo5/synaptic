@@ -1,18 +1,18 @@
-#include <sys/types.h>
-#include <dirent.h>
-
-#include <gtk/gtk.h>
-
-#include <algorithm>
-#include <string>
-#include <vector>
+#include "config.h" // IWYU pragma: associated
 
 #include "rgslideshow.h"
 
+#include <algorithm>
+#include <cstddef>
+#include <dirent.h>
+#include <gtk/gtk.h>
+#include <string>
+#include <vector>
+
 using namespace std;
 
-RGSlideShow::RGSlideShow(GtkImage * image, string imgPath)
-: _image(image), _totalSteps(0), _currentStep(0)
+RGSlideShow::RGSlideShow(GtkImage *image, string imgPath)
+   : _image(image), _totalSteps(0), _currentStep(0)
 {
    DIR *dir = opendir(imgPath.c_str());
    struct dirent *entry;
@@ -37,10 +37,10 @@ void RGSlideShow::refresh()
    if (!_imageFileList.empty()) {
       int current = 0;
       if (_totalSteps) {
-	 float stepping = (_totalSteps / (float)_imageFileList.size());
-	 current = (int)((_currentStep + (stepping - 1) / 2) / stepping);
-	 if (current >= _imageFileList.size())
-	    current = _imageFileList.size() - 1;
+         float stepping = (_totalSteps / (float)_imageFileList.size());
+         current = (int)((_currentStep + (stepping - 1) / 2) / stepping);
+         if (current >= _imageFileList.size())
+            current = _imageFileList.size() - 1;
       }
       gtk_image_set_from_file(_image, _imageFileList[current].c_str());
    }

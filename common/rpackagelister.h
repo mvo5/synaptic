@@ -22,58 +22,53 @@
  * USA
  */
 
+#pragma once
 
-
-#ifndef _RPACKAGELISTER_H_
-#define _RPACKAGELISTER_H_
-
-
-#include <vector>
-#include <list>
-#include <map>
-#include <set>
-#include <regex.h>
-#include <apt-pkg/depcache.h>
-#include <apt-pkg/acquire.h>
-#include <apt-pkg/progress.h>
-
-#ifdef WITH_EPT
-#include <ept/axi/axi.h>
-#endif
+#include "config.h" // IWYU pragma: associated
 
 #include "rpackagecache.h"
-#include "rpackage.h"
 #include "rpackagestatus.h"
-#include "rpackageview.h"
-#include "ruserdialog.h"
-#include "config.h"
 
-using namespace std;
+#include <apt-pkg/pkgcache.h>
+#include <apt-pkg/progress.h>
+#include <ctime>
+#include <istream>
+#include <list>
+#include <regex.h>
+#include <set>
+#include <string>
+#include <vector>
 
+#ifdef HAVE_RPM
+#   include <apt-pkg/depcache.h>
+#endif
+
+#ifdef HAVE_XAPIAN
+#   include <xapian.h>
+#endif
+
+class FileFd;
 class OpProgress;
-class RPackageCache;
-class RPackageFilter;
 class RCacheActor;
+class RInstallProgress;
+class RPackage;
+class RPackageView;
 class RPackageViewFilter;
 class RPackageViewSearch;
-class pkgRecords;
+class RUserDialog;
 class pkgAcquireStatus;
-class pkgPackageManager;
+class pkgRecords;
 
-
-struct RFilter;
-class RPackageView;
-
-class RInstallProgress;
-
-class RPackageObserver {
+class RPackageObserver
+{
  public:
    virtual void notifyChange(RPackage *pkg) = 0;
    virtual void notifyPreFilteredChange() = 0;
    virtual void notifyPostFilteredChange() = 0;
 };
 
-class RCacheObserver {
+class RCacheObserver
+{
  public:
    virtual void notifyCacheOpen() = 0;
    virtual void notifyCachePreChange() = 0;
@@ -82,68 +77,69 @@ class RCacheObserver {
 
 // base sort class
 // for a example use see sortPackages()
-template<class T>
-class sortFunc {
+template <class T> class sortFunc
+{
  protected:
    bool _ascent;
    T cmp;
+
  public:
-   sortFunc(bool ascent) : _ascent(ascent) {}
-   bool operator() (RPackage *x, RPackage *y) {
-      if(_ascent)
-	 return cmp(x,y);
+   sortFunc(bool ascent) : _ascent(ascent)
+   {}
+   bool operator()(RPackage *x, RPackage *y)
+   {
+      if (_ascent)
+         return cmp(x, y);
       else
-	 return cmp(y,x);
+         return cmp(y, x);
    }
 };
 
+class RPackageLister
+{
 
-class RPackageLister {
-
-   protected:
-
+ protected:
    // Internal APT stuff.
-   RPackageCache * _cache;
+   RPackageCache *_cache;
    pkgRecords *_records;
    OpProgress *_progMeter;
 
-#ifdef WITH_EPT
+#ifdef HAVE_XAPIAN
    Xapian::Database *_xapianDatabase;
 #endif
 
-
    // Other members.
-   vector<RPackage *> _packages;
-   vector<int> _packagesIndex;
+   std::vector<RPackage *> _packages;
+   std::vector<int> _packagesIndex;
 
-   vector<RPackage *> _viewPackages;
-   vector<int> _viewPackagesIndex;
+   std::vector<RPackage *> _viewPackages;
+   std::vector<int> _viewPackagesIndex;
 
    // this is what we feed to the views as "all packages" to avoid
    // to show all the multiarch versions by default, the user can
    // turn that off with a config option
-   vector<RPackage *> _nativeArchPackages;
+   std::vector<RPackage *> _nativeArchPackages;
 
    // It shouldn't be needed to control this inside this class. -- niemeyer
    bool _updating;
 
    // all known packages (needed identifing "new" pkgs)
-   set<string> packageNames;
+   std::set<std::string> packageNames;
 
-   bool _cacheValid;            // is the cache valid?
+   bool _cacheValid; // is the cache valid?
 
-   int _installedCount;         // # of installed packages
+   int _installedCount; // # of installed packages
 
-   vector<RCacheActor *> _actors;
+   std::vector<RCacheActor *> _actors;
 
    RPackageViewFilter *_filterView; // the package view that does the filtering
-   RPackageViewSearch *_searchView; // the package view that does the (simple) search
+   RPackageViewSearch
+      *_searchView; // the package view that does the (simple) search
 
    // helper for the limitBySearch() code
-   bool xapianSearch(string searchString);
+   bool xapianSearch(std::string searchString);
 
-   public:
-
+ public:
    unsigned int _viewMode;
 
    typedef enum {
@@ -172,12 +168,11 @@ class RPackageLister {
 #ifdef HAVE_RPM
    typedef pkgDepCache::State pkgState;
 #else
-   typedef vector<int> pkgState;
+   typedef std::vector<int> pkgState;
 #endif
 
-   private:
-
-   vector<RPackageView *> _views;
+ private:
+   std::vector<RPackageView *> _views;
    RPackageView *_selectedView;
    RPackageStatus _pkgStatus;
 
@@ -185,46 +180,48 @@ class RPackageLister {
 
    bool lockPackageCache(FileFd &lock);
 
-   void sortPackages(vector<RPackage *> &packages,listSortMode mode);
+   void sortPackages(std::vector<RPackage *> &packages, listSortMode mode);
 
-   struct {
+   struct
+   {
       char *pattern;
       regex_t regex;
       bool isRegex;
       int last;
    } _searchData;
 
-   vector<RPackageObserver *> _packageObservers;
-   vector<RCacheObserver *> _cacheObservers;
+   std::vector<RPackageObserver *> _packageObservers;
+   std::vector<RCacheObserver *> _cacheObservers;
 
    RUserDialog *_userDialog;
 
    void makeCommitLog();
    void writeCommitLog();
-   string _logEntry;
+   std::string _logEntry;
    time_t _logTime;
 
    // undo/redo stuff
-   list<pkgState> undoStack;
-   list<pkgState> redoStack;
+   std::list<pkgState> undoStack;
+   std::list<pkgState> redoStack;
 
-   public:
+ public:
    // limit what the current view displays
-   bool limitBySearch(string searchString);
+   bool limitBySearch(std::string searchString);
 
    // clean files older than "Synaptic::delHistory"
    void cleanCommitLog();
 
-   void sortPackages(listSortMode mode) {
+   void sortPackages(listSortMode mode)
+   {
       sortPackages(_viewPackages, mode);
    }
 
    void setView(unsigned int index);
-   vector<string> getViews();
-   vector<string> getSubViews();
+   std::vector<std::string> getViews() const;
+   std::vector<std::string> getSubViews() const;
 
    // set subView (if newView is empty, set to all packages)
-   bool setSubView(string newView="");
+   bool setSubView(std::string newView = "");
 
    // this needs a different name, something like refresh
    void reapplyFilter();
@@ -233,45 +230,78 @@ class RPackageLister {
    void refreshView();
 
    // is is exposed for the stuff like filter manager window
-   RPackageViewFilter *filterView() { return _filterView; }
-   RPackageViewSearch *searchView() { return _searchView; }
+   RPackageViewFilter *filterView()
+   {
+      return _filterView;
+   }
+   RPackageViewSearch *searchView()
+   {
+      return _searchView;
+   }
 
    // find
    int findPackage(const char *pattern);
    int findNextPackage();
 
-   const vector<RPackage *> &getPackages() { return _packages; }
-   const vector<RPackage *> &getViewPackages() { return _viewPackages; }
-   RPackage *getPackage(int index) { return _packages.at(index); }
-   RPackage *getViewPackage(int index) { return _viewPackages.at(index); }
+   const std::vector<RPackage *> &getPackages()
+   {
+      return _packages;
+   }
+   const std::vector<RPackage *> &getViewPackages()
+   {
+      return _viewPackages;
+   }
+   RPackage *getPackage(int index)
+   {
+      return _packages.at(index);
+   }
+   RPackage *getViewPackage(int index)
+   {
+      return _viewPackages.at(index);
+   }
    RPackage *getPackage(pkgCache::PkgIterator &pkg);
-   RPackage *getPackage(string name);
+   RPackage *getPackage(std::string name);
    int getPackageIndex(RPackage *pkg);
    int getViewPackageIndex(RPackage *pkg);
 
-   int packagesSize() { return _packages.size(); }
-   int viewPackagesSize() { return _updating ? 0 : _viewPackages.size(); }
+   int packagesSize()
+   {
+      return _packages.size();
+   }
+   int viewPackagesSize()
+   {
+      return _updating ? 0 : _viewPackages.size();
+   }
 
-   void getStats(int &installed, int &broken, int &toInstall,
-		 int &toRemove, double &sizeChange);
+   void getStats(int &installed,
+                 int &broken,
+                 int &toInstall,
+                 int &toRemove,
+                 double &sizeChange);
 
-   void getSummary(int &held, int &kept, int &essential,
-                   int &toInstall, int &toReInstall, int &toUpgrade,
-		   int &toRemove,  int &toDowngrade,
-		   int &unAuthenticated,  double &sizeChange);
+   void getSummary(int &held,
+                   int &kept,
+                   int &essential,
+                   int &toInstall,
+                   int &toReInstall,
+                   int &toUpgrade,
+                   int &toRemove,
+                   int &toDowngrade,
+                   int &unAuthenticated,
+                   double &sizeChange);
 
 
-   void getDetailedSummary(vector<RPackage *> &held,
-                           vector<RPackage *> &kept,
-                           vector<RPackage *> &essential,
-                           vector<RPackage *> &toInstall,
-                           vector<RPackage *> &toReInstall,
-                           vector<RPackage *> &toUpgrade,
-                           vector<RPackage *> &toRemove,
-                           vector<RPackage *> &toPurge,
-                           vector<RPackage *> &toDowngrade,
+   void getDetailedSummary(std::vector<RPackage *> &held,
+                           std::vector<RPackage *> &kept,
+                           std::vector<RPackage *> &essential,
+                           std::vector<RPackage *> &toInstall,
+                           std::vector<RPackage *> &toReInstall,
+                           std::vector<RPackage *> &toUpgrade,
+                           std::vector<RPackage *> &toRemove,
+                           std::vector<RPackage *> &toPurge,
+                           std::vector<RPackage *> &toDowngrade,
 #ifdef WITH_APT_AUTH
-			   vector<string> &notAuthenticated,
+                           std::vector<std::string> &notAuthenticated,
 #endif
                            double &sizeChange);
 
@@ -284,14 +314,14 @@ class RPackageLister {
    void saveState(pkgState &state);
    void restoreState(pkgState &state);
    bool getStateChanges(pkgState &state,
-                        vector<RPackage *> &kept,
-                        vector<RPackage *> &toInstall,
-			vector<RPackage *> &toReInstall,
-                        vector<RPackage *> &toUpgrade,
-                        vector<RPackage *> &toRemove,
-                        vector<RPackage *> &toDowngrade,
-			vector<RPackage *> &notAuthenticated,
-                        const vector<RPackage *> &exclude,
+                        std::vector<RPackage *> &kept,
+                        std::vector<RPackage *> &toInstall,
+                        std::vector<RPackage *> &toReInstall,
+                        std::vector<RPackage *> &toUpgrade,
+                        std::vector<RPackage *> &toRemove,
+                        std::vector<RPackage *> &toDowngrade,
+                        std::vector<RPackage *> &notAuthenticated,
+                        const std::vector<RPackage *> &exclude,
                         bool sorted = true);
 
    // open (lock if run as root)
@@ -302,29 +332,32 @@ class RPackageLister {
    bool upgrade();
    bool distUpgrade();
    bool cleanPackageCache(bool forceClean = false);
-   bool updateCache(pkgAcquireStatus *status, string &error);
+   bool updateCache(pkgAcquireStatus *status, std::string &error);
    bool commitChanges(pkgAcquireStatus *status, RInstallProgress *iprog);
 
    // some information
-   bool getDownloadUris(vector<string> &uris);
-   bool addArchiveToCache(string archiveDir, string &pkgname);
+   bool getDownloadUris(std::vector<std::string> &uris);
+   bool addArchiveToCache(std::string archiveDir, std::string &pkgname);
 
-   void setProgressMeter(OpProgress *progMeter) {
-      if(_progMeter != NULL)
-	 delete _progMeter;
+   void setProgressMeter(OpProgress *progMeter)
+   {
+      if (_progMeter != NULL)
+         delete _progMeter;
       _progMeter = progMeter;
    }
 
-   void setUserDialog(RUserDialog *dialog) {
+   void setUserDialog(RUserDialog *dialog)
+   {
       _userDialog = dialog;
    }
 
    // policy stuff
-   vector<string> getPolicyArchives(bool filenames_only=false) {
+   std::vector<std::string> getPolicyArchives(bool filenames_only = false)
+   {
       if (_cacheValid)
          return _cache->getPolicyArchives(filenames_only);
       else
-         return vector<string>();
+         return std::vector<std::string>();
    }
 
    // multiarch
@@ -344,12 +377,19 @@ class RPackageLister {
    void registerCacheObserver(RCacheObserver *observer);
    void unregisterCacheObserver(RCacheObserver *observer);
 
-   bool readSelections(istream &in);
-   bool writeSelections(ostream &out, bool fullState);
+   bool readSelections(std::istream &in);
+   bool writeSelections(std::ostream &out, bool fullState);
 
-   RPackageCache* getCache() { return _cache; }
-#ifdef WITH_EPT
-   Xapian::Database* xapiandatabase() { return _xapianDatabase; }
+   RPackageCache *getCache()
+   {
+      return _cache;
+   }
+#ifdef HAVE_XAPIAN
+   Xapian::Database *xapiandatabase()
+   {
+      return _xapianDatabase;
+   }
+   time_t xapianIndexTimestamp();
    bool xapianIndexNeedsUpdate();
    bool openXapianIndex();
 #endif
@@ -357,8 +397,3 @@ class RPackageLister {
    RPackageLister();
    ~RPackageLister();
 };
-
-
-#endif
-
-// vim:ts=3:sw=3:et

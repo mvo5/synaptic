@@ -20,44 +20,44 @@
  * USA
  */
 
+#pragma once
 
-#ifndef _RPACKAGECACHE_H_
-#define _RPACKAGECACHE_H_
+#include "config.h" // IWYU pragma: associated
 
+#include <apt-pkg/cachefile.h>
+#include <apt-pkg/pkgcache.h>
 #include <map>
 #include <string>
 #include <vector>
 
-#include <apt-pkg/cachefile.h>
-#include <apt-pkg/depcache.h>
-#include <apt-pkg/sourcelist.h>
-#include <apt-pkg/pkgsystem.h>
-#include <apt-pkg/policy.h>
-
 class OpProgress;
+class pkgDepCache;
+class pkgIndexFile;
+class pkgSourceList;
 
-class pkgCache;
-
-
-class RPackageCache {
+class RPackageCache
+{
    pkgCacheFile cache;
    // speed up IsTrusted()
-   std::map<pkgCache::PkgFileIterator, pkgIndexFile*> _trust_cache;
+   std::map<pkgCache::PkgFileIterator, pkgIndexFile *> _trust_cache;
 
    bool _locked;
 
  public:
-   inline pkgDepCache *deps() {
+   inline pkgDepCache *deps()
+   {
       return cache.GetDepCache();
    }
-   inline pkgSourceList *list() {
+   inline pkgSourceList *list()
+   {
       return cache.GetSourceList();
    }
-   inline std::map<pkgCache::PkgFileIterator, pkgIndexFile*>& trust_cache() {
+   inline std::map<pkgCache::PkgFileIterator, pkgIndexFile *> &trust_cache()
+   {
       return _trust_cache;
    }
 
-   bool open(OpProgress *progress, bool lock=true);
+   bool open(OpProgress *progress, bool lock = true);
 
    std::vector<std::string> getPolicyArchives(bool filenames_only);
 
@@ -65,11 +65,7 @@ class RPackageCache {
    void releaseLock();
 
    RPackageCache() : _locked(false)
-   {
-   }
-   ~RPackageCache() {
-   }
+   {}
+   ~RPackageCache()
+   {}
 };
-
-
-#endif

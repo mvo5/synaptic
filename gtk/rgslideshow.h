@@ -20,32 +20,30 @@
  * USA
  */
 
+#pragma once
 
-#ifndef _RGSLIDESHOW_H_
-#define _RGSLIDESHOW_H_
+#include "config.h" // IWYU pragma: associated
 
-using namespace std;
+#include <gtk/gtk.h>
+#include <string>
+#include <vector>
 
-class RGSlideShow {
+class RGSlideShow
+{
 
  protected:
-
-   GtkImage * _image;
+   GtkImage *_image;
    int _totalSteps;
    int _currentStep;
-   vector<string> _imageFileList;
+   std::vector<std::string> _imageFileList;
 
  public:
-
    void step();
    void refresh();
-   void setTotalSteps(int totalSteps) {
+   void setTotalSteps(int totalSteps)
+   {
       _totalSteps = totalSteps;
    };
 
-   RGSlideShow(GtkImage * image, string imgPath);
+   RGSlideShow(GtkImage *image, std::string imgPath);
 };
-
-#endif
-
-// vim:sts=3:sw=3

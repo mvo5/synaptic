@@ -26,28 +26,32 @@
  * USA
  */
 
-#ifndef _RPACKAGESTATUS_H_
-#define _RPACKAGESTATUS_H_
+#pragma once
 
-#include <time.h>
-#include <vector>
+#include "config.h" // IWYU pragma: associated
+
 #include <string>
-#include <sstream>
-#include <apt-pkg/configuration.h>
-#include <apt-pkg/fileutl.h>
+#include <vector>
 
-#include "i18n.h"
-#include "rpackage.h"
+class RPackage;
 
-using namespace std;
-
-class RPackageStatus {
+class RPackageStatus
+{
  public:
    enum PkgStatus {
-      ToInstall, ToReInstall, ToUpgrade, ToDowngrade, ToRemove, ToPurge,
-      NotInstalled, NotInstalledLocked,
-      InstalledUpdated, InstalledOutdated, InstalledLocked,
-      IsBroken, IsNew,
+      ToInstall,
+      ToReInstall,
+      ToUpgrade,
+      ToDowngrade,
+      ToRemove,
+      ToPurge,
+      NotInstalled,
+      NotInstalledLocked,
+      InstalledUpdated,
+      InstalledOutdated,
+      InstalledLocked,
+      IsBroken,
+      IsNew,
       N_STATUS_COUNT
    };
 
@@ -55,9 +59,9 @@ class RPackageStatus {
    static char release[255];
 
    // the supported archive-labels and components
-   vector<string> supportedLabels;
-   vector<string> supportedOrigins;
-   vector<string> supportedComponents;
+   std::vector<std::string> supportedLabels;
+   std::vector<std::string> supportedOrigins;
+   std::vector<std::string> supportedComponents;
    bool markUnsupported;
 
    // this is the short string to load the icons
@@ -70,21 +74,26 @@ class RPackageStatus {
 
 
  public:
-   RPackageStatus() : markUnsupported(false) {}
-   virtual ~RPackageStatus() {}
+   RPackageStatus() : markUnsupported(false)
+   {}
+   virtual ~RPackageStatus()
+   {}
 
    // this reads the pixmaps and the colors
    virtual void init();
 
    // here we get the description for the States
-   const char *getLongStatusString(int i) {
+   const char *getLongStatusString(int i)
+   {
       return PackageStatusLongString[i];
    }
-   const char *getLongStatusString(RPackage *pkg) {
+   const char *getLongStatusString(RPackage *pkg)
+   {
       return PackageStatusLongString[getStatus(pkg)];
    }
 
-   const char *getShortStatusString(int i) {
+   const char *getShortStatusString(int i)
+   {
       return PackageStatusShortString[i];
    }
 
@@ -93,5 +102,3 @@ class RPackageStatus {
    // return the time until the package is supported
    bool maintenanceEndTime(RPackage *pkg, struct tm *support_end_tm);
 };
-
-#endif

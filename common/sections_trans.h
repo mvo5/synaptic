@@ -2,17 +2,10 @@
  * (c) 2004 Michael Vogt
  */
 
-#ifndef _HAVE_SECTIONS_TRANS_H
-#define _HAVE_SECTIONS_TRANS_H
+#pragma once
+
+#include "config.h" // IWYU pragma: associated
 
 #include <string>
-#include <sstream>
-#include <iostream>
-#include <apt-pkg/strutl.h>
-#include "i18n.h"
 
-using namespace std;
-
-string trans_section(string sec);
-
-#endif
+std::string trans_section(std::string sec);

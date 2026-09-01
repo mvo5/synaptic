@@ -20,19 +20,29 @@
  * USA
  */
 
-#include <apt-pkg/configuration.h>
-
-#include "config.h"
-#include "i18n.h"
+#include "config.h" // IWYU pragma: associated
 
 #include "rgsetoptwindow.h"
 
+#include "rggtkbuilderwindow.h"
+
+#include <apt-pkg/configuration.h>
+#include <glib-object.h>
+#include <glib.h>
+#include <gobject/gclosure.h>
+#include <gtk/gtk.h>
+#include <string>
+
+class RGWindow;
+
 void RGSetOptWindow::DoApply(GtkWindow *widget, void *data)
 {
-   RGSetOptWindow *me = (RGSetOptWindow *) data;
+   RGSetOptWindow *me = (RGSetOptWindow *)data;
 
-   GtkWidget *entry_name = GTK_WIDGET(gtk_builder_get_object(me->_builder, "entry_name"));
-   GtkWidget *entry_value = GTK_WIDGET(gtk_builder_get_object(me->_builder, "entry_value"));
+   GtkWidget *entry_name =
+      GTK_WIDGET(gtk_builder_get_object(me->_builder, "entry_name"));
+   GtkWidget *entry_value =
+      GTK_WIDGET(gtk_builder_get_object(me->_builder, "entry_value"));
 
    const gchar *name = gtk_entry_get_text(GTK_ENTRY(entry_name));
    const gchar *value = gtk_entry_get_text(GTK_ENTRY(entry_value));
@@ -42,23 +52,25 @@ void RGSetOptWindow::DoApply(GtkWindow *widget, void *data)
 
 void RGSetOptWindow::DoClose(GtkWindow *widget, void *data)
 {
-   RGSetOptWindow *me = (RGSetOptWindow *) data;
+   RGSetOptWindow *me = (RGSetOptWindow *)data;
 
    me->hide();
 }
 
 RGSetOptWindow::RGSetOptWindow(RGWindow *win)
-: RGGtkBuilderWindow(win, "setopt")
+   : RGGtkBuilderWindow(win, "setopt")
 {
-   g_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                               (_builder, "button_apply")),
-                    "clicked",
-                    G_CALLBACK(DoApply), this);
+   g_signal_connect(
+      GTK_WIDGET(gtk_builder_get_object(_builder, "button_apply")),
+      "clicked",
+      G_CALLBACK(DoApply),
+      this);
 
-   g_signal_connect(GTK_WIDGET(gtk_builder_get_object
-                               (_builder, "button_close")),
-                    "clicked",
-                    G_CALLBACK(DoClose), this);
+   g_signal_connect(
+      GTK_WIDGET(gtk_builder_get_object(_builder, "button_close")),
+      "clicked",
+      G_CALLBACK(DoClose),
+      this);
 
    setTitle("");
    skipTaskbar(true);

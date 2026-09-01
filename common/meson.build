@@ -1,0 +1,34 @@
+common_sources = files(
+  'rconfiguration.cc',
+  'rinstallprogress.cc',
+  'rpackage.cc',
+  'rpackagestatus.cc',
+  'rpackagecache.cc',
+  'rpackagefilter.cc',
+  'rpackagelister.cc',
+  'rpackageview.cc',
+  'rcdscanner.cc',
+  'rpmindexcopy.cc',
+  'raptoptions.cc',
+  'rsources.cc',
+  'rsource_deb822.cc',
+  'rcacheactor.cc',
+  'rpackagelistactor.cc',
+  'rtagcollbuilder.cc',
+  'rtagcollfilter.cc',
+  'ruserdialog.cc',
+  'sections_trans.cc',
+)
+
+libsynaptic = static_library(
+  'synaptic',
+  common_sources,
+  cpp_args: rpm_compile_args,
+  dependencies: common_deps,
+  include_directories: [root_inc, common_inc],
+)
+
+libsynaptic_dep = declare_dependency(
+  link_with: libsynaptic,
+  include_directories: [root_inc, common_inc],
+)

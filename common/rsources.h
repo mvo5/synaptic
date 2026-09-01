@@ -23,15 +23,16 @@
  * USA
  */
 
-#ifndef _RSOURCES_H
-#define _RSOURCES_H
+#pragma once
 
-#include <string>
+#include "config.h" // IWYU pragma: associated
+
+#include <iostream>
 #include <list>
+#include <string>
 
-using namespace std;
-
-class SourcesList {
+class SourcesList
+{
  public:
    enum RecType {
       Deb = 1 << 0,
@@ -47,38 +48,41 @@ class SourcesList {
       Deb822 = 1 << 10  // New type for Deb822 format
    };
 
-   struct SourceRecord {
+   struct SourceRecord
+   {
       unsigned int Type;
-      string VendorID;
-      string URI;
-      string Dist;
-      string *Sections;
+      std::string VendorID;
+      std::string URI;
+      std::string Dist;
+      std::string *Sections;
       unsigned short NumSections;
-      string Comment;
-      string SourceFile;
+      std::string Comment;
+      std::string SourceFile;
       bool PreserveOriginalURI;  // Flag to preserve original URI format
 
-      bool SetType(string);
-      string GetType();
-      bool SetURI(string);
+      bool SetType(std::string);
+      std::string GetType();
+      bool SetURI(std::string);
 
-      SourceRecord():Type(0), Sections(0), NumSections(0), PreserveOriginalURI(false) {
-      }
-      ~SourceRecord() {
+      SourceRecord() : Type(0), Sections(0), NumSections(0), PreserveOriginalURI(false)
+      {}
+      ~SourceRecord()
+      {
          if (Sections)
-            delete[]Sections;
+            delete[] Sections;
       }
       SourceRecord &operator=(const SourceRecord &);
    };
 
-   struct VendorRecord {
-      string VendorID;
-      string FingerPrint;
-      string Description;
+   struct VendorRecord
+   {
+      std::string VendorID;
+      std::string FingerPrint;
+      std::string Description;
    };
 
-   list<SourceRecord *> SourceRecords;
-   list<VendorRecord *> VendorRecords;
+   std::list<SourceRecord *> SourceRecords;
+   std::list<VendorRecord *> VendorRecords;
 
  private:
    SourceRecord *AddSourceNode(SourceRecord &);
@@ -86,35 +90,35 @@ class SourcesList {
 
  public:
    SourceRecord *AddSource(RecType Type,
-                           string VendorID,
-                           string URI,
-                           string Dist,
-                           string *Sections,
-                           unsigned short count, string SourceFile);
+                           std::string VendorID,
+                           std::string URI,
+                           std::string Dist,
+                           std::string *Sections,
+                           unsigned short count,
+                           std::string SourceFile);
    SourceRecord *AddEmptySource();
    void RemoveSource(SourceRecord *&);
-   void SwapSources( SourceRecord *&, SourceRecord *& );
-   bool ReadSourcePart(string listpath);
-   bool ReadSourceDir(string Dir);
+   void SwapSources(SourceRecord *&, SourceRecord *&);
+   bool ReadSourcePart(std::string listpath);
+   bool ReadSourceDir(std::string Dir);
    bool ReadSources();
    bool UpdateSources();
 
    // New methods for Deb822 support
-   bool ReadDeb822SourcePart(string listpath);
-   bool ReadDeb822SourceDir(string Dir);
-   bool WriteDeb822Source(SourceRecord *record, string path);
+   bool ReadDeb822SourcePart(std::string listpath);
+   bool ReadDeb822SourceDir(std::string Dir);
+   bool WriteDeb822Source(SourceRecord *record, std::string path);
 
-   VendorRecord *AddVendor(string VendorID,
-                           string FingerPrint, string Description);
+   VendorRecord *AddVendor(std::string VendorID,
+                           std::string FingerPrint,
+                           std::string Description);
    void RemoveVendor(VendorRecord *&);
    bool ReadVendors();
    bool UpdateVendors();
 
-   SourcesList() {
-   }
+   SourcesList()
+   {}
    ~SourcesList();
 };
 
-ostream &operator <<(ostream &, const SourcesList::SourceRecord &);
-
-#endif
+std::ostream &operator<<(std::ostream &, const SourcesList::SourceRecord &);

@@ -1,14 +1,14 @@
 /* rsource.cc - access the sources.list file
- * 
+ *
  * Copyright (c) 1999 Patrick Cole <z@amused.net>
- *           (c) 2002 Synaptic development team          
- * 
+ *           (c) 2002 Synaptic development team
+ *
  * Author: Patrick Cole <z@amused.net>
  *         Michael Vogt <mvo@debian.org>
  *         Gustavo Niemeyer <niemeyer@conectiva.com>
  *
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License as 
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation; either version 2 of the
  * License, or (at your option) any later version.
  *
@@ -23,29 +23,40 @@
  * USA
  */
 
-#include <sys/stat.h>
-#include <dirent.h>
+#include "config.h" // IWYU pragma: associated
 
 #include "rsources.h"
-#include <apt-pkg/configuration.h>
-#include <apt-pkg/fileutl.h>
-#include <apt-pkg/sourcelist.h>
-#include <apt-pkg/strutl.h>
-#include <apt-pkg/error.h>
-#include <algorithm>
-#include <fstream>
-#include "config.h"
+
 #include "i18n.h"
 #include "rsource_deb822.h"
 #include <iostream>
 
+#include <algorithm>
+#include <apt-pkg/configuration.h>
+#include <apt-pkg/error.h>
+#include <apt-pkg/fileutl.h>
+#include <apt-pkg/strutl.h>
+#include <cctype>
+#include <cstring>
+#include <dirent.h>
+#include <fstream>
+#include <iostream>
+#include <list>
+#include <string>
+#include <sys/stat.h>
+#include <vector>
+
+using namespace std;
+
 SourcesList::~SourcesList()
 {
    for (list<SourceRecord *>::iterator it = SourceRecords.begin();
-        it != SourceRecords.end(); it++)
+        it != SourceRecords.end();
+        it++)
       delete *it;
    for (list<VendorRecord *>::iterator it = VendorRecords.begin();
-        it != VendorRecords.end(); it++)
+        it != VendorRecords.end();
+        it++)
       delete *it;
 }
 
@@ -60,6 +71,7 @@ SourcesList::SourceRecord *SourcesList::AddSourceNode(SourceRecord &rec)
 
 bool SourcesList::ReadSourcePart(string listpath)
 {
+   // cout << "SourcesList::ReadSourcePart() "<< listpath  << endl;
    char buf[512];
    const char *p;
    ifstream ifs(listpath.c_str(), ios::in);
@@ -93,8 +105,8 @@ bool SourcesList::ReadSourcePart(string listpath)
       bool Failed = true;
       string orig_buf = buf;
       const char* orig_p = p;
-      if (ParseQuoteWord(p, Type) == true &&
-          rec.SetType(Type) == true && ParseQuoteWord(p, VURI) == true) {
+      if (ParseQuoteWord(p, Type) == true && rec.SetType(Type) == true &&
+          ParseQuoteWord(p, VURI) == true) {
          if (VURI[0] == '[') {
             rec.VendorID = VURI.substr(1, VURI.length() - 2);
             if (ParseQuoteWord(p, VURI) == true && rec.SetURI(VURI) == true)
@@ -117,6 +129,7 @@ bool SourcesList::ReadSourcePart(string listpath)
             string s = "#" + string(buf);
             rec.Comment = s;
             record_ok = false;
+            // return _error->Error(_("Syntax error in line %s"), buf);
          }
          AddSourceNode(rec);
          continue;
@@ -128,8 +141,8 @@ bool SourcesList::ReadSourcePart(string listpath)
          if (ParseQuoteWord(p, Section) == true)
             return _error->Error(_("Syntax error in line %s"), buf);
 
-         rec.Dist = SubstVar(rec.Dist, "$(ARCH)",
-                             _config->Find("APT::Architecture"));
+         rec.Dist =
+            SubstVar(rec.Dist, "$(ARCH)", _config->Find("APT::Architecture"));
 
          AddSourceNode(rec);
          continue;
@@ -168,20 +181,22 @@ bool SourcesList::ReadSourcePart(string listpath)
 
 bool SourcesList::ReadSourceDir(string Dir)
 {
+   // cout << "SourcesList::ReadSourceDir() " << Dir  << endl;
+
    DIR *D = opendir(Dir.c_str());
    if (D == 0)
       return _error->Errno("opendir", _("Unable to read %s"), Dir.c_str());
 
    vector<string> List;
-   for (struct dirent * Ent = readdir(D); Ent != 0; Ent = readdir(D)) {
+   for (struct dirent *Ent = readdir(D); Ent != 0; Ent = readdir(D)) {
       if (Ent->d_name[0] == '.')
          continue;
 
       // Skip bad file names ala run-parts
       const char *C = Ent->d_name;
       for (; *C != 0; C++)
-         if (isalpha(*C) == 0 && isdigit(*C) == 0
-             && *C != '_' && *C != '-' && *C != '.')
+         if (isalpha(*C) == 0 && isdigit(*C) == 0 && *C != '_' && *C != '-' &&
+             *C != '.')
             break;
       if (*C != 0)
          continue;
@@ -196,23 +211,22 @@ bool SourcesList::ReadSourceDir(string Dir)
       if (stat(File.c_str(), &St) != 0 || S_ISREG(St.st_mode) == 0)
          continue;
       List.push_back(File);
-
    }
    closedir(D);
 
    sort(List.begin(), List.end());
 
    // Read the files
-   for (vector<string>::const_iterator I = List.begin(); I != List.end();
-        I++)
+   for (vector<string>::const_iterator I = List.begin(); I != List.end(); I++)
       if (ReadSourcePart(*I) == false)
          return false;
    return true;
 }
 
-
 bool SourcesList::ReadSources()
 {
+   // cout << "SourcesList::ReadSources() " << endl;
+
    bool Res = true;
 
    // Use config or fallback to /etc/apt/sources.list.d/
@@ -254,11 +268,12 @@ SourcesList::SourceRecord *SourcesList::AddEmptySource()
 }
 
 SourcesList::SourceRecord *SourcesList::AddSource(RecType Type,
-                                                   string VendorID, string URI,
-                                                   string Dist,
-                                                   string *Sections,
-                                                   unsigned short count,
-                                                   string SourceFile)
+                                                  string VendorID,
+                                                  string URI,
+                                                  string Dist,
+                                                  string *Sections,
+                                                  unsigned short count,
+                                                  string SourceFile)
 {
    SourceRecord rec;
    rec.Type = Type;
@@ -284,16 +299,16 @@ void SourcesList::RemoveSource(SourceRecord *&rec)
    rec = 0;
 }
 
-void SourcesList::SwapSources( SourceRecord *&rec_one, SourceRecord *&rec_two )
+void SourcesList::SwapSources(SourceRecord *&rec_one, SourceRecord *&rec_two)
 {
-  list<SourceRecord *>::iterator rec_p;
-  list<SourceRecord *>::iterator rec_n;
+   list<SourceRecord *>::iterator rec_p;
+   list<SourceRecord *>::iterator rec_n;
 
-  rec_p = find( SourceRecords.begin(), SourceRecords.end(), rec_one );
-  rec_n = find( SourceRecords.begin(), SourceRecords.end(), rec_two );
-  
-  SourceRecords.insert( rec_p, rec_two );
-  SourceRecords.erase( rec_n );
+   rec_p = find(SourceRecords.begin(), SourceRecords.end(), rec_one);
+   rec_n = find(SourceRecords.begin(), SourceRecords.end(), rec_two);
+
+   SourceRecords.insert(rec_p, rec_two);
+   SourceRecords.erase(rec_n);
 }
 
 bool SourcesList::UpdateSources()
@@ -424,7 +439,7 @@ bool SourcesList::SourceRecord::SetType(string S)
       Type |= RepomdSrc;
    else
       return false;
-   //cout << S << " settype " << (Type | Repomd) << endl;
+   // cout << S << " settype " << (Type | Repomd) << endl;
    return true;
 }
 
@@ -446,7 +461,7 @@ string SourcesList::SourceRecord::GetType()
       return "repomd";
    else if ((Type & RepomdSrc) != 0)
       return "repomd-src";
-   //cout << "type " << (Type & Repomd) << endl;
+   // cout << "type " << (Type & Repomd) << endl;
    return "unknown";
 }
 
@@ -468,10 +483,11 @@ bool SourcesList::SourceRecord::SetURI(string S)
    return true;
 }
 
-SourcesList::SourceRecord &SourcesList::SourceRecord::
-operator=(const SourceRecord &rhs)
+SourcesList::SourceRecord &SourcesList::SourceRecord::operator=(
+   const SourceRecord &rhs)
 {
-   // Needed for a proper deep copy of the record; uses the string operator= to properly copy the strings
+   // Needed for a proper deep copy of the record; uses the string operator= to
+   // properly copy the strings
    Type = rhs.Type;
    VendorID = rhs.VendorID;
    URI = rhs.URI;
@@ -506,7 +522,8 @@ bool SourcesList::ReadVendors()
          return false;
 
    for (list<VendorRecord *>::const_iterator I = VendorRecords.begin();
-        I != VendorRecords.end(); I++)
+        I != VendorRecords.end();
+        I++)
       delete *I;
    VendorRecords.clear();
 
@@ -521,15 +538,17 @@ bool SourcesList::ReadVendors()
       Vendor.Description = Block.Find("Name");
 
       char *buffer = new char[Vendor.FingerPrint.length() + 1];
-      char *p = buffer;;
+      char *p = buffer;
+      ;
       for (string::const_iterator I = Vendor.FingerPrint.begin();
-           I != Vendor.FingerPrint.end(); I++) {
+           I != Vendor.FingerPrint.end();
+           I++) {
          if (*I != ' ' && *I != '\t')
             *p++ = *I;
       }
       *p = 0;
       Vendor.FingerPrint = buffer;
-      delete[]buffer;
+      delete[] buffer;
 
       if (Vendor.FingerPrint.empty() == true ||
           Vendor.Description.empty() == true) {
@@ -562,7 +581,8 @@ bool SourcesList::UpdateVendors()
       return false;
 
    for (list<VendorRecord *>::iterator it = VendorRecords.begin();
-        it != VendorRecords.end(); it++) {
+        it != VendorRecords.end();
+        it++) {
       ofs << "simple-key \"" << (*it)->VendorID << "\" {" << endl;
       ofs << "\tFingerPrint \"" << (*it)->FingerPrint << "\";" << endl;
       ofs << "\tName \"" << (*it)->Description << "\";" << endl;

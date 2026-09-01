@@ -3,9 +3,18 @@
  *
  */
 
-#include <libintl.h>
+#include "config.h" // IWYU pragma: associated
 
 #include "sections_trans.h"
+
+#include "i18n.h"
+
+#include <apt-pkg/strutl.h>
+#include <cstddef>
+#include <sstream>
+#include <string>
+
+using namespace std;
 
 const char *transtable[][2] = {
    // TRANSLATORS: Alias for the Debian package section "admin"
@@ -138,8 +147,7 @@ const char *transtable[][2] = {
    // TRANSLATORS: Alias for the Debian package section "contrib"
    //              Free software that depends on non-free software
    {"contrib", _("contrib")},
-   {NULL, NULL}
-};
+   {NULL, NULL}};
 
 #ifndef HAVE_RPM
 string trans_section(string sec)

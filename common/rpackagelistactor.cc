@@ -1,14 +1,13 @@
+#include "config.h" // IWYU pragma: associated
 
 #include "rpackagelistactor.h"
-#include "rpackagelister.h"
-#include "i18n.h"
 
-#include <apt-pkg/error.h>
-#include <apt-pkg/tagfile.h>
-#include <apt-pkg/strutl.h>
-#include <apt-pkg/configuration.h>
+#include "rpackagelister.h"
+
 #include <algorithm>
-#include <fnmatch.h>
+#include <vector>
+
+using namespace std;
 
 void RPackageListActor::notifyPostFilteredChange()
 {
@@ -23,7 +22,7 @@ void RPackageListActor::notifyPostFilteredChange()
    for (unsigned int i = 0; i < currentList.size(); i++) {
       I = find(removedList.begin(), removedList.end(), currentList[i]);
       if (I != removedList.end())
-	 removedList.erase(I);
+         removedList.erase(I);
       else
          insertedList.push_back(currentList[i]);
    }

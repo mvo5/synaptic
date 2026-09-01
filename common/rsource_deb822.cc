@@ -42,6 +42,9 @@ bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822E
                 entry.Suites = fields["Suites"];
                 entry.Components = fields.count("Components") ? fields["Components"] : "";
                 entry.SignedBy = fields.count("Signed-By") ? fields["Signed-By"] : "";
+                entry.Architectures = fields.count("Architectures") ? fields["Architectures"] : "";
+                entry.Languages = fields.count("Languages") ? fields["Languages"] : "";
+                entry.Targets = fields.count("Targets") ? fields["Targets"] : "";
                 // Handle Enabled/Disabled fields
                 if (fields.count("Enabled")) {
                     std::string enabled_val = fields["Enabled"];
@@ -87,6 +90,9 @@ bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822E
             entry.Suites = fields["Suites"];
             entry.Components = fields.count("Components") ? fields["Components"] : "";
             entry.SignedBy = fields.count("Signed-By") ? fields["Signed-By"] : "";
+            entry.Architectures = fields.count("Architectures") ? fields["Architectures"] : "";
+            entry.Languages = fields.count("Languages") ? fields["Languages"] : "";
+            entry.Targets = fields.count("Targets") ? fields["Targets"] : "";
             // Handle Enabled/Disabled fields
             if (fields.count("Enabled")) {
                 std::string enabled_val = fields["Enabled"];

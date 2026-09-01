@@ -72,9 +72,19 @@ test_deb822_dialog = executable(
   link_with: libsynaptic,
 )
 
+test_deb822_sourceparts = executable(
+  'test_deb822_sourceparts',
+  'test_deb822_sourceparts.cc',
+  cpp_args: gtk_cpp_args + rpm_compile_args + ['-O0', '-g3'],
+  dependencies: test_common_deps,
+  include_directories: [root_inc, common_inc, gtk_inc],
+  link_with: libsynaptic,
+)
+
 test('test_rpackage', test_rpackage, env: test_env)
 test('test_rpackagefilter', test_rpackagefilter, env: test_env)
 test('test_rpackageview', test_rpackageview, env: test_env)
 test('test_deb822_separator', test_deb822_separator, env: test_env)
 test('test_deb822_roundtrip', test_deb822_roundtrip, env: test_env)
 test('test_deb822_dialog', test_deb822_dialog, env: test_env)
+test('test_deb822_sourceparts', test_deb822_sourceparts, env: test_env)

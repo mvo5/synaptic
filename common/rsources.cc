@@ -229,16 +229,14 @@ bool SourcesList::ReadSources()
 
    bool Res = true;
 
-   // Use config or fallback to /etc/apt/sources.list.d/
-   string Deb822Parts = _config->FindDir("Dir::Etc::sourcelist.d");
-   if (Deb822Parts.empty() || Deb822Parts == "/")
-      Deb822Parts = "/etc/apt/sources.list.d/";
-
-   if (FileExists(Deb822Parts) == true) {
-      Res &= ReadDeb822SourceDir(Deb822Parts);
-   }
-
-   // Then read Deb822 format sources from sourceparts as well
+   // Deb822 .sources and one-line .list files both live in apt's
+   // Dir::Etc::sourceparts, so a single scan of it covers both.
+   //
+   // This used to also scan "Dir::Etc::sourcelist.d" first. That is not an apt
+   // configuration key: FindDir returns "/" for it, which the old code then
+   // rewrote to a hardcoded /etc/apt/sources.list.d/ -- the very directory
+   // sourceparts already points at on a normal system. Every .sources file was
+   // therefore read twice and every repository appeared twice in the dialog.
    string Parts = _config->FindDir("Dir::Etc::sourceparts");
    if (FileExists(Parts) == true) {
       Res &= ReadDeb822SourceDir(Parts);
@@ -676,8 +674,13 @@ bool SourcesList::ReadDeb822SourceDir(string Dir) {
         if (Ent->d_name[0] == '.')
             continue;
 
-        // Only look at files ending in .sources
-        if (strcmp(Ent->d_name + strlen(Ent->d_name) - 8, ".sources") != 0)
+        // Only look at files ending in .sources. Comparing at
+        // d_name + strlen(d_name) - 8 walks in front of the buffer for any
+        // name shorter than ".sources" itself, so measure the length first.
+        const size_t NameLen = strlen(Ent->d_name);
+        const size_t SuffixLen = 8; // strlen(".sources")
+        if (NameLen < SuffixLen ||
+            strcmp(Ent->d_name + NameLen - SuffixLen, ".sources") != 0)
             continue;
 
         // Make sure it is a file and not something else

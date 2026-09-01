@@ -82,10 +82,9 @@ RGInstallProgressMsgs::~RGInstallProgressMsgs()
 
 void RGInstallProgressMsgs::onCloseClicked(GtkWidget *self, void *data)
 {
-   // RGInstallProgressMsgs *me = (RGInstallProgressMsgs*)data;
-   gtk_main_quit();
+   RGInstallProgressMsgs *me = (RGInstallProgressMsgs *)data;
+   gtk_window_close(GTK_WINDOW(me->_win));
 }
-
 void RGInstallProgressMsgs::close()
 {
    gtk_main_quit();
@@ -129,20 +128,20 @@ bool RGInstallProgressMsgs::empty()
    return gtk_text_buffer_get_char_count(_textBuffer) == 0;
 }
 
-void RGInstallProgressMsgs::run()
+task<void> RGInstallProgressMsgs::run()
 {
    show();
-   gtk_main();
+   co_await co_run_window(GTK_WINDOW(_win));
    hide();
 }
 
-void RGInstallProgress::startUpdate()
+task<void> RGInstallProgress::startUpdate()
 {
    show();
-   RGFlushInterface();
+   co_await RGFlushInterface();
 }
 
-void RGInstallProgress::finishUpdate()
+task<void> RGInstallProgress::finishUpdate()
 {
    char buf[1024];
    memset(buf, 0, 1024);
@@ -154,7 +153,7 @@ void RGInstallProgress::finishUpdate()
                                               GTK_BUTTONS_OK,
                                               _("APT system reports:\n%s"),
                                               utf8(buf));
-      gtk_dialog_run(GTK_DIALOG(dia));
+      co_await co_run_dialog(GTK_DIALOG(dia));
       gtk_widget_destroy(dia);
    }
 
@@ -165,16 +164,16 @@ void RGInstallProgress::finishUpdate()
 
    if (_msgs.empty() == false &&
        _config->FindB("Synaptic::IgnorePMOutput", false) == false)
-      _msgs.run();
+      co_await _msgs.run();
 
-   RGFlushInterface();
+   co_await RGFlushInterface();
 
    hide();
 }
 
 void RGInstallProgress::prepare(RPackageLister *lister)
 {
-   for (unsigned int row = 0; row < lister->packagesSize(); row++) {
+   for (int row = 0; row < lister->packagesSize(); row++) {
       RPackage *elem = lister->getPackage(row);
 
       // Is it going to be seen?
@@ -191,7 +190,7 @@ void RGInstallProgress::prepare(RPackageLister *lister)
    }
 }
 
-void RGInstallProgress::updateInterface()
+task<void> RGInstallProgress::updateInterface()
 {
    char buf[2];
    static char line[1024] = "";
@@ -248,15 +247,12 @@ void RGInstallProgress::updateInterface()
       }
    }
 
-   if (gtk_events_pending()) {
-      while (gtk_events_pending())
-         gtk_main_iteration();
-   } else {
-      usleep(5000);
-      if (_startCounting == false) {
-         gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbar));
-         gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbarTotal));
-      }
+   co_await RGFlushInterface();
+   co_await sleep_ms{5};
+
+   if (_startCounting == false) {
+      gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbar));
+      gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbarTotal));
    }
 }
 

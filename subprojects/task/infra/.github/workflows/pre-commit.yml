@@ -1,0 +1,78 @@
+name: Lint Check (pre-commit)
+
+on:
+  # We have to use pull_request_target here as pull_request does not grant
+  # enough permission for reviewdog
+  pull_request_target:
+  push:
+    branches:
+      - main
+
+jobs:
+  pre-commit-push:
+    name: Pre-Commit check on Push
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.13
+
+        # We wish to run pre-commit on all files instead of the changes
+        # only made in the push commit.
+        #
+        # So linting error persists when there's formatting problem.
+      - uses: pre-commit/action@v3.0.1
+
+  pre-commit-pr:
+    name: Pre-Commit check on PR
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request_target' }}
+
+    permissions:
+      contents: read
+      checks: write
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+        # pull_request_target checkout the base of the repo
+        # We need to checkout the actual pr to lint the changes.
+      - name: Checkout pr
+        run: gh pr checkout ${{ github.event.number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.13
+
+        # we only lint on the changed file in PR.
+      - name: Get Changed Files
+        id: changed-files
+        uses: tj-actions/changed-files@v45
+
+        # See:
+        # https://github.com/tj-actions/changed-files?tab=readme-ov-file#using-local-git-directory-
+      - uses: pre-commit/action@v3.0.1
+        id: run-pre-commit
+        with:
+          extra_args: --files ${{ steps.changed-files.outputs.all_changed_files }}
+
+        # Review dog posts the suggested change from pre-commit to the pr.
+      - name: suggester / pre-commit
+        uses: reviewdog/action-suggester@v1
+        if: ${{ failure() && steps.run-pre-commit.conclusion == 'failure' }}
+        with:
+          tool_name: pre-commit
+          level: warning
+          reviewdog_flags: "-fail-level=error"

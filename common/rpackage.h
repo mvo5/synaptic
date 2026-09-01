@@ -30,6 +30,8 @@
 
 #include "config.h" // IWYU pragma: associated
 
+#include "coroutines.h"
+#include "racquireasync.h"
 #include "i18n.h"
 
 #include <apt-pkg/pkgcache.h>
@@ -156,9 +158,14 @@ class RPackage
    bool isMultiArchDuplicate();
 
    // get changelog file from the debian server
-   std::string getChangelogFile(pkgAcquire *fetcher);
+   [[nodiscard]] task<std::string> getChangelogFile(
+      pkgAcquire *fetcher,
+      RPkgAcquireStatusAsync *status);
    // get screenshot file from the debian server
-   std::string getScreenshotFile(pkgAcquire *fetcher, bool thumb = true);
+   [[nodiscard]] task<std::string> getScreenshotFile(
+      pkgAcquire *fetcher,
+      RPkgAcquireStatusAsync *status,
+      bool thumb = true);
 
    std::vector<std::string> provides();
 

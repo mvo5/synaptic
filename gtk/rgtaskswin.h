@@ -25,6 +25,7 @@
 #include "config.h" // IWYU pragma: associated
 
 #include "rggtkbuilderwindow.h"
+#include "rgutils.h"
 
 #include <glib.h>
 #include <gtk/gtk.h>
@@ -50,6 +51,10 @@ class RGTasksWin : public RGGtkBuilderWindow
                                           gpointer user_data);
 
  public:
+   std::vector<std::string> packages;
+
    RGTasksWin(RGWindow *parent);
    virtual ~RGTasksWin() {};
+
+   [[nodiscard]] task<std::vector<std::string>> selectTasks();
 };

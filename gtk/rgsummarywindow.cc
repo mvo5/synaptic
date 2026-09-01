@@ -45,6 +45,7 @@
 #include <vector>
 
 class RGWindow;
+#include "rgutils.h"
 
 using namespace std;
 
@@ -520,20 +521,20 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
       skipTaskbar(false);
 }
 
-bool RGSummaryWindow::showAndConfirm()
+task<bool> RGSummaryWindow::showAndConfirm()
 {
    gtk_toggle_button_set_active(
       GTK_TOGGLE_BUTTON(_dlonlyB),
       _config->FindB("Volatile::Download-Only", false));
-   int res = gtk_dialog_run(GTK_DIALOG(_win));
+   int res = co_await co_run_dialog(GTK_DIALOG(_win));
    bool confirmed = (res == GTK_RESPONSE_APPLY);
 
    RGUserDialog userDialog(this);
    if (confirmed && _potentialBreak &&
-       userDialog.warning(_("Essential packages will be removed.\n"
-                            "This may render your system unusable!\n"),
-                          false) == false)
-      return false;
+       co_await userDialog.warning(_("Essential packages will be removed.\n"
+                                     "This may render your system unusable!\n"),
+                                   false) == false)
+      co_return false;
 
    _config->Set("Volatile::Download-Only",
                 gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_dlonlyB))
@@ -546,5 +547,5 @@ bool RGSummaryWindow::showAndConfirm()
                    : "false");
 #endif
 
-   return confirmed;
+   co_return confirmed;
 }

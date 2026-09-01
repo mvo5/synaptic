@@ -120,7 +120,7 @@ class RGDebInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
 
    virtual void prepare(RPackageLister *lister);
 
-   void conffile(gchar *conffile, gchar *status);
+   [[nodiscard]] task<void> conffile(gchar *conffile, gchar *status);
 
    // gtk stuff
    static void cbCancel(GtkWidget *self, void *data);
@@ -147,9 +147,9 @@ class RGDebInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
       int totalPackages = 0) override;
    virtual std::optional<pkgPackageManager::OrderResult> poll() override;
 
-   virtual void startUpdate() override;
-   virtual void updateInterface() override;
-   virtual void finishUpdate() override;
+   [[nodiscard]] virtual task<void> startUpdate() override;
+   [[nodiscard]] virtual task<void> updateInterface() override;
+   [[nodiscard]] virtual task<void> finishUpdate() override;
 };
 
 #endif // WITH_DPKG_STATUSFD

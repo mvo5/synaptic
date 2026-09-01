@@ -12,6 +12,7 @@
 #include <iostream>
 #include <list>
 #include <string>
+#include <vector>
 #include <sys/stat.h>
 
 using namespace std;
@@ -47,8 +48,17 @@ int main(int argc, char *argv[])
    pkgInitConfig(*_config);
    pkgInitSystem(*_config, _system);
 
-   char tmpl[] = "/tmp/synaptic-types-XXXXXX";
-   const char *root = mkdtemp(tmpl);
+   // Honour TMPDIR like the other tests here, and check mkdtemp: dereferencing
+   // a null root below would crash instead of reporting a failure.
+   string tmplstr = string(getenv("TMPDIR") ? getenv("TMPDIR") : "/tmp") +
+                    "/synaptic-types-XXXXXX";
+   vector<char> tmpl(tmplstr.begin(), tmplstr.end());
+   tmpl.push_back('\0');
+   const char *root = mkdtemp(tmpl.data());
+   if (root == nullptr) {
+      cerr << "FAIL: could not create a temp dir" << endl;
+      return 1;
+   }
    string parts = string(root) + "/sources.list.d";
    mkdir(parts.c_str(), 0755);
    {

@@ -12,6 +12,7 @@
 #include <iostream>
 #include <list>
 #include <string>
+#include <vector>
 #include <sys/stat.h>
 
 using namespace std;
@@ -38,8 +39,13 @@ int main(int argc, char *argv[])
    pkgInitConfig(*_config);
    pkgInitSystem(*_config, _system);
 
-   char tmpl[] = "/tmp/synaptic-dir-XXXXXX";
-   const char *root = mkdtemp(tmpl);
+   // Honour TMPDIR like the other tests here: a build host may have /tmp
+   // read-only or redirected.
+   string tmplstr = string(getenv("TMPDIR") ? getenv("TMPDIR") : "/tmp") +
+                    "/synaptic-dir-XXXXXX";
+   vector<char> tmpl(tmplstr.begin(), tmplstr.end());
+   tmpl.push_back('\0');
+   const char *root = mkdtemp(tmpl.data());
    if (root == nullptr) {
       cerr << "FAIL: could not create a temp dir" << endl;
       return 1;

@@ -22,6 +22,10 @@ bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822E
     }
     std::string line;
     std::map<std::string, std::string> fields;
+    // Comment lines seen since the last stanza ended. deb822 has no comment
+    // syntax of its own, so apt treats '#' lines as belonging to the stanza
+    // that follows them -- which is also where WriteDeb822File emits them.
+    std::string pendingComment;
     int stanza_count = 0;
     while (std::getline(file, line)) {
         // A whitespace-only line separates stanzas just like an empty one
@@ -35,6 +39,7 @@ bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822E
                 // Check required fields
                 if (fields.find("Types") == fields.end() || fields.find("URIs") == fields.end() || fields.find("Suites") == fields.end()) {
                     fields.clear();
+                    pendingComment.clear();
                     continue;
                 }
                 entry.Types = fields["Types"];
@@ -57,6 +62,8 @@ bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822E
                 } else {
                     entry.Enabled = true; // Default to enabled
                 }
+                entry.Comment = pendingComment;
+                pendingComment.clear();
                 entries.push_back(entry);
                 stanza_count++;
                 fields.clear();
@@ -64,6 +71,8 @@ bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822E
             continue;
         }
         if (line[0] == '#') {
+            pendingComment += line;
+            pendingComment += '\n';
             continue;
         }
         size_t colon = line.find(':');
@@ -105,6 +114,8 @@ bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822E
             } else {
                 entry.Enabled = true; // Default to enabled
             }
+            entry.Comment = pendingComment;
+            pendingComment.clear();
             entries.push_back(entry);
             stanza_count++;
         }

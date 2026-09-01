@@ -90,6 +90,24 @@ static const char *MULTIARCH =
    "Languages: en de\n"
    "Targets: deb-src\n";
 
+// A comment attached to a stanza. deb822 has no comment syntax of its own, so
+// apt treats '#' lines as belonging to the stanza that follows -- which is
+// where WriteDeb822File already emits Deb822Entry::Comment. Only the parser
+// dropped them, so a save deleted the user's own annotations.
+static const char *COMMENTED =
+   "# Modernized from /etc/apt/sources.list\n"
+   "# See: https://wiki.debian.org/SourcesList\n"
+   "Types: deb\n"
+   "URIs: http://deb.debian.org/debian\n"
+   "Suites: bookworm\n"
+   "Components: main\n"
+   "\n"
+   "# security updates\n"
+   "Types: deb\n"
+   "URIs: http://security.debian.org/debian-security\n"
+   "Suites: bookworm-security\n"
+   "Components: main\n";
+
 int main(int argc, char *argv[])
 {
    control();
@@ -100,6 +118,14 @@ int main(int argc, char *argv[])
    check_preserved("architectures", MULTIARCH, "Architectures: amd64 arm64");
    check_preserved("languages", MULTIARCH, "Languages: en de");
    check_preserved("targets", MULTIARCH, "Targets: deb-src");
+
+   // Comments, including one carrying a colon, which must not be mistaken for
+   // a field, and one attached to the second stanza rather than the first.
+   check_preserved("comment-first-stanza", COMMENTED,
+                   "# Modernized from /etc/apt/sources.list");
+   check_preserved("comment-with-colon", COMMENTED,
+                   "# See: https://wiki.debian.org/SourcesList");
+   check_preserved("comment-second-stanza", COMMENTED, "# security updates");
 
    if (failures > 0) {
       cerr << failures << " check(s) failed" << endl;

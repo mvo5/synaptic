@@ -441,6 +441,19 @@ bool SourcesList::SourceRecord::SetType(string S)
    return true;
 }
 
+string SourcesList::SourceRecord::GetTypeLabel()
+{
+   const bool isDeb = (Type & Deb) != 0;
+   const bool isDebSrc = (Type & DebSrc) != 0;
+   if (isDeb && isDebSrc)
+      return "deb, deb-src";
+   if (isDeb)
+      return "deb";
+   if (isDebSrc)
+      return "deb-src";
+   return GetType();
+}
+
 string SourcesList::SourceRecord::GetType()
 {
    if ((Type & Deb) != 0)

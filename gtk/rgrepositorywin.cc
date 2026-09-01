@@ -52,26 +52,6 @@ class RGWindow;
 
 using namespace std;
 
-// The string shown in TYPE_COLUMN, and the string DoEdit() parses back out of
-// it. A deb822 stanza can declare both types in one record ("Types: deb
-// deb-src"), which SourceRecord::GetType() cannot express -- it returns the
-// first match only. Writing GetType() here made the column say "deb", so
-// editing such a row re-parsed it as deb-only and silently dropped deb-src
-// from the user's file. Both the initial fill and the post-edit repaint must
-// use this, or the loss simply moves to the second edit.
-static string sourceTypeLabel(SourcesList::SourceRecord *rec)
-{
-   const bool isDeb = (rec->Type & SourcesList::Deb) != 0;
-   const bool isDebSrc = (rec->Type & SourcesList::DebSrc) != 0;
-   if (isDeb && isDebSrc)
-      return "deb, deb-src";
-   if (isDeb)
-      return "deb";
-   if (isDebSrc)
-      return "deb-src";
-   return rec->GetType();
-}
-
 #if HAVE_RPM
 enum {
    ITEM_TYPE_RPM,
@@ -465,7 +445,7 @@ bool RGRepositoryEditor::Run()
                          STATUS_COLUMN,
                          !((*it)->Type & SourcesList::Disabled),
                          TYPE_COLUMN,
-                         utf8(sourceTypeLabel(*it).c_str()),
+                         utf8((*it)->GetTypeLabel().c_str()),
                          VENDOR_COLUMN,
                          utf8((*it)->VendorID.c_str()),
                          URI_COLUMN,
@@ -675,7 +655,7 @@ void RGRepositoryEditor::doEdit()
                       STATUS_COLUMN,
                       !(rec->Type & SourcesList::Disabled),
                       TYPE_COLUMN,
-                      utf8(sourceTypeLabel(rec).c_str()),
+                      utf8(rec->GetTypeLabel().c_str()),
                       VENDOR_COLUMN,
                       utf8(rec->VendorID.c_str()),
                       URI_COLUMN,

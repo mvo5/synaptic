@@ -25,24 +25,11 @@ static const char *BOTH_TYPES =
    "Suites: trixie\n"
    "Components: main non-free-firmware\n";
 
-// The dialog fills TYPE_COLUMN from this, and the edit path later parses that
-// same column back into rec->Type. The two must agree, or a round trip through
-// the dialog loses a type.
-//
-// Display side, mirroring rgrepositorywin.cc: a deb822 stanza can carry both
-// types, so the column shows "deb, deb-src" rather than just the first match.
-static string displayed_type(SourcesList::SourceRecord *rec)
-{
-   const bool is_deb = (rec->Type & SourcesList::Deb) != 0;
-   const bool is_debsrc = (rec->Type & SourcesList::DebSrc) != 0;
-   if (is_deb && is_debsrc)
-      return "deb, deb-src";
-   if (is_deb)
-      return "deb";
-   if (is_debsrc)
-      return "deb-src";
-   return rec->GetType();
-}
+// The dialog fills TYPE_COLUMN from SourceRecord::GetTypeLabel() and DoEdit()
+// parses that same column back into the record, so the two must agree or a
+// round trip through the dialog loses a type. This test links the real
+// GetTypeLabel() out of libsynaptic rather than reimplementing it, so a
+// regression in that function fails here.
 
 // Edit side, rgrepositorywin.cc DoEdit(): substring test on that column.
 static unsigned reparsed_type(const string &type_val)
@@ -90,7 +77,7 @@ int main(int argc, char *argv[])
 
       // What the dialog puts in the column, then reads back out when the user
       // edits the row.
-      const string shown = displayed_type(*I);
+      const string shown = (*I)->GetTypeLabel();
       const unsigned back = reparsed_type(shown);
 
       const bool keeps_deb = (back & SourcesList::Deb) != 0;

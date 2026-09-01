@@ -62,6 +62,13 @@ class SourcesList
 
       bool SetType(std::string);
       std::string GetType();
+      // The type as shown to the user. GetType() returns the first matching
+      // type only, which cannot express a deb822 stanza declaring both
+      // ("Types: deb deb-src"); this returns "deb, deb-src" for that case.
+      // The repository dialog stores this in its type column and parses it
+      // back when the row is edited, so the two must agree or editing such a
+      // row drops a type.
+      std::string GetTypeLabel();
       bool SetURI(std::string);
 
       SourceRecord() : Type(0), Sections(0), NumSections(0), PreserveOriginalURI(false)

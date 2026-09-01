@@ -24,7 +24,12 @@ bool RDeb822Source::ParseDeb822File(const std::string& path, std::vector<Deb822E
     std::map<std::string, std::string> fields;
     int stanza_count = 0;
     while (std::getline(file, line)) {
-        if (line.empty()) {
+        // A whitespace-only line separates stanzas just like an empty one
+        // (deb822 / RFC 822). Testing line.empty() alone made "   " count as
+        // content, so the following stanza's fields overwrote this one's via
+        // fields[key] = value and the earlier stanza was silently dropped.
+        // Also handles CRLF files, where the separator line is "\r".
+        if (line.find_first_not_of(" \t\r") == std::string::npos) {
             if (!fields.empty()) {
                 Deb822Entry entry;
                 // Check required fields

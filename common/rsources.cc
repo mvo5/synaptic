@@ -35,13 +35,10 @@
 #include <apt-pkg/fileutl.h>
 #include <apt-pkg/strutl.h>
 #include <cctype>
-#include <cstring>
-#include <dirent.h>
 #include <fstream>
 #include <iostream>
 #include <list>
 #include <string>
-#include <sys/stat.h>
 #include <vector>
 
 using namespace std;
@@ -181,42 +178,10 @@ bool SourcesList::ReadSourcePart(string listpath)
 
 bool SourcesList::ReadSourceDir(string Dir)
 {
-   // cout << "SourcesList::ReadSourceDir() " << Dir  << endl;
+   vector<string> List = GetListOfFilesInDir(Dir, "list", /* SortList */ true);
+   if (List.empty() && _error->PendingError())
+      return false;
 
-   DIR *D = opendir(Dir.c_str());
-   if (D == 0)
-      return _error->Errno("opendir", _("Unable to read %s"), Dir.c_str());
-
-   vector<string> List;
-   for (struct dirent *Ent = readdir(D); Ent != 0; Ent = readdir(D)) {
-      if (Ent->d_name[0] == '.')
-         continue;
-
-      // Skip bad file names ala run-parts
-      const char *C = Ent->d_name;
-      for (; *C != 0; C++)
-         if (isalpha(*C) == 0 && isdigit(*C) == 0 && *C != '_' && *C != '-' &&
-             *C != '.')
-            break;
-      if (*C != 0)
-         continue;
-
-      // Only look at files ending in .list to skip .rpmnew etc files
-      if (strcmp(Ent->d_name + strlen(Ent->d_name) - 5, ".list") != 0)
-         continue;
-
-      // Make sure it is a file and not something else
-      string File = flCombine(Dir, Ent->d_name);
-      struct stat St;
-      if (stat(File.c_str(), &St) != 0 || S_ISREG(St.st_mode) == 0)
-         continue;
-      List.push_back(File);
-   }
-   closedir(D);
-
-   sort(List.begin(), List.end());
-
-   // Read the files
    for (vector<string>::const_iterator I = List.begin(); I != List.end(); I++)
       if (ReadSourcePart(*I) == false)
          return false;

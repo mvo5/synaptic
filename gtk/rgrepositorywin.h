@@ -54,6 +54,7 @@ class RGRepositoryEditor : RGGtkBuilderWindow
    GtkTreeIter *_lastIter;
 
    GtkWidget *_editTable;
+   GtkWidget *_hintLabel;
    GtkWidget *_optVendor;
    GtkListStore *_optVendorMenu;
    GtkWidget *_entryURI;
@@ -71,7 +72,8 @@ class RGRepositoryEditor : RGGtkBuilderWindow
 
    bool _applied;
    bool _dirty;
-   const GdkRGBA _gray = {0xAA00, 0xAA00, 0xAA00, 1.0};
+   // GdkRGBA channels are doubles in 0..1, not 16-bit GdkColor values
+   const GdkRGBA _gray = {0xAA / 255.0, 0xAA / 255.0, 0xAA / 255.0, 1.0};
 
    void UpdateVendorMenu();
    int VendorMenuIndex(std::string VendorID);

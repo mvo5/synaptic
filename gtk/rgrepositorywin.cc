@@ -90,6 +90,20 @@ enum {
    COL_TYPE,
 };
 
+// Shown under the edit fields for the selected source
+static string SourceHint(const SourcesList::SourceRecord *rec)
+{
+   gchar *text = g_strdup_printf(_("Defined in %s."), rec->SourceFile.c_str());
+   string hint = text;
+   g_free(text);
+   if (rec->Format == SourcesList::Deb822) {
+      hint += " ";
+      hint += _("This source uses the deb822 format and can not be edited "
+                "here yet.");
+   }
+   return hint;
+}
+
 void RGRepositoryEditor::item_toggled(GtkCellRendererToggle *cell,
                                       gchar *path_str,
                                       gpointer data)
@@ -401,6 +415,9 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    _editTable = GTK_WIDGET(gtk_builder_get_object(_builder, "table_edit"));
    assert(_editTable);
    gtk_widget_set_sensitive(_editTable, FALSE);
+   _hintLabel =
+      GTK_WIDGET(gtk_builder_get_object(_builder, "label_source_hint"));
+   assert(_hintLabel);
 
    gtk_window_resize(GTK_WINDOW(_win), 620, 400);
    skipTaskbar(true);
@@ -761,6 +778,7 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
       gtk_widget_set_sensitive(me->_upBut, editable);
       gtk_widget_set_sensitive(me->_downBut, editable);
       gtk_widget_set_sensitive(me->_deleteBut, editable);
+      gtk_label_set_text(GTK_LABEL(me->_hintLabel), SourceHint(rec).c_str());
 
       int id = ITEM_TYPE_DEB;
       if (rec->Type & SourcesList::DebSrc)
@@ -797,6 +815,7 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
    } else {
       // cout << "no selection" << endl;
       gtk_widget_set_sensitive(me->_editTable, FALSE);
+      gtk_label_set_text(GTK_LABEL(me->_hintLabel), "");
 
       gtk_widget_set_sensitive(me->_upBut, FALSE);
       gtk_widget_set_sensitive(me->_downBut, FALSE);

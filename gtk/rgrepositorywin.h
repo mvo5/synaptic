@@ -54,6 +54,7 @@ class RGRepositoryEditor : RGGtkBuilderWindow
    GtkTreeIter *_lastIter;
 
    GtkWidget *_editTable;
+   GtkWidget *_hintLabel;
    GtkWidget *_optVendor;
    GtkListStore *_optVendorMenu;
    GtkWidget *_entryURI;

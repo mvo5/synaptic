@@ -6,7 +6,8 @@ DIST = $(shell lsb_release -i -s)
 DHFLAGS=--parallel
 MESON_FLAGS= --prefix=/usr \
 	     --localstatedir=/var/lib/synaptic \
-	     -Dpkg_hold=true
+	     -Dpkg_hold=true \
+	     -Dtests=enabled
 
 %:
 	dh $@ $(DHFLAGS) --buildsystem=meson --without autoreconf --without autotools-dev

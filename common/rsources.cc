@@ -28,6 +28,8 @@
 #include "rsources.h"
 
 #include "i18n.h"
+#include "rsource_deb822.h"
+#include <iostream>
 
 #include <algorithm>
 #include <apt-pkg/configuration.h>
@@ -89,6 +91,7 @@ bool SourcesList::ReadSourcePart(string listpath)
       ifs.getline(buf, sizeof(buf));
 
       rec.SourceFile = listpath;
+      rec.PreserveOriginalURI = true;  // Preserve original URI format when reading
       while (isspace(*p))
          p++;
       if (*p == '#') {
@@ -98,15 +101,10 @@ bool SourcesList::ReadSourcePart(string listpath)
             p++;
       }
 
-      if (*p == '\r' || *p == '\n' || *p == 0) {
-         rec.Type = Comment;
-         rec.Comment = p;
-
-         AddSourceNode(rec);
-         continue;
-      }
-
+      // Try to parse as a source line after '#'. If not valid, treat as comment.
       bool Failed = true;
+      string orig_buf = buf;
+      const char* orig_p = p;
       if (ParseQuoteWord(p, Type) == true && rec.SetType(Type) == true &&
           ParseQuoteWord(p, VURI) == true) {
          if (VURI[0] == '[') {
@@ -121,10 +119,10 @@ bool SourcesList::ReadSourcePart(string listpath)
       }
 
       if (Failed == true) {
+         // If this was a disabled line (started with '#'), but not a valid source, treat as comment
          if (rec.Type == Disabled) {
-            // treat as a comment field
             rec.Type = Comment;
-            rec.Comment = buf;
+            rec.Comment = orig_buf;
          } else {
             // syntax error on line
             rec.Type = Comment;
@@ -133,6 +131,8 @@ bool SourcesList::ReadSourcePart(string listpath)
             record_ok = false;
             // return _error->Error(_("Syntax error in line %s"), buf);
          }
+         AddSourceNode(rec);
+         continue;
       }
 #ifndef HAVE_RPM
       // check for absolute dist
@@ -229,12 +229,23 @@ bool SourcesList::ReadSources()
 
    bool Res = true;
 
+   // Deb822 .sources and one-line .list files both live in apt's
+   // Dir::Etc::sourceparts, so a single scan of it covers both.
+   //
+   // This used to also scan "Dir::Etc::sourcelist.d" first. That is not an apt
+   // configuration key: FindDir returns "/" for it, which the old code then
+   // rewrote to a hardcoded /etc/apt/sources.list.d/ -- the very directory
+   // sourceparts already points at on a normal system. Every .sources file was
+   // therefore read twice and every repository appeared twice in the dialog.
    string Parts = _config->FindDir("Dir::Etc::sourceparts");
-   if (FileExists(Parts) == true)
+   if (FileExists(Parts) == true) {
+      Res &= ReadDeb822SourceDir(Parts);
       Res &= ReadSourceDir(Parts);
+   }
    string Main = _config->FindFile("Dir::Etc::sourcelist");
-   if (FileExists(Main) == true)
+   if (FileExists(Main) == true) {
       Res &= ReadSourcePart(Main);
+   }
 
    return Res;
 }
@@ -300,52 +311,109 @@ void SourcesList::SwapSources(SourceRecord *&rec_one, SourceRecord *&rec_two)
 
 bool SourcesList::UpdateSources()
 {
-   list<string> filenames;
-   for (list<SourceRecord *>::iterator it = SourceRecords.begin();
-        it != SourceRecords.end();
-        it++) {
-      if ((*it)->SourceFile == "")
+   // Group sources by their source file
+   map<string, vector<SourceRecord*>> sourcesByFile;
+   for (list<SourceRecord *>::const_iterator it = SourceRecords.begin();
+        it != SourceRecords.end(); it++) {
+      sourcesByFile[(*it)->SourceFile].push_back(*it);
+   }
+
+   // Write each source file
+   for (const auto& pair : sourcesByFile) {
+      const string& sourcePath = pair.first;
+      const vector<SourceRecord*>& records = pair.second;
+
+      // Skip empty source files
+      if (records.empty()) {
          continue;
-      filenames.push_front((*it)->SourceFile);
-   }
-   filenames.sort();
-   filenames.unique();
-
-   for (list<string>::iterator fi = filenames.begin(); fi != filenames.end();
-        fi++) {
-      ofstream ofs((*fi).c_str(), ios::out);
-      if (!ofs != 0)
-         return false;
-
-      for (list<SourceRecord *>::iterator it = SourceRecords.begin();
-           it != SourceRecords.end();
-           it++) {
-         if ((*fi) != (*it)->SourceFile)
-            continue;
-         string S;
-         if (((*it)->Type & Comment) != 0) {
-            S = (*it)->Comment;
-         } else if ((*it)->URI.empty() || (*it)->Dist.empty()) {
-            continue;
-         } else {
-            if (((*it)->Type & Disabled) != 0)
-               S = "# ";
-
-            S += (*it)->GetType() + " ";
-
-            if ((*it)->VendorID.empty() == false)
-               S += "[" + (*it)->VendorID + "] ";
-
-            S += (*it)->URI + " ";
-            S += (*it)->Dist + " ";
-
-            for (unsigned int J = 0; J < (*it)->NumSections; J++)
-               S += (*it)->Sections[J] + " ";
-         }
-         ofs << S << endl;
       }
-      ofs.close();
+
+      // Trim trailing blank/comment lines (empty or whitespace-only comments)
+      std::vector<SourceRecord*> trimmed_records = records;
+      while (!trimmed_records.empty()) {
+         SourceRecord* rec = trimmed_records.back();
+         bool is_blank_comment = (rec->Type == Comment) && (rec->Comment.find_first_not_of(" \t\r\n") == std::string::npos);
+         if (is_blank_comment) {
+            trimmed_records.pop_back();
+         } else {
+            break;
+         }
+      }
+
+      // Check if this is a Deb822 format file (only .sources files)
+      bool isDeb822 = false;
+      if (sourcePath.size() > 8 && sourcePath.substr(sourcePath.size() - 8) == ".sources") {
+         isDeb822 = true;
+      }
+
+      // Open the appropriate file for writing
+      ofstream out(sourcePath.c_str(), ios::out);
+      if (!out) {
+         return _error->Error(_("Error writing to %s"), sourcePath.c_str());
+      }
+
+      if (isDeb822) {
+         // Write Deb822 format
+         vector<RDeb822Source::Deb822Entry> entries;
+         for (const auto& record : trimmed_records) {
+            RDeb822Source::Deb822Entry entry;
+            if (!RDeb822Source::ConvertFromSourceRecord(*record, entry)) {
+               return _error->Error(_("Failed to convert source record to Deb822 format"));
+            }
+            entries.push_back(entry);
+         }
+         if (!RDeb822Source::WriteDeb822File(sourcePath, entries)) {
+            return false;
+         }
+      } else {
+         // Write classic format (deb lines)
+         for (const auto& record : trimmed_records) {
+            if (record->Type == Comment) {
+               out << record->Comment << endl;
+            } else {
+               // Write as a standard deb/deb-src line, comment if disabled
+               string line;
+               if (record->Type & Disabled) {
+                  line += "# ";
+               }
+               if (record->Type & Deb) {
+                  line += "deb ";
+               } else if (record->Type & DebSrc) {
+                  line += "deb-src ";
+               } else if (record->Type & Rpm) {
+                  line += "rpm ";
+               } else if (record->Type & RpmSrc) {
+                  line += "rpm-src ";
+               } else if (record->Type & RpmDir) {
+                  line += "rpm-dir ";
+               } else if (record->Type & RpmSrcDir) {
+                  line += "rpm-src-dir ";
+               } else if (record->Type & Repomd) {
+                  line += "repomd ";
+               } else if (record->Type & RepomdSrc) {
+                  line += "repomd-src ";
+               } else {
+                  line += "deb "; // fallback
+               }
+               line += record->URI + " " + record->Dist;
+               for (unsigned int J = 0; J < record->NumSections; J++) {
+                  line += " " + record->Sections[J];
+               }
+               // Trim trailing space
+               if (!line.empty() && line[line.length()-1] == ' ') {
+                  line.erase(line.length()-1);
+               }
+               out << line << endl;
+            }
+         }
+      }
+
+      out.close();
+      if (!out) {
+         return _error->Error(_("Error writing to %s"), sourcePath.c_str());
+      }
    }
+
    return true;
 }
 
@@ -371,6 +439,19 @@ bool SourcesList::SourceRecord::SetType(string S)
       return false;
    // cout << S << " settype " << (Type | Repomd) << endl;
    return true;
+}
+
+string SourcesList::SourceRecord::GetTypeLabel()
+{
+   const bool isDeb = (Type & Deb) != 0;
+   const bool isDebSrc = (Type & DebSrc) != 0;
+   if (isDeb && isDebSrc)
+      return "deb, deb-src";
+   if (isDeb)
+      return "deb";
+   if (isDebSrc)
+      return "deb-src";
+   return GetType();
 }
 
 string SourcesList::SourceRecord::GetType()
@@ -406,8 +487,8 @@ bool SourcesList::SourceRecord::SetURI(string S)
    S = SubstVar(S, "$(VERSION)", _config->Find("APT::DistroVersion"));
    URI = S;
 
-   // append a / to the end if one is not already there
-   if (URI[URI.size() - 1] != '/')
+   // Only append / if we're not preserving the original format
+   if (!PreserveOriginalURI && URI[URI.size() - 1] != '/')
       URI += '/';
 
    return true;
@@ -428,6 +509,7 @@ SourcesList::SourceRecord &SourcesList::SourceRecord::operator=(
    NumSections = rhs.NumSections;
    Comment = rhs.Comment;
    SourceFile = rhs.SourceFile;
+   PreserveOriginalURI = rhs.PreserveOriginalURI;
 
    return *this;
 }
@@ -532,38 +614,36 @@ void SourcesList::RemoveVendor(VendorRecord *&rec)
 
 ostream &operator<<(ostream &os, const SourcesList::SourceRecord &rec)
 {
-   os << "Type: ";
-   if ((rec.Type & SourcesList::Comment) != 0)
-      os << "Comment ";
-   if ((rec.Type & SourcesList::Disabled) != 0)
-      os << "Disabled ";
-   if ((rec.Type & SourcesList::Deb) != 0)
-      os << "Deb";
-   if ((rec.Type & SourcesList::DebSrc) != 0)
-      os << "DebSrc";
-   if ((rec.Type & SourcesList::Rpm) != 0)
-      os << "Rpm";
-   if ((rec.Type & SourcesList::RpmSrc) != 0)
-      os << "RpmSrc";
-   if ((rec.Type & SourcesList::RpmDir) != 0)
-      os << "RpmDir";
-   if ((rec.Type & SourcesList::RpmSrcDir) != 0)
-      os << "RpmSrcDir";
-   if ((rec.Type & SourcesList::Repomd) != 0)
-      os << "Repomd";
-   if ((rec.Type & SourcesList::RepomdSrc) != 0)
-      os << "RepomdSrc";
-   os << endl;
-   os << "SourceFile: " << rec.SourceFile << endl;
-   os << "VendorID: " << rec.VendorID << endl;
-   os << "URI: " << rec.URI << endl;
-   os << "Dist: " << rec.Dist << endl;
-   os << "Section(s):" << endl;
-#if 0
-   for (unsigned int J = 0; J < rec.NumSections; J++) {
-      cout << "\t" << rec.Sections[J] << endl;
+   if (rec.Type == SourcesList::Comment) {
+      os << rec.Comment << endl;
+      return os;
    }
-#endif
+   if (rec.Type & SourcesList::Disabled) {
+      os << "# ";
+   }
+   if (rec.Type & SourcesList::Deb) {
+      os << "deb ";
+   } else if (rec.Type & SourcesList::DebSrc) {
+      os << "deb-src ";
+   } else if (rec.Type & SourcesList::Rpm) {
+      os << "rpm ";
+   } else if (rec.Type & SourcesList::RpmSrc) {
+      os << "rpm-src ";
+   } else if (rec.Type & SourcesList::RpmDir) {
+      os << "rpm-dir ";
+   } else if (rec.Type & SourcesList::RpmSrcDir) {
+      os << "rpm-src-dir ";
+   } else if (rec.Type & SourcesList::Repomd) {
+      os << "repomd ";
+   } else if (rec.Type & SourcesList::RepomdSrc) {
+      os << "repomd-src ";
+   } else {
+      os << "deb "; // fallback
+   }
+   os << rec.URI << " " << rec.Dist;
+   for (unsigned int J = 0; J < rec.NumSections; J++) {
+      os << " " << rec.Sections[J];
+   }
    os << endl;
    return os;
 }
@@ -574,6 +654,81 @@ ostream &operator<<(ostream &os, const SourcesList::VendorRecord &rec)
    os << "FingerPrint: " << rec.FingerPrint << endl;
    os << "Description: " << rec.Description << endl;
    return os;
+}
+
+bool SourcesList::ReadDeb822SourcePart(string listpath) {
+    vector<RDeb822Source::Deb822Entry> entries;
+    if (!RDeb822Source::ParseDeb822File(listpath, entries)) {
+        return false;
+    }
+
+    for (const auto& entry : entries) {
+        SourceRecord rec;
+        rec.SourceFile = listpath;
+
+        if (!RDeb822Source::ConvertToSourceRecord(entry, rec)) {
+            return _error->Error(_("Failed to convert Deb822 entry in %s"), listpath.c_str());
+        }
+
+        rec.Type |= Deb822;  // Mark as Deb822 format
+        AddSourceNode(rec);
+    }
+
+    return true;
+}
+
+bool SourcesList::ReadDeb822SourceDir(string Dir) {
+    DIR *D = opendir(Dir.c_str());
+    if (D == 0)
+        return _error->Errno("opendir", _( "Unable to read %s"), Dir.c_str());
+
+    vector<string> List;
+    for (struct dirent * Ent = readdir(D); Ent != 0; Ent = readdir(D)) {
+        if (Ent->d_name[0] == '.')
+            continue;
+
+        // Only look at files ending in .sources. Comparing at
+        // d_name + strlen(d_name) - 8 walks in front of the buffer for any
+        // name shorter than ".sources" itself, so measure the length first.
+        const size_t NameLen = strlen(Ent->d_name);
+        const size_t SuffixLen = 8; // strlen(".sources")
+        if (NameLen < SuffixLen ||
+            strcmp(Ent->d_name + NameLen - SuffixLen, ".sources") != 0)
+            continue;
+
+        // Make sure it is a file and not something else
+        string File = flCombine(Dir, Ent->d_name);
+        struct stat St;
+        if (stat(File.c_str(), &St) != 0 || S_ISREG(St.st_mode) == 0)
+            continue;
+        List.push_back(File);
+    }
+    closedir(D);
+
+    sort(List.begin(), List.end());
+
+    // Read the files
+    for (vector<string>::const_iterator I = List.begin(); I != List.end(); I++) {
+        if (ReadDeb822SourcePart(*I) == false)
+            return false;
+    }
+    return true;
+}
+
+bool SourcesList::WriteDeb822Source(SourceRecord *record, string path) {
+    if (!record || !(record->Type & Deb822)) {
+        return _error->Error(_("Not a Deb822 format source"));
+    }
+
+    vector<RDeb822Source::Deb822Entry> entries;
+    RDeb822Source::Deb822Entry entry;
+
+    if (!RDeb822Source::ConvertFromSourceRecord(*record, entry)) {
+        return _error->Error(_("Failed to convert source record to Deb822 format"));
+    }
+
+    entries.push_back(entry);
+    return RDeb822Source::WriteDeb822File(path, entries);
 }
 
 // vim:sts=4:sw=4

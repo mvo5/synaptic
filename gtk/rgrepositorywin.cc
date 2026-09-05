@@ -31,6 +31,7 @@
 #include "rggtkbuilderwindow.h"
 #include "rguserdialog.h"
 #include "rgutils.h"
+#include "rsource_deb822.h"
 #include "ruserdialog.h"
 
 #include <apt-pkg/error.h>
@@ -43,7 +44,9 @@
 #include <glib/gtypes.h>
 #include <gobject/gclosure.h>
 #include <gtk/gtk.h>
+#include <sstream>
 #include <string>
+#include <vector>
 
 class RGWindow;
 
@@ -143,6 +146,7 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    _userDialog = new RGUserDialog(_win);
    _applied = false;
    _lastIter = NULL;
+   _config = new Configuration();
 
    setTitle(_("Repositories"));
    gtk_window_set_modal(GTK_WINDOW(_win), TRUE);
@@ -403,6 +407,7 @@ RGRepositoryEditor::~RGRepositoryEditor()
 {
    // gtk_widget_destroy(_win);
    delete _userDialog;
+   delete _config;
 }
 
 
@@ -417,7 +422,6 @@ bool RGRepositoryEditor::Run()
    _savedList.ReadSources();
 
    if (_lst.ReadVendors() == false) {
-      _error->Error(_("Cannot read vendors.list file"));
       _userDialog->showErrors();
       return false;
    }
@@ -428,6 +432,7 @@ bool RGRepositoryEditor::Run()
         it++) {
       if ((*it)->Type & SourcesList::Comment)
          continue;
+
       string Sections;
       for (unsigned int J = 0; J < (*it)->NumSections; J++) {
          Sections += (*it)->Sections[J];
@@ -440,7 +445,7 @@ bool RGRepositoryEditor::Run()
                          STATUS_COLUMN,
                          !((*it)->Type & SourcesList::Disabled),
                          TYPE_COLUMN,
-                         utf8((*it)->GetType().c_str()),
+                         utf8((*it)->GetTypeLabel().c_str()),
                          VENDOR_COLUMN,
                          utf8((*it)->VendorID.c_str()),
                          URI_COLUMN,
@@ -454,6 +459,7 @@ bool RGRepositoryEditor::Run()
                          DISABLED_COLOR_COLUMN,
                          (*it)->Type & SourcesList::Disabled ? &_gray : NULL,
                          -1);
+
    }
 
 
@@ -575,6 +581,10 @@ void RGRepositoryEditor::doEdit()
    gtk_tree_model_get(model, _lastIter, RECORD_COLUMN, &rec, -1);
    assert(rec);
 
+   // --- PATCH: Preserve Deb822 flag ---
+   bool was_deb822 = (rec->Type & SourcesList::Deb822) != 0;
+   // --- END PATCH ---
+
    rec->Type = 0;
    gboolean status;
    gtk_tree_model_get(
@@ -582,40 +592,21 @@ void RGRepositoryEditor::doEdit()
    if (!status)
       rec->Type |= SourcesList::Disabled;
 
-   GtkTreeIter item;
-   int type;
-   gtk_combo_box_get_active_iter(GTK_COMBO_BOX(_optType), &item);
-   gtk_tree_model_get(GTK_TREE_MODEL(_optTypeMenu), &item, 1, &type, -1);
+   // --- NEW: For Deb822, allow both deb and deb-src to be set ---
+   // Parse the type_display string from the TYPE_COLUMN
+   gchar* type_str = NULL;
+   gtk_tree_model_get(GTK_TREE_MODEL(_sourcesListStore), _lastIter, TYPE_COLUMN, &type_str, -1);
+   std::string type_val = type_str ? type_str : "";
+   g_free(type_str);
+   bool set_deb = (type_val.find("deb") != std::string::npos);
+   bool set_debsrc = (type_val.find("deb-src") != std::string::npos);
+   if (set_deb) rec->Type |= SourcesList::Deb;
+   if (set_debsrc) rec->Type |= SourcesList::DebSrc;
+   // --- END NEW ---
 
-   switch (type) {
-      case ITEM_TYPE_DEB:
-         rec->Type |= SourcesList::Deb;
-         break;
-      case ITEM_TYPE_DEBSRC:
-         rec->Type |= SourcesList::DebSrc;
-         break;
-      case ITEM_TYPE_RPM:
-         rec->Type |= SourcesList::Rpm;
-         break;
-      case ITEM_TYPE_RPMSRC:
-         rec->Type |= SourcesList::RpmSrc;
-         break;
-      case ITEM_TYPE_RPMDIR:
-         rec->Type |= SourcesList::RpmDir;
-         break;
-      case ITEM_TYPE_RPMSRCDIR:
-         rec->Type |= SourcesList::RpmSrcDir;
-         break;
-      case ITEM_TYPE_REPOMD:
-         rec->Type |= SourcesList::Repomd;
-         break;
-      case ITEM_TYPE_REPOMDSRC:
-         rec->Type |= SourcesList::RepomdSrc;
-         break;
-      default:
-         _userDialog->error(_("Unknown source type"));
-         return;
-   }
+   // --- PATCH: Restore Deb822 flag if it was set ---
+   if (was_deb822) rec->Type |= SourcesList::Deb822;
+   // --- END PATCH ---
 
 #if 0 // PORTME, no vendor id support right now
    gtk_combo_box_get_active_iter(GTK_COMBO_BOX(_optVendor), &item);
@@ -631,15 +622,26 @@ void RGRepositoryEditor::doEdit()
    rec->NumSections = 0;
 
    const char *Section = gtk_entry_get_text(GTK_ENTRY(_entrySect));
-   if (Section != 0 && Section[0] != 0)
-      rec->NumSections++;
+   if (Section != 0 && Section[0] != 0) {
+      // Parse sections properly - split by spaces
+      string sectionsStr = Section;
+      vector<string> sections;
+      stringstream ss(sectionsStr);
+      string section;
 
-   rec->Sections = new string[rec->NumSections];
-   rec->NumSections = 0;
-   Section = gtk_entry_get_text(GTK_ENTRY(_entrySect));
+      while (ss >> section) {
+         sections.push_back(section);
+      }
 
-   if (Section != 0 && Section[0] != 0)
-      rec->Sections[rec->NumSections++] = Section;
+      rec->NumSections = sections.size();
+      rec->Sections = new string[rec->NumSections];
+      for (unsigned int I = 0; I < rec->NumSections; I++) {
+         rec->Sections[I] = sections[I];
+      }
+   } else {
+      rec->Sections = new string[0];
+      rec->NumSections = 0;
+   }
 
    string Sect;
    for (unsigned int I = 0; I < rec->NumSections; I++) {
@@ -653,7 +655,7 @@ void RGRepositoryEditor::doEdit()
                       STATUS_COLUMN,
                       !(rec->Type & SourcesList::Disabled),
                       TYPE_COLUMN,
-                      utf8(rec->GetType().c_str()),
+                      utf8(rec->GetTypeLabel().c_str()),
                       VENDOR_COLUMN,
                       utf8(rec->VendorID.c_str()),
                       URI_COLUMN,
@@ -844,4 +846,55 @@ void RGRepositoryEditor::DoUpDown(GtkWidget *self, gpointer data)
       me->_lst.SwapSources(rec_p, rec);
    else
       me->_lst.SwapSources(rec, rec_p);
+}
+
+bool RGRepositoryEditor::ConvertToDeb822() {
+    GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(_win),
+        (GtkDialogFlags)(GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
+        GTK_MESSAGE_QUESTION,
+        GTK_BUTTONS_YES_NO,
+        _("Convert to Deb822 format?"));
+
+    gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(dialog),
+        _("This will convert your sources to the new Deb822 format.\n"
+          "The conversion will be done in-place and cannot be undone.\n\n"
+          "Do you want to proceed?"));
+
+    gint result = gtk_dialog_run(GTK_DIALOG(dialog));
+    gtk_widget_destroy(dialog);
+
+    if (result != GTK_RESPONSE_YES) {
+        return false;
+}
+
+    // Convert each source record to Deb822 format
+    for (SourcesListIter I = _lst.SourceRecords.begin(); I != _lst.SourceRecords.end(); I++) {
+        SourcesList::SourceRecord *rec = *I;
+        if (rec == NULL) continue;
+
+        // Create Deb822 entry
+        RDeb822Source::Deb822Entry entry;
+        if (!RDeb822Source::ConvertFromSourceRecord(*rec, entry)) {
+            _userDialog->error(_("Failed to convert source record to Deb822 format"));
+            return false;
+        }
+
+        // Update the source record
+        if (!RDeb822Source::ConvertToSourceRecord(entry, *rec)) {
+            _userDialog->error(_("Failed to update source record with Deb822 format"));
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void RGRepositoryEditor::SaveClicked() {
+    // Remove auto-conversion to Deb822. Only update sources.
+    if (!_lst.UpdateSources()) {
+        _userDialog->error(_("Failed to update sources list"));
+        return;
+    }
+
+    _dirty = false;
 }

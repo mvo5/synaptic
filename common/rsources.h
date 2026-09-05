@@ -44,7 +44,8 @@ class SourcesList
       RpmDir = 1 << 6,
       RpmSrcDir = 1 << 7,
       Repomd = 1 << 8,
-      RepomdSrc = 1 << 9
+      RepomdSrc = 1 << 9,
+      Deb822 = 1 << 10  // New type for Deb822 format
    };
 
    struct SourceRecord
@@ -57,12 +58,20 @@ class SourcesList
       unsigned short NumSections;
       std::string Comment;
       std::string SourceFile;
+      bool PreserveOriginalURI;  // Flag to preserve original URI format
 
       bool SetType(std::string);
       std::string GetType();
+      // The type as shown to the user. GetType() returns the first matching
+      // type only, which cannot express a deb822 stanza declaring both
+      // ("Types: deb deb-src"); this returns "deb, deb-src" for that case.
+      // The repository dialog stores this in its type column and parses it
+      // back when the row is edited, so the two must agree or editing such a
+      // row drops a type.
+      std::string GetTypeLabel();
       bool SetURI(std::string);
 
-      SourceRecord() : Type(0), Sections(0), NumSections(0)
+      SourceRecord() : Type(0), Sections(0), NumSections(0), PreserveOriginalURI(false)
       {}
       ~SourceRecord()
       {
@@ -101,6 +110,11 @@ class SourcesList
    bool ReadSourceDir(std::string Dir);
    bool ReadSources();
    bool UpdateSources();
+
+   // New methods for Deb822 support
+   bool ReadDeb822SourcePart(std::string listpath);
+   bool ReadDeb822SourceDir(std::string Dir);
+   bool WriteDeb822Source(SourceRecord *record, std::string path);
 
    VendorRecord *AddVendor(std::string VendorID,
                            std::string FingerPrint,

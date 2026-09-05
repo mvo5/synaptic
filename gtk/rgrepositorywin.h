@@ -28,8 +28,10 @@
 #include "config.h" // IWYU pragma: associated
 
 #include "rggtkbuilderwindow.h"
+#include "rguserdialog.h"
 #include "rsources.h"
 
+#include <apt-pkg/configuration.h>
 #include <gdk/gdk.h>
 #include <glib.h>
 #include <gtk/gtk.h>
@@ -73,6 +75,9 @@ class RGRepositoryEditor : RGGtkBuilderWindow
    bool _dirty;
    const GdkRGBA _gray = {0xAA00, 0xAA00, 0xAA00, 1.0};
 
+   // Configuration
+   Configuration *_config;
+
    void UpdateVendorMenu();
    int VendorMenuIndex(std::string VendorID);
 
@@ -93,10 +98,21 @@ class RGRepositoryEditor : RGGtkBuilderWindow
    // get values
    void doEdit();
 
-
  public:
    RGRepositoryEditor(RGWindow *parent);
    ~RGRepositoryEditor();
 
    bool Run();
+
+   // Deb822 support
+   bool ConvertToDeb822();
+   void SaveClicked();
+};
+
+class RGRepositoryWin {
+public:
+    // ... existing declarations ...
+
+private:
+    // ... existing private members ...
 };

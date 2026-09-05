@@ -1,6 +1,6 @@
 ﻿/* rsource_deb822.cc - Deb822 format sources support
- * 
- * Copyright (c) 2025 Synaptic development team          
+ *
+ * Copyright (c) 2025 Synaptic development team
  */
 
 #include "rsource_deb822.h"
@@ -131,7 +131,7 @@ bool RDeb822Source::WriteDeb822File(const std::string& path, const std::vector<D
 
     for (size_t i = 0; i < entries.size(); ++i) {
         const auto& entry = entries[i];
-        
+
         // Write preserved comments before stanza
         if (!entry.Comment.empty()) {
             file << entry.Comment;
@@ -148,7 +148,7 @@ bool RDeb822Source::WriteDeb822File(const std::string& path, const std::vector<D
         file << "Types: " << entry.Types << std::endl;
         file << "URIs: " << entry.URIs << std::endl;
         file << "Suites: " << entry.Suites << std::endl;
-        
+
         if (!entry.Components.empty()) {
             file << "Components: " << entry.Components << std::endl;
         }
@@ -164,7 +164,7 @@ bool RDeb822Source::WriteDeb822File(const std::string& path, const std::vector<D
         if (!entry.Targets.empty()) {
             file << "Targets: " << entry.Targets << std::endl;
         }
-        
+
         // Only add empty line between entries, not after the last one
         if (i < entries.size() - 1) {
             file << std::endl;
@@ -223,7 +223,7 @@ bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, SourcesList:
             sections.push_back(comp);
         }
     }
-    
+
     // Set sections
     if (!sections.empty()) {
         record.NumSections = sections.size();
@@ -232,7 +232,7 @@ bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, SourcesList:
             record.Sections[i] = sections[i];
         }
     }
-    
+
     // Preserve extra fields in Comment
     std::stringstream commentStream;
     if (!entry.SignedBy.empty()) {
@@ -248,7 +248,7 @@ bool RDeb822Source::ConvertToSourceRecord(const Deb822Entry& entry, SourcesList:
         commentStream << "Targets: " << entry.Targets << std::endl;
     }
     record.Comment = commentStream.str();
-    
+
     return true;
 }
 
@@ -266,10 +266,10 @@ bool RDeb822Source::ConvertFromSourceRecord(const SourcesList::SourceRecord& rec
 
     // Set URI
     entry.URIs = record.URI;
-    
+
     // Set suite
     entry.Suites = record.Dist;
-    
+
     // Set components
     std::stringstream compStream;
     for (unsigned short i = 0; i < record.NumSections; i++) {
@@ -277,7 +277,7 @@ bool RDeb822Source::ConvertFromSourceRecord(const SourcesList::SourceRecord& rec
     }
     entry.Components = compStream.str();
     TrimWhitespace(entry.Components);
-    
+
     // Set enabled state
     entry.Enabled = !(record.Type & SourcesList::Disabled);
 
@@ -298,7 +298,7 @@ bool RDeb822Source::ConvertFromSourceRecord(const SourcesList::SourceRecord& rec
             else if (key == "Targets") entry.Targets = value;
         }
     }
-    
+
     return true;
 }
 
@@ -316,7 +316,7 @@ void RDeb822Source::TrimWhitespace(std::string& str) {
 bool RDeb822Source::ParseStanza(std::ifstream& file, std::map<std::string, std::string>& fields) {
     std::string line;
     bool inStanza = false;
-    
+
     while (std::getline(file, line)) {
         // Skip empty lines
         if (line.empty()) {
@@ -341,17 +341,17 @@ bool RDeb822Source::ParseStanza(std::ifstream& file, std::map<std::string, std::
             if (colonPos != std::string::npos) {
                 std::string key = line.substr(0, colonPos);
                 std::string value = line.substr(colonPos + 1);
-                
+
                 // Trim whitespace
                 key.erase(0, key.find_first_not_of(" \t"));
                 key.erase(key.find_last_not_of(" \t") + 1);
                 value.erase(0, value.find_first_not_of(" \t"));
                 value.erase(value.find_last_not_of(" \t") + 1);
-                
+
                 fields[key] = value;
             }
         }
     }
-    
+
     return !fields.empty();
-} 
+}

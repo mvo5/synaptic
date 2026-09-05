@@ -628,11 +628,11 @@ void RGRepositoryEditor::doEdit()
       vector<string> sections;
       stringstream ss(sectionsStr);
       string section;
-      
+
       while (ss >> section) {
          sections.push_back(section);
       }
-      
+
       rec->NumSections = sections.size();
       rec->Sections = new string[rec->NumSections];
       for (unsigned int I = 0; I < rec->NumSections; I++) {

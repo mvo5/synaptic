@@ -665,11 +665,11 @@ bool SourcesList::ReadDeb822SourcePart(string listpath) {
     for (const auto& entry : entries) {
         SourceRecord rec;
         rec.SourceFile = listpath;
-        
+
         if (!RDeb822Source::ConvertToSourceRecord(entry, rec)) {
             return _error->Error(_("Failed to convert Deb822 entry in %s"), listpath.c_str());
         }
-        
+
         rec.Type |= Deb822;  // Mark as Deb822 format
         AddSourceNode(rec);
     }
@@ -722,11 +722,11 @@ bool SourcesList::WriteDeb822Source(SourceRecord *record, string path) {
 
     vector<RDeb822Source::Deb822Entry> entries;
     RDeb822Source::Deb822Entry entry;
-    
+
     if (!RDeb822Source::ConvertFromSourceRecord(*record, entry)) {
         return _error->Error(_("Failed to convert source record to Deb822 format"));
     }
-    
+
     entries.push_back(entry);
     return RDeb822Source::WriteDeb822File(path, entries);
 }

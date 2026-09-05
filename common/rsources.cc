@@ -34,6 +34,7 @@
 #include <apt-pkg/error.h>
 #include <apt-pkg/fileutl.h>
 #include <apt-pkg/strutl.h>
+#include <apt-pkg/tagfile.h>
 #include <cctype>
 #include <fstream>
 #include <iostream>
@@ -176,15 +177,91 @@ bool SourcesList::ReadSourcePart(string listpath)
    return record_ok;
 }
 
+// copy libapt:sourcelist.cc FindMultiValue()
+// TODO: expose in libapt as pkgTagSection::FindMultiValue() and drop this
+static vector<string> FindMultiValue(const pkgTagSection &Sec, const char *Field)
+{
+   string value = Sec.FindS(Field);
+   replace_if(value.begin(), value.end(), isspace_ascii, ' ');
+   vector<string> parts = VectorizeString(value, ' ');
+   parts.erase(remove_if(parts.begin(), parts.end(),
+                         [](const string &s) { return s.empty(); }),
+               parts.end());
+   return parts;
+}
+
+bool SourcesList::ReadDeb822SourcePart(string path)
+{
+   FileFd Fd;
+   if (Fd.Open(path, FileFd::ReadOnly) == false)
+      return _error->Error(_("Can't read %s"), path.c_str());
+
+   pkgTagFile Tags(&Fd, pkgTagFile::SUPPORT_COMMENTS);
+   pkgTagSection Sec;
+   bool record_ok = true;
+   while (Tags.Step(Sec)) {
+      SourceRecord rec;
+      rec.SourceFile = path;
+      rec.Format = Deb822;
+
+      bool types_ok = true;
+      for (const string &T : FindMultiValue(Sec, "Types"))
+         if (rec.SetType(T) == false)
+            types_ok = false;
+      if (!types_ok || rec.Type == 0) {
+         record_ok = false;
+         continue;
+      }
+      // absent means enabled (like in libapt)
+      string Enabled = Sec.FindS("Enabled");
+      if (Enabled.empty() == false && StringToBool(Enabled) == false)
+         rec.Type |= Disabled;
+
+      // expanded like SetURI() does it, but without its trailing slash, which
+      // only makes sense for a single URI
+      vector<string> uris = FindMultiValue(Sec, "URIs");
+      for (string &uri : uris) {
+         uri = SubstVar(uri, "$(ARCH)", _config->Find("APT::Architecture"));
+         uri = SubstVar(uri, "$(VERSION)", _config->Find("APT::DistroVersion"));
+      }
+      rec.URI = APT::String::Join(uris, " ");
+      // apt expands $(ARCH) in deb822 suites too
+      vector<string> suites = FindMultiValue(Sec, "Suites");
+      for (string &suite : suites)
+         suite = SubstVar(suite, "$(ARCH)", _config->Find("APT::Architecture"));
+      rec.Dist = APT::String::Join(suites, " ");
+
+      vector<string> comps = FindMultiValue(Sec, "Components");
+      rec.NumSections = comps.size();
+      rec.Sections = new string[rec.NumSections];
+      for (unsigned short i = 0; i < rec.NumSections; i++)
+         rec.Sections[i] = comps[i];
+
+      AddSourceNode(rec);
+   }
+   return record_ok;
+}
+
 bool SourcesList::ReadSourceDir(string Dir)
 {
-   vector<string> List = GetListOfFilesInDir(Dir, "list", /* SortList */ true);
+   vector<string> List =
+      GetListOfFilesInDir(Dir, vector<string>{"list", "sources"}, /* SortList */ true);
    if (List.empty() && _error->PendingError())
       return false;
 
-   for (vector<string>::const_iterator I = List.begin(); I != List.end(); I++)
-      if (ReadSourcePart(*I) == false)
+   for (const string &File : List) {
+      const string Ext = flExtension(File);
+      bool ok;
+      if (Ext == "sources")
+         ok = ReadDeb822SourcePart(File);
+      else if (Ext == "list")
+         ok = ReadSourcePart(File);
+      else
+         ok = _error->Error(_("Unexpected file %s in the sources directory"),
+                            File.c_str());
+      if (ok == false)
          return false;
+   }
    return true;
 }
 
@@ -269,7 +346,9 @@ bool SourcesList::UpdateSources()
    for (list<SourceRecord *>::iterator it = SourceRecords.begin();
         it != SourceRecords.end();
         it++) {
-      if ((*it)->SourceFile == "")
+      // we cannot represent a deb822 in a SourceRecord yet so skip
+      // writing until we can represent and write them
+      if ((*it)->SourceFile == "" || (*it)->Format == Deb822)
          continue;
       filenames.push_front((*it)->SourceFile);
    }
@@ -338,7 +417,14 @@ bool SourcesList::SourceRecord::SetType(string S)
    return true;
 }
 
-string SourcesList::SourceRecord::GetType()
+string SourcesList::SourceRecord::TypeLabel() const
+{
+   if ((Type & Deb) != 0 && (Type & DebSrc) != 0)
+      return "deb deb-src";
+   return GetType();
+}
+
+string SourcesList::SourceRecord::GetType() const
 {
    if ((Type & Deb) != 0)
       return "deb";
@@ -393,6 +479,7 @@ SourcesList::SourceRecord &SourcesList::SourceRecord::operator=(
    NumSections = rhs.NumSections;
    Comment = rhs.Comment;
    SourceFile = rhs.SourceFile;
+   Format = rhs.Format;
 
    return *this;
 }

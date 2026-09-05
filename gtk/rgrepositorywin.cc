@@ -107,6 +107,15 @@ void RGRepositoryEditor::item_toggled(GtkCellRendererToggle *cell,
    gtk_tree_model_get(
       model, &iter, STATUS_COLUMN, &toggle_item, SECTIONS_COLUMN, &section, -1);
 
+   SourcesList::SourceRecord *rec;
+   gtk_tree_model_get(model, &iter, RECORD_COLUMN, &rec, -1);
+   if (rec->Format == SourcesList::Deb822) {
+      // read-only for now, see SourcesList::FileFormat
+      g_free(section);
+      gtk_tree_path_free(path);
+      return;
+   }
+
    /* do something with the value */
    toggle_item ^= 1;
 
@@ -440,7 +449,7 @@ bool RGRepositoryEditor::Run()
                          STATUS_COLUMN,
                          !((*it)->Type & SourcesList::Disabled),
                          TYPE_COLUMN,
-                         utf8((*it)->GetType().c_str()),
+                         utf8((*it)->TypeLabel().c_str()),
                          VENDOR_COLUMN,
                          utf8((*it)->VendorID.c_str()),
                          URI_COLUMN,
@@ -574,6 +583,8 @@ void RGRepositoryEditor::doEdit()
    SourcesList::SourceRecord *rec;
    gtk_tree_model_get(model, _lastIter, RECORD_COLUMN, &rec, -1);
    assert(rec);
+   if (rec->Format == SourcesList::Deb822)
+      return;
 
    rec->Type = 0;
    gboolean status;
@@ -653,7 +664,7 @@ void RGRepositoryEditor::doEdit()
                       STATUS_COLUMN,
                       !(rec->Type & SourcesList::Disabled),
                       TYPE_COLUMN,
-                      utf8(rec->GetType().c_str()),
+                      utf8(rec->TypeLabel().c_str()),
                       VENDOR_COLUMN,
                       utf8(rec->VendorID.c_str()),
                       URI_COLUMN,
@@ -742,6 +753,14 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
 
       const SourcesList::SourceRecord *rec;
       gtk_tree_model_get(model, &iter, RECORD_COLUMN, &rec, -1);
+
+      // deb822 stanzas are shown but not editable yet, see
+      // SourcesList::FileFormat
+      const bool editable = rec->Format != SourcesList::Deb822;
+      gtk_widget_set_sensitive(me->_editTable, editable);
+      gtk_widget_set_sensitive(me->_upBut, editable);
+      gtk_widget_set_sensitive(me->_downBut, editable);
+      gtk_widget_set_sensitive(me->_deleteBut, editable);
 
       int id = ITEM_TYPE_DEB;
       if (rec->Type & SourcesList::DebSrc)

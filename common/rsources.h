@@ -47,6 +47,10 @@ class SourcesList
       RepomdSrc = 1 << 9
    };
 
+   // record the type because deb822 is read-only for now
+   // (until we can fully represent it)
+   enum FileFormat { OneLine, Deb822 };
+
    struct SourceRecord
    {
       unsigned int Type;
@@ -57,12 +61,15 @@ class SourcesList
       unsigned short NumSections;
       std::string Comment;
       std::string SourceFile;
+      FileFormat Format;
 
       bool SetType(std::string);
-      std::string GetType();
+      std::string GetType() const;
+      // For display: "deb deb-src" when a stanza declares both types
+      std::string TypeLabel() const;
       bool SetURI(std::string);
 
-      SourceRecord() : Type(0), Sections(0), NumSections(0)
+      SourceRecord() : Type(0), Sections(0), NumSections(0), Format(OneLine)
       {}
       ~SourceRecord()
       {
@@ -98,6 +105,7 @@ class SourcesList
    void RemoveSource(SourceRecord *&);
    void SwapSources(SourceRecord *&, SourceRecord *&);
    bool ReadSourcePart(std::string listpath);
+   bool ReadDeb822SourcePart(std::string path);
    bool ReadSourceDir(std::string Dir);
    bool ReadSources();
    bool UpdateSources();

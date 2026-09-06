@@ -67,6 +67,11 @@ SourcesList::SourceRecord *SourcesList::AddSourceNode(SourceRecord &rec)
    return newrec;
 }
 
+static string ExpandArch(const string &S)
+{
+   return SubstVar(S, "$(ARCH)", _config->Find("APT::Architecture"));
+}
+
 bool SourcesList::ReadSourcePart(string listpath)
 {
    // cout << "SourcesList::ReadSourcePart() "<< listpath  << endl;
@@ -141,8 +146,7 @@ bool SourcesList::ReadSourcePart(string listpath)
          if (ParseQuoteWord(p, Section) == true)
             return _error->Error(_("Syntax error in line %s"), buf);
 
-         rec.Dist =
-            SubstVar(rec.Dist, "$(ARCH)", _config->Find("APT::Architecture"));
+         rec.Dist = ExpandArch(rec.Dist);
 
          AddSourceNode(rec);
          continue;
@@ -402,9 +406,7 @@ bool SourcesList::SourceRecord::SetURI(string S)
    if (S.find(':') == string::npos)
       return false;
 
-   S = SubstVar(S, "$(ARCH)", _config->Find("APT::Architecture"));
-   S = SubstVar(S, "$(VERSION)", _config->Find("APT::DistroVersion"));
-   URI = S;
+   URI = ExpandArch(S);
 
    // append a / to the end if one is not already there
    if (URI[URI.size() - 1] != '/')

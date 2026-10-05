@@ -15,7 +15,8 @@ type SelectionAction(
 	install,
 	remove,
 	purge,
-	keep
+	keep,
+	reinstall
 )
 
 type ConffilePolicy(
@@ -70,7 +71,7 @@ type Selection(
 	name: string,
 	arch: string,
 	action: SelectionAction,
-	# Required for install: the exact version to install.
+	# install, reinstall: the exact version.
 	version: ?string,
 	# Mark the package as automatically installed.
 	auto: bool

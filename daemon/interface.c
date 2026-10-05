@@ -74,7 +74,8 @@ static SD_VARLINK_DEFINE_ENUM_TYPE(SelectionAction,
                                    SD_VARLINK_DEFINE_ENUM_VALUE(install),
                                    SD_VARLINK_DEFINE_ENUM_VALUE(remove),
                                    SD_VARLINK_DEFINE_ENUM_VALUE(purge),
-                                   SD_VARLINK_DEFINE_ENUM_VALUE(keep));
+                                   SD_VARLINK_DEFINE_ENUM_VALUE(keep),
+                                   SD_VARLINK_DEFINE_ENUM_VALUE(reinstall));
 
 static SD_VARLINK_DEFINE_STRUCT_TYPE(
    Selection,
@@ -85,8 +86,7 @@ static SD_VARLINK_DEFINE_STRUCT_TYPE(
    SD_VARLINK_DEFINE_FIELD(name, SD_VARLINK_STRING, 0),
    SD_VARLINK_DEFINE_FIELD(arch, SD_VARLINK_STRING, 0),
    SD_VARLINK_DEFINE_FIELD_BY_TYPE(action, SelectionAction, 0),
-   SD_VARLINK_FIELD_COMMENT(
-      "Required for install: the exact version to install."),
+   SD_VARLINK_FIELD_COMMENT("install, reinstall: the exact version."),
    SD_VARLINK_DEFINE_FIELD(version, SD_VARLINK_STRING, SD_VARLINK_NULLABLE),
    SD_VARLINK_FIELD_COMMENT("Mark the package as automatically installed."),
    SD_VARLINK_DEFINE_FIELD(auto, SD_VARLINK_BOOL, 0));

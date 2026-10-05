@@ -476,7 +476,19 @@ int applySelections(sd_varlink *link,
          if (pkg.end())
             return reject(name, "unknown package");
 
-         if (strcmp(action, "install") == 0) {
+         if (strcmp(action, "reinstall") == 0) {
+            if (pkg.CurrentVer().end())
+               return reject(name, "not installed");
+            if (version == nullptr ||
+                strcmp(pkg.CurrentVer().VerStr(), version) != 0)
+               return reject(name, "reinstall needs the installed version");
+            deps.SetCandidateVersion(pkg.CurrentVer());
+            if (!deps.MarkInstall(
+                   pkg, /* AutoInst */ false, 0, /* FromUser */ !automatic))
+               return reject(name, "cannot be installed");
+            deps.SetReInstall(pkg, true);
+            deps.MarkAuto(pkg, automatic);
+         } else if (strcmp(action, "install") == 0) {
             if (version == nullptr)
                return reject(name, "install needs a version");
             pkgCache::VerIterator ver = pkg.VersionList();

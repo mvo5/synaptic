@@ -399,6 +399,51 @@ TEST_F(RSourcesTest, WriteSourcesFileKeepsModeAndCreatesMissingFiles)
    EXPECT_EQ(box.get("sources.list.d/new.list.bak"), "deb http://a/ s main\n");
 }
 
+// Reader corner cases taken from apt's own test suite.
+TEST_F(RSourcesTest, Deb822AptTestsuiteFixtures)
+{
+   _config->Set("APT::Architecture", "riscv64");
+   box.put("sources.list.d/a.sources",
+           "# that contains a : as well\n"
+           "#Types: meep\n"
+           "\n"
+           "# a free-standing comment appears\n"
+           "\n"
+           "Types: deb\n"
+           "#Types: deb-src\n"
+           "URIs: http://ftp.debian.org/debian\n"
+           "Suites: stable\n"
+           "Components: main\n"
+           "Description: summary\n"
+           "# comments are ignored\n");
+   box.put("sources.list.d/b.sources",
+           "#NOTE: Most preferred source listed first!\n"
+           "Types:          deb deb-src\n"
+           "URIs:http://ftp.uk.debian.org/debian/\n"
+           "Suites:         stretch\n"
+           "Components:     main contrib non-free\n");
+   box.put("sources.list.d/c.sources",
+           "Types: deb\n"
+           "URIs: http://ftp.tlh.debian.org/universe\n"
+           "Suites: stable/binary-$(ARCH)/\n"
+           "Enabled: false\n");
+
+   SourcesList lst;
+   EXPECT_TRUE(lst.ReadSources());
+   auto recs = records(lst);
+   ASSERT_EQ(recs.size(), 3u);
+   EXPECT_EQ(recs[0]->Type, SourcesList::Deb);
+   EXPECT_EQ(recs[0]->URI, "http://ftp.debian.org/debian");
+   EXPECT_EQ(sections(recs[0]), (vector<string>{"main"}));
+   EXPECT_EQ(recs[1]->Type, SourcesList::Deb | SourcesList::DebSrc);
+   EXPECT_EQ(recs[1]->URI, "http://ftp.uk.debian.org/debian/");
+   EXPECT_EQ(recs[1]->Dist, "stretch");
+   EXPECT_EQ(sections(recs[1]), (vector<string>{"main", "contrib", "non-free"}));
+   EXPECT_EQ(recs[2]->Type, SourcesList::Deb | SourcesList::Disabled);
+   EXPECT_EQ(recs[2]->Dist, "stable/binary-riscv64/");
+   EXPECT_EQ(recs[2]->NumSections, 0);
+}
+
 // Debian's package ships sources files as symlinks in some setups; the edit
 // must land in the target, not replace the link with a regular file.
 TEST_F(RSourcesTest, WriteSourcesFileFollowsSymlinks)

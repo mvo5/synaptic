@@ -34,7 +34,8 @@ type InstallEventKind(
 )
 
 type FetchItem(
-	# One file being downloaded, e.g. a package index.
+	# One file being downloaded, e.g. a package index. The id is stable across events for the same file.
+	id: int,
 	uri: string,
 	description: string,
 	short_description: string,

@@ -27,7 +27,10 @@
 
 static SD_VARLINK_DEFINE_STRUCT_TYPE(
    FetchItem,
-   SD_VARLINK_FIELD_COMMENT("One file being downloaded, e.g. a package index."),
+   SD_VARLINK_FIELD_COMMENT(
+      "One file being downloaded, e.g. a package index. "
+      "The id is stable across events for the same file."),
+   SD_VARLINK_DEFINE_FIELD(id, SD_VARLINK_INT, 0),
    SD_VARLINK_DEFINE_FIELD(uri, SD_VARLINK_STRING, 0),
    SD_VARLINK_DEFINE_FIELD(description, SD_VARLINK_STRING, 0),
    SD_VARLINK_DEFINE_FIELD(short_description, SD_VARLINK_STRING, 0),

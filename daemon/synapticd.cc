@@ -26,6 +26,8 @@
 #include "config.h" // IWYU pragma: associated
 
 #include "interface.h"
+#include "rfetchevent.h"
+#include "rfetchstatus.h"
 #include "rpackagecache.h"
 
 #include <apt-pkg/acquire-item.h>
@@ -107,96 +109,33 @@ int replyError(sd_varlink *link, const char *error, const string &message)
 // Forwards libapt's acquire callbacks to the client as FetchEvent
 // notifies. Runs inside the blocking ListUpdate(), so every notify is
 // flushed by hand; the event loop is not spinning meanwhile.
-class FetchStatus : public pkgAcquireStatus
+class FetchStatus : public RFetchStatus
 {
    sd_varlink *_link;
    const char *_key;
    bool _clientGone = false;
-
-   static int itemVariant(sd_json_variant **ret, pkgAcquire::ItemDesc &item)
-   {
-      return sd_json_buildo(
-         ret,
-         SD_JSON_BUILD_PAIR_STRING("uri", item.URI.c_str()),
-         SD_JSON_BUILD_PAIR_STRING("description", item.Description.c_str()),
-         SD_JSON_BUILD_PAIR_STRING("short_description", item.ShortDesc.c_str()),
-         SD_JSON_BUILD_PAIR_UNSIGNED("size", item.Owner->FileSize));
-   }
-
-   void send(sd_json_variant *event)
-   {
-      if (_clientGone)
-         return;
-      int r =
-         sd_varlink_notifybo(_link, SD_JSON_BUILD_PAIR_VARIANT(_key, event));
-      if (r >= 0)
-         r = sd_varlink_flush(_link);
-      if (r < 0) {
-         logError(string("sending event failed: ") + strerror(-r));
-         _clientGone = true;
-      }
-   }
-
-   void sendItem(const char *kind,
-                 pkgAcquire::ItemDesc &item,
-                 const char *error = nullptr)
-   {
-      JsonRef it, ev;
-      if (itemVariant(&it.v, item) < 0)
-         return;
-      if (sd_json_buildo(
-             &ev.v,
-             SD_JSON_BUILD_PAIR_STRING("kind", kind),
-             SD_JSON_BUILD_PAIR_VARIANT("item", it.v),
-             SD_JSON_BUILD_PAIR_CONDITION(
-                error != nullptr, "error", SD_JSON_BUILD_STRING(error))) < 0)
-         return;
-      send(ev.v);
-   }
-
-   void sendKind(const char *kind)
-   {
-      JsonRef ev;
-      if (sd_json_buildo(&ev.v, SD_JSON_BUILD_PAIR_STRING("kind", kind)) < 0)
-         return;
-      send(ev.v);
-   }
 
  public:
    // key: the name of the reply field the events go into
    FetchStatus(sd_varlink *link, const char *key) : _link(link), _key(key)
    {}
 
-   void Start() override
+   bool handleFetchEvent(const FetchEvent &ev) override
    {
-      pkgAcquireStatus::Start();
-      sendKind("start");
-   }
-
-   void Stop() override
-   {
-      pkgAcquireStatus::Stop();
-      sendKind("stop");
-   }
-
-   void Fetch(pkgAcquire::ItemDesc &item) override
-   {
-      sendItem("fetch", item);
-   }
-
-   void IMSHit(pkgAcquire::ItemDesc &item) override
-   {
-      sendItem("hit", item);
-   }
-
-   void Done(pkgAcquire::ItemDesc &item) override
-   {
-      sendItem("done", item);
-   }
-
-   void Fail(pkgAcquire::ItemDesc &item) override
-   {
-      sendItem("fail", item, item.Owner->ErrorText.c_str());
+      if (_clientGone)
+         return false;
+      JsonRef v;
+      int r = fetchEventToJson(ev, &v.v);
+      if (r >= 0)
+         r = sd_varlink_notifybo(_link, SD_JSON_BUILD_PAIR_VARIANT(_key, v.v));
+      if (r >= 0)
+         r = sd_varlink_flush(_link);
+      if (r < 0) {
+         logError(string("sending event failed: ") + strerror(-r));
+         _clientGone = true;
+      }
+      // a vanished client is the only way to cancel for now
+      return !_clientGone;
    }
 
    bool MediaChange(string media, string drive) override
@@ -206,49 +145,6 @@ class FetchStatus : public pkgAcquireStatus
          media.c_str(),
          drive.c_str());
       return false;
-   }
-
-   bool Pulse(pkgAcquire *owner) override
-   {
-      pkgAcquireStatus::Pulse(owner);
-
-      JsonRef workers;
-      for (pkgAcquire::Worker *w = owner->WorkersBegin(); w != nullptr;
-           w = owner->WorkerStep(w)) {
-         if (w->CurrentItem == nullptr)
-            continue;
-         JsonRef it, entry;
-         if (itemVariant(&it.v, *w->CurrentItem) < 0)
-            return !_clientGone;
-         if (sd_json_buildo(&entry.v,
-                            SD_JSON_BUILD_PAIR_VARIANT("item", it.v),
-                            SD_JSON_BUILD_PAIR_UNSIGNED(
-                               "current", w->CurrentItem->CurrentSize),
-                            SD_JSON_BUILD_PAIR_UNSIGNED(
-                               "total", w->CurrentItem->TotalSize)) < 0)
-            return !_clientGone;
-         if (sd_json_variant_append_array(&workers.v, entry.v) < 0)
-            return !_clientGone;
-      }
-
-      JsonRef ev;
-      if (sd_json_buildo(
-             &ev.v,
-             SD_JSON_BUILD_PAIR_STRING("kind", "pulse"),
-             SD_JSON_BUILD_PAIR_UNSIGNED("current_bytes", CurrentBytes),
-             SD_JSON_BUILD_PAIR_UNSIGNED("total_bytes", TotalBytes),
-             SD_JSON_BUILD_PAIR_UNSIGNED("current_items", CurrentItems),
-             SD_JSON_BUILD_PAIR_UNSIGNED("total_items", TotalItems),
-             SD_JSON_BUILD_PAIR_UNSIGNED("current_cps", CurrentCPS),
-             SD_JSON_BUILD_PAIR_CONDITION(workers.v != nullptr,
-                                          "workers",
-                                          SD_JSON_BUILD_VARIANT(workers.v))) <
-          0)
-         return !_clientGone;
-      send(ev.v);
-
-      // a vanished client is the only way to cancel for now
-      return !_clientGone;
    }
 };
 

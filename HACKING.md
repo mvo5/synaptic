@@ -57,11 +57,11 @@ layout for git-buildpackage.
 ## The varlink backend (synapticd)
 
 `daemon/` holds `synapticd`, the privileged half of synaptic. It needs
-libsystemd >= 257 for sd-varlink. To build against a systemd tree that
-is built but not installed, point pkg-config at a `libsystemd.pc` that
-describes it:
+libsystemd >= 257 for sd-varlink. On a system with an older one, build
+against a systemd checkout whose `build/` dir contains libsystemd (only
+that target is needed: `ninja -C build libsystemd.so.0.<n>.0`):
 
-    meson configure build -Dpkg_config_path=/path/to/dir-with-libsystemd.pc
+    meson setup build -Dsystemd_tree=$HOME/devel/systemd/systemd
 
 Poke at it with varlinkctl, which starts it as a child process:
 

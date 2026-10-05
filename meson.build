@@ -37,7 +37,16 @@ util_dep = cpp.find_library('util', required: true)
 apt_inst_dep = cpp.find_library('apt-inst', required: false)
 dependency('polkit-gobject-1', required: true)
 # sd-varlink, for synapticd
-libsystemd_dep = dependency('libsystemd', version: '>= 257')
+systemd_tree = get_option('systemd_tree')
+if systemd_tree != ''
+  # no pkg-config file for an uninstalled systemd, so wire it by hand
+  libsystemd_dep = declare_dependency(
+    compile_args: ['-I' + systemd_tree / 'src'],
+    link_args: ['-L' + systemd_tree / 'build', '-Wl,-rpath,' + systemd_tree / 'build', '-lsystemd'],
+  )
+else
+  libsystemd_dep = dependency('libsystemd', version: '>= 257')
+endif
 
 if not cpp.has_header('apt-pkg/configuration.h', dependencies: apt_pkg_dep)
   error('You need the apt-pkg headers installed to compile synaptic.')

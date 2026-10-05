@@ -28,8 +28,10 @@
 #include "rconfiguration.h"
 
 #include <algorithm>
+#include <apt-pkg/configuration.h>
 #include <apt-pkg/depcache.h>
 #include <apt-pkg/error.h>
+#include <apt-pkg/fileutl.h>
 #include <apt-pkg/pkgsystem.h>
 #include <apt-pkg/policy.h>
 #include <apt-pkg/sourcelist.h>
@@ -102,16 +104,46 @@ vector<string> RPackageCache::getPolicyArchives(bool filenames_only = false)
 }
 
 
+bool RPackageCache::lockLists()
+{
+   if (_config->FindB("Debug::NoLocking", false))
+      return true;
+
+   // must close before GetLock()
+   _listsLock.Close();
+   _listsLock.Fd(GetLock(_config->FindDir("Dir::State::Lists") + "lock"));
+   if (_listsLock.Fd() < 0)
+      return _error->Error(_("Unable to lock the list directory"));
+   return true;
+}
+
+
 bool RPackageCache::lock()
 {
    if (_locked)
       return true;
 
-   _system->Lock();
-   _locked = true;
+   if (!_system->Lock())
+      return false;
 
-   // FIXME: should depend on the result of _system->lock()
+   // the system lock only covers dpkg; without the lists lock an
+   // "apt update" elsewhere changes the package lists under us
+   if (!lockLists()) {
+      _system->UnLock();
+      return false;
+   }
+
+   _locked = true;
    return true;
+}
+
+
+bool RPackageCache::relockLists()
+{
+   if (!_locked)
+      return true;
+
+   return lockLists();
 }
 
 
@@ -120,6 +152,7 @@ void RPackageCache::releaseLock()
    if (!_locked)
       return;
 
+   _listsLock.Close();
    _system->UnLock();
    _locked = false;
 }

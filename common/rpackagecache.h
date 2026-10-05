@@ -25,6 +25,7 @@
 #include "config.h" // IWYU pragma: associated
 
 #include <apt-pkg/cachefile.h>
+#include <apt-pkg/fileutl.h>
 #include <apt-pkg/pkgcache.h>
 #include <map>
 #include <string>
@@ -42,6 +43,9 @@ class RPackageCache
    std::map<pkgCache::PkgFileIterator, pkgIndexFile *> _trust_cache;
 
    bool _locked;
+   FileFd _listsLock;
+
+   bool lockLists();
 
  public:
    inline pkgDepCache *deps()
@@ -63,6 +67,9 @@ class RPackageCache
 
    bool lock();
    void releaseLock();
+   // Call after every ListUpdate(): libapt takes and releases its own
+   // lists lock in there, which drops ours as a side effect.
+   bool relockLists();
 
    RPackageCache() : _locked(false)
    {}

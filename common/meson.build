@@ -1,5 +1,7 @@
 common_sources = files(
   'rconfiguration.cc',
+  'rfetchevent.cc',
+  'rfetchstatus.cc',
   'rinstallprogress.cc',
   'rpackage.cc',
   'rpackagestatus.cc',

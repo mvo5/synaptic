@@ -157,7 +157,7 @@ gtk_cpp_args = [
   '-DGDK_PIXBUF_DISABLE_DEPRECATED',
 ]
 
-common_deps = [apt_pkg_dep]
+common_deps = [apt_pkg_dep, libsystemd_dep]
 common_deps += rpm_deps
 if apt_inst_dep.found()
   common_deps += [apt_inst_dep]
@@ -171,6 +171,7 @@ gui_deps = [
   pango_dep,
   glib_dep,
   apt_pkg_dep,
+  libsystemd_dep,
   x11_dep,
   util_dep,
   threads_dep,

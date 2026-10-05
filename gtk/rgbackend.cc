@@ -23,6 +23,7 @@
 #include "rgbackend.h"
 
 #include "i18n.h"
+#include "rcommit.h"
 #include "rfetchevent.h"
 #include "rfetchstatus.h"
 
@@ -58,6 +59,7 @@ struct Call
    GMainLoop *loop;
    bool done = false;
    bool ok = true;
+   string errorId;
    string error;
 };
 
@@ -224,6 +226,7 @@ int RGBackend::onReply(sd_varlink *,
 
    if (error_id != nullptr) {
       call->ok = false;
+      call->errorId = error_id;
       call->error = describeError(error_id, parameters);
    } else {
       call->onReply(parameters);
@@ -275,8 +278,55 @@ bool RGBackend::call(const char *method,
       error = _("Lost the connection to synapticd");
       return false;
    }
+   _lastErrorId = call.errorId;
    error = call.error;
    return call.ok;
+}
+
+const char *RGBackend::fetchFailedError()
+{
+   return INTERFACE ".FetchFailed";
+}
+
+bool RGBackend::commit(const std::vector<Selection> &selections,
+                       const CommitOptions &options,
+                       RFetchStatus *fetch,
+                       RInstallEventHandler *install,
+                       string &error)
+{
+   sd_json_variant *sels = nullptr, *opts = nullptr, *parameters = nullptr;
+   int r = selectionsToJson(selections, &sels);
+   if (r >= 0)
+      r = commitOptionsToJson(options, &opts);
+   if (r >= 0)
+      r = sd_json_buildo(&parameters,
+                         SD_JSON_BUILD_PAIR_VARIANT("selections", sels),
+                         SD_JSON_BUILD_PAIR_VARIANT("options", opts));
+   sd_json_variant_unref(sels);
+   sd_json_variant_unref(opts);
+   if (r < 0) {
+      error = string("Commit: ") + strerror(-r);
+      return false;
+   }
+
+   auto onReply = [this, fetch, install](sd_json_variant *reply) {
+      FetchEvent fev;
+      if (fetchEventFromJson(sd_json_variant_by_key(reply, "fetch"), fev))
+         fetch->handleFetchEvent(fev);
+      InstallEvent iev;
+      if (installEventFromJson(sd_json_variant_by_key(reply, "install"), iev)) {
+         if (iev.kind == InstallEvent::Terminal) {
+            int fd = sd_varlink_take_fd(_link, 0);
+            if (fd >= 0)
+               install->attachTerminal(fd);
+         }
+         install->handleInstallEvent(iev);
+      }
+   };
+   bool ok =
+      call(INTERFACE ".Commit", parameters, /* more */ true, onReply, error);
+   sd_json_variant_unref(parameters);
+   return ok;
 }
 
 bool RGBackend::updateCache(RFetchStatus *status, string &error)

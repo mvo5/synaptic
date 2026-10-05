@@ -2721,8 +2721,10 @@ void RGMainWindow::cbProceedClicked(GSimpleAction *action,
 #endif    // HAVE_RPM
    me->_installProgress = dynamic_cast<RGWindow *>(iprogress);
 
-   // bool result = me->_lister->commitChanges(fprogress, iprogress);
-   me->_lister->commitChanges(fprogress, iprogress);
+   if (_backend != nullptr)
+      me->commitViaBackend(fprogress, iprogress);
+   else
+      me->_lister->commitChanges(fprogress, iprogress);
 
    iprogress->finish();
    delete fprogress;
@@ -2771,6 +2773,57 @@ void RGMainWindow::cbProceedClicked(GSimpleAction *action,
    me->refreshSubViewList();
    me->setInterfaceLocked(FALSE);
    me->updatePackageInfo(NULL);
+}
+
+// The daemon does what commitChanges() did in-process: the marks go
+// over as selections, download and dpkg progress come back as events.
+void RGMainWindow::commitViaBackend(RGFetchProgress *fprogress,
+                                    RInstallProgress *iprogress)
+{
+#ifdef WITH_DPKG_STATUSFD
+   auto *handler = dynamic_cast<RGDebInstallProgress *>(iprogress);
+#else
+   RInstallEventHandler *handler = nullptr;
+#endif
+   if (handler == nullptr) {
+      _error->Error(_("Applying changes through synapticd needs the dpkg "
+                      "progress window"));
+      return;
+   }
+
+   vector<Selection> selections;
+   _lister->getSelections(selections);
+
+   CommitOptions options;
+   options.downloadOnly = _config->FindB("Volatile::Download-Only", false);
+   options.conffile = CommitOptions::Ask;
+   options.terminal = true;
+
+   string error;
+   bool ok = _backend->commit(selections, options, fprogress, handler, error);
+   // the in-process path asked mid-transaction whether to go on without
+   // the archives that failed to download; here it is a retry
+   if (!ok && _backend->lastErrorId() == RGBackend::fetchFailedError() &&
+       !options.downloadOnly) {
+      string msg = _("Some of the packages could not be retrieved from the "
+                     "server(s).\n");
+      msg += error + "\n";
+      msg += _("Do you want to continue, ignoring these packages?");
+      if (_userDialog->confirm(msg.c_str())) {
+         options.fixMissing = true;
+         ok = _backend->commit(selections, options, fprogress, handler, error);
+      }
+   }
+   if (!ok)
+      _error->Error("%s", error.c_str());
+
+#ifdef WITH_DPKG_STATUSFD
+   // no result window when dpkg never ran, e.g. the download failed
+   if (handler->started()) {
+      handler->finishDaemon(ok);
+      handler->finishUpdate();
+   }
+#endif
 }
 
 void RGMainWindow::cbShowWelcomeDialog(GSimpleAction *action,
@@ -2874,8 +2927,9 @@ void RGMainWindow::cbUpdateClicked(GSimpleAction *action,
    // update cache and forget about the previous new packages
    // (only if no error occurred)
    string error;
-   bool updated = _backend != nullptr ? _backend->updateCache(progress, error)
-                                      : me->_lister->updateCache(progress, error);
+   bool updated = _backend != nullptr
+                     ? _backend->updateCache(progress, error)
+                     : me->_lister->updateCache(progress, error);
    if (!updated) {
       RGGtkBuilderUserDialog dia(me, "update_failed");
       GtkWidget *tv =

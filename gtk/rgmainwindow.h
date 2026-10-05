@@ -53,6 +53,7 @@ typedef enum {
 
 class RGAboutPanel;
 class RGFetchProgress;
+class RInstallProgress;
 class RGFilterManagerWindow;
 class RGFilterWindow;
 class RGFindWindow;
@@ -120,6 +121,8 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver
    RGLogView *_logView;
    RGUserDialog *_userDialog;
    RGFetchProgress *_fetchProgress;
+   void commitViaBackend(RGFetchProgress *fprogress,
+                         RInstallProgress *iprogress);
    RGWindow *_installProgress;
 
    // fast search stuff
@@ -206,7 +209,7 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver
    RGMainWindow(GtkApplication *app,
                 RPackageLister *packLister,
                 std::string name);
-   virtual ~RGMainWindow() {};
+   virtual ~RGMainWindow(){};
 
    void refreshTable(RPackage *selectedPkg = NULL, bool setAdjustments = true);
 

@@ -27,6 +27,10 @@
 #include <string>
 #include <systemd/sd-varlink.h>
 
+#include "rcommit.h"
+
+#include <vector>
+
 class RFetchStatus;
 
 // Starts synapticd through pkexec with a socketpair on its stdio and
@@ -45,6 +49,7 @@ class RGBackend
    bool _disconnected = false;
    bool _locked = false;
    std::string _lockError;
+   std::string _lastErrorId;
 
    bool spawn(std::string &error);
    bool attach();
@@ -88,6 +93,22 @@ class RGBackend
 
    // apt update; the events go to status, warnings into _error
    bool updateCache(RFetchStatus *status, std::string &error);
+
+   // apply the selections; download events go to fetch, dpkg events
+   // and the terminal to install
+   bool commit(const std::vector<Selection> &selections,
+               const CommitOptions &options,
+               RFetchStatus *fetch,
+               RInstallEventHandler *install,
+               std::string &error);
+
+   // the varlink error of the last failed call, e.g. to retry a
+   // FetchFailed with fix_missing
+   const std::string &lastErrorId() const
+   {
+      return _lastErrorId;
+   }
+   static const char *fetchFailedError();
 };
 
 extern RGBackend *_backend;

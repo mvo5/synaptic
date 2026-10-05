@@ -82,8 +82,9 @@ events, which is what you want from a shell; the GUI asks for the
 terminal and gets the pty master passed as a file descriptor.
 
 To run the GUI against the daemon instead of doing the privileged work
-in-process, name the daemon in the environment; as a user it is started
-through pkexec, as root directly:
+in-process (Reload and Apply go through it so far), name the daemon in
+the environment; as a user it is started through pkexec, as root
+directly:
 
     SYNAPTIC_DAEMON=$PWD/build/daemon/synapticd ./build/gtk/synaptic
 

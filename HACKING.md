@@ -39,7 +39,7 @@ not a test, so it is built but not registered with `meson test`.
 
 ## Style checks
 
-    ninja -C build lint                # whitespace errors introduced relative to master
+    ninja -C build lint                # whitespace errors introduced relative to main
     ninja -C build clang-format-check  # formatting per .clang-format
 
 `./fmt` runs clang-format in place over every C++ file under `common/`,

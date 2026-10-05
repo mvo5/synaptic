@@ -28,6 +28,7 @@
 #include "rsources.h"
 
 #include "i18n.h"
+#include "rdeb822file.h"
 
 #include <algorithm>
 #include <apt-pkg/configuration.h>
@@ -36,10 +37,14 @@
 #include <apt-pkg/strutl.h>
 #include <apt-pkg/tagfile.h>
 #include <cctype>
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <list>
+#include <map>
+#include <sstream>
 #include <string>
+#include <sys/stat.h>
 #include <vector>
 
 using namespace std;
@@ -198,18 +203,13 @@ static vector<string> FindMultiValue(const pkgTagSection &Sec,
 
 bool SourcesList::ReadDeb822SourcePart(string path)
 {
-   FileFd Fd;
-   // FileFd::Open() already queued an error with the errno
-   if (Fd.Open(path, FileFd::ReadOnly) == false)
-      return false;
-
-   pkgTagFile Tags(&Fd, pkgTagFile::SUPPORT_COMMENTS);
-   pkgTagSection Sec;
    bool record_ok = true;
-   while (Tags.Step(Sec)) {
+   RDeb822File File(path);
+   bool read_ok = File.Read([&](const pkgTagSection &Sec, unsigned Index) {
       SourceRecord rec;
       rec.SourceFile = path;
       rec.Format = Deb822;
+      rec.StanzaIndex = Index;
 
       bool types_ok = true;
       for (const string &T : FindMultiValue(Sec, "Types"))
@@ -217,9 +217,10 @@ bool SourcesList::ReadDeb822SourcePart(string path)
             types_ok = false;
       if (!types_ok || rec.Type == 0) {
          record_ok = false;
-         continue;
+         return;
       }
-      // absent means enabled (like in libapt)
+      // as in apt's ParseStanza(): absent means enabled, and so does an
+      // unparseable value; StringToBool("") alone would say disabled
       string Enabled = Sec.FindS("Enabled");
       if (Enabled.empty() == false && StringToBool(Enabled) == false)
          rec.Type |= Disabled;
@@ -243,8 +244,8 @@ bool SourcesList::ReadDeb822SourcePart(string path)
          rec.Sections[i] = comps[i];
 
       AddSourceNode(rec);
-   }
-   return record_ok;
+   });
+   return read_ok && record_ok;
 }
 
 bool SourcesList::ReadSourceDir(string Dir)
@@ -344,14 +345,37 @@ void SourcesList::SwapSources(SourceRecord *&rec_one, SourceRecord *&rec_two)
    SourceRecords.erase(rec_n);
 }
 
+// deb822 files are edited in place, field by field, because a SourceRecord
+// holds only what the dialog shows and regenerating the file from it would
+// drop Signed-By, unknown fields and comments. Only Enabled is written so far.
+bool SourcesList::UpdateDeb822Sources()
+{
+   map<string, vector<SourceRecord *>> byFile;
+   for (SourceRecord *rec : SourceRecords)
+      if (rec->Format == Deb822)
+         byFile[rec->SourceFile].push_back(rec);
+
+   for (const auto &entry : byFile) {
+      RDeb822File File(entry.first);
+      if (File.Read() == false)
+         return false;
+      for (const SourceRecord *rec : entry.second)
+         File.SetEnabled(rec->StanzaIndex, (rec->Type & Disabled) == 0);
+      if (File.Write() == false)
+         return false;
+   }
+   return true;
+}
+
 bool SourcesList::UpdateSources()
 {
+   if (UpdateDeb822Sources() == false)
+      return false;
+
    list<string> filenames;
    for (list<SourceRecord *>::iterator it = SourceRecords.begin();
         it != SourceRecords.end();
         it++) {
-      // we cannot represent a deb822 in a SourceRecord yet so skip
-      // writing until we can represent and write them
       if ((*it)->SourceFile == "" || (*it)->Format == Deb822)
          continue;
       filenames.push_front((*it)->SourceFile);
@@ -361,9 +385,7 @@ bool SourcesList::UpdateSources()
 
    for (list<string>::iterator fi = filenames.begin(); fi != filenames.end();
         fi++) {
-      ofstream ofs((*fi).c_str(), ios::out);
-      if (!ofs != 0)
-         return false;
+      ostringstream ofs;
 
       for (list<SourceRecord *>::iterator it = SourceRecords.begin();
            it != SourceRecords.end();
@@ -392,7 +414,8 @@ bool SourcesList::UpdateSources()
          }
          ofs << S << endl;
       }
-      ofs.close();
+      if (WriteSourcesFile(*fi, ofs.str()) == false)
+         return false;
    }
    return true;
 }
@@ -482,6 +505,7 @@ SourcesList::SourceRecord &SourcesList::SourceRecord::operator=(
    Comment = rhs.Comment;
    SourceFile = rhs.SourceFile;
    Format = rhs.Format;
+   StanzaIndex = rhs.StanzaIndex;
 
    return *this;
 }
@@ -582,6 +606,54 @@ void SourcesList::RemoveVendor(VendorRecord *&rec)
    VendorRecords.remove(rec);
    delete rec;
    rec = 0;
+}
+
+static bool WriteAtomically(const string &Path, const string &Content,
+                            mode_t Mode)
+{
+   // WriteAtomic writes a temporary file next to Path and renames it into
+   // place on Close(), so an interrupted save never leaves a truncated file
+   FileFd Out;
+   if (Out.Open(Path, FileFd::WriteAtomic, Mode) == false ||
+       Out.Write(Content.data(), Content.size()) == false ||
+       Out.Close() == false)
+      return _error->Error(_("Can't write %s"), Path.c_str());
+   return true;
+}
+
+bool WriteSourcesFile(const string &Target, const string &Content)
+{
+   // rename-into-place would replace a symlink with a regular file, so edit
+   // the file the link points to instead
+   string Path = Target;
+   if (char *Real = realpath(Target.c_str(), nullptr)) {
+      Path = Real;
+      free(Real);
+   }
+
+   string Old;
+   mode_t Mode = 0644;
+   const bool Exists = FileExists(Path);
+   if (Exists) {
+      ifstream In(Path, ios::binary);
+      ostringstream Buf;
+      Buf << In.rdbuf();
+      Old = Buf.str();
+      struct stat St;
+      if (stat(Path.c_str(), &St) == 0)
+         Mode = St.st_mode & 07777;
+      if (Old == Content)
+         return true;
+   }
+
+   // Written once only, so it keeps the file as it was before synaptic first
+   // changed it. apt ignores *.bak in sources.list.d silently
+   // (Dir::Ignore-Files-Silently).
+   const string Backup = Path + ".bak";
+   if (Exists && FileExists(Backup) == false &&
+       WriteAtomically(Backup, Old, Mode) == false)
+      return false;
+   return WriteAtomically(Path, Content, Mode);
 }
 
 ostream &operator<<(ostream &os, const SourcesList::SourceRecord &rec)

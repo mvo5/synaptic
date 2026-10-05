@@ -295,9 +295,137 @@ void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
 
 void RGDebInstallProgress::startUpdate()
 {
+   _started = true;
    child_has_exited = false;
+   last_term_action = time(NULL);
+   if (_timeoutSource == 0)
+      _timeoutSource = g_timeout_add_seconds(1, checkTerminalTimeout, this);
    show();
    RGFlushInterface();
+}
+
+gboolean RGDebInstallProgress::checkTerminalTimeout(gpointer data)
+{
+   RGDebInstallProgress *me = (RGDebInstallProgress *)data;
+
+   if (!me->_startCounting) {
+      gtk_progress_bar_pulse(GTK_PROGRESS_BAR(me->_pbarTotal));
+      // wait until we get the first message from apt
+      me->last_term_action = time(NULL);
+      return G_SOURCE_CONTINUE;
+   }
+
+   if ((time(NULL) - me->last_term_action) > me->_terminalTimeout) {
+      // get some debug info
+      const gchar *s = gtk_label_get_text(GTK_LABEL(me->_label_status));
+      g_warning("no statusfd changes/content updates in terminal for %i"
+                " seconds",
+                me->_terminalTimeout);
+      g_warning("TerminalTimeout in step: %s", s);
+      // now expand the terminal
+      GtkWidget *w;
+      w = GTK_WIDGET(gtk_builder_get_object(me->_builder, "expander_terminal"));
+      gtk_expander_set_expanded(GTK_EXPANDER(w), TRUE);
+      me->last_term_action = time(NULL);
+      // try to get the attention of the user
+      gtk_window_set_urgency_hint(GTK_WINDOW(me->_win), TRUE);
+   }
+   return G_SOURCE_CONTINUE;
+}
+
+void RGDebInstallProgress::showStatus(const string &status,
+                                      const string &pkg,
+                                      int percent,
+                                      const string &str)
+{
+   last_term_action = time(NULL);
+
+   gchar *label = NULL;
+   if (status == "pmerror") {
+      // error from dpkg, needs to be parsed different
+      label = g_strdup_printf(_("Error in package %s"), pkg.c_str());
+      string err = pkg + ": " + str;
+      _error->Error("%s", utf8(err.c_str()));
+   } else if (status == "pmrecover") {
+      // running dpkg --configure -a
+      label = g_strdup(_("Trying to recover from package failure"));
+   } else if (status == "pmconffile") {
+      // conffile-request from dpkg, needs to be parsed different
+      gchar *file = g_strdup(pkg.c_str());
+      gchar *detail = g_strdup(str.c_str());
+      conffile(file, detail);
+      g_free(file);
+      g_free(detail);
+   } else {
+      _startCounting = true;
+      gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), 0);
+      label = g_strdup(str.c_str());
+   }
+
+   // reset the urgency hint, something changed on the terminal
+   if (gtk_window_get_urgency_hint(GTK_WINDOW(_win)))
+      gtk_window_set_urgency_hint(GTK_WINDOW(_win), FALSE);
+
+   float val = percent / 100.0;
+   if (fabs(val - gtk_progress_bar_get_fraction(GTK_PROGRESS_BAR(_pbarTotal))) >
+       0.1)
+      gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), val);
+
+   if (label != NULL) {
+      gtk_label_set_text(GTK_LABEL(_label_status), utf8(label));
+      g_free(label);
+   }
+}
+
+void RGDebInstallProgress::handleInstallEvent(const InstallEvent &ev)
+{
+   // the first event is the moment dpkg starts, i.e. when the window
+   // appears in the in-process path too
+   if (!_started)
+      startUpdate();
+
+   switch (ev.kind) {
+      case InstallEvent::Status:
+         showStatus("pmstatus", ev.package, ev.percent, ev.message);
+         break;
+      case InstallEvent::Error:
+         showStatus("pmerror", ev.package, ev.percent, ev.message);
+         break;
+      case InstallEvent::Conffile:
+         showStatus("pmconffile", ev.package, ev.percent, ev.message);
+         break;
+      case InstallEvent::Recover:
+         showStatus("pmrecover", ev.package, ev.percent, ev.message);
+         break;
+      case InstallEvent::Terminal:
+      case InstallEvent::Output:
+         // the terminal comes with its fd, output only without one
+         break;
+   }
+   RGFlushInterface();
+}
+
+void RGDebInstallProgress::attachTerminal(int fd)
+{
+   GError *err = NULL;
+   VtePty *pty = vte_pty_new_foreign_sync(fd, NULL, &err);
+   if (err != NULL) {
+      std::cerr << "failed to attach the dpkg terminal: " << err->message
+                << std::endl;
+      g_error_free(err);
+      ::close(fd);
+      return;
+   }
+   vte_terminal_set_pty(VTE_TERMINAL(_term), pty);
+   g_object_unref(pty);
+}
+
+void RGDebInstallProgress::finishDaemon(bool ok)
+{
+   res = ok ? pkgPackageManager::Completed : pkgPackageManager::Failed;
+   child_has_exited = true;
+   // dpkg is gone, do not keep its terminal around
+   vte_terminal_set_pty(VTE_TERMINAL(_term), NULL);
 }
 
 void RGDebInstallProgress::cbCancel(GtkWidget *self, void *data)
@@ -305,10 +433,9 @@ void RGDebInstallProgress::cbCancel(GtkWidget *self, void *data)
    // FIXME: we can't activate this yet, it's way to heavy (sending KILL)
    // cout << "cbCancel: sending SIGKILL to child" << endl;
    RGDebInstallProgress *me = (RGDebInstallProgress *)data;
-   // kill(me->_child_id, SIGINT);
-   // kill(me->_child_id, SIGQUIT);
-   kill(me->_child_id, SIGTERM);
-   // kill(me->_child_id, SIGKILL);
+   // with synapticd there is no child of ours to signal (yet)
+   if (me->_child_id > 0)
+      kill(me->_child_id, SIGTERM);
 }
 
 void RGDebInstallProgress::cbClose(GtkWidget *self, void *data)
@@ -561,92 +688,23 @@ void RGDebInstallProgress::updateInterface()
       if (len < 1)
          break;
 
-      // update the time we last saw some action
-      last_term_action = time(NULL);
-
       if (buf[0] == '\n') {
-         // cout << "got line: " << line << endl;
-
          gchar **split = g_strsplit(line, ":", 4);
-         gchar *status = g_strstrip(split[0]);
-         gchar *pkg = g_strstrip(split[1]);
-         gchar *percent = g_strstrip(split[2]);
-         gchar *str = g_strdup(g_strstrip(split[3]));
-
          // major problem here, we got unexpected input. should _never_ happen
-         if (!(pkg && status))
-            continue;
-
-         // first check for errors and conf-file prompts
-         if (strstr(status, "pmerror") != NULL) {
-            // error from dpkg, needs to be parsed different
-            str = g_strdup_printf(_("Error in package %s"), split[1]);
-            gtk_label_set_text(GTK_LABEL(_label_status), str);
-            string err = split[1] + string(": ") + split[3];
-            _error->Error("%s", utf8(err.c_str()));
-            // first check for errors and conf-file prompts
-         } else if (strstr(status, "pmrecover") != NULL) {
-            // running dpkg --configure -a
-            str = g_strdup(_("Trying to recover from package failure"));
-            gtk_label_set_text(GTK_LABEL(_label_status), str);
-         } else if (strstr(status, "pmconffile") != NULL) {
-            // conffile-request from dpkg, needs to be parsed different
-            // cout << split[2] << " " << split[3] << endl;
-            conffile(pkg, split[3]);
-         } else {
-            _startCounting = true;
-            gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), 0);
+         if (split[0] != NULL && split[1] != NULL && split[2] != NULL &&
+             split[3] != NULL) {
+            showStatus(g_strstrip(split[0]),
+                       g_strstrip(split[1]),
+                       atoi(g_strstrip(split[2])),
+                       g_strstrip(split[3]));
          }
-
-         // reset the urgency hint, something changed on the terminal
-         if (gtk_window_get_urgency_hint(GTK_WINDOW(_win)))
-            gtk_window_set_urgency_hint(GTK_WINDOW(_win), FALSE);
-
-         float val = atof(percent) / 100.0;
-         // cout << "progress: " << val << endl;
-         if (fabs(val - gtk_progress_bar_get_fraction(
-                           GTK_PROGRESS_BAR(_pbarTotal))) > 0.1)
-            gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), val);
-
-         if (str != NULL)
-            gtk_label_set_text(GTK_LABEL(_label_status), utf8(str));
-
-         // clean-up
          g_strfreev(split);
-         g_free(str);
          line[0] = 0;
       } else {
          buf[1] = 0;
          strcat(line, buf);
       }
    }
-
-   time_t now = time(NULL);
-
-   if (!_startCounting) {
-      usleep(100000);
-      gtk_progress_bar_pulse(GTK_PROGRESS_BAR(_pbarTotal));
-      // wait until we get the first message from apt
-      last_term_action = now;
-   }
-
-
-   if ((now - last_term_action) > _terminalTimeout) {
-      // get some debug info
-      const gchar *s = gtk_label_get_text(GTK_LABEL(_label_status));
-      g_warning("no statusfd changes/content updates in terminal for %i"
-                " seconds",
-                _terminalTimeout);
-      g_warning("TerminalTimeout in step: %s", s);
-      // now expand the terminal
-      GtkWidget *w;
-      w = GTK_WIDGET(gtk_builder_get_object(_builder, "expander_terminal"));
-      gtk_expander_set_expanded(GTK_EXPANDER(w), TRUE);
-      last_term_action = time(NULL);
-      // try to get the attention of the user
-      gtk_window_set_urgency_hint(GTK_WINDOW(_win), TRUE);
-   }
-
 
    if (gtk_events_pending()) {
       while (gtk_events_pending())
@@ -755,6 +813,10 @@ std::optional<pkgPackageManager::OrderResult> RGDebInstallProgress::poll()
 
 void RGDebInstallProgress::finishUpdate()
 {
+   if (_timeoutSource != 0) {
+      g_source_remove(_timeoutSource);
+      _timeoutSource = 0;
+   }
    if (_startCounting) {
       gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), 1.0);
    }

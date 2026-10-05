@@ -26,6 +26,7 @@
 
 #ifdef WITH_DPKG_STATUSFD
 
+#   include "rcommit.h"
 #   include "rggtkbuilderwindow.h"
 #   include "rinstallprogress.h"
 
@@ -41,7 +42,12 @@ class RGMainWindow;
 class RGUserDialog;
 class RPackageLister;
 
-class RGDebInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
+// Shows dpkg running, either forked from this process (the in-process
+// path) or reported by synapticd as InstallEvents with the pty passed
+// over.
+class RGDebInstallProgress : public RInstallProgress,
+                             public RInstallEventHandler,
+                             public RGGtkBuilderWindow
 {
    typedef enum {
       EDIT_COPY,
@@ -106,6 +112,15 @@ class RGDebInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
 
    // last time something changed
    time_t last_term_action;
+   guint _timeoutSource = 0;
+   bool _started = false;
+   static gboolean checkTerminalTimeout(gpointer data);
+
+   // one parsed status-fd line, from either source
+   void showStatus(const std::string &status,
+                   const std::string &pkg,
+                   int percent,
+                   const std::string &str);
 
    int master;
    pkgPackageManager::OrderResult res;
@@ -150,6 +165,17 @@ class RGDebInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    virtual void startUpdate() override;
    virtual void updateInterface() override;
    virtual void finishUpdate() override;
+
+   // the synapticd path
+   void handleInstallEvent(const InstallEvent &ev) override;
+   void attachTerminal(int fd) override;
+   // whether dpkg ran, i.e. whether there is a result to show
+   bool started() const
+   {
+      return _started;
+   }
+   // tells the window how it ended, before finishUpdate()
+   void finishDaemon(bool ok);
 };
 
 #endif // WITH_DPKG_STATUSFD

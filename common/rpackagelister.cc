@@ -1363,15 +1363,7 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
    // pkgSourceList List;
    _cache->list()->ReadMainList();
 
-   // Lock the list directory
-   FileFd Lock;
-   if (_config->FindB("Debug::NoLocking", false) == false) {
-      Lock.Fd(GetLock(_config->FindDir("Dir::State::Lists") + "lock"));
-      // cout << "lock in : " << _config->FindDir("Dir::State::Lists") << endl;
-      if (_error->PendingError() == true)
-         return _error->Error(_("Unable to lock the list directory"));
-   }
-
+   // the lists dir is locked for the whole session by RPackageCache
    _updating = true;
 
 
@@ -1379,6 +1371,8 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
    // apt-0.7.10 has the new UpdateList code in algorithms, we use it
    string s;
    bool res = ListUpdate(*status, *_cache->list(), 5000);
+   if (!_cache->relockLists())
+      res = false;
    if (res == false) {
       while (!_error->empty()) {
          _error->PopMessage(s);

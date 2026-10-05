@@ -1,5 +1,6 @@
 gtk_sources = files(
   'gsynaptic.cc',
+  'rgbackend.cc',
   'gtkpkglist.cc',
   'rgcacheprogress.cc',
   'rgpkgcdrom.cc',

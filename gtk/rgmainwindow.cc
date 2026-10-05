@@ -31,6 +31,7 @@
 #include "gtkpkglist.h"
 #include "i18n.h"
 #include "raptoptions.h"
+#include "rgbackend.h"
 #include "rconfiguration.h"
 #include "rgcacheprogress.h"
 #include "rgchangelogdialog.h"
@@ -2873,7 +2874,9 @@ void RGMainWindow::cbUpdateClicked(GSimpleAction *action,
    // update cache and forget about the previous new packages
    // (only if no error occurred)
    string error;
-   if (!me->_lister->updateCache(progress, error)) {
+   bool updated = _backend != nullptr ? _backend->updateCache(progress, error)
+                                      : me->_lister->updateCache(progress, error);
+   if (!updated) {
       RGGtkBuilderUserDialog dia(me, "update_failed");
       GtkWidget *tv =
          GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(), "textview"));

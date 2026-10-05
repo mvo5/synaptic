@@ -338,9 +338,9 @@ bool RPackageLister::openCache()
    // Flush old errors
    _error->Discard();
 
-   // only lock if we run as root
+   // only lock if we run as root and no synapticd holds the locks for us
    bool lock = true;
-   if (getuid() != 0)
+   if (getuid() != 0 || _config->FindB("Volatile::Backend", false))
       lock = false;
 
    if (!_cache->open(_progMeter, lock)) {

@@ -25,6 +25,7 @@
 #include "i18n.h"
 #include "raptoptions.h"
 #include "rconfiguration.h"
+#include "rgbackend.h"
 #include "rgmainwindow.h"
 #include "rgpackagestatus.h"
 #include "rguserdialog.h"
@@ -495,9 +496,21 @@ static void applicationStartup(GApplication *app, gpointer user_data)
       exit(1);
    }
 
-   // check if there is another application runing and
-   // act accordingly
-   check_and_aquire_lock();
+   // the daemon takes the locks for the whole session, otherwise we do
+   _backend = RGBackend::fromEnvironment();
+   if (_backend != nullptr) {
+      string error;
+      if (!_backend->start(error) || !_backend->locked()) {
+         RGUserDialog userDialog;
+         userDialog.error(error.empty() ? _backend->lockError().c_str() : error.c_str());
+         exit(1);
+      }
+      _config->Set("Volatile::Backend", true);
+   } else {
+      // check if there is another application runing and
+      // act accordingly
+      check_and_aquire_lock();
+   }
 
    // read configuration early
    _roptions->restore();

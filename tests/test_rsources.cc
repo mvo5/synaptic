@@ -5,12 +5,14 @@
 
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/error.h>
+#include <apt-pkg/fileutl.h>
 #include <apt-pkg/init.h>
 #include <apt-pkg/pkgsystem.h>
 #include <gtest/gtest.h>
 #include <list>
 #include <string>
 #include <sys/stat.h>
+#include <unistd.h>
 #include <vector>
 
 using namespace std;
@@ -337,6 +339,82 @@ TEST_F(RSourcesTest, Deb822FilesAreNeverWritten)
    // the one-line file is still rewritten as before
    EXPECT_NE(box.get("sources.list").find("deb http://deb.debian.org/debian/ bookworm main"),
              string::npos);
+}
+
+// The first save keeps the original next to the file; later saves leave that
+// backup alone, and files whose content would not change are not touched.
+TEST_F(RSourcesTest, SavingBacksUpOnceAndSkipsUnchangedFiles)
+{
+   const string main_orig = "deb http://deb.debian.org/debian bookworm main\n";
+   const string part_orig = "deb http://a.example/debian stable main\n";
+   box.put("sources.list", main_orig);
+   box.put("sources.list.d/a.list", part_orig);
+
+   SourcesList lst;
+   EXPECT_TRUE(lst.ReadSources());
+   EXPECT_TRUE(lst.UpdateSources());
+
+   // both files are normalised on save (trailing slash, trailing space)...
+   const string main_saved = box.get("sources.list");
+   const string part_saved = box.get("sources.list.d/a.list");
+   EXPECT_NE(main_saved, main_orig);
+   EXPECT_NE(part_saved, part_orig);
+   // ...and the originals are kept
+   EXPECT_EQ(box.get("sources.list.bak"), main_orig);
+   EXPECT_EQ(box.get("sources.list.d/a.list.bak"), part_orig);
+
+   // saving again changes nothing, so the backups still hold the originals
+   EXPECT_TRUE(lst.UpdateSources());
+   EXPECT_EQ(box.get("sources.list"), main_saved);
+   EXPECT_EQ(box.get("sources.list.bak"), main_orig);
+   EXPECT_EQ(box.get("sources.list.d/a.list.bak"), part_orig);
+
+   // a real change later on does not overwrite the first backup either
+   for (SourcesList::SourceRecord *rec : lst.SourceRecords)
+      if (!(rec->Type & SourcesList::Comment))
+         rec->Type |= SourcesList::Disabled;
+   EXPECT_TRUE(lst.UpdateSources());
+   EXPECT_NE(box.get("sources.list"), main_saved);
+   EXPECT_EQ(box.get("sources.list.bak"), main_orig);
+   EXPECT_EQ(box.get("sources.list.d/a.list.bak"), part_orig);
+}
+
+TEST_F(RSourcesTest, WriteSourcesFileKeepsModeAndCreatesMissingFiles)
+{
+   const string path = box.path("sources.list.d/new.list");
+   EXPECT_TRUE(WriteSourcesFile(path, "deb http://a/ s main\n"));
+   EXPECT_EQ(box.get("sources.list.d/new.list"), "deb http://a/ s main\n");
+   EXPECT_FALSE(FileExists(path + ".bak"));
+
+   chmod(path.c_str(), 0600);
+   EXPECT_TRUE(WriteSourcesFile(path, "deb http://b/ s main\n"));
+   struct stat st;
+   ASSERT_EQ(stat(path.c_str(), &st), 0);
+   EXPECT_EQ(st.st_mode & 0777, 0600u);
+   ASSERT_EQ(stat((path + ".bak").c_str(), &st), 0);
+   EXPECT_EQ(st.st_mode & 0777, 0600u);
+   EXPECT_EQ(box.get("sources.list.d/new.list.bak"), "deb http://a/ s main\n");
+
+   EXPECT_TRUE(WriteSourcesFile(path, "deb http://c/ s main\n"));
+   EXPECT_EQ(box.get("sources.list.d/new.list.bak"), "deb http://a/ s main\n");
+}
+
+// Debian's package ships sources files as symlinks in some setups; the edit
+// must land in the target, not replace the link with a regular file.
+TEST_F(RSourcesTest, WriteSourcesFileFollowsSymlinks)
+{
+   const string target = box.path("real.sources");
+   const string link = box.path("sources.list.d/link.sources");
+   box.put("real.sources", "Types: deb\nURIs: http://a/\nSuites: s\n");
+   ASSERT_EQ(symlink(target.c_str(), link.c_str()), 0);
+
+   EXPECT_TRUE(WriteSourcesFile(link, "Types: deb\nURIs: http://b/\nSuites: s\n"));
+   struct stat st;
+   ASSERT_EQ(lstat(link.c_str(), &st), 0);
+   EXPECT_TRUE(S_ISLNK(st.st_mode));
+   EXPECT_EQ(box.get("real.sources"), "Types: deb\nURIs: http://b/\nSuites: s\n");
+   EXPECT_EQ(box.get("real.sources.bak"), "Types: deb\nURIs: http://a/\nSuites: s\n");
+   EXPECT_FALSE(FileExists(link + ".bak"));
 }
 
 int main(int argc, char **argv)

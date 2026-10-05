@@ -123,3 +123,7 @@ class SourcesList
 };
 
 std::ostream &operator<<(std::ostream &, const SourcesList::SourceRecord &);
+
+// Replaces Path with Content. The first time a file is changed its previous
+// content is kept in Path.bak; nothing is touched if the content is identical.
+bool WriteSourcesFile(const std::string &Path, const std::string &Content);

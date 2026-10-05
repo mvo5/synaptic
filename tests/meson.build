@@ -61,3 +61,14 @@ test_gtkpkglist = executable(
 test('test_rpackage', test_rpackage, env: test_env)
 test('test_rpackagefilter', test_rpackagefilter, env: test_env)
 test('test_rpackageview', test_rpackageview, env: test_env)
+
+varlinkctl = find_program('varlinkctl', required: false)
+if varlinkctl.found()
+  test(
+    'test_synapticd',
+    files('test_synapticd.sh'),
+    args: [synapticd.full_path(), varlinkctl.full_path(), files('../data/io.github.mvo5.synaptic.varlink')],
+    depends: synapticd,
+    env: test_env,
+  )
+endif

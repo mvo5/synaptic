@@ -16,6 +16,7 @@ bindir = prefix / get_option('bindir')
 datadir = prefix / get_option('datadir')
 localedir = prefix / get_option('localedir')
 localstatedir = prefix / get_option('localstatedir')
+libexecdir = prefix / get_option('libexecdir')
 
 pkg_datadir = datadir / meson.project_name()
 
@@ -35,6 +36,8 @@ x11_dep = cpp.find_library('X11', required: true)
 util_dep = cpp.find_library('util', required: true)
 apt_inst_dep = cpp.find_library('apt-inst', required: false)
 dependency('polkit-gobject-1', required: true)
+# sd-varlink, for synapticd
+libsystemd_dep = dependency('libsystemd', version: '>= 257')
 
 if not cpp.has_header('apt-pkg/configuration.h', dependencies: apt_pkg_dep)
   error('You need the apt-pkg headers installed to compile synaptic.')
@@ -143,6 +146,7 @@ endif
 if vendor_derives_from_ubuntu
   conf.set('VENDOR_DERIVES_FROM_UBUNTU', 1)
 endif
+conf.set_quoted('SYNAPTICD_PATH', libexecdir / 'synaptic' / 'synapticd')
 
 configure_file(output: 'config.h', configuration: conf)
 
@@ -187,6 +191,7 @@ endif
 
 subdir('po')
 subdir('common')
+subdir('daemon')
 subdir('gtk')
 subdir('data')
 subdir('pixmaps')

@@ -1,0 +1,152 @@
+# Privileged backend of the Synaptic package manager.
+interface io.github.mvo5.synaptic
+
+type FetchEventKind(
+	start,
+	fetch,
+	hit,
+	done,
+	fail,
+	pulse,
+	stop
+)
+
+type SelectionAction(
+	install,
+	remove,
+	purge,
+	keep
+)
+
+type ConffilePolicy(
+	ask,
+	keep,
+	replace
+)
+
+type InstallEventKind(
+	terminal,
+	status,
+	error,
+	conffile,
+	recover,
+	output
+)
+
+type FetchItem(
+	# One file being downloaded, e.g. a package index.
+	uri: string,
+	description: string,
+	short_description: string,
+	size: int
+)
+
+type FetchWorker(
+	# Progress of one download in flight.
+	item: FetchItem,
+	current: int,
+	total: int
+)
+
+type FetchEvent(
+	# Mirrors libapt's pkgAcquireStatus callbacks.
+	kind: FetchEventKind,
+	# Set for fetch, hit, done and fail.
+	item: ?FetchItem,
+	# Set for fail.
+	error: ?string,
+	# The remaining fields are set for pulse.
+	current_bytes: ?int,
+	total_bytes: ?int,
+	current_items: ?int,
+	total_items: ?int,
+	current_cps: ?int,
+	workers: ?[]FetchWorker
+)
+
+type Selection(
+	# The requested state of one package. The client has already resolved dependencies, so the list must be complete and consistent.
+	name: string,
+	arch: string,
+	action: SelectionAction,
+	# Required for install: the exact version to install.
+	version: ?string,
+	# Mark the package as automatically installed.
+	auto: bool
+)
+
+type CommitOptions(
+	# Only download the archives, do not run dpkg.
+	download_only: ?bool,
+	# Go on when some archives could not be downloaded.
+	fix_missing: ?bool,
+	# How dpkg handles changed configuration files. 'ask' needs 'terminal', the question is answered there.
+	conffile: ConffilePolicy,
+	# Pass the dpkg terminal (pty master) as a file descriptor with the 'terminal' event. Otherwise its output is streamed as 'output' events.
+	terminal: ?bool
+)
+
+type InstallEvent(
+	# Mirrors the dpkg status-fd lines libapt emits.
+	kind: InstallEventKind,
+	package: ?string,
+	percent: ?int,
+	message: ?string,
+	# Terminal output, only without 'terminal'.
+	output: ?string
+)
+
+# Report the daemon version and lock state.
+method Status() -> (
+	version: string,
+	# Whether the dpkg and package list locks are held.
+	locked: bool,
+	# libapt's explanation when they are not.
+	lock_error: ?string
+)
+
+# Download the package lists (apt update). Requires 'more'.
+# [Requires 'more' flag]
+method UpdateCache() -> (
+	# Streamed while downloading; absent in the final reply.
+	event: ?FetchEvent,
+	# Non-fatal problems, e.g. unsigned repositories.
+	warnings: ?string
+)
+
+# Apply a set of package selections: download the archives and run dpkg. Requires 'more'.
+# [Requires 'more' flag]
+method Commit(
+	selections: []Selection,
+	options: CommitOptions
+) -> (
+	# Streamed while downloading, then while dpkg runs; both absent in the final reply.
+	fetch: ?FetchEvent,
+	install: ?InstallEvent
+)
+
+# The daemon could not take the locks at startup.
+error NotLocked()
+
+error UpdateFailed(
+	message: string
+)
+
+# A selection names an unknown package or version, or could not be applied as requested.
+error InvalidSelection(
+	name: string,
+	reason: string
+)
+
+# Applying the selections leaves these packages with unsatisfied dependencies.
+error Broken(
+	packages: []string
+)
+
+error FetchFailed(
+	message: string
+)
+
+error InstallFailed(
+	message: string
+)

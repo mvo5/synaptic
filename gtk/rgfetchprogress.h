@@ -24,9 +24,10 @@
 
 #include "config.h" // IWYU pragma: associated
 
+#include "rfetchevent.h"
+#include "rfetchstatus.h"
 #include "rggtkbuilderwindow.h"
 
-#include <apt-pkg/acquire.h>
 #include <gtk/gtk.h>
 #include <set>
 #include <string>
@@ -34,7 +35,9 @@
 
 class RGWindow;
 
-class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow
+// Shows FetchEvents, whether they come from libapt in this process
+// (through RFetchStatus) or from synapticd.
+class RGFetchProgress : public RFetchStatus, public RGGtkBuilderWindow
 {
 
    struct Item
@@ -57,7 +60,8 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow
    GtkCellRenderer *_statusRenderer;
    bool _cancelled;
 
-   void updateStatus(pkgAcquire::ItemDesc &Itm, int status);
+   void updateStatus(const FetchItem &item, int status);
+   void handlePulse(const FetchEvent &ev);
    static void stopDownload(GtkWidget *self, void *data);
 
    static void cursorChanged(GtkTreeView *treeview, gpointer user_data);
@@ -72,16 +76,9 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow
    // GdkPixmap *statusDraw(int width, int height, int status);
 
  public:
-   virtual bool MediaChange(std::string Media, std::string Drive);
-   virtual void IMSHit(pkgAcquire::ItemDesc &Itm);
-   virtual void Fetch(pkgAcquire::ItemDesc &Itm);
-   virtual void Done(pkgAcquire::ItemDesc &Itm);
-   virtual void Fail(pkgAcquire::ItemDesc &Itm);
-   virtual void Start();
-   virtual void Stop();
-   virtual void close() override;
-
-   bool Pulse(pkgAcquire *Owner);
+   bool MediaChange(std::string Media, std::string Drive) override;
+   bool handleFetchEvent(const FetchEvent &ev) override;
+   void close() override;
 
    // set description of the current task (main and additonal explaination)
    void setDescription(std::string mainText, std::string secondText = "");

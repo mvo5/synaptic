@@ -311,9 +311,9 @@ TEST_F(RSourcesTest, SourcepartsMixesFormatsInSortedOrder)
    EXPECT_EQ(recs[1]->Format, SourcesList::OneLine);
 }
 
-// Until there is a writer that edits stanzas in place, saving must not touch
-// .sources files at all, whatever happened to their records in memory.
-TEST_F(RSourcesTest, Deb822FilesAreNeverWritten)
+// Only the Enabled state is written back for deb822 stanzas so far, in place;
+// every other in-memory change is ignored and the rest of the file is kept.
+TEST_F(RSourcesTest, Deb822OnlyEnabledIsWrittenBack)
 {
    const string ubuntu =
       "# See sources.list(5) for details\n"
@@ -323,22 +323,55 @@ TEST_F(RSourcesTest, Deb822FilesAreNeverWritten)
       "Components: main universe restricted multiverse\n"
       "Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\n";
    box.put("sources.list.d/ubuntu.sources", ubuntu);
+   box.put("sources.list.d/ppa.sources", string("Enabled: yes\n") + STANZA_A);
    box.put("sources.list", "deb http://deb.debian.org/debian bookworm main\n");
 
    SourcesList lst;
    EXPECT_TRUE(lst.ReadSources());
-   for (SourcesList::SourceRecord *rec : lst.SourceRecords) {
-      if (rec->Format != SourcesList::Deb822)
-         continue;
-      rec->Type |= SourcesList::Disabled;
-      rec->URI = "http://changed.example/";
-   }
+   SourcesList::SourceRecord *ubuntu_rec = nullptr;
+   for (SourcesList::SourceRecord *rec : lst.SourceRecords)
+      if (rec->SourceFile == box.path("sources.list.d/ubuntu.sources"))
+         ubuntu_rec = rec;
+   ASSERT_NE(ubuntu_rec, nullptr);
+
+   ubuntu_rec->Type |= SourcesList::Disabled;
+   ubuntu_rec->URI = "http://changed.example/";
    EXPECT_TRUE(lst.UpdateSources());
 
-   EXPECT_EQ(box.get("sources.list.d/ubuntu.sources"), ubuntu);
+   string expected = ubuntu;
+   expected.insert(expected.find("Types: deb\n"), "Enabled: no\n");
+   EXPECT_EQ(box.get("sources.list.d/ubuntu.sources"), expected);
+   EXPECT_EQ(box.get("sources.list.d/ppa.sources"), string("Enabled: yes\n") + STANZA_A);
    // the one-line file is still rewritten as before
    EXPECT_NE(box.get("sources.list").find("deb http://deb.debian.org/debian/ bookworm main"),
              string::npos);
+
+   // and back: the line we added is rewritten, not removed
+   ubuntu_rec->Type &= ~static_cast<unsigned int>(SourcesList::Disabled);
+   EXPECT_TRUE(lst.UpdateSources());
+   expected.replace(expected.find("Enabled: no\n"), 12, "Enabled: yes\n");
+   EXPECT_EQ(box.get("sources.list.d/ubuntu.sources"), expected);
+}
+
+// A stanza apt would reject still counts for the stanza index, so the writer
+// and the records agree on which stanza is which.
+TEST_F(RSourcesTest, Deb822StanzaIndexSurvivesSkippedStanzas)
+{
+   box.put("sources.list.d/mix.sources",
+           string(STANZA_A) + "\n" + "URIs: http://no-types.example/\nSuites: s\n\n" + STANZA_B);
+
+   SourcesList lst;
+   EXPECT_FALSE(lst.ReadSources());
+   auto recs = records(lst);
+   ASSERT_EQ(recs.size(), 2u);
+   EXPECT_EQ(recs[0]->StanzaIndex, 0u);
+   EXPECT_EQ(recs[1]->StanzaIndex, 2u);
+
+   const_cast<SourcesList::SourceRecord *>(recs[1])->Type |= SourcesList::Disabled;
+   EXPECT_TRUE(lst.UpdateSources());
+   EXPECT_EQ(box.get("sources.list.d/mix.sources"),
+             string(STANZA_A) + "\n" + "URIs: http://no-types.example/\nSuites: s\n\n" +
+                "Enabled: no\n" + STANZA_B);
 }
 
 // The first save keeps the original next to the file; later saves leave that

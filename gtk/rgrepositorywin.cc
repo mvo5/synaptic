@@ -727,7 +727,11 @@ void RGRepositoryEditor::DoOK(GtkWidget *, gpointer data)
    RGRepositoryEditor *me = (RGRepositoryEditor *)data;
 
    me->doEdit();
-   me->_lst.UpdateSources();
+   if (!me->_lst.UpdateSources()) {
+      // e.g. no permission: say so instead of closing as if it were saved
+      me->_userDialog->showErrors();
+      return;
+   }
 
    // check if we actually can parse the sources.list
    pkgSourceList List;

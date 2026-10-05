@@ -36,10 +36,13 @@
 #include <apt-pkg/strutl.h>
 #include <apt-pkg/tagfile.h>
 #include <cctype>
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <list>
+#include <sstream>
 #include <string>
+#include <sys/stat.h>
 #include <vector>
 
 using namespace std;
@@ -361,9 +364,7 @@ bool SourcesList::UpdateSources()
 
    for (list<string>::iterator fi = filenames.begin(); fi != filenames.end();
         fi++) {
-      ofstream ofs((*fi).c_str(), ios::out);
-      if (!ofs != 0)
-         return false;
+      ostringstream ofs;
 
       for (list<SourceRecord *>::iterator it = SourceRecords.begin();
            it != SourceRecords.end();
@@ -392,7 +393,8 @@ bool SourcesList::UpdateSources()
          }
          ofs << S << endl;
       }
-      ofs.close();
+      if (WriteSourcesFile(*fi, ofs.str()) == false)
+         return false;
    }
    return true;
 }
@@ -582,6 +584,54 @@ void SourcesList::RemoveVendor(VendorRecord *&rec)
    VendorRecords.remove(rec);
    delete rec;
    rec = 0;
+}
+
+static bool WriteAtomically(const string &Path, const string &Content,
+                            mode_t Mode)
+{
+   // WriteAtomic writes a temporary file next to Path and renames it into
+   // place on Close(), so an interrupted save never leaves a truncated file
+   FileFd Out;
+   if (Out.Open(Path, FileFd::WriteAtomic, Mode) == false ||
+       Out.Write(Content.data(), Content.size()) == false ||
+       Out.Close() == false)
+      return _error->Error(_("Can't write %s"), Path.c_str());
+   return true;
+}
+
+bool WriteSourcesFile(const string &Target, const string &Content)
+{
+   // rename-into-place would replace a symlink with a regular file, so edit
+   // the file the link points to instead
+   string Path = Target;
+   if (char *Real = realpath(Target.c_str(), nullptr)) {
+      Path = Real;
+      free(Real);
+   }
+
+   string Old;
+   mode_t Mode = 0644;
+   const bool Exists = FileExists(Path);
+   if (Exists) {
+      ifstream In(Path, ios::binary);
+      ostringstream Buf;
+      Buf << In.rdbuf();
+      Old = Buf.str();
+      struct stat St;
+      if (stat(Path.c_str(), &St) == 0)
+         Mode = St.st_mode & 07777;
+      if (Old == Content)
+         return true;
+   }
+
+   // Written once only, so it keeps the file as it was before synaptic first
+   // changed it. apt ignores *.bak in sources.list.d silently
+   // (Dir::Ignore-Files-Silently).
+   const string Backup = Path + ".bak";
+   if (Exists && FileExists(Backup) == false &&
+       WriteAtomically(Backup, Old, Mode) == false)
+      return false;
+   return WriteAtomically(Path, Content, Mode);
 }
 
 ostream &operator<<(ostream &os, const SourcesList::SourceRecord &rec)

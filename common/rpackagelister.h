@@ -26,6 +26,7 @@
 
 #include "config.h" // IWYU pragma: associated
 
+#include "rcommit.h"
 #include "rpackagecache.h"
 #include "rpackagestatus.h"
 
@@ -333,6 +334,8 @@ class RPackageLister
    bool distUpgrade();
    bool cleanPackageCache(bool forceClean = false);
    bool updateCache(pkgAcquireStatus *status, std::string &error);
+   // the marked changes, for synapticd's Commit
+   void getSelections(std::vector<Selection> &selections);
    bool commitChanges(pkgAcquireStatus *status, RInstallProgress *iprog);
 
    // some information

@@ -730,7 +730,7 @@ struct supportedPartFunc
 
  public:
    supportedPartFunc(bool ascent, RPackageStatus &s)
-      : _ascent(ascent), _status(s) {};
+      : _ascent(ascent), _status(s){};
    bool operator()(RPackage *x)
    {
       return (_ascent == _status.isSupported(x));
@@ -1354,6 +1354,32 @@ void RPackageLister::getDetailedSummary(vector<RPackage *> &held,
    delete PM;
 #endif
    sizeChange = deps->UsrSize();
+}
+
+void RPackageLister::getSelections(vector<Selection> &selections)
+{
+   pkgDepCache &deps = *_cache->deps();
+   for (RPackage *pkg : _packages) {
+      int flags = pkg->getFlags();
+      Selection sel;
+      if (flags & RPackage::FReInstall) {
+         sel.action = Selection::Reinstall;
+         sel.version = pkg->installedVersion();
+      } else if (flags & RPackage::FInstall) {
+         sel.action = Selection::Install;
+         sel.version = deps[*pkg->package()].InstVerIter(deps).VerStr();
+      } else if (flags & RPackage::FPurge) {
+         sel.action = Selection::Purge;
+      } else if (flags & RPackage::FRemove) {
+         sel.action = Selection::Remove;
+      } else {
+         continue;
+      }
+      sel.name = pkg->name();
+      sel.arch = pkg->package()->Arch();
+      sel.automatic = (flags & RPackage::FIsAuto) != 0;
+      selections.push_back(sel);
+   }
 }
 
 bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)

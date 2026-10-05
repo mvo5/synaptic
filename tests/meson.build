@@ -52,6 +52,16 @@ if gtest_dep.found()
   )
   test('test_rfetchevent', test_rfetchevent, env: test_env)
 
+  test_rcommit = executable(
+    'test_rcommit',
+    'test_rcommit.cc',
+    cpp_args: gtk_cpp_args + rpm_compile_args + ['-O0', '-g3'],
+    dependencies: test_common_deps + [gtest_dep],
+    include_directories: [root_inc, common_inc, gtk_inc],
+    link_with: libsynaptic,
+  )
+  test('test_rcommit', test_rcommit, env: test_env)
+
   test_rgbackend = executable(
     'test_rgbackend',
     ['test_rgbackend.cc', '../gtk/rgbackend.cc'],

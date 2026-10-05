@@ -1,4 +1,5 @@
 common_sources = files(
+  'rcommit.cc',
   'rconfiguration.cc',
   'rfetchevent.cc',
   'rfetchstatus.cc',

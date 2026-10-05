@@ -62,6 +62,7 @@ class SourcesList
       std::string Comment;
       std::string SourceFile;
       FileFormat Format;
+      unsigned StanzaIndex; // position in SourceFile, for RDeb822File
 
       bool SetType(std::string);
       std::string GetType() const;
@@ -69,7 +70,9 @@ class SourcesList
       std::string TypeLabel() const;
       bool SetURI(std::string);
 
-      SourceRecord() : Type(0), Sections(0), NumSections(0), Format(OneLine)
+      SourceRecord()
+          : Type(0), Sections(0), NumSections(0), Format(OneLine),
+            StanzaIndex(0)
       {}
       ~SourceRecord()
       {
@@ -109,6 +112,7 @@ class SourcesList
    bool ReadSourceDir(std::string Dir);
    bool ReadSources();
    bool UpdateSources();
+   bool UpdateDeb822Sources();
 
    VendorRecord *AddVendor(std::string VendorID,
                            std::string FingerPrint,

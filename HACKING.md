@@ -53,3 +53,35 @@ Boolean arguments at call sites are annotated systemd style, e.g.
 
 or plain `dpkg-buildpackage -us -uc`; `debian/gbp.conf` holds the branch
 layout for git-buildpackage.
+
+## The varlink backend (synapticd)
+
+`daemon/` holds `synapticd`, the privileged half of synaptic. It needs
+libsystemd >= 257 for sd-varlink. To build against a systemd tree that
+is built but not installed, point pkg-config at a `libsystemd.pc` that
+describes it:
+
+    meson configure build -Dpkg_config_path=/path/to/dir-with-libsystemd.pc
+
+Poke at it with varlinkctl, which starts it as a child process:
+
+    varlinkctl introspect build/daemon/synapticd io.github.mvo5.synaptic
+    varlinkctl call build/daemon/synapticd io.github.mvo5.synaptic.Status '{}'
+    sudo varlinkctl call --more build/daemon/synapticd io.github.mvo5.synaptic.UpdateCache '{}'
+
+A commit that only downloads is a safe way to see the whole path
+without changing the system (pick an installable version from
+`apt-cache policy hello`):
+
+    sudo varlinkctl call --more build/daemon/synapticd io.github.mvo5.synaptic.Commit \
+      '{"selections":[{"name":"hello","arch":"amd64","action":"install","version":"2.10-3build1","auto":false}],
+        "options":{"conffile":"keep","download_only":true}}'
+
+Without `"terminal":true` the dpkg output is streamed as `output`
+events, which is what you want from a shell; the GUI asks for the
+terminal and gets the pty master passed as a file descriptor.
+
+`data/io.github.mvo5.synaptic.varlink` is the textual interface
+description; `tests/test_synapticd.sh` checks it against what the
+daemon serves, so regenerate it with the introspect command above after
+changing `daemon/interface.c`.

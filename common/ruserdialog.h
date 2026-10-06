@@ -25,6 +25,8 @@
 
 #include "config.h" // IWYU pragma: associated
 
+#include "coroutines.h"
+
 class RUserDialog
 {
  public:
@@ -37,31 +39,39 @@ class RUserDialog
 
    enum DialogType { DialogInfo, DialogWarning, DialogQuestion, DialogError };
 
-   virtual bool message(const char *msg,
-                        DialogType dialog = DialogInfo,
-                        ButtonsType buttons = ButtonsDefault,
-                        bool defaultResponse = true) = 0;
+   [[nodiscard]] virtual task<bool> message(
+      const char *msg,
+      DialogType dialog = DialogInfo,
+      ButtonsType buttons = ButtonsDefault,
+      bool defaultResponse = true) = 0;
 
-   virtual bool confirm(const char *msg, bool defaultResponse = true)
+   [[nodiscard]] virtual task<bool> confirm(const char *msg,
+                                            bool defaultResponse = true)
    {
-      return message(msg, DialogQuestion, ButtonsYesNo, defaultResponse);
+      co_return co_await message(
+         msg, DialogQuestion, ButtonsYesNo, defaultResponse);
    }
 
-   virtual bool proceed(const char *msg, bool defaultResponse = true)
+   [[nodiscard]] virtual task<bool> proceed(const char *msg,
+                                            bool defaultResponse = true)
    {
-      return message(msg, DialogInfo, ButtonsOkCancel, defaultResponse);
+      co_return co_await message(
+         msg, DialogInfo, ButtonsOkCancel, defaultResponse);
    }
 
-   virtual bool warning(const char *msg, bool nocancel = true)
+   [[nodiscard]] virtual task<bool> warning(const char *msg,
+                                            bool nocancel = true)
    {
-      return nocancel ? message(msg, DialogWarning)
-                      : message(msg, DialogWarning, ButtonsOkCancel, false);
+      if (nocancel)
+         co_return co_await message(msg, DialogWarning);
+      else
+         co_return co_await message(msg, DialogWarning, ButtonsOkCancel, false);
    }
 
-   virtual void error(const char *msg)
+   [[nodiscard]] virtual task<void> error(const char *msg)
    {
-      message(msg, DialogError);
+      co_await message(msg, DialogError);
    }
 
-   virtual bool showErrors();
+   [[nodiscard]] virtual task<bool> showErrors();
 };

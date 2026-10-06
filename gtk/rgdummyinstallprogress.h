@@ -28,11 +28,12 @@
 
 class RGDummyInstallProgress : public RInstallProgress
 {
+
  public:
    RGDummyInstallProgress() : RInstallProgress() {};
    virtual ~RGDummyInstallProgress() {};
 
-   virtual void startUpdate() override;
-   virtual void updateInterface() override;
-   virtual void finishUpdate() override;
+   [[nodiscard]] virtual task<void> startUpdate() override;
+   [[nodiscard]] virtual task<void> updateInterface() override;
+   [[nodiscard]] virtual task<void> finishUpdate() override;
 };

@@ -88,9 +88,6 @@
 #include <utility>
 #include <vector>
 
-// include it here because depcache.h hates us if we have it before
-#include <gdk/gdkx.h>
-
 using namespace std;
 
 const char *relOptions[] = {N_("Dependencies"),
@@ -117,7 +114,7 @@ enum {
 
 GtkCssProvider *RGMainWindow::_fastSearchCssProvider = NULL;
 
-void RGMainWindow::changeView(int view, string subView)
+task<void> RGMainWindow::changeView(int view, string subView)
 {
    if (_config->FindB("Debug::Synaptic::View", false))
       ioprintf(clog,
@@ -148,7 +145,7 @@ void RGMainWindow::changeView(int view, string subView)
 
    GtkTreeSelection *selection;
    setBusyCursor(true);
-   setInterfaceLocked(TRUE);
+   co_await setInterfaceLocked(TRUE);
    GtkWidget *tview =
       GTK_WIDGET(gtk_builder_get_object(_builder, "treeview_subviews"));
    selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(tview));
@@ -173,7 +170,7 @@ void RGMainWindow::changeView(int view, string subView)
    }
    _lister->setSubView(subView);
    refreshTable(pkg, false);
-   setInterfaceLocked(FALSE);
+   co_await setInterfaceLocked(FALSE);
    setBusyCursor(false);
    _blockActions = FALSE;
    setStatusText();
@@ -284,9 +281,9 @@ string RGMainWindow::selectedSubView()
    return ret;
 }
 
-bool RGMainWindow::showErrors()
+task<bool> RGMainWindow::showErrors()
 {
-   return _userDialog->showErrors();
+   co_return co_await _userDialog->showErrors();
 }
 
 void RGMainWindow::notifyChange(RPackage *pkg)
@@ -321,7 +318,7 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
                selectedPkg != NULL ? selectedPkg->name() : "(no pkg)",
                setAdjustment);
 
-   const gchar *str = gtk_entry_get_text(GTK_ENTRY(_entry_fast_search));
+   const gchar *str = gtk_editable_get_text(GTK_EDITABLE(_entry_fast_search));
    if (str != NULL && strlen(str) > 1) {
       if (_config->FindB("Debug::Synaptic::View", false))
          cerr << "RGMainWindow::refreshTable: rerun limitBySearch" << endl;
@@ -521,16 +518,25 @@ void RGMainWindow::cbMenuAutoInstalledClicked(GSimpleAction *action,
    g_variant_unref(state);
    g_simple_action_set_state(action, g_variant_new_boolean(active));
 
+   start_task(
+      [me, active]() -> task<void> { co_await me->autoInstalled(active); });
+}
+
+task<void> RGMainWindow::autoInstalled(bool active)
+{
+   if (_blockActions)
+      co_return;
+
    GtkTreeSelection *selection;
    GtkTreeIter iter;
    GList *list, *li;
    RPackage *pkg;
 
-   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_treeView));
-   list = li = gtk_tree_selection_get_selected_rows(selection, &me->_pkgList);
+   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_treeView));
+   li = gtk_tree_selection_get_selected_rows(selection, &_pkgList);
    while (li != NULL) {
-      gtk_tree_model_get_iter(me->_pkgList, &iter, (GtkTreePath *)(li->data));
-      gtk_tree_model_get(me->_pkgList, &iter, PKG_COLUMN, &pkg, -1);
+      gtk_tree_model_get_iter(_pkgList, &iter, (GtkTreePath *)(li->data));
+      gtk_tree_model_get(_pkgList, &iter, PKG_COLUMN, &pkg, -1);
       if (pkg == NULL) {
          li = g_list_next(li);
          continue;
@@ -544,23 +550,23 @@ void RGMainWindow::cbMenuAutoInstalledClicked(GSimpleAction *action,
 
    // write it
    GtkWidget *progress =
-      GTK_WIDGET(gtk_builder_get_object(me->_builder, "progressbar_main"));
+      GTK_WIDGET(gtk_builder_get_object(_builder, "progressbar_main"));
    GtkWidget *label =
-      GTK_WIDGET(gtk_builder_get_object(me->_builder, "label_status"));
+      GTK_WIDGET(gtk_builder_get_object(_builder, "label_status"));
    RGCacheProgress cacheProgress(progress, label);
-   me->_lister->getCache()->deps()->writeStateFile(&cacheProgress, true);
+   _lister->getCache()->deps()->writeStateFile(&cacheProgress, true);
 
    // refresh
-   me->setInterfaceLocked(TRUE);
-   me->_lister->unregisterObserver(me);
+   co_await setInterfaceLocked(TRUE);
+   _lister->unregisterObserver(this);
 
-   me->_lister->getCache()->deps()->MarkAndSweep();
-   me->_lister->refreshView();
+   _lister->getCache()->deps()->MarkAndSweep();
+   _lister->refreshView();
 
-   me->_lister->registerObserver(me);
-   me->refreshTable();
-   me->refreshSubViewList();
-   me->setInterfaceLocked(FALSE);
+   _lister->registerObserver(this);
+   refreshTable();
+   refreshSubViewList();
+   co_await setInterfaceLocked(FALSE);
 }
 
 // install a specific version
@@ -571,11 +577,17 @@ void RGMainWindow::cbInstallFromVersion(GSimpleAction *action,
    // cout << "RGMainWindow::cbInstallFromVersion()" << endl;
 
    RGMainWindow *me = (RGMainWindow *)data;
-   RPackage *pkg = me->selectedPackage();
-   if (pkg == NULL)
-      return;
+   start_task([me]() -> task<void> { co_await me->installFromVersion(); });
+}
 
-   RGGtkBuilderUserDialog dia(me, "change_version");
+// install a specific version
+task<void> RGMainWindow::installFromVersion()
+{
+   RPackage *pkg = selectedPackage();
+   if (pkg == NULL)
+      co_return;
+
+   RGGtkBuilderUserDialog dia(this, "change_version");
 
    GtkWidget *label =
       GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(), "label_text"));
@@ -609,9 +621,9 @@ void RGMainWindow::cbInstallFromVersion(GSimpleAction *action,
    }
    gtk_combo_box_set_active(GTK_COMBO_BOX(available_versions_combo),
                             canidateNr);
-   if (!dia.run()) {
+   if (!co_await dia.co_run()) {
       // cout << "cancel" << endl;
-      return; // user clicked cancel
+      co_return; // user clicked cancel
    }
 
    int nr = gtk_combo_box_get_active(GTK_COMBO_BOX(available_versions_combo));
@@ -619,7 +631,7 @@ void RGMainWindow::cbInstallFromVersion(GSimpleAction *action,
    pkg->setNotify(false);
    // nr-1 here as we add a "do not override" to the option menu
    pkg->setVersion(versions[nr].first.c_str());
-   me->pkgAction(PKG_INSTALL_FROM_VERSION);
+   co_await pkgAction(PKG_INSTALL_FROM_VERSION);
 
 
    if (!(pkg->getFlags() & RPackage::FInstall))
@@ -628,8 +640,8 @@ void RGMainWindow::cbInstallFromVersion(GSimpleAction *action,
    pkg->setNotify(true);
 }
 
-bool RGMainWindow::askStateChange(RPackageLister::pkgState state,
-                                  const vector<RPackage *> &exclude)
+task<bool> RGMainWindow::askStateChange(RPackageLister::pkgState state,
+                                        const vector<RPackage *> &exclude)
 {
    vector<RPackage *> toKeep;
    vector<RPackage *> toInstall;
@@ -661,7 +673,7 @@ bool RGMainWindow::askStateChange(RPackageLister::pkgState state,
                       toRemove,
                       toDowngrade,
                       notAuthenticated);
-      int res = gtk_dialog_run(GTK_DIALOG(changes.window()));
+      int res = co_await co_run_dialog(GTK_DIALOG(changes.window()));
       if (res != GTK_RESPONSE_OK) {
          // canceled operation
          _lister->restoreState(state);
@@ -672,16 +684,16 @@ bool RGMainWindow::askStateChange(RPackageLister::pkgState state,
       }
    }
 
-   return changed;
+   co_return changed;
 }
 
-void RGMainWindow::pkgAction(RGPkgAction action)
+task<void> RGMainWindow::pkgAction(RGPkgAction action)
 {
    GtkTreeSelection *selection;
    GtkTreeIter iter;
    GList *li, *list;
 
-   setInterfaceLocked(TRUE);
+   co_await setInterfaceLocked(TRUE);
    _blockActions = TRUE;
 
    // get list of selected pkgs
@@ -748,17 +760,17 @@ void RGMainWindow::pkgAction(RGPkgAction action)
             break;
          case PKG_DELETE: // delete
             if (flags & RPackage::FInstalled)
-               pkgRemoveHelper(pkg);
+               co_await pkgRemoveHelper(pkg);
             break;
          case PKG_PURGE: // purge
             if (flags & RPackage::FInstalled ||
                 flags & RPackage::FResidualConfig)
-               pkgRemoveHelper(pkg, true);
+               co_await pkgRemoveHelper(pkg, true);
             break;
          case PKG_DELETE_WITH_DEPS:
             if (flags & RPackage::FInstalled ||
                 flags & RPackage::FResidualConfig)
-               pkgRemoveHelper(pkg, true, true);
+               co_await pkgRemoveHelper(pkg, true, true);
             break;
          default:
             cout << "uh oh!!!!!!!!!" << endl;
@@ -776,14 +788,14 @@ void RGMainWindow::pkgAction(RGPkgAction action)
 
    _lister->notifyCachePostChange();
 
-   bool changed = askStateChange(state, exclude);
+   bool changed = co_await askStateChange(state, exclude);
 
    if (changed) {
       bool failed = false;
       // check for failed installs, if a installs fails, restore old state
       // as the Fixer may do wired thinks when trying to resolve the problem
       if (action == PKG_INSTALL) {
-         failed = checkForFailedInst(instPkgs);
+         failed = co_await checkForFailedInst(instPkgs);
          if (failed)
             _lister->restoreState(state);
       }
@@ -800,11 +812,11 @@ void RGMainWindow::pkgAction(RGPkgAction action)
 
    refreshSubViewList();
    _blockActions = FALSE;
-   setInterfaceLocked(FALSE);
+   co_await setInterfaceLocked(FALSE);
    refreshTable(pkg);
 }
 
-bool RGMainWindow::checkForFailedInst(vector<RPackage *> instPkgs)
+task<bool> RGMainWindow::checkForFailedInst(vector<RPackage *> instPkgs)
 {
    string failedReason;
    bool failed = false;
@@ -828,45 +840,27 @@ bool RGMainWindow::checkForFailedInst(vector<RPackage *> instPkgs)
          GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(), "textview"));
       GtkTextBuffer *tb = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tv));
       gtk_text_buffer_set_text(tb, utf8(failedReason.c_str()), -1);
-      dia.run();
+      co_await dia.co_run();
       // we informaed the user about the problem, we can clear the
       // apt error stack
       // CHECKME: is this discard here really needed?
       _error->Discard();
    }
 
-   return failed;
-}
-
-struct ActionClosure
-{
-   RGMainWindow *me;
-   const char *action_name;
-};
-
-static void acceleratorCallback(gpointer data)
-{
-   ActionClosure *c = (ActionClosure *)data;
-   c->me->activateAction(c->action_name, nullptr);
+   co_return failed;
 }
 
 static void setActionShortcut(RGMainWindow *me,
-                              GtkAccelGroup *accel_group,
+                              GtkShortcutController *shortcuts,
                               const char *action_name,
                               guint key,
                               GdkModifierType mods)
 {
-   ActionClosure *closure = g_new0(ActionClosure, 1);
-   closure->me = me;
-   closure->action_name = action_name;
-
-   gtk_accel_group_connect(accel_group,
-                           key,
-                           mods,
-                           GTK_ACCEL_VISIBLE,
-                           g_cclosure_new_swap(G_CALLBACK(acceleratorCallback),
-                                               closure,
-                                               (GClosureNotify)g_free));
+   gtk_shortcut_controller_add_shortcut(
+      shortcuts,
+      gtk_shortcut_new(
+         gtk_keyval_trigger_new(key, mods),
+         gtk_named_action_new((std::string("win.") + action_name).c_str())));
 }
 
 RGMainWindow::RGMainWindow(GtkApplication *app,
@@ -874,7 +868,7 @@ RGMainWindow::RGMainWindow(GtkApplication *app,
                            string name)
    : RGGtkBuilderWindow(NULL, name), _lister(packLister), _pkgList(0),
      _treeView(0), _tasksWin(0), _iconLegendPanel(0), _pkgDetails(0),
-     _logView(0), _installProgress(0), _fetchProgress(0), _fastSearchEventID(-1)
+     _logView(0), _fetchProgress(0), _installProgress(0), _fastSearchEventID(-1)
 {
    assert(_win);
    gtk_application_add_window(GTK_APPLICATION(app), GTK_WINDOW(_win));
@@ -927,38 +921,37 @@ RGMainWindow::RGMainWindow(GtkApplication *app,
       {"icon-legend", cbShowIconLegendPanel},
       {"about", cbShowAboutPanel}};
 
-   GSimpleActionGroup *group = g_simple_action_group_new();
+   win_actions = G_ACTION_GROUP(g_simple_action_group_new());
    g_action_map_add_action_entries(
-      G_ACTION_MAP(group), entries, G_N_ELEMENTS(entries), this);
+      G_ACTION_MAP(win_actions), entries, G_N_ELEMENTS(entries), this);
    gtk_widget_insert_action_group(
-      GTK_WIDGET(_win), "win", G_ACTION_GROUP(group));
+      GTK_WIDGET(_win), "win", G_ACTION_GROUP(win_actions));
 
-   GtkAccelGroup *accel_group = gtk_accel_group_new();
-   gtk_window_add_accel_group(GTK_WINDOW(_win), accel_group);
-   setActionShortcut(this, accel_group, "quit", GDK_KEY_Q, GDK_CONTROL_MASK);
-   setActionShortcut(this, accel_group, "undo", GDK_KEY_Z, GDK_CONTROL_MASK);
-   setActionShortcut(this, accel_group, "redo", GDK_KEY_Z, GDK_SHIFT_MASK);
-   setActionShortcut(this, accel_group, "search", GDK_KEY_F, GDK_CONTROL_MASK);
-   setActionShortcut(this, accel_group, "reload", GDK_KEY_R, GDK_CONTROL_MASK);
+   GtkShortcutController *shortcuts = getShortcutController();
+   setActionShortcut(this, shortcuts, "quit", GDK_KEY_Q, GDK_CONTROL_MASK);
+   setActionShortcut(this, shortcuts, "undo", GDK_KEY_Z, GDK_CONTROL_MASK);
+   setActionShortcut(this, shortcuts, "redo", GDK_KEY_Z, GDK_SHIFT_MASK);
+   setActionShortcut(this, shortcuts, "search", GDK_KEY_F, GDK_CONTROL_MASK);
+   setActionShortcut(this, shortcuts, "reload", GDK_KEY_R, GDK_CONTROL_MASK);
    setActionShortcut(
-      this, accel_group, "mark-all-upgrades", GDK_KEY_G, GDK_CONTROL_MASK);
-   setActionShortcut(this, accel_group, "apply", GDK_KEY_P, GDK_CONTROL_MASK);
-   setActionShortcut(this, accel_group, "unmark", GDK_KEY_N, GDK_CONTROL_MASK);
+      this, shortcuts, "mark-all-upgrades", GDK_KEY_G, GDK_CONTROL_MASK);
+   setActionShortcut(this, shortcuts, "apply", GDK_KEY_P, GDK_CONTROL_MASK);
+   setActionShortcut(this, shortcuts, "unmark", GDK_KEY_N, GDK_CONTROL_MASK);
    setActionShortcut(
-      this, accel_group, "mark-install", GDK_KEY_I, GDK_CONTROL_MASK);
+      this, shortcuts, "mark-install", GDK_KEY_I, GDK_CONTROL_MASK);
    setActionShortcut(
-      this, accel_group, "mark-upgrade", GDK_KEY_U, GDK_CONTROL_MASK);
+      this, shortcuts, "mark-upgrade", GDK_KEY_U, GDK_CONTROL_MASK);
    setActionShortcut(
-      this, accel_group, "mark-delete", GDK_KEY_Delete, (GdkModifierType)0);
+      this, shortcuts, "mark-delete", GDK_KEY_Delete, (GdkModifierType)0);
    setActionShortcut(
-      this, accel_group, "mark-purge", GDK_KEY_Delete, GDK_SHIFT_MASK);
+      this, shortcuts, "mark-purge", GDK_KEY_Delete, GDK_SHIFT_MASK);
    setActionShortcut(
-      this, accel_group, "override-version", GDK_KEY_E, GDK_CONTROL_MASK);
+      this, shortcuts, "override-version", GDK_KEY_E, GDK_CONTROL_MASK);
    setActionShortcut(
-      this, accel_group, "download-changelog", GDK_KEY_L, GDK_CONTROL_MASK);
+      this, shortcuts, "download-changelog", GDK_KEY_L, GDK_CONTROL_MASK);
    setActionShortcut(
-      this, accel_group, "package-properties", GDK_KEY_Return, GDK_MOD1_MASK);
-   setActionShortcut(this, accel_group, "help", GDK_KEY_F1, (GdkModifierType)0);
+      this, shortcuts, "package-properties", GDK_KEY_Return, GDK_ALT_MASK);
+   setActionShortcut(this, shortcuts, "help", GDK_KEY_F1, (GdkModifierType)0);
 
    _blockActions = false;
    _unsavedChanges = false;
@@ -1127,35 +1120,25 @@ void RGMainWindow::buildInterface()
 
    gtk_window_set_icon_name(GTK_WINDOW(_win), "synaptic");
 
-   gtk_window_resize(GTK_WINDOW(_win),
-                     _config->FindI("Synaptic::windowWidth", 640),
-                     _config->FindI("Synaptic::windowHeight", 480));
-   gtk_window_move(GTK_WINDOW(_win),
-                   _config->FindI("Synaptic::windowX", 100),
-                   _config->FindI("Synaptic::windowY", 100));
+   gtk_window_set_default_size(GTK_WINDOW(_win),
+                               _config->FindI("Synaptic::windowWidth", 640),
+                               _config->FindI("Synaptic::windowHeight", 480));
+
    if (_config->FindB("Synaptic::Maximized", false))
       gtk_window_maximize(GTK_WINDOW(_win));
-   RGFlushInterface();
 
    if (_fastSearchCssProvider == NULL) {
       _fastSearchCssProvider = gtk_css_provider_new();
       gtk_css_provider_load_from_data(
          _fastSearchCssProvider,
          "GtkEntry:not(:selected) { background: #F7F7BE; }",
-         -1,
-         NULL);
+         -1);
    }
 
    if (getuid() != 0) {
       gtk_widget_show(
          GTK_WIDGET(gtk_builder_get_object(_builder, "no_root_info")));
    }
-
-   gtk_menu_shell_bind_model(
-      GTK_MENU_SHELL(gtk_builder_get_object(_builder, "menubar1")),
-      G_MENU_MODEL(gtk_builder_get_object(_builder, "main_menu")),
-      nullptr,
-      false);
 
    g_signal_connect(gtk_builder_get_object(_builder, "entry_fast_search"),
                     "changed",
@@ -1246,7 +1229,7 @@ void RGMainWindow::buildInterface()
    // not restored in the same place as it was.
    if (!_config->FindB("Volatile::HideMainwindow", false))
       show();
-   RGFlushInterface();
+
    gtk_paned_set_position(GTK_PANED(vpaned),
                           _config->FindI("Synaptic::vpanedPos", 140));
    gtk_paned_set_position(GTK_PANED(hpaned),
@@ -1256,10 +1239,12 @@ void RGMainWindow::buildInterface()
    // build the treeview
    buildTreeView();
 
-   g_signal_connect(G_OBJECT(_treeView),
-                    "button-press-event",
-                    (GCallback)cbPackageListClicked,
-                    this);
+   GtkGesture *click_controller = gtk_gesture_click_new();
+   gtk_gesture_single_set_button(GTK_GESTURE_SINGLE(click_controller), 0);
+   g_signal_connect(
+      click_controller, "pressed", (GCallback)cbPackageListClicked, this);
+   gtk_widget_add_controller(GTK_WIDGET(_treeView),
+                             GTK_EVENT_CONTROLLER(click_controller));
 
    GtkTreeSelection *select;
    select = gtk_tree_view_get_selection(GTK_TREE_VIEW(_treeView));
@@ -1339,9 +1324,9 @@ void RGMainWindow::buildInterface()
    g_signal_connect(
       G_OBJECT(select), "changed", G_CALLBACK(cbChangedSubView), this);
 
-   GtkBindingSet *binding_set = gtk_binding_set_find("GtkTreeView");
-   gtk_binding_entry_add_signal(
-      binding_set, GDK_KEY_s, GDK_CONTROL_MASK, "start_interactive_search", 0);
+   //   GtkBindingSet *binding_set = gtk_binding_set_find("GtkTreeView");
+   //   gtk_binding_entry_add_signal(binding_set, GDK_KEY_s, GDK_CONTROL_MASK,
+   //				"start_interactive_search", 0);
 
    _entry_fast_search =
       GTK_WIDGET(gtk_builder_get_object(_builder, "entry_fast_search"));
@@ -1369,13 +1354,11 @@ void RGMainWindow::buildInterface()
 
 bool RGMainWindow::isActionEnabled(const char *action_name)
 {
-   GActionGroup *win_actions = gtk_widget_get_action_group(_win, "win");
    return g_action_group_get_action_enabled(win_actions, action_name);
 }
 
 void RGMainWindow::setActionEnabled(const char *action_name, bool enabled)
 {
-   GActionGroup *win_actions = gtk_widget_get_action_group(_win, "win");
    GAction *action =
       g_action_map_lookup_action(G_ACTION_MAP(win_actions), action_name);
    g_simple_action_set_enabled(G_SIMPLE_ACTION(action), enabled);
@@ -1383,7 +1366,6 @@ void RGMainWindow::setActionEnabled(const char *action_name, bool enabled)
 
 void RGMainWindow::setActionState(const char *action_name, GVariant *value)
 {
-   GActionGroup *win_actions = gtk_widget_get_action_group(_win, "win");
    GAction *action =
       g_action_map_lookup_action(G_ACTION_MAP(win_actions), action_name);
    g_simple_action_set_state(G_SIMPLE_ACTION(action), value);
@@ -1391,7 +1373,6 @@ void RGMainWindow::setActionState(const char *action_name, GVariant *value)
 
 void RGMainWindow::activateAction(const char *action_name, GVariant *value)
 {
-   GActionGroup *win_actions = gtk_widget_get_action_group(_win, "win");
    g_action_group_activate_action(win_actions, action_name, value);
 }
 
@@ -1410,7 +1391,9 @@ void RGMainWindow::pkgInstallHelper(RPackage *pkg,
       _lister->fixBroken();
 }
 
-void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge, bool withDeps)
+task<void> RGMainWindow::pkgRemoveHelper(RPackage *pkg,
+                                         bool purge,
+                                         bool withDeps)
 {
    if (pkg->getFlags() & RPackage::FImportant) {
       gchar *warning =
@@ -1418,10 +1401,10 @@ void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge, bool withDeps)
                            "system unusable.\n"
                            "Are you sure you want to do that?"),
                          pkg->name());
-      bool confirmed = _userDialog->confirm(warning, false);
+      bool confirmed = co_await _userDialog->confirm(warning, false);
       g_free(warning);
       if (!confirmed) {
-         return;
+         co_return;
       }
    }
    if (!withDeps)
@@ -1501,10 +1484,10 @@ void RGMainWindow::setStatusText(char *text)
 }
 
 
-void RGMainWindow::saveState()
+task<void> RGMainWindow::saveState()
 {
    if (_config->FindB("Volatile::NoStateSaving", false) == true)
-      return;
+      co_return;
 
    GtkWidget *vpaned =
       GTK_WIDGET(gtk_builder_get_object(_builder, "vpaned_main"));
@@ -1515,30 +1498,21 @@ void RGMainWindow::saveState()
    _config->Set("Synaptic::hpanedPos",
                 gtk_paned_get_position(GTK_PANED(hpaned)));
 
-   GtkAllocation allocation;
-   gtk_widget_get_allocation(_win, &allocation);
-   _config->Set("Synaptic::windowWidth", allocation.width);
-   _config->Set("Synaptic::windowHeight", allocation.height);
-   gint x, y;
-   gtk_window_get_position(GTK_WINDOW(_win), &x, &y);
-   _config->Set("Synaptic::windowX", x);
-   _config->Set("Synaptic::windowY", y);
+   _config->Set("Synaptic::windowWidth", gtk_widget_get_width(_win));
+   _config->Set("Synaptic::windowHeight", gtk_widget_get_height(_win));
    _config->Set("Synaptic::ToolbarState", (int)_toolbarStyle);
-   if (gdk_window_get_state(gtk_widget_get_window(_win)) &
-       GDK_WINDOW_STATE_MAXIMIZED)
-      _config->Set("Synaptic::Maximized", true);
-   else
-      _config->Set("Synaptic::Maximized", false);
+   _config->Set("Synaptic::Maximized",
+                gtk_window_is_maximized(GTK_WINDOW(_win)));
 
    if (!RWriteConfigFile(*_config)) {
       _error->Error(_("An error occurred while saving configurations."));
-      _userDialog->showErrors();
+      co_await _userDialog->showErrors();
    }
    if (!_roptions->store())
       cerr << "Internal Error: error storing raptoptions" << endl;
 }
 
-bool RGMainWindow::restoreState()
+task<bool> RGMainWindow::restoreState()
 {
 
    // see if we have broken packages (might be better in some
@@ -1554,13 +1528,13 @@ bool RGMainWindow::restoreState()
                      "Use the \"Broken\" filter to locate them.",
                      broken);
       msg = g_strdup_printf(msg, broken);
-      _userDialog->warning(msg);
+      co_await _userDialog->warning(msg);
       g_free(msg);
    }
 
    if (!_config->FindB("Volatile::Upgrade-Mode", false)) {
       int viewNr = _config->FindI("Synaptic::ViewMode", 0);
-      changeView(viewNr);
+      co_await changeView(viewNr);
 
       // we auto set to "All" on startup when we have gtk2.4 (without
       // the list is too slow)
@@ -1574,7 +1548,7 @@ bool RGMainWindow::restoreState()
       gtk_tree_selection_select_iter(selection, &iter);
    }
    updatePackageInfo(NULL);
-   return true;
+   co_return true;
 }
 
 
@@ -1583,41 +1557,42 @@ void RGMainWindow::close()
    if (_interfaceLocked > 0)
       return;
 
-   RGGtkBuilderUserDialog dia(this);
-   if (_unsavedChanges == false || dia.run("quit")) {
-      _error->Discard();
-      saveState();
-      showErrors();
-      exit(0);
-   }
+   start_task([this]() -> task<void> {
+      RGGtkBuilderUserDialog dia(this);
+      if (_unsavedChanges == false || co_await dia.co_run("quit")) {
+         _error->Discard();
+         co_await saveState();
+         co_await showErrors();
+         exit(0);
+      }
+   });
 }
 
 
-void RGMainWindow::setInterfaceLocked(bool flag)
+task<void> RGMainWindow::setInterfaceLocked(bool flag)
 {
    if (flag) {
       _interfaceLocked++;
       if (_interfaceLocked > 1)
-         return;
+         co_return;
 
       gtk_widget_set_sensitive(_win, FALSE);
       if (gtk_widget_get_visible(_win))
-         gdk_window_set_cursor(gtk_widget_get_window(_win), _busyCursor);
+         gtk_widget_set_cursor_from_name(GTK_WIDGET(_win), "watch");
    } else {
       assert(_interfaceLocked > 0);
 
       _interfaceLocked--;
       if (_interfaceLocked > 0)
-         return;
+         co_return;
 
       gtk_widget_set_sensitive(_win, TRUE);
       if (gtk_widget_get_visible(_win))
-         gdk_window_set_cursor(gtk_widget_get_window(_win), NULL);
+         gtk_widget_set_cursor_from_name(GTK_WIDGET(_win), NULL);
    }
 
    // fast enough with the new fixed-height mode
-   while (gtk_events_pending())
-      gtk_main_iteration();
+   co_await RGFlushInterface();
 }
 
 void RGMainWindow::setTreeLocked(bool flag)
@@ -1643,7 +1618,7 @@ void RGMainWindow::cbPkgAction(RGPkgAction action)
    if (gtk_widget_has_focus(entry) && action == PKG_DELETE) {
       return;
    }
-   pkgAction(action);
+   start_task([this, action]() -> task<void> { co_await pkgAction(action); });
 }
 
 void RGMainWindow::cbPkgActionUnmark(GSimpleAction *action,
@@ -1712,11 +1687,18 @@ void RGMainWindow::cbPkgActionDefault(GSimpleAction *action,
 }
 
 
-gboolean RGMainWindow::cbPackageListClicked(GtkWidget *treeview,
-                                            GdkEventButton *event,
-                                            gpointer data)
+void RGMainWindow::cbPackageListClicked(GtkGestureClick *gesture,
+                                        int n_press,
+                                        double x,
+                                        double y,
+                                        gpointer data)
 {
    // cout << "RGMainWindow::cbPackageListClicked()" << endl;
+
+   int button =
+      gtk_gesture_single_get_current_button(GTK_GESTURE_SINGLE(gesture));
+   GdkModifierType state = gdk_event_get_modifier_state(
+      gtk_event_controller_get_current_event(GTK_EVENT_CONTROLLER(gesture)));
 
    RGMainWindow *me = (RGMainWindow *)data;
    RPackage *pkg = NULL;
@@ -1724,18 +1706,19 @@ gboolean RGMainWindow::cbPackageListClicked(GtkWidget *treeview,
    GtkTreeViewColumn *column;
 
    /* Single clicks only */
-   if (event->type == GDK_BUTTON_PRESS) {
+   if (n_press == 1) {
       GtkTreeSelection *selection;
       GtkTreeIter iter;
 
-      if (!(event->window ==
-            gtk_tree_view_get_bin_window(GTK_TREE_VIEW(treeview))))
-         return false;
+      selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_treeView));
 
-      selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
-      if (gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(treeview),
-                                        (int)event->x,
-                                        (int)event->y,
+      int bx, by;
+      gtk_tree_view_convert_widget_to_bin_window_coords(
+         GTK_TREE_VIEW(me->_treeView), (int)x, (int)y, &bx, &by);
+
+      if (gtk_tree_view_get_path_at_pos(GTK_TREE_VIEW(me->_treeView),
+                                        bx,
+                                        by,
                                         &path,
                                         &column,
                                         NULL,
@@ -1743,18 +1726,19 @@ gboolean RGMainWindow::cbPackageListClicked(GtkWidget *treeview,
 
          /* Check if it's either a right-button click, or a left-button
           * click on the status column. */
-         if (!(event->button == 3 ||
-               (event->button == 1 &&
+         if (!(button == 3 ||
+               (button == 1 &&
                 strcmp(gtk_tree_view_column_get_title(column), "S") == 0)))
-            return false;
+            return;
 
          vector<RPackage *> selected_pkgs;
          GList *li = NULL;
 
          // Treat click with CONTROL as additional selection
-         if ((event->state & GDK_CONTROL_MASK) != GDK_CONTROL_MASK &&
-             !gtk_tree_selection_path_is_selected(selection, path))
+         if ((state & GDK_CONTROL_MASK) != GDK_CONTROL_MASK &&
+             !gtk_tree_selection_path_is_selected(selection, path)) {
             gtk_tree_selection_unselect_all(selection);
+         }
          gtk_tree_selection_select_path(selection, path);
 
          li = gtk_tree_selection_get_selected_rows(selection, &me->_pkgList);
@@ -1767,12 +1751,10 @@ gboolean RGMainWindow::cbPackageListClicked(GtkWidget *treeview,
                selected_pkgs.push_back(pkg);
          }
 
-         cbTreeviewPopupMenu(treeview, event, me, selected_pkgs);
-         return true;
+         me->cbTreeviewPopupMenu(button, bx, by, selected_pkgs);
+         return;
       }
    }
-
-   return false;
 }
 
 void RGMainWindow::cbChangelogDialog(GSimpleAction *action,
@@ -1781,13 +1763,14 @@ void RGMainWindow::cbChangelogDialog(GSimpleAction *action,
 {
    RGMainWindow *me = (RGMainWindow *)data;
 
-   RPackage *pkg = me->selectedPackage();
-   if (pkg == NULL)
-      return;
-
-   me->setInterfaceLocked(TRUE);
-   ShowChangelogDialog(me, pkg);
-   me->setInterfaceLocked(FALSE);
+   start_task([me]() -> task<void> {
+      RPackage *pkg = me->selectedPackage();
+      if (pkg != NULL) {
+         co_await me->setInterfaceLocked(TRUE);
+         co_await ShowChangelogDialog(me, pkg);
+         co_await me->setInterfaceLocked(FALSE);
+      }
+   });
 }
 
 void RGMainWindow::cbPackageListRowActivated(GtkTreeView *treeview,
@@ -1796,49 +1779,55 @@ void RGMainWindow::cbPackageListRowActivated(GtkTreeView *treeview,
                                              gpointer data)
 {
    // cout << "RGMainWindow::cbPackageListRowActivated()" << endl;
-
    RGMainWindow *me = (RGMainWindow *)data;
+   start_task([me, treeview, path] -> task<void> {
+      co_await me->packageListRowActivated(treeview, path);
+   });
+}
+
+task<void> RGMainWindow::packageListRowActivated(GtkTreeView *treeview,
+                                                 GtkTreePath *path)
+{
    GtkTreeIter iter;
    RPackage *pkg = NULL;
 
-   if (!gtk_tree_model_get_iter(me->_pkgList, &iter, path))
-      return;
+   if (!gtk_tree_model_get_iter(_pkgList, &iter, path))
+      co_return;
 
-   gtk_tree_model_get(me->_pkgList, &iter, PKG_COLUMN, &pkg, -1);
+   gtk_tree_model_get(_pkgList, &iter, PKG_COLUMN, &pkg, -1);
    assert(pkg);
 
    int flags = pkg->getFlags();
 
    if (flags & RPackage::FPinned)
-      return;
+      co_return;
 
    if (!(flags & RPackage::FInstalled)) {
       if (flags & RPackage::FKeep)
-         me->pkgAction(PKG_INSTALL);
+         co_await pkgAction(PKG_INSTALL);
       else if (flags & RPackage::FInstall)
-         me->pkgAction(PKG_KEEP);
+         co_await pkgAction(PKG_KEEP);
    } else if (flags & RPackage::FOutdated) {
       if (flags & RPackage::FKeep)
-         me->pkgAction(PKG_INSTALL);
+         co_await pkgAction(PKG_INSTALL);
       else if (flags & RPackage::FUpgrade)
-         me->pkgAction(PKG_KEEP);
+         co_await pkgAction(PKG_KEEP);
    }
 
    // make sure we do not lose the keyboard focus (this happens in
    // pkgAction otherwise)
-   gtk_widget_grab_focus(GTK_WIDGET(treeview));
-   gtk_tree_view_set_cursor(GTK_TREE_VIEW(treeview), path, NULL, false);
+   // gtk_widget_grab_focus (GTK_WIDGET(treeview));
+   // gtk_tree_view_set_cursor(GTK_TREE_VIEW(treeview), path, NULL, false);
 
-   GtkTreePath *start = gtk_tree_path_new();
-   bool ok =
-      gtk_tree_view_get_visible_range(GTK_TREE_VIEW(treeview), &start, NULL);
-   if (ok && gtk_tree_model_get_iter_first(me->_pkgList, &iter)) {
-      gtk_tree_view_scroll_to_cell(
-         GTK_TREE_VIEW(treeview), start, NULL, true, 0.0, 0.0);
-   }
-   gtk_tree_path_free(start);
+   // GtkTreePath *start = gtk_tree_path_new();
+   // bool ok = gtk_tree_view_get_visible_range(GTK_TREE_VIEW(treeview), &start,
+   // NULL); if (ok && gtk_tree_model_get_iter_first(_pkgList, &iter)) {
+   //    gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(treeview), start, NULL,
+   //    true, 0.0, 0.0);
+   // }
+   // gtk_tree_path_free(start);
 
-   me->setStatusText();
+   setStatusText();
 }
 
 void RGMainWindow::cbAddCDROM(GSimpleAction *action,
@@ -1846,32 +1835,37 @@ void RGMainWindow::cbAddCDROM(GSimpleAction *action,
                               gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *)data;
-   RGCDScanner scan(me, me->_userDialog);
-   me->setInterfaceLocked(TRUE);
+   start_task([me]() -> task<void> { co_await me->addCDROM(); });
+}
+
+task<void> RGMainWindow::addCDROM()
+{
+   RGCDScanner scan(this, _userDialog);
+   co_await setInterfaceLocked(TRUE);
    bool updateCache = false;
    bool dontStop = true;
    while (dontStop) {
-      if (scan.run() == false)
-         me->showErrors();
+      if (co_await scan.run() == false)
+         co_await showErrors();
       else
          updateCache = true;
       if (_config->FindB("APT::CDROM::NoMount", false))
          dontStop = false;
       else
-         dontStop =
-            me->_userDialog->confirm(_("Do you want to add another CD-ROM?"));
+         dontStop = co_await _userDialog->confirm(
+            _("Do you want to add another CD-ROM?"));
    }
    scan.hide();
    if (updateCache) {
-      me->setTreeLocked(TRUE);
-      if (!me->_lister->openCache()) {
-         me->showErrors();
+      setTreeLocked(TRUE);
+      if (!_lister->openCache()) {
+         co_await showErrors();
          exit(1);
       }
-      me->setTreeLocked(FALSE);
-      me->refreshTable(me->selectedPackage());
+      setTreeLocked(FALSE);
+      refreshTable(selectedPackage());
    }
-   me->setInterfaceLocked(FALSE);
+   co_await setInterfaceLocked(FALSE);
 }
 
 void RGMainWindow::cbTasksClicked(GSimpleAction *action,
@@ -1879,15 +1873,20 @@ void RGMainWindow::cbTasksClicked(GSimpleAction *action,
                                   gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *)data;
+   start_task([me]() -> task<void> { co_await me->tasksClicked(); });
+}
 
-   me->setBusyCursor(true);
+task<void> RGMainWindow::tasksClicked()
+{
+   setBusyCursor(true);
 
-   if (me->_tasksWin == NULL) {
-      me->_tasksWin = new RGTasksWin(me);
+   if (_tasksWin == NULL) {
+      _tasksWin = new RGTasksWin(this);
    }
-   me->_tasksWin->show();
+   auto packages = co_await _tasksWin->selectTasks();
+   co_await selectToInstall(packages);
 
-   me->setBusyCursor(false);
+   setBusyCursor(false);
 }
 
 void RGMainWindow::cbOpenClicked(GSimpleAction *action,
@@ -1896,47 +1895,56 @@ void RGMainWindow::cbOpenClicked(GSimpleAction *action,
 {
    // std::cout << "RGMainWindow::openClicked()" << endl;
    RGMainWindow *me = (RGMainWindow *)data;
+   start_task([me]() -> task<void> { co_await me->openClicked(); });
+}
 
+task<void> RGMainWindow::openClicked()
+{
    GtkWidget *filesel;
    filesel = gtk_file_chooser_dialog_new(_("Open changes"),
-                                         GTK_WINDOW(me->window()),
+                                         GTK_WINDOW(window()),
                                          GTK_FILE_CHOOSER_ACTION_OPEN,
                                          _("_Cancel"),
                                          GTK_RESPONSE_CANCEL,
                                          _("_Open"),
                                          GTK_RESPONSE_ACCEPT,
                                          NULL);
-   if (gtk_dialog_run(GTK_DIALOG(filesel)) == GTK_RESPONSE_ACCEPT) {
-      me->setInterfaceLocked(TRUE);
+   if (co_await co_run_dialog(GTK_DIALOG(filesel)) == GTK_RESPONSE_ACCEPT) {
+      co_await setInterfaceLocked(TRUE);
       gtk_widget_hide(filesel);
-      RGFlushInterface();
+      co_await RGFlushInterface();
 
       RPackageLister::pkgState state;
-      me->_lister->saveState(state);
+      _lister->saveState(state);
 
-      const char *file;
-      file = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(filesel));
-      me->selectionsFilename = file;
+      GFile *file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(filesel));
+      char *filename = g_file_get_path(file);
+      g_object_unref(file);
 
-      ifstream in(file);
+      selectionsFilename = filename;
+      ifstream in(filename);
       if (!in != 0) {
-         _error->Error(_("Can't read %s"), file);
-         me->_userDialog->showErrors();
-         return;
+         _error->Error(_("Can't read %s"), filename);
+         co_await _userDialog->showErrors();
+         g_free(filename);
+         co_return;
       }
-      me->_lister->unregisterObserver(me);
+
+      g_free(filename);
+
+      _lister->unregisterObserver(this);
       // read the selections from the file
-      me->_lister->readSelections(in);
-      me->askStateChange(state);
+      _lister->readSelections(in);
+      co_await askStateChange(state);
 
       // refresh to ensure that broken dependencies are displayed
-      me->_lister->registerObserver(me);
-      me->refreshTable();
-      me->refreshSubViewList();
-      me->setStatusText();
-      me->setInterfaceLocked(FALSE);
+      _lister->registerObserver(this);
+      refreshTable();
+      refreshSubViewList();
+      setStatusText();
+      co_await setInterfaceLocked(FALSE);
    }
-   gtk_widget_destroy(filesel);
+   gtk_window_destroy(GTK_WINDOW(filesel));
 }
 
 void RGMainWindow::cbSaveClicked(GSimpleAction *action,
@@ -1945,23 +1953,27 @@ void RGMainWindow::cbSaveClicked(GSimpleAction *action,
 {
    // std::cout << "RGMainWindow::saveClicked()" << endl;
    RGMainWindow *me = (RGMainWindow *)data;
+   start_task([me]() -> task<void> { co_await me->saveClicked(); });
+}
 
-   if (me->selectionsFilename == "") {
-      me->cbSaveAsClicked(nullptr, nullptr, data);
-      return;
+task<void> RGMainWindow::saveClicked()
+{
+   if (selectionsFilename == "") {
+      co_await saveAsClicked();
+      co_return;
    }
 
-   ofstream out(me->selectionsFilename.c_str());
+   ofstream out(selectionsFilename.c_str());
    if (!out != 0) {
-      _error->Error(_("Can't write %s"), me->selectionsFilename.c_str());
-      me->_userDialog->showErrors();
-      return;
+      _error->Error(_("Can't write %s"), selectionsFilename.c_str());
+      co_await _userDialog->showErrors();
+      co_return;
    }
 
-   me->_lister->unregisterObserver(me);
-   me->_lister->writeSelections(out, me->saveFullState);
-   me->_lister->registerObserver(me);
-   me->setStatusText();
+   _lister->unregisterObserver(this);
+   _lister->writeSelections(out, saveFullState);
+   _lister->registerObserver(this);
+   setStatusText();
 }
 
 
@@ -1971,30 +1983,39 @@ void RGMainWindow::cbSaveAsClicked(GSimpleAction *action,
 {
    // std::cout << "RGMainWindow::saveAsClicked()" << endl;
    RGMainWindow *me = (RGMainWindow *)data;
+   start_task([me]() -> task<void> { co_await me->saveAsClicked(); });
+}
 
+task<void> RGMainWindow::saveAsClicked()
+{
    GtkWidget *filesel;
    filesel = gtk_file_chooser_dialog_new(_("Save changes"),
-                                         GTK_WINDOW(me->window()),
+                                         GTK_WINDOW(window()),
                                          GTK_FILE_CHOOSER_ACTION_SAVE,
                                          _("_Cancel"),
                                          GTK_RESPONSE_CANCEL,
                                          _("_Save"),
                                          GTK_RESPONSE_ACCEPT,
                                          NULL);
-   GtkWidget *checkButton =
-      gtk_check_button_new_with_label(_("Save full state, not only changes"));
-   gtk_file_chooser_set_extra_widget(GTK_FILE_CHOOSER(filesel), checkButton);
+   gtk_file_chooser_add_choice(GTK_FILE_CHOOSER(filesel),
+                               "full",
+                               _("Save full state, not only changes"),
+                               NULL,
+                               NULL);
 
-   if (gtk_dialog_run(GTK_DIALOG(filesel)) == GTK_RESPONSE_ACCEPT) {
-      const char *file;
-      file = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(filesel));
-      me->selectionsFilename = file;
-      me->saveFullState =
-         gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkButton));
+   if (co_await co_run_dialog(GTK_DIALOG(filesel)) == GTK_RESPONSE_ACCEPT) {
+      GFile *file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(filesel));
+      char *filename = g_file_get_path(file);
+      selectionsFilename = filename;
+      g_free(filename);
+      g_object_unref(file);
+      saveFullState = g_strcmp0("true",
+                                gtk_file_chooser_get_choice(
+                                   GTK_FILE_CHOOSER(filesel), "full")) == 0;
       // now call save for the actual saving
-      me->cbSaveClicked(nullptr, nullptr, me);
+      co_await saveClicked();
    }
-   gtk_widget_destroy(filesel);
+   gtk_window_destroy(GTK_WINDOW(filesel));
 }
 
 
@@ -2046,7 +2067,11 @@ void RGMainWindow::cbShowSourcesWindow(GSimpleAction *action,
                                        gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *)data;
+   start_task([me]() -> task<void> { co_await me->showSourcesWindow(); });
+}
 
+task<void> RGMainWindow::showSourcesWindow()
+{
    // FIXME: make this all go into the repository window
    bool Changed = false;
    bool ForceReload = _config->FindB("Synaptic::UpdateAfterSrcChange", false);
@@ -2054,20 +2079,18 @@ void RGMainWindow::cbShowSourcesWindow(GSimpleAction *action,
    if (!g_file_test("/usr/bin/software-properties-gtk",
                     G_FILE_TEST_IS_EXECUTABLE) ||
        _config->FindB("Synaptic::dontUseGnomeSoftwareProperties", false)) {
-      RGRepositoryEditor w(me);
-      Changed = w.Run();
+      RGRepositoryEditor w(this);
+      Changed = co_await w.Run();
    } else {
       // use gnome-software-properties window
-      me->setInterfaceLocked(TRUE);
+      co_await setInterfaceLocked(TRUE);
       GPid pid;
       int status;
-      const char *argv[5];
+      const char *argv[4];
       argv[0] = "/usr/bin/software-properties-gtk";
       argv[1] = "-n";
       argv[2] = "-t";
-      argv[3] = g_strdup_printf(
-         "%lu", GDK_WINDOW_XID(gtk_widget_get_window(me->_win)));
-      argv[4] = NULL;
+      argv[3] = NULL;
       g_spawn_async(NULL,
                     const_cast<char **>(argv),
                     NULL,
@@ -2079,22 +2102,22 @@ void RGMainWindow::cbShowSourcesWindow(GSimpleAction *action,
       // kill the child if the window is deleted
       while (waitpid(pid, &status, WNOHANG) == 0) {
          usleep(50000);
-         RGFlushInterface();
+         co_await RGFlushInterface();
       }
       Changed = WEXITSTATUS(status);
-      me->setInterfaceLocked(FALSE);
+      co_await setInterfaceLocked(FALSE);
    }
 
-   RGFlushInterface();
+   co_await RGFlushInterface();
 
    // auto update after repostitory change
    if (Changed == true && ForceReload) {
-      me->cbUpdateClicked(nullptr, nullptr, data);
+      co_await updateClicked();
    } else if (Changed == true &&
               _config->FindB("Synaptic::AskForUpdateAfterSrcChange", true)) {
       // ask for update after repo change
       GtkWidget *cb, *dialog;
-      dialog = gtk_message_dialog_new(GTK_WINDOW(me->window()),
+      dialog = gtk_message_dialog_new(GTK_WINDOW(window()),
                                       GTK_DIALOG_DESTROY_WITH_PARENT,
                                       GTK_MESSAGE_INFO,
                                       GTK_BUTTONS_NONE,
@@ -2116,26 +2139,21 @@ void RGMainWindow::cbShowSourcesWindow(GSimpleAction *action,
                              NULL);
       GtkWidget *reload_button = gtk_dialog_get_widget_for_response(
          GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
-      GtkWidget *refresh_image =
-         gtk_image_new_from_icon_name("view-refresh", GTK_ICON_SIZE_BUTTON);
-      gtk_button_set_image(GTK_BUTTON(reload_button), refresh_image);
+      GtkWidget *refresh_image = gtk_image_new_from_icon_name("view-refresh");
+      gtk_button_set_child(GTK_BUTTON(reload_button), refresh_image);
       cb = gtk_check_button_new_with_label(_("Never show this message again"));
-      gtk_box_pack_start(
-         GTK_BOX(gtk_dialog_get_content_area(GTK_DIALOG(dialog))),
-         cb,
-         true,
-         true,
-         0);
+      gtk_box_append(GTK_BOX(gtk_dialog_get_content_area(GTK_DIALOG(dialog))),
+                     cb);
       gtk_widget_show(cb);
-      gint response = gtk_dialog_run(GTK_DIALOG(dialog));
+      gint response = co_await co_run_dialog(GTK_DIALOG(dialog));
       gtk_widget_hide(dialog);
       if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb))) {
          _config->Set("Synaptic::AskForUpdateAfterSrcChange", false);
       }
       if (response == GTK_RESPONSE_ACCEPT) {
-         me->cbUpdateClicked(nullptr, nullptr, data);
+         co_await updateClicked();
       }
-      gtk_widget_destroy(dialog);
+      gtk_window_destroy(GTK_WINDOW(dialog));
    }
 }
 
@@ -2143,28 +2161,28 @@ static void traverseToolbarButtons(
    GtkWidget *toolbar,
    std::function<void(GtkWidget *, GtkWidget *, GtkWidget *)> cb)
 {
-   if (!GTK_IS_CONTAINER(toolbar))
+   if (!GTK_IS_WIDGET(toolbar))
       return;
-   GList *children = gtk_container_get_children(GTK_CONTAINER(toolbar));
-   for (GList *iter = children; iter != NULL; iter = iter->next) {
-      if (GTK_IS_BUTTON(iter->data)) {
-         GtkWidget *box = gtk_bin_get_child(GTK_BIN(iter->data));
+
+   for (GtkWidget *child = gtk_widget_get_first_child(toolbar); child != NULL;
+        child = gtk_widget_get_next_sibling(child)) {
+      if (GTK_IS_BUTTON(child)) {
+         GtkWidget *box = gtk_button_get_child(GTK_BUTTON(child));
          GtkWidget *image = nullptr;
          GtkWidget *label = nullptr;
 
-         GList *box_children = gtk_container_get_children(GTK_CONTAINER(box));
-         for (GList *iter2 = box_children; iter2 != NULL; iter2 = iter2->next) {
-            if (GTK_IS_IMAGE(iter2->data))
-               image = GTK_WIDGET(iter2->data);
-            else if (GTK_IS_LABEL(iter2->data))
-               label = GTK_WIDGET(iter2->data);
+         for (GtkWidget *box_child = gtk_widget_get_first_child(box);
+              box_child != NULL;
+              box_child = gtk_widget_get_next_sibling(box_child)) {
+            if (GTK_IS_IMAGE(box_child))
+               image = GTK_WIDGET(box_child);
+            else if (GTK_IS_LABEL(box_child))
+               label = GTK_WIDGET(box_child);
          }
-         g_list_free(box_children);
 
          cb(box, image, label);
       }
    }
-   g_list_free(children);
 }
 
 void RGMainWindow::cbMenuToolbarClicked(GSimpleAction *action,
@@ -2228,41 +2246,44 @@ void RGMainWindow::cbFindToolClicked(GSimpleAction *action,
                                      gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *)data;
+   start_task([me]() -> task<void> { co_await me->findTool(); });
+}
 
-   if (me->_findWin == NULL) {
-      me->_findWin = new RGFindWindow(me);
+task<void> RGMainWindow::findTool()
+{
+   if (_findWin == NULL) {
+      _findWin = new RGFindWindow(this);
    }
 
-   me->_findWin->selectText();
-   int res = gtk_dialog_run(GTK_DIALOG(me->_findWin->window()));
+   _findWin->selectText();
+   int res = co_await co_run_dialog(GTK_DIALOG(_findWin->window()));
    if (res == GTK_RESPONSE_OK) {
-
       // clear the quick search, otherwise both apply and that is
       // confusing
-      gtk_entry_set_text(GTK_ENTRY(me->_entry_fast_search), "");
+      gtk_editable_set_text(GTK_EDITABLE(_entry_fast_search), "");
 
-      string str = me->_findWin->getFindString();
-      me->setBusyCursor(true);
+      string str = _findWin->getFindString();
+      setBusyCursor(true);
 
       // we need to convert here as the DDTP project does not use utf-8
       const char *locale_str = utf8_to_locale(str.c_str());
       if (locale_str == NULL) // invalid utf-8
          locale_str = str.c_str();
 
-      int type = me->_findWin->getSearchType();
+      int type = _findWin->getSearchType();
       GtkWidget *progress =
-         GTK_WIDGET(gtk_builder_get_object(me->_builder, "progressbar_main"));
+         GTK_WIDGET(gtk_builder_get_object(_builder, "progressbar_main"));
       GtkWidget *label =
-         GTK_WIDGET(gtk_builder_get_object(me->_builder, "label_status"));
+         GTK_WIDGET(gtk_builder_get_object(_builder, "label_status"));
       RGCacheProgress searchProgress(progress, label);
-      int found = me->_lister->searchView()->setSearch(
+      int found = _lister->searchView()->setSearch(
          str, type, locale_str, searchProgress);
-      me->changeView(PACKAGE_VIEW_SEARCH, str);
+      co_await changeView(PACKAGE_VIEW_SEARCH, str);
 
-      me->setBusyCursor(false);
+      setBusyCursor(false);
       gchar *statusstr = g_strdup_printf(_("Found %i packages"), found);
-      me->setStatusText(statusstr);
-      me->updatePackageInfo(NULL);
+      setStatusText(statusstr);
+      updatePackageInfo(NULL);
       g_free(statusstr);
    }
 }
@@ -2334,8 +2355,12 @@ void RGMainWindow::cbHelpAction(GSimpleAction *action,
                                 gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *)data;
+   start_task([me]() -> task<void> { co_await me->helpAction(); });
+}
 
-   me->setStatusText(_("Starting help viewer..."));
+task<void> RGMainWindow::helpAction()
+{
+   setStatusText(_("Starting help viewer..."));
 
    // FIXME: move this into rgutils as well (or rgspawn.cc)
    vector<const gchar *> cmd;
@@ -2348,57 +2373,44 @@ void RGMainWindow::cbHelpAction(GSimpleAction *action,
    }
 
    if (cmd.empty()) {
-      me->_userDialog->error(_("No help viewer is installed!\n\n"
-                               "You need either the GNOME help viewer 'yelp', "
-                               "or any browser setup to use xdg-open "
-                               "to view the synaptic manual.\n\n"
-                               "Alternatively you can open the man page "
-                               "with 'man synaptic' from the "
-                               "command line or view the html version located "
-                               "in the 'synaptic/html' folder."));
-      return;
+      co_await _userDialog->error(
+         _("No help viewer is installed!\n\n"
+           "You need either the GNOME help viewer 'yelp', "
+           "or any browser setup to use xdg-open "
+           "to view the synaptic manual.\n\n"
+           "Alternatively you can open the man page "
+           "with 'man synaptic' from the "
+           "command line or view the html version located "
+           "in the 'synaptic/html' folder."));
+      co_return;
    }
    RunAsSudoUserCommand(cmd);
 }
-
-void RGMainWindow::cbCloseFilterManagerAction(void *self, bool okcancel)
-{
-   RGMainWindow *me = (RGMainWindow *)self;
-
-   // FIXME: only do all this if the user didn't click "cancel" in the dialog
-
-   me->setInterfaceLocked(TRUE);
-
-   me->_lister->filterView()->refreshFilters();
-   me->refreshTable();
-   me->refreshSubViewList();
-
-   me->setInterfaceLocked(FALSE);
-}
-
 
 void RGMainWindow::cbShowFilterManagerWindow(GSimpleAction *action,
                                              GVariant *parameter,
                                              gpointer data)
 {
-
    RGMainWindow *me = (RGMainWindow *)data;
+   start_task([me]() -> task<void> { co_await me->showFilterManagerWindow(); });
+}
 
-   if (me->_fmanagerWin == NULL) {
-      me->_fmanagerWin =
-         new RGFilterManagerWindow(me, me->_lister->filterView());
+task<void> RGMainWindow::showFilterManagerWindow()
+{
+   if (_fmanagerWin == NULL) {
+      _fmanagerWin = new RGFilterManagerWindow(this, _lister->filterView());
    }
 
-   me->_fmanagerWin->readFilters();
-   int res = gtk_dialog_run(GTK_DIALOG(me->_fmanagerWin->window()));
+   _fmanagerWin->readFilters();
+   int res = co_await co_run_dialog(GTK_DIALOG(_fmanagerWin->window()));
    if (res == GTK_RESPONSE_OK) {
-      me->setInterfaceLocked(TRUE);
+      co_await setInterfaceLocked(TRUE);
 
-      me->_lister->filterView()->refreshFilters();
-      me->refreshTable();
-      me->refreshSubViewList();
+      _lister->filterView()->refreshFilters();
+      refreshTable();
+      refreshSubViewList();
 
-      me->setInterfaceLocked(FALSE);
+      co_await setInterfaceLocked(FALSE);
    }
 }
 
@@ -2444,22 +2456,27 @@ void RGMainWindow::cbClearAllChangesClicked(GSimpleAction *action,
 {
    // cout << "clearAllChangesClicked" << endl;
    RGMainWindow *me = (RGMainWindow *)data;
-   me->setInterfaceLocked(TRUE);
-   me->_lister->unregisterObserver(me);
-   me->setTreeLocked(TRUE);
+   start_task([me]() -> task<void> { co_await me->clearAllChanges(); });
+}
+
+task<void> RGMainWindow::clearAllChanges()
+{
+   co_await setInterfaceLocked(TRUE);
+   _lister->unregisterObserver(this);
+   setTreeLocked(TRUE);
 
    // reset
-   if (!me->_lister->openCache()) {
-      me->showErrors();
+   if (!_lister->openCache()) {
+      co_await showErrors();
       exit(1);
    }
 
-   me->_lister->registerObserver(me);
-   me->setTreeLocked(FALSE);
-   me->refreshTable();
-   me->refreshSubViewList();
-   me->setInterfaceLocked(FALSE);
-   me->setStatusText();
+   _lister->registerObserver(this);
+   setTreeLocked(FALSE);
+   refreshTable();
+   refreshSubViewList();
+   co_await setInterfaceLocked(FALSE);
+   setStatusText();
 }
 
 
@@ -2469,16 +2486,21 @@ void RGMainWindow::cbUndoClicked(GSimpleAction *action,
 {
    // cout << "undoClicked" << endl;
    RGMainWindow *me = (RGMainWindow *)data;
-   me->setInterfaceLocked(TRUE);
+   start_task([me]() -> task<void> { co_await me->undo(); });
+}
 
-   me->_lister->unregisterObserver(me);
+task<void> RGMainWindow::undo()
+{
+   co_await setInterfaceLocked(TRUE);
+
+   _lister->unregisterObserver(this);
 
    // undo
-   me->_lister->undo();
+   _lister->undo();
 
-   me->_lister->registerObserver(me);
-   me->refreshTable();
-   me->setInterfaceLocked(FALSE);
+   _lister->registerObserver(this);
+   refreshTable();
+   co_await setInterfaceLocked(FALSE);
 }
 
 void RGMainWindow::cbRedoClicked(GSimpleAction *action,
@@ -2487,16 +2509,21 @@ void RGMainWindow::cbRedoClicked(GSimpleAction *action,
 {
    // cout << "redoClicked" << endl;
    RGMainWindow *me = (RGMainWindow *)data;
-   me->setInterfaceLocked(TRUE);
+   start_task([me]() -> task<void> { co_await me->redo(); });
+}
 
-   me->_lister->unregisterObserver(me);
+task<void> RGMainWindow::redo()
+{
+   co_await setInterfaceLocked(TRUE);
+
+   _lister->unregisterObserver(this);
 
    // redo
-   me->_lister->redo();
+   _lister->redo();
 
-   me->_lister->registerObserver(me);
-   me->refreshTable();
-   me->setInterfaceLocked(FALSE);
+   _lister->registerObserver(this);
+   refreshTable();
+   co_await setInterfaceLocked(FALSE);
 }
 
 void RGMainWindow::cbPkgReconfigureClicked(GSimpleAction *action,
@@ -2505,24 +2532,26 @@ void RGMainWindow::cbPkgReconfigureClicked(GSimpleAction *action,
 {
    RGMainWindow *me = (RGMainWindow *)data;
    // cout << "RGMainWindow::pkgReconfigureClicked()" << endl;
+   start_task([me]() -> task<void> { co_await me->pkgReconfigureClicked(); });
+}
 
-   if (me->selectedPackage() == NULL)
-      return;
+task<void> RGMainWindow::pkgReconfigureClicked()
+{
+   if (selectedPackage() == NULL)
+      co_return;
 
    RPackage *pkg = NULL;
-   pkg = me->_lister->getPackage("libgnome2-perl");
+   pkg = _lister->getPackage("libgnome2-perl");
    if (pkg && pkg->installedVersion() == NULL) {
-      me->_userDialog->error(_("Cannot start configuration tool!\n"
-                               "You have to install the required package "
-                               "'libgnome2-perl'."));
-      return;
+      co_await _userDialog->error(_("Cannot start configuration tool!\n"
+                                    "You have to install the required package "
+                                    "'libgnome2-perl'."));
+      co_return;
    }
 
-   me->setStatusText(_("Starting package configuration tool..."));
-   const gchar *cmd[] = {"/usr/sbin/dpkg-reconfigure",
-                         "-fgnome",
-                         me->selectedPackage()->name(),
-                         NULL};
+   setStatusText(_("Starting package configuration tool..."));
+   const gchar *cmd[] = {
+      "/usr/sbin/dpkg-reconfigure", "-fgnome", selectedPackage()->name(), NULL};
    GError *error = NULL;
    g_spawn_async("/",
                  const_cast<gchar **>(cmd),
@@ -2543,12 +2572,16 @@ void RGMainWindow::cbPkgHelpClicked(GSimpleAction *action,
                                     gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *)data;
+   start_task([me]() -> task<void> { co_await me->pkgHelpClicked(); });
+}
 
-   if (me->selectedPackage() == NULL)
-      return;
+task<void> RGMainWindow::pkgHelpClicked()
+{
+   if (selectedPackage() == NULL)
+      co_return;
 
    // cout << "RGMainWindow::pkgHelpClicked()" << endl;
-   me->setStatusText(_("Starting package documentation viewer..."));
+   setStatusText(_("Starting package documentation viewer..."));
 
    // mozilla eats bookmarks when run under sudo (because it does not
    // change $HOME) so we better play safe here
@@ -2560,7 +2593,7 @@ void RGMainWindow::cbPkgHelpClicked(GSimpleAction *action,
    if (is_binary_in_path("dwww")) {
       const gchar *cmd[5];
       cmd[0] = "dwww";
-      cmd[1] = me->selectedPackage()->name();
+      cmd[1] = selectedPackage()->name();
       cmd[2] = NULL;
       g_spawn_async("/tmp",
                     const_cast<gchar **>(cmd),
@@ -2571,8 +2604,9 @@ void RGMainWindow::cbPkgHelpClicked(GSimpleAction *action,
                     NULL,
                     NULL);
    } else {
-      me->_userDialog->error(_("You have to install the package \"dwww\" "
-                               "to browse the documentation of a package"));
+      co_await _userDialog->error(
+         _("You have to install the package \"dwww\" "
+           "to browse the documentation of a package"));
    }
 }
 
@@ -2580,14 +2614,16 @@ void RGMainWindow::cbPkgHelpClicked(GSimpleAction *action,
 void RGMainWindow::cbChangedView(GtkWidget *self, void *data)
 {
    RGMainWindow *me = (RGMainWindow *)data;
+   start_task([self, me]() -> task<void> {
+      // only act on the active buttons
+      if (!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(self)) ||
+          me->_blockActions == TRUE) {
+         co_return;
+      }
 
-   // only act on the active buttons
-   if (!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(self)) ||
-       me->_blockActions == TRUE)
-      return;
-
-   long view = (long)g_object_get_data(G_OBJECT(self), "index");
-   me->changeView(view);
+      long view = (long)g_object_get_data(G_OBJECT(self), "index");
+      co_await me->changeView(view);
+   });
 }
 
 void RGMainWindow::cbChangedSubView(GtkTreeSelection *selection, gpointer data)
@@ -2636,48 +2672,52 @@ void RGMainWindow::cbProceedClicked(GSimpleAction *action,
                                     gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *)data;
+   start_task([me]() -> task<void> { co_await me->applyChanges(); });
+}
 
+task<void> RGMainWindow::applyChanges()
+{
    // nothing to do
-   int installed, broken;
+   int listed, installed, broken;
    int toInstall, toRemove;
    double size;
-   me->_lister->getStats(installed, broken, toInstall, toRemove, size);
+   _lister->getStats(installed, broken, toInstall, toRemove, size);
    if ((toInstall + toRemove) == 0)
-      return;
+      co_return;
 
    // check whether we can really do it
-   if (!me->_lister->check()) {
-      me->_userDialog->error(_("Could not apply changes!\n"
-                               "Fix broken packages first."));
-      return;
+   if (!_lister->check()) {
+      co_await _userDialog->error(_("Could not apply changes!\n"
+                                    "Fix broken packages first."));
+      co_return;
    }
 
    int a, b, c, d, e, f, g, h, unAuthenticated;
    double s;
-   me->_lister->getSummary(a, b, c, d, e, f, g, h, unAuthenticated, s);
+   _lister->getSummary(a, b, c, d, e, f, g, h, unAuthenticated, s);
    if (unAuthenticated ||
        _config->FindB("Volatile::Non-Interactive", false) == false) {
       // show a summary of what's gonna happen
-      RGSummaryWindow summ(me, me->_lister);
-      if (!summ.showAndConfirm()) {
+      RGSummaryWindow summ(this, _lister);
+      if (!co_await summ.showAndConfirm()) {
          // canceled operation
-         return;
+         co_return;
       }
    }
 
-   me->setInterfaceLocked(TRUE);
-   me->updatePackageInfo(NULL);
+   co_await setInterfaceLocked(TRUE);
+   updatePackageInfo(NULL);
 
-   me->setStatusText(_("Applying marked changes. This may take a while..."));
+   setStatusText(_("Applying marked changes. This may take a while..."));
 
    // fetch packages
-   RGFetchProgress *fprogress = me->_fetchProgress = new RGFetchProgress(me);
+   RGFetchProgress *fprogress = _fetchProgress = new RGFetchProgress(this);
    fprogress->setDescription(_("Downloading Package Files"), "");
    //			     _("The package files will be cached locally for
    // installation."));
 
    // Do not let the treeview access the cache during the update.
-   me->setTreeLocked(TRUE);
+   setTreeLocked(TRUE);
 
    // save selections to temporary file
    const gchar *file =
@@ -2685,10 +2725,10 @@ void RGMainWindow::cbProceedClicked(GSimpleAction *action,
    ofstream out(file);
    if (!out != 0) {
       _error->Error(_("Can't write %s"), file);
-      me->_userDialog->showErrors();
-      return;
+      co_await _userDialog->showErrors();
+      co_return;
    }
-   me->_lister->writeSelections(out, false);
+   _lister->writeSelections(out, false);
 
 
    RInstallProgress *iprogress;
@@ -2704,52 +2744,51 @@ void RGMainWindow::cbProceedClicked(GSimpleAction *action,
 #      endif // DPKG
 #   endif    // HAVE_RPM
    if (_config->FindB("Synaptic::UseTerminal", UseTerminal) == true)
-      iprogress = new RGTermInstallProgress(me);
+      iprogress = new RGTermInstallProgress(this);
    else
 #endif // HAVE_TERMINAL
 
 
 #ifdef HAVE_RPM
-      iprogress = new RGInstallProgress(me, me->_lister);
+      iprogress = new RGInstallProgress(this, _lister);
 #else
 #   ifdef WITH_DPKG_STATUSFD
-   iprogress = new RGDebInstallProgress(me, me->_lister);
+   iprogress = new RGDebInstallProgress(this, _lister);
 #   else
    iprogress = new RGDummyInstallProgress();
 #   endif // WITH_DPKG_STATUSFD
 #endif    // HAVE_RPM
-   me->_installProgress = dynamic_cast<RGWindow *>(iprogress);
+   _installProgress = dynamic_cast<RGWindow *>(iprogress);
 
-   // bool result = me->_lister->commitChanges(fprogress, iprogress);
-   me->_lister->commitChanges(fprogress, iprogress);
+   co_await _lister->commitChanges(fprogress, iprogress);
 
    iprogress->finish();
    delete fprogress;
-   me->_fetchProgress = NULL;
+   _fetchProgress = NULL;
    delete iprogress;
-   me->_installProgress = NULL;
+   _installProgress = NULL;
 
    if (_config->FindB("Synaptic::IgnorePMOutput", false) == false) {
-      me->showErrors();
+      co_await showErrors();
    } else {
       _error->Discard();
    }
    if (_config->FindB("Volatile::Non-Interactive", false) == true) {
-      return;
+      co_return;
    }
 
    if (_config->FindB("Synaptic::AskQuitOnProceed", false) == true &&
-       me->_userDialog->confirm(_("Do you want to quit Synaptic?"))) {
+       co_await _userDialog->confirm(_("Do you want to quit Synaptic?"))) {
       _error->Discard();
-      me->saveState();
-      me->showErrors();
+      co_await saveState();
+      co_await showErrors();
       exit(0);
    }
 
    if (_config->FindB("Volatile::Download-Only", false) == false) {
       // reset the cache
-      if (!me->_lister->openCache()) {
-         me->showErrors();
+      if (!_lister->openCache()) {
+         co_await showErrors();
          exit(1);
       }
    }
@@ -2757,19 +2796,19 @@ void RGMainWindow::cbProceedClicked(GSimpleAction *action,
    ifstream in(file);
    if (!in != 0) {
       _error->Error(_("Can't read %s"), file);
-      me->_userDialog->showErrors();
-      return;
+      co_await _userDialog->showErrors();
+      co_return;
    }
-   me->_lister->readSelections(in);
+   _lister->readSelections(in);
    unlink(file);
    g_free((void *)file);
 
 
-   me->setTreeLocked(FALSE);
-   me->refreshTable();
-   me->refreshSubViewList();
-   me->setInterfaceLocked(FALSE);
-   me->updatePackageInfo(NULL);
+   setTreeLocked(FALSE);
+   refreshTable();
+   refreshSubViewList();
+   co_await setInterfaceLocked(FALSE);
+   updatePackageInfo(NULL);
 }
 
 void RGMainWindow::cbShowWelcomeDialog(GSimpleAction *action,
@@ -2777,52 +2816,59 @@ void RGMainWindow::cbShowWelcomeDialog(GSimpleAction *action,
                                        gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *)data;
-   RGGtkBuilderUserDialog dia(me);
-   dia.run("welcome");
+   start_task([me]() -> task<void> { co_await me->showWelcomeDialog(); });
+}
+
+task<void> RGMainWindow::showWelcomeDialog()
+{
+   RGGtkBuilderUserDialog dia(this);
+   co_await dia.co_run("welcome");
    GtkWidget *cb = GTK_WIDGET(
       gtk_builder_get_object(dia.getGtkBuilder(), "checkbutton_show_again"));
    assert(cb);
    _config->Set("Synaptic::showWelcomeDialog",
-                gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
+                gtk_check_button_get_active(GTK_CHECK_BUTTON(cb)));
 }
 
-gboolean RGMainWindow::xapianDoSearch(void *data)
+void RGMainWindow::xapianDoSearch(void *data)
 {
    RGMainWindow *me = (RGMainWindow *)data;
-   const gchar *str = gtk_entry_get_text(GTK_ENTRY(me->_entry_fast_search));
-   GtkStyleContext *styleContext =
-      gtk_widget_get_style_context(me->_entry_fast_search);
+   start_task([me]() -> task<void> {
+      const gchar *str =
+         gtk_editable_get_text(GTK_EDITABLE(me->_entry_fast_search));
+      GtkStyleContext *styleContext =
+         gtk_widget_get_style_context(me->_entry_fast_search);
 
-   me->_fastSearchEventID = -1;
-   me->setBusyCursor(true);
-   RGFlushInterface();
-   if (str == NULL || strlen(str) <= 1) {
-      // reset the color
-      gtk_style_context_remove_provider(
-         styleContext, GTK_STYLE_PROVIDER(_fastSearchCssProvider));
-      // if the user has cleared the search, refresh the view
-      // Gtk-CRITICAL **: gtk_tree_view_unref_tree_helper: assertion `node !=
-      // NULL' failed at us, see LP: #38397 for more information
-      gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), NULL);
-      me->_lister->reapplyFilter();
-      me->refreshTable();
-      me->setBusyCursor(false);
-   } else if (strlen(str) > 1) {
-      // only search when there is more than one char entered, single
-      // char searches tend to be very slow
+      me->_fastSearchEventID = -1;
       me->setBusyCursor(true);
-      RGFlushInterface();
-      gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), NULL);
-      me->refreshTable();
-      // set color to a light yellow to make it more obvious that a search
-      // is performed
-      gtk_style_context_add_provider(styleContext,
-                                     GTK_STYLE_PROVIDER(_fastSearchCssProvider),
-                                     GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-   }
-   me->setBusyCursor(false);
-
-   return FALSE;
+      co_await RGFlushInterface();
+      if (str == NULL || strlen(str) <= 1) {
+         // reset the color
+         gtk_style_context_remove_provider(
+            styleContext, GTK_STYLE_PROVIDER(_fastSearchCssProvider));
+         // if the user has cleared the search, refresh the view
+         // Gtk-CRITICAL **: gtk_tree_view_unref_tree_helper: assertion `node !=
+         // NULL' failed at us, see LP: #38397 for more information
+         gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), NULL);
+         me->_lister->reapplyFilter();
+         me->refreshTable();
+         me->setBusyCursor(false);
+      } else if (strlen(str) > 1) {
+         // only search when there is more than one char entered, single
+         // char searches tend to be very slow
+         me->setBusyCursor(true);
+         co_await RGFlushInterface();
+         gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), NULL);
+         me->refreshTable();
+         // set color to a light yellow to make it more obvious that a search
+         // is performed
+         gtk_style_context_add_provider(
+            styleContext,
+            GTK_STYLE_PROVIDER(_fastSearchCssProvider),
+            GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+      }
+      me->setBusyCursor(false);
+   });
 }
 
 void RGMainWindow::cbSearchEntryChanged(GtkWidget *edit, void *data)
@@ -2833,7 +2879,7 @@ void RGMainWindow::cbSearchEntryChanged(GtkWidget *edit, void *data)
       g_source_remove(me->_fastSearchEventID);
       me->_fastSearchEventID = -1;
    }
-   me->_fastSearchEventID = g_timeout_add(500, xapianDoSearch, me);
+   me->_fastSearchEventID = g_timeout_add_once(500, xapianDoSearch, me);
 }
 
 void RGMainWindow::cbUpdateClicked(GSimpleAction *action,
@@ -2841,23 +2887,27 @@ void RGMainWindow::cbUpdateClicked(GSimpleAction *action,
                                    gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *)data;
+   start_task([me]() -> task<void> { co_await me->updateClicked(); });
+}
 
+task<void> RGMainWindow::updateClicked()
+{
    // need to delete dialogs, as they might have data pointing
    // to old stuff
    // xxx    delete me->_fmanagerWin;
-   me->_fmanagerWin = NULL;
+   _fmanagerWin = NULL;
 
-   RGFetchProgress *progress = me->_fetchProgress = new RGFetchProgress(me);
+   RGFetchProgress *progress = _fetchProgress = new RGFetchProgress(this);
    progress->setDescription(
       _("Downloading Package Information"),
       _("The repositories will be checked for new, removed "
         "or upgraded software packages."));
 
-   me->setStatusText(_("Reloading package information..."));
+   setStatusText(_("Reloading package information..."));
 
-   me->setInterfaceLocked(TRUE);
-   me->setTreeLocked(TRUE);
-   me->_lister->unregisterObserver(me);
+   co_await setInterfaceLocked(TRUE);
+   setTreeLocked(TRUE);
+   _lister->unregisterObserver(this);
 
    // save to temporary file
    const gchar *file =
@@ -2865,54 +2915,59 @@ void RGMainWindow::cbUpdateClicked(GSimpleAction *action,
    ofstream out(file);
    if (!out != 0) {
       _error->Error(_("Can't write %s"), file);
-      me->_userDialog->showErrors();
-      return;
+      co_await _userDialog->showErrors();
+      co_return;
    }
-   me->_lister->writeSelections(out, false);
+   _lister->writeSelections(out, false);
 
    // update cache and forget about the previous new packages
    // (only if no error occurred)
    string error;
-   if (!me->_lister->updateCache(progress, error)) {
-      RGGtkBuilderUserDialog dia(me, "update_failed");
+   bool updateCacheResult = co_await runWithStatusAsync<bool>(
+      [this, &error](pkgAcquireStatus &progress) -> bool {
+         return _lister->updateCache(&progress, error);
+      },
+      progress);
+   if (!updateCacheResult) {
+      RGGtkBuilderUserDialog dia(this, "update_failed");
       GtkWidget *tv =
          GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(), "textview"));
       GtkTextBuffer *tb = gtk_text_view_get_buffer(GTK_TEXT_VIEW(tv));
       gtk_text_buffer_set_text(tb, utf8(error.c_str()), -1);
-      dia.run();
+      co_await dia.co_run();
    } else {
-      me->forgetNewPackages();
+      forgetNewPackages();
       _config->Set("Synaptic::update::last", time(NULL));
    }
    delete progress;
-   me->_fetchProgress = NULL;
+   _fetchProgress = NULL;
 
    // show errors and warnings (like the gpg failures for the package list)
-   me->showErrors();
+   co_await showErrors();
 
-   if (!me->_lister->openCache()) {
-      me->showErrors();
+   if (!_lister->openCache()) {
+      co_await showErrors();
       exit(1);
    }
    // reread saved selections
    ifstream in(file);
    if (!in != 0) {
       _error->Error(_("Can't read %s"), file);
-      me->_userDialog->showErrors();
-      return;
+      co_await _userDialog->showErrors();
+      co_return;
    }
-   me->_lister->readSelections(in);
+   _lister->readSelections(in);
    unlink(file);
    g_free((void *)file);
 
    // check if the index needs to be rebuild
-   me->xapianDoIndexUpdate(me);
+   xapianDoIndexUpdate(this);
 
-   me->setTreeLocked(FALSE);
-   me->refreshTable();
-   me->refreshSubViewList();
-   me->setInterfaceLocked(FALSE);
-   me->setStatusText();
+   setTreeLocked(FALSE);
+   refreshTable();
+   refreshSubViewList();
+   co_await setInterfaceLocked(FALSE);
+   setStatusText();
 }
 
 void RGMainWindow::cbFixBrokenClicked(GSimpleAction *action,
@@ -2920,19 +2975,24 @@ void RGMainWindow::cbFixBrokenClicked(GSimpleAction *action,
                                       gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *)data;
-   RPackage *pkg = me->selectedPackage();
+   start_task([me]() -> task<void> { co_await me->fixBroken(); });
+}
 
-   bool res = me->_lister->fixBroken();
-   me->setInterfaceLocked(TRUE);
-   me->refreshTable(pkg);
+task<void> RGMainWindow::fixBroken()
+{
+   RPackage *pkg = selectedPackage();
+
+   bool res = _lister->fixBroken();
+   co_await setInterfaceLocked(TRUE);
+   refreshTable(pkg);
 
    if (!res)
-      me->setStatusText(_("Failed to resolve dependency problems!"));
+      setStatusText(_("Failed to resolve dependency problems!"));
    else
-      me->setStatusText(_("Successfully fixed dependency problems"));
+      setStatusText(_("Successfully fixed dependency problems"));
 
-   me->setInterfaceLocked(FALSE);
-   me->showErrors();
+   co_await setInterfaceLocked(FALSE);
+   co_await showErrors();
 }
 
 
@@ -2941,38 +3001,43 @@ void RGMainWindow::cbUpgradeClicked(GSimpleAction *action,
                                     gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *)data;
-   RPackage *pkg = me->selectedPackage();
+   start_task([me]() -> task<void> { co_await me->upgrade(); });
+}
+
+task<void> RGMainWindow::upgrade()
+{
+   RPackage *pkg = selectedPackage();
    bool dist_upgrade;
    int res;
 
-   if (!me->_lister->check()) {
-      me->_userDialog->error(_("Could not upgrade the system!\n"
-                               "Fix broken packages first."));
-      return;
+   if (!_lister->check()) {
+      co_await _userDialog->error(_("Could not upgrade the system!\n"
+                                    "Fix broken packages first."));
+      co_return;
    }
    // check if we have saved upgrade type
    UpgradeType upgrade =
       (UpgradeType)_config->FindI("Synaptic::UpgradeType", UPGRADE_DIST);
 
    // special case for non-interactive upgrades
-   if (_config->FindB("Volatile::Non-Interactive", false))
+   if (_config->FindB("Volatile::Non-Interactive", false)) {
       if (_config->FindB("Volatile::Upgrade-Mode", false))
          upgrade = UPGRADE_NORMAL;
       else if (_config->FindB("Volatile::DistUpgrade-Mode", false))
          upgrade = UPGRADE_DIST;
-
+   }
 
    if (upgrade == UPGRADE_ASK) {
       // ask what type of upgrade the user wants
       GtkBuilder *builder;
       GtkWidget *button;
 
-      RGGtkBuilderUserDialog dia(me);
-      res = dia.run("upgrade", true);
+      RGGtkBuilderUserDialog dia(this);
+      res = co_await dia.co_run("upgrade", true);
       switch (res) {
          case GTK_RESPONSE_CANCEL:
          case GTK_RESPONSE_DELETE_EVENT:
-            return;
+            co_return;
          case GTK_RESPONSE_YES:
             dist_upgrade = true;
             break;
@@ -2995,33 +3060,33 @@ void RGMainWindow::cbUpgradeClicked(GSimpleAction *action,
    }
 
    // do the work
-   me->setInterfaceLocked(TRUE);
-   me->setStatusText(_("Marking all available upgrades..."));
+   co_await setInterfaceLocked(TRUE);
+   setStatusText(_("Marking all available upgrades..."));
 
-   me->_lister->saveUndoState();
+   _lister->saveUndoState();
 
    RPackageLister::pkgState state;
-   me->_lister->saveState(state);
+   _lister->saveState(state);
 
    if (dist_upgrade)
-      res = me->_lister->distUpgrade();
+      res = _lister->distUpgrade();
    else
-      res = me->_lister->upgrade();
+      res = _lister->upgrade();
 
-   if (me->askStateChange(state)) {
-      me->refreshTable(pkg);
+   if (co_await askStateChange(state)) {
+      refreshTable(pkg);
 
       if (res)
-         me->setStatusText(_("Successfully marked available upgrades"));
+         setStatusText(_("Successfully marked available upgrades"));
       else
-         me->setStatusText(_("Failed to mark all available upgrades!"));
+         setStatusText(_("Failed to mark all available upgrades!"));
    } else {
       // if the user canceled the action, just show the default message
-      me->setStatusText();
+      setStatusText();
    }
 
-   me->setInterfaceLocked(FALSE);
-   me->showErrors();
+   co_await setInterfaceLocked(FALSE);
+   co_await showErrors();
 }
 
 void RGMainWindow::cbMenuPinClicked(GSimpleAction *action,
@@ -3029,10 +3094,6 @@ void RGMainWindow::cbMenuPinClicked(GSimpleAction *action,
                                     gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *)data;
-
-   GtkTreeSelection *selection;
-   GtkTreeIter iter;
-   RPackage *pkg;
 
    if (me->_blockActions)
       return;
@@ -3044,15 +3105,27 @@ void RGMainWindow::cbMenuPinClicked(GSimpleAction *action,
    g_variant_unref(state);
    g_simple_action_set_state(action, g_variant_new_boolean(active));
 
-   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(me->_treeView));
+   start_task([me, active]() -> task<void> { co_await me->pin(active); });
+}
+
+task<void> RGMainWindow::pin(bool active)
+{
+   if (_blockActions)
+      co_return;
+
+   GtkTreeSelection *selection;
+   GtkTreeIter iter;
+   RPackage *pkg;
+
+   selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(_treeView));
    GList *li, *list;
 
-   list = li = gtk_tree_selection_get_selected_rows(selection, &me->_pkgList);
+   list = li = gtk_tree_selection_get_selected_rows(selection, &_pkgList);
    if (li == NULL)
-      return;
+      co_return;
 
-   me->setInterfaceLocked(TRUE);
-   me->_lister->unregisterObserver(me);
+   co_await setInterfaceLocked(TRUE);
+   _lister->unregisterObserver(this);
 
    // save to temporary file
    const gchar *file =
@@ -3060,14 +3133,14 @@ void RGMainWindow::cbMenuPinClicked(GSimpleAction *action,
    ofstream out(file);
    if (!out != 0) {
       _error->Error(_("Can't write %s"), file);
-      me->_userDialog->showErrors();
-      return;
+      co_await _userDialog->showErrors();
+      co_return;
    }
-   me->_lister->writeSelections(out, false);
+   _lister->writeSelections(out, false);
 
    while (li != NULL) {
-      gtk_tree_model_get_iter(me->_pkgList, &iter, (GtkTreePath *)(li->data));
-      gtk_tree_model_get(me->_pkgList, &iter, PKG_COLUMN, &pkg, -1);
+      gtk_tree_model_get_iter(_pkgList, &iter, (GtkTreePath *)(li->data));
+      gtk_tree_model_get(_pkgList, &iter, PKG_COLUMN, &pkg, -1);
       if (pkg == NULL) {
          li = g_list_next(li);
          continue;
@@ -3077,9 +3150,9 @@ void RGMainWindow::cbMenuPinClicked(GSimpleAction *action,
       _roptions->setPackageLock(pkg->name(), active);
       li = g_list_next(li);
    }
-   me->setTreeLocked(TRUE);
-   if (!me->_lister->openCache()) {
-      me->showErrors();
+   setTreeLocked(TRUE);
+   if (!_lister->openCache()) {
+      co_await showErrors();
       exit(1);
    }
 
@@ -3087,10 +3160,10 @@ void RGMainWindow::cbMenuPinClicked(GSimpleAction *action,
    ifstream in(file);
    if (!in != 0) {
       _error->Error(_("Can't read %s"), file);
-      me->_userDialog->showErrors();
-      return;
+      co_await _userDialog->showErrors();
+      co_return;
    }
-   me->_lister->readSelections(in);
+   _lister->readSelections(in);
    unlink(file);
    g_free((void *)file);
 
@@ -3098,17 +3171,17 @@ void RGMainWindow::cbMenuPinClicked(GSimpleAction *action,
    g_list_foreach(list, (GFunc)gtk_tree_path_free, NULL);
    g_list_free(list);
 
-   me->_lister->registerObserver(me);
-   me->setTreeLocked(FALSE);
-   me->refreshTable();
-   me->refreshSubViewList();
-   me->refreshTable();
-   me->setInterfaceLocked(FALSE);
+   _lister->registerObserver(this);
+   setTreeLocked(FALSE);
+   refreshTable();
+   refreshSubViewList();
+   refreshTable();
+   co_await setInterfaceLocked(FALSE);
 }
 
-void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
-                                       GdkEventButton *event,
-                                       RGMainWindow *me,
+void RGMainWindow::cbTreeviewPopupMenu(int button,
+                                       double x,
+                                       double y,
                                        vector<RPackage *> selected_pkgs)
 {
    // Nothing selected, shouldn't happen, but we play safely.
@@ -3124,9 +3197,9 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
    if (flags & RPackage::FPinned)
       return;
 
-   if (event->button == 1 &&
+   if (button == 1 &&
        _config->FindB("Synaptic::OneClickOnStatusActions", false) == true) {
-      me->activateAction("mark-default", nullptr);
+      activateAction("mark-default", nullptr);
       return;
    }
 
@@ -3160,7 +3233,7 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
       GMenu *recommendsSection = g_menu_new();
 
       if (GMenu *recommendedSubmenu =
-             me->buildWeakDependsMenu(pkg, pkgCache::Dep::Recommends))
+             buildWeakDependsMenu(pkg, pkgCache::Dep::Recommends))
          g_menu_append_submenu(recommendsSection,
                                _("Mark Recommended for Installation"),
                                G_MENU_MODEL(recommendedSubmenu));
@@ -3169,7 +3242,7 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
             recommendsSection, _("Mark Recommended for Installation"), nullptr);
 
       if (GMenu *suggestedSubmenu =
-             me->buildWeakDependsMenu(pkg, pkgCache::Dep::Suggests))
+             buildWeakDependsMenu(pkg, pkgCache::Dep::Suggests))
          g_menu_append_submenu(recommendsSection,
                                _("Mark Suggested for Installation"),
                                G_MENU_MODEL(suggestedSubmenu));
@@ -3184,11 +3257,13 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
 
    GdkRectangle rect{0, 0, 0, 0};
    gtk_tree_view_convert_bin_window_to_widget_coords(
-      GTK_TREE_VIEW(treeview), (int)event->x, (int)event->y, &rect.x, &rect.y);
+      GTK_TREE_VIEW(_treeView), (int)x, (int)y, &rect.x, &rect.y);
 
    GtkWidget *popupMenu =
-      gtk_popover_new_from_model(treeview, G_MENU_MODEL(popupMenuModel));
+      gtk_popover_menu_new_from_model(G_MENU_MODEL(popupMenuModel));
+   gtk_widget_set_parent(popupMenu, _treeView);
    gtk_popover_set_pointing_to(GTK_POPOVER(popupMenu), &rect);
+   gtk_popover_present(GTK_POPOVER(popupMenu));
    gtk_popover_popup(GTK_POPOVER(popupMenu));
 }
 
@@ -3239,20 +3314,18 @@ GMenu *RGMainWindow::buildWeakDependsMenu(RPackage *pkg,
       return NULL;
 }
 
-void RGMainWindow::selectToInstall(vector<string> packagenames)
+task<void> RGMainWindow::selectToInstall(vector<string> packagenames)
 {
-   RGMainWindow *me = this;
-
    RPackageLister::pkgState state;
    vector<RPackage *> exclude;
    vector<RPackage *> instPkgs;
 
    // we always save the state (for undo)
-   me->_lister->saveState(state);
-   me->_lister->notifyCachePreChange();
+   _lister->saveState(state);
+   _lister->notifyCachePreChange();
 
    for (unsigned int i = 0; i < packagenames.size(); i++) {
-      RPackage *newpkg = (RPackage *)me->_lister->getPackage(packagenames[i]);
+      RPackage *newpkg = (RPackage *)_lister->getPackage(packagenames[i]);
       if (newpkg) {
          // only install the package if it is not already installed or if
          // it is outdated
@@ -3260,7 +3333,7 @@ void RGMainWindow::selectToInstall(vector<string> packagenames)
              (newpkg->getFlags() & RPackage::FOutdated)) {
             // actual action
             newpkg->setNotify(false);
-            me->pkgInstallHelper(newpkg);
+            pkgInstallHelper(newpkg);
             newpkg->setNotify(true);
             // exclude.push_back(newpkg);
             instPkgs.push_back(newpkg);
@@ -3269,19 +3342,19 @@ void RGMainWindow::selectToInstall(vector<string> packagenames)
    }
 
    // ask for additional changes
-   me->setBusyCursor(true);
-   if (me->askStateChange(state, exclude)) {
-      me->_lister->saveUndoState(state);
-      if (me->checkForFailedInst(instPkgs))
-         me->_lister->restoreState(state);
+   setBusyCursor(true);
+   if (co_await askStateChange(state, exclude)) {
+      _lister->saveUndoState(state);
+      if (co_await checkForFailedInst(instPkgs))
+         _lister->restoreState(state);
    }
-   me->setBusyCursor(false);
-   me->_lister->notifyPostChange(NULL);
-   me->_lister->notifyCachePostChange();
+   setBusyCursor(false);
+   _lister->notifyPostChange(NULL);
+   _lister->notifyCachePostChange();
 
-   RPackage *pkg = me->selectedPackage();
-   me->refreshTable(pkg);
-   me->updatePackageInfo(pkg);
+   RPackage *pkg = selectedPackage();
+   refreshTable(pkg);
+   updatePackageInfo(pkg);
 }
 
 void RGMainWindow::pkgInstallByNameHelper(GSimpleAction *action,
@@ -3292,37 +3365,42 @@ void RGMainWindow::pkgInstallByNameHelper(GSimpleAction *action,
    // cout << "pkgInstallByNameHelper: " << name << endl;
 
    RGMainWindow *me = (RGMainWindow *)data;
+   start_task(
+      [me, name]() -> task<void> { co_await me->pkgInstallByName(name); });
+}
 
-   RPackage *newpkg = (RPackage *)me->_lister->getPackage(name);
+task<void> RGMainWindow::pkgInstallByName(const char *name)
+{
+   RPackage *newpkg = (RPackage *)_lister->getPackage(name);
    if (newpkg) {
       RPackageLister::pkgState state;
       vector<RPackage *> exclude;
       vector<RPackage *> instPkgs;
 
       // we always save the state (for undo)
-      me->_lister->saveState(state);
-      me->_lister->notifyCachePreChange();
+      _lister->saveState(state);
+      _lister->notifyCachePreChange();
 
       // actual action
       newpkg->setNotify(false);
-      me->pkgInstallHelper(newpkg);
+      pkgInstallHelper(newpkg);
       newpkg->setNotify(true);
 
       exclude.push_back(newpkg);
       instPkgs.push_back(newpkg);
 
       // ask for additional changes
-      if (me->askStateChange(state, exclude)) {
-         me->_lister->saveUndoState(state);
-         if (me->checkForFailedInst(instPkgs))
-            me->_lister->restoreState(state);
+      if (co_await askStateChange(state, exclude)) {
+         _lister->saveUndoState(state);
+         if (co_await checkForFailedInst(instPkgs))
+            _lister->restoreState(state);
       }
-      me->_lister->notifyPostChange(NULL);
-      me->_lister->notifyCachePostChange();
+      _lister->notifyPostChange(NULL);
+      _lister->notifyCachePostChange();
 
-      RPackage *pkg = me->selectedPackage();
-      me->refreshTable(pkg);
-      me->updatePackageInfo(pkg);
+      RPackage *pkg = selectedPackage();
+      refreshTable(pkg);
+      updatePackageInfo(pkg);
    }
 }
 
@@ -3332,43 +3410,54 @@ void RGMainWindow::cbGenerateDownloadScriptClicked(GSimpleAction *action,
 {
    // cout << "cbGenerateDownloadScriptClicked()" << endl;
    RGMainWindow *me = (RGMainWindow *)data;
+   start_task([me]() -> task<void> { co_await me->generateDownloadScript(); });
+}
 
+task<void> RGMainWindow::generateDownloadScript()
+{
    int installed, broken, toInstall, toRemove;
    double sizeChange;
-   me->_lister->getStats(installed, broken, toInstall, toRemove, sizeChange);
+   _lister->getStats(installed, broken, toInstall, toRemove, sizeChange);
    if (toInstall == 0) {
-      me->_userDialog->message("Nothing to install/upgrade\n\n"
-                               "Please select the \"Mark all Upgrades\" "
-                               "button or some packages to install/upgrade.");
-      return;
+      co_await _userDialog->message(
+         "Nothing to install/upgrade\n\n"
+         "Please select the \"Mark all Upgrades\" "
+         "button or some packages to install/upgrade.");
+      co_return;
    }
 
    vector<string> uris;
-   if (!me->_lister->getDownloadUris(uris))
-      return;
+   if (!_lister->getDownloadUris(uris))
+      co_return;
 
    GtkWidget *filesel;
    filesel = gtk_file_chooser_dialog_new(_("Save script"),
-                                         GTK_WINDOW(me->window()),
+                                         GTK_WINDOW(window()),
                                          GTK_FILE_CHOOSER_ACTION_SAVE,
                                          _("_Cancel"),
                                          GTK_RESPONSE_CANCEL,
                                          _("_Save"),
                                          GTK_RESPONSE_ACCEPT,
                                          NULL);
-   int res = gtk_dialog_run(GTK_DIALOG(filesel));
-   const char *file = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(filesel));
-   gtk_widget_destroy(filesel);
-   if (res != GTK_RESPONSE_ACCEPT)
-      return;
+   int res = co_await co_run_dialog(GTK_DIALOG(filesel));
+   GFile *selected_file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(filesel));
+   gtk_window_destroy(GTK_WINDOW(filesel));
+   if (res != GTK_RESPONSE_ACCEPT) {
+      g_object_unref(selected_file);
+      co_return;
+   }
+
+   char *file = g_file_get_path(selected_file);
+   g_object_unref(selected_file);
 
    // FIXME: this is prototype code, hardcoding wget here suckx
    ofstream out(file);
    out << "#!/bin/sh" << endl;
-   for (int i = 0; i < uris.size(); i++) {
+   for (size_t i = 0; i < uris.size(); i++) {
       out << "wget -c " << uris[i] << endl;
    }
    chmod(file, 0755);
+   g_free(file);
 }
 
 void RGMainWindow::cbAddDownloadedFilesClicked(GSimpleAction *action,
@@ -3376,57 +3465,70 @@ void RGMainWindow::cbAddDownloadedFilesClicked(GSimpleAction *action,
                                                gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *)data;
+   start_task([me]() -> task<void> { co_await me->addDownloadedFiles(); });
+}
+
+task<void> RGMainWindow::addDownloadedFiles()
+{
 #ifndef HAVE_RPM
-   // cout << "cbAddDownloadedFilesClicked()" << endl;
    GtkWidget *filesel;
    filesel = gtk_file_chooser_dialog_new(_("Select directory"),
-                                         GTK_WINDOW(me->window()),
+                                         GTK_WINDOW(window()),
                                          GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
                                          _("_Cancel"),
                                          GTK_RESPONSE_CANCEL,
                                          _("_Open"),
                                          GTK_RESPONSE_ACCEPT,
                                          NULL);
-   int res = gtk_dialog_run(GTK_DIALOG(filesel));
-   const char *path = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(filesel));
-   gtk_widget_destroy(filesel);
-   if (res != GTK_RESPONSE_ACCEPT)
-      return;
-   if (!g_file_test(path, G_FILE_TEST_IS_DIR)) {
-      me->_userDialog->error(_("Please select a directory"));
-      return;
+   int res = co_await co_run_dialog(GTK_DIALOG(filesel));
+   GFile *selected_file = gtk_file_chooser_get_file(GTK_FILE_CHOOSER(filesel));
+   gtk_window_destroy(GTK_WINDOW(filesel));
+   if (res != GTK_RESPONSE_ACCEPT) {
+      g_object_unref(selected_file);
+      co_return;
    }
+   GFileType file_type = g_file_query_file_type(
+      selected_file, G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS, NULL);
+   if (file_type != G_FILE_TYPE_DIRECTORY) {
+      co_await _userDialog->error(_("Please select a directory"));
+      g_object_unref(selected_file);
+      co_return;
+   }
+
    // now read the dir for debs
+   char *path = g_file_get_path(selected_file);
    const gchar *file;
    string pkgname;
    stringstream pkgs;
    GDir *dir = g_dir_open(path, 0, NULL);
    while ((file = g_dir_read_name(dir)) != NULL) {
       if (g_pattern_match_simple("*_*.deb", file)) {
-         if (me->_lister->addArchiveToCache(string(path) + "/" + string(file),
-                                            pkgname))
+         if (_lister->addArchiveToCache(string(path) + "/" + string(file),
+                                        pkgname))
             pkgs << pkgname << "\t install" << endl;
       }
    }
    g_dir_close(dir);
+   g_free(path);
+   g_object_unref(selected_file);
 
    // and set what we found as selection
    pkgs.seekg(0);
    if (pkgs.str() == "")
-      return;
+      co_return;
 
-   me->_lister->unregisterObserver(me);
-   me->_lister->readSelections(pkgs);
-   me->_lister->registerObserver(me);
-   me->refreshTable();
+   _lister->unregisterObserver(this);
+   _lister->readSelections(pkgs);
+   _lister->registerObserver(this);
+   refreshTable();
 
    // show any errors
-   me->_userDialog->showErrors();
+   co_await _userDialog->showErrors();
 
    // click proceed
-   me->cbProceedClicked(nullptr, nullptr, me);
-
+   co_await applyChanges();
 #else
-   me->_userDialog->error("Sorry, not implemented for rpm, patches welcome");
+   co_await _userDialog->error(
+      "Sorry, not implemented for rpm, patches welcome");
 #endif
 }

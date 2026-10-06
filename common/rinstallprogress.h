@@ -31,6 +31,8 @@
 #include <optional>
 #include <string>
 
+#include "coroutines.h"
+
 class RInstallProgress
 {
  protected:
@@ -64,17 +66,27 @@ class RInstallProgress
       int numPackages = 0,
       int numPackagesTotal = 0);
    virtual std::optional<pkgPackageManager::OrderResult> poll();
-   virtual void finish()
-   {}
+   [[nodiscard]] virtual task<void> finish()
+   {
+      co_return;
+   }
 
-   virtual void startUpdate()
-   {}
-   virtual void updateInterface()
-   {}
-   virtual void finishUpdate()
-   {}
+   [[nodiscard]] virtual task<void> startUpdate()
+   {
+      co_return;
+   }
+   [[nodiscard]] virtual task<void> updateInterface()
+   {
+      co_return;
+   }
+   [[nodiscard]] virtual task<void> finishUpdate()
+   {
+      co_return;
+   }
 
    RInstallProgress()
       : _donePackagesTotal(0), _numPackagesTotal(0), _updateFinished(false)
+   {}
+   virtual ~RInstallProgress()
    {}
 };

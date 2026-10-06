@@ -29,6 +29,7 @@
 #ifdef HAVE_APTPKG_CDROM
 
 #   include "rgwindow.h"
+#   include "coroutines.h"
 
 #   include <apt-pkg/cdrom.h>
 #   include <gtk/gtk.h>
@@ -52,7 +53,7 @@ class RGCDScanner : public pkgCdromStatus, public RGWindow
    bool AskCdromName(std::string &defaultName);
    void Update(std::string text, int current);
 
-   bool run();
+   [[nodiscard]] task<bool> run();
 };
 
 #endif

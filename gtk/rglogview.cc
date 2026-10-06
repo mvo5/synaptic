@@ -36,9 +36,6 @@
 #include <cstring>
 #include <ctime>
 #include <fstream>
-#include <glib-object.h>
-#include <glib.h>
-#include <gobject/gclosure.h>
 #include <gtk/gtk.h>
 #include <map>
 #include <string>
@@ -272,7 +269,7 @@ void RGLogView::cbButtonFind(GtkWidget *self, void *data)
 
    me->clearLogBuf();
 
-   me->findStr = gtk_entry_get_text(GTK_ENTRY(me->_entryFind));
+   me->findStr = gtk_editable_get_text(GTK_EDITABLE(me->_entryFind));
    // reset to old model
    if (strlen(me->findStr) == 0) {
       me->findStr = NULL;
@@ -309,16 +306,13 @@ void RGLogView::cbButtonFind(GtkWidget *self, void *data)
 void RGLogView::show()
 {
    clearLogBuf();
-   gtk_entry_set_text(GTK_ENTRY(_entryFind), "");
+   gtk_editable_set_text(GTK_EDITABLE(_entryFind), "");
    RGWindow::show();
 }
 
 RGLogView::RGLogView(RGWindow *parent)
    : RGGtkBuilderWindow(parent, "logview"), findStr(NULL)
 {
-   GtkWidget *vbox = GTK_WIDGET(gtk_builder_get_object(_builder, "vbox_main"));
-   assert(vbox);
-
    _entryFind = GTK_WIDGET(gtk_builder_get_object(_builder, "entry_find"));
    assert(_entryFind);
 
@@ -344,6 +338,7 @@ RGLogView::RGLogView(RGWindow *parent)
                     G_CALLBACK(cbCloseClicked),
                     this);
 
+   hideByEscape();
 
    /* Setup the selection handler */
    GtkTreeSelection *select;

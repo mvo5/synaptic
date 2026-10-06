@@ -36,15 +36,13 @@
 #include <apt-pkg/strutl.h>
 #include <cassert>
 #include <cstdio>
-#include <glib-object.h>
-#include <glib.h>
-#include <gobject/gclosure.h>
 #include <gtk/gtk.h>
 #include <libintl.h>
 #include <string>
 #include <vector>
 
 class RGWindow;
+#include "rgutils.h"
 
 using namespace std;
 
@@ -405,7 +403,7 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    assert(_checkSigsB);
 #ifdef HAVE_RPM
    bool check = _config->FindB("RPM::GPG-Check", true);
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_checkSigsB), check);
+   gtk_check_button_set_active(GTK_CHECK_BUTTON(_checkSigsB), check);
    gtk_widget_show(_checkSigsB);
 #endif
 
@@ -514,37 +512,33 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    gtk_label_set_markup(GTK_LABEL(_summarySpaceL), msg_space->str);
    g_string_free(msg, TRUE);
    g_string_free(msg_space, TRUE);
-   if (!_config->FindB("Volatile::HideMainwindow", false))
-      skipTaskbar(true);
-   else
-      skipTaskbar(false);
 }
 
-bool RGSummaryWindow::showAndConfirm()
+task<bool> RGSummaryWindow::showAndConfirm()
 {
-   gtk_toggle_button_set_active(
-      GTK_TOGGLE_BUTTON(_dlonlyB),
+   gtk_check_button_set_active(
+      GTK_CHECK_BUTTON(_dlonlyB),
       _config->FindB("Volatile::Download-Only", false));
-   int res = gtk_dialog_run(GTK_DIALOG(_win));
+   int res = co_await co_run_dialog(GTK_DIALOG(_win));
    bool confirmed = (res == GTK_RESPONSE_APPLY);
 
    RGUserDialog userDialog(this);
    if (confirmed && _potentialBreak &&
-       userDialog.warning(_("Essential packages will be removed.\n"
-                            "This may render your system unusable!\n"),
-                          false) == false)
-      return false;
+       co_await userDialog.warning(_("Essential packages will be removed.\n"
+                                     "This may render your system unusable!\n"),
+                                   false) == false)
+      co_return false;
 
    _config->Set("Volatile::Download-Only",
-                gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_dlonlyB))
+                gtk_check_button_get_active(GTK_CHECK_BUTTON(_dlonlyB))
                    ? "true"
                    : "false");
 #ifdef HAVE_RPM
    _config->Set("RPM::GPG-Check",
-                gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_checkSigsB))
+                gtk_check_button_get_active(GTK_CHECK_BUTTON(_checkSigsB))
                    ? "true"
                    : "false");
 #endif
 
-   return confirmed;
+   co_return confirmed;
 }

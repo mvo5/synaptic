@@ -120,7 +120,7 @@ class RGDebInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
 
    virtual void prepare(RPackageLister *lister);
 
-   void conffile(gchar *conffile, gchar *status);
+   [[nodiscard]] task<void> conffile(gchar *conffile, gchar *status);
 
    // gtk stuff
    static void cbCancel(GtkWidget *self, void *data);
@@ -129,13 +129,19 @@ class RGDebInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    static void expander_callback(GObject *object,
                                  GParamSpec *param_spec,
                                  gpointer user_data);
-   static gboolean key_press_event(GtkWidget *widget,
-                                   GdkEventKey *event,
+   static gboolean key_press_event(GtkEventControllerKey *controller,
+                                   guint keyval,
+                                   guint keycode,
+                                   GdkModifierType state,
                                    gpointer user_data);
-   static gboolean cbTerminalClicked(GtkWidget *widget,
-                                     GdkEventButton *event,
-                                     gpointer user_data);
-   static void cbMenuitemClicked(GtkMenuItem *menuitem, gpointer user_data);
+   static void cbTerminalClicked(GtkGestureClick *gesture,
+                                 gint n_press,
+                                 gdouble x,
+                                 gdouble y,
+                                 gpointer user_data);
+   static void cbTeerminalAction(GSimpleAction *action,
+                                 GVariant *parameter,
+                                 gpointer user_data);
 
  public:
    RGDebInstallProgress(RGMainWindow *main, RPackageLister *lister);
@@ -147,9 +153,9 @@ class RGDebInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
       int totalPackages = 0) override;
    virtual std::optional<pkgPackageManager::OrderResult> poll() override;
 
-   virtual void startUpdate() override;
-   virtual void updateInterface() override;
-   virtual void finishUpdate() override;
+   [[nodiscard]] virtual task<void> startUpdate() override;
+   [[nodiscard]] virtual task<void> updateInterface() override;
+   [[nodiscard]] virtual task<void> finishUpdate() override;
 };
 
 #endif // WITH_DPKG_STATUSFD

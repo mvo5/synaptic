@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+
+name: 'Beman issue creation workflow'
+on:
+  workflow_call:
+  workflow_dispatch:
+jobs:
+  create-issue:
+    runs-on: ubuntu-latest
+    steps:
+      # See https://github.com/cli/cli/issues/5075
+      - uses: actions/checkout@v4
+      - name: Create issue
+        run: |
+          issue_num=$(gh issue list -s open -S "[SCHEDULED-BUILD] infra repo CI job failure" -L 1 --json number | jq 'if length == 0 then -1 else .[0].number end')
+          body="**CI job failure Report**
+          - **Time of Failure**: $(date -u '+%B %d, %Y, %H:%M %Z')
+          - **Commit**: [${{ github.sha }}](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})
+          - **Action Run**: [View logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          The scheduled job triggered by cron has failed.
+          Please investigate the logs and recent changes associated with this commit or rerun the workflow if you believe this is an error."
+          if [[ $issue_num -eq -1 ]]; then
+            gh issue create --repo ${{ github.repository }} --title "[SCHEDULED-BUILD] infra repo CI job failure" --body "$body" --assignee ${{ github.actor }}
+          else
+            gh issue comment --repo ${{ github.repository }} $issue_num --body "$body"
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}

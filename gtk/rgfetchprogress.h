@@ -24,7 +24,10 @@
 
 #include "config.h" // IWYU pragma: associated
 
+#include "rpackagelister.h"
 #include "rggtkbuilderwindow.h"
+#include "coroutines.h"
+#include "racquireasync.h"
 
 #include <apt-pkg/acquire.h>
 #include <gtk/gtk.h>
@@ -34,8 +37,20 @@
 
 class RGWindow;
 
-class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow
+class RPkgAcquireStatusImpl : public pkgAcquireStatus
 {
+   friend class RGFetchProgress;
+
+ protected:
+   virtual bool MediaChange(std::string Media, std::string Drive) override
+   {
+      return true;
+   }
+};
+
+class RGFetchProgress : public RPkgAcquireStatusAsync, public RGGtkBuilderWindow
+{
+   RPkgAcquireStatusImpl _status;
 
    struct Item
    {
@@ -72,13 +87,15 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow
    // GdkPixmap *statusDraw(int width, int height, int status);
 
  public:
-   virtual bool MediaChange(std::string Media, std::string Drive);
-   virtual void IMSHit(pkgAcquire::ItemDesc &Itm);
-   virtual void Fetch(pkgAcquire::ItemDesc &Itm);
-   virtual void Done(pkgAcquire::ItemDesc &Itm);
-   virtual void Fail(pkgAcquire::ItemDesc &Itm);
-   virtual void Start();
-   virtual void Stop();
+   [[nodiscard]] virtual task<bool> MediaChange(std::string Media,
+                                                std::string Drive) override;
+   [[nodiscard]] virtual task<void> IMSHit(pkgAcquire::ItemDesc &Itm) override;
+   [[nodiscard]] virtual task<void> Fetch(pkgAcquire::ItemDesc &Itm) override;
+   [[nodiscard]] virtual task<void> Done(pkgAcquire::ItemDesc &Itm) override;
+   [[nodiscard]] virtual task<void> Fail(pkgAcquire::ItemDesc &Itm) override;
+   [[nodiscard]] virtual task<void> Start() override;
+   [[nodiscard]] virtual task<void> Stop() override;
+
    virtual void close() override;
 
    bool Pulse(pkgAcquire *Owner);

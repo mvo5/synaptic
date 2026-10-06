@@ -63,11 +63,11 @@ class RGTermInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
       int numPackages = 0,
       int totalPackages = 0) override;
    virtual std::optional<pkgPackageManager::OrderResult> poll() override;
-   virtual void finish() override;
+   [[nodiscard]] virtual task<void> finish() override;
 
-   virtual void startUpdate() override;
-   virtual void updateInterface() override;
-   virtual void finishUpdate() override;
+   [[nodiscard]] virtual task<void> startUpdate() override;
+   [[nodiscard]] virtual task<void> updateInterface() override;
+   [[nodiscard]] virtual task<void> finishUpdate() override;
 };
 
 #endif /* HAVT_TERMINAL */

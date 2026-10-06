@@ -55,7 +55,7 @@ class RGInstallProgressMsgs : public RGGtkBuilderWindow
    virtual void addLine(const char *line);
 
    virtual bool empty();
-   virtual void run();
+   [[nodiscard]] virtual task<void> run();
    virtual void close() override;
 
    RGInstallProgressMsgs(RGWindow *win);
@@ -91,7 +91,7 @@ class RGInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    RGInstallProgress(RGMainWindow *main, RPackageLister *lister);
    ~RGInstallProgress();
 
-   virtual void startUpdate() override;
-   virtual void updateInterface() override;
-   virtual void finishUpdate() override;
+   [[nodiscard]] virtual task<void> startUpdate() override;
+   [[nodiscard]] virtual task<void> updateInterface() override;
+   [[nodiscard]] virtual task<void> finishUpdate() override;
 };

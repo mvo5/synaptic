@@ -26,6 +26,7 @@
 #include "rgpkgdetails.h"
 
 #include "i18n.h"
+#include "racquireasync.h"
 #include "rgchangelogdialog.h"
 #include "rgfetchprogress.h"
 #include "rggtkbuilderwindow.h"
@@ -152,16 +153,15 @@ void RGPkgDetailsWindow::cbShowBigScreenshot(GtkWidget *box,
 {
    // cerr << "cbShowBigScreenshot" << endl;
    RPackage *pkg = (RPackage *)data;
-
-   doShowBigScreenshot(pkg);
+   start_task([pkg] -> task<void> { co_await doShowBigScreenshot(pkg); });
 }
 
-void RGPkgDetailsWindow::doShowBigScreenshot(RPackage *pkg)
+task<void> RGPkgDetailsWindow::doShowBigScreenshot(RPackage *pkg)
 {
    RGFetchProgress *status = new RGFetchProgress(NULL);
-   ;
-   pkgAcquire fetcher(status);
-   string filename = pkg->getScreenshotFile(&fetcher, false);
+
+   pkgAcquire fetcher;
+   string filename = co_await pkg->getScreenshotFile(&fetcher, status, false);
    GtkWidget *img = gtk_image_new_from_file(filename.c_str());
    GtkWidget *win = gtk_dialog_new();
    gtk_window_set_default_size(GTK_WINDOW(win), 500, 400);
@@ -169,45 +169,47 @@ void RGPkgDetailsWindow::doShowBigScreenshot(RPackage *pkg)
    gtk_widget_show(img);
    GtkWidget *content_area = gtk_dialog_get_content_area(GTK_DIALOG(win));
    gtk_container_add(GTK_CONTAINER(content_area), img);
-   gtk_dialog_run(GTK_DIALOG(win));
-   gtk_widget_destroy(win);
+   g_signal_connect(win, "response", G_CALLBACK(gtk_widget_destroy), nullptr);
+   gtk_window_present(GTK_WINDOW(win));
 }
 
 void RGPkgDetailsWindow::cbShowScreenshot(GtkWidget *button, void *data)
 {
    struct screenshot_info *si = (struct screenshot_info *)data;
+   start_task([si, button]() -> task<void> {
+      if (_config->FindB("Synaptic::InlineScreenshots") == false) {
+         co_await doShowBigScreenshot(si->pkg);
+      } else {
+         // hide button
+         gtk_widget_hide(button);
 
-   if (_config->FindB("Synaptic::InlineScreenshots") == false) {
-      doShowBigScreenshot(si->pkg);
-      return;
-   } else {
+         // get screenshot
+         RGFetchProgress *status = new RGFetchProgress(NULL);
 
-      // hide button
-      gtk_widget_hide(button);
-
-      // get screenshot
-      RGFetchProgress *status = new RGFetchProgress(NULL);
-      ;
-      pkgAcquire fetcher(status);
-      string filename = si->pkg->getScreenshotFile(&fetcher);
-      GtkWidget *event = gtk_event_box_new();
-      GtkWidget *img = gtk_image_new_from_file(filename.c_str());
-      gtk_container_add(GTK_CONTAINER(event), img);
-      g_signal_connect(G_OBJECT(event),
-                       "button_press_event",
-                       G_CALLBACK(cbShowBigScreenshot),
-                       (void *)si->pkg);
-      gtk_text_view_add_child_at_anchor(
-         GTK_TEXT_VIEW(si->textview), GTK_WIDGET(event), si->anchor);
-      gtk_widget_show_all(event);
-   }
+         pkgAcquire fetcher;
+         string filename =
+            co_await si->pkg->getScreenshotFile(&fetcher, status);
+         GtkWidget *event = gtk_event_box_new();
+         GtkWidget *img = gtk_image_new_from_file(filename.c_str());
+         gtk_container_add(GTK_CONTAINER(event), img);
+         g_signal_connect(G_OBJECT(event),
+                          "button_press_event",
+                          G_CALLBACK(cbShowBigScreenshot),
+                          (void *)si->pkg);
+         gtk_text_view_add_child_at_anchor(
+            GTK_TEXT_VIEW(si->textview), GTK_WIDGET(event), si->anchor);
+         gtk_widget_show_all(event);
+      }
+   });
 }
 
 void RGPkgDetailsWindow::cbShowChangelog(GtkWidget *button, void *data)
 {
    RPackage *pkg = (RPackage *)data;
    RGWindow *parent = (RGWindow *)g_object_get_data(G_OBJECT(button), "me");
-   ShowChangelogDialog(parent, pkg);
+   start_task([parent, pkg]() -> task<void> {
+      co_await ShowChangelogDialog(parent, pkg);
+   });
 }
 
 gboolean RGPkgDetailsWindow::cbOpenLink(GtkWidget *label,
@@ -400,7 +402,7 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
    gchar *str;
    vector<string> list;
    vector<pair<string, string>> versions = pkg->getAvailableVersions();
-   for (int i = 0; i < versions.size(); i++) {
+   for (size_t i = 0; i < versions.size(); i++) {
       // TRANSLATORS: this the format of the available versions in
       // the "Properties/Available versions" window
       // e.g. "0.56 (unstable)"

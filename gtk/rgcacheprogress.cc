@@ -53,34 +53,39 @@ RGCacheProgress::~RGCacheProgress()
 void RGCacheProgress::Update()
 {
    if (!CheckChange()) {
-      // RGFlushInterface();
+      // co_await RGFlushInterface();
       return;
    }
 
-   if (!_mapped) {
-      gtk_widget_show(_prog);
-      RGFlushInterface();
-      _mapped = true;
-   }
+   start_task([this]() -> task<void> {
+      if (!_mapped) {
+         gtk_widget_show(_prog);
+         co_await RGFlushInterface();
+         _mapped = true;
+      }
 
-   if (MajorChange)
-      gtk_label_set_text(GTK_LABEL(_label), utf8(Op.c_str()));
+      if (MajorChange)
+         gtk_label_set_text(GTK_LABEL(_label), utf8(Op.c_str()));
 
-   // only call set_fraction when the changes are noticable (0.1%)
-   if (fabs(Percent - gtk_progress_bar_get_fraction(GTK_PROGRESS_BAR(_prog)) *
-                         100.0) > 0.1)
-      gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_prog),
-                                    (float)Percent / 100.0);
+      // only call set_fraction when the changes are noticable (0.1%)
+      if (fabs(Percent -
+               gtk_progress_bar_get_fraction(GTK_PROGRESS_BAR(_prog)) * 100.0) >
+          0.1)
+         gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_prog),
+                                       (float)Percent / 100.0);
 
-   RGFlushInterface();
+      co_await RGFlushInterface();
+   });
 }
 
 void RGCacheProgress::Done()
 {
-   gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_prog), 1.0);
-   RGFlushInterface();
+   start_task([this]() -> task<void> {
+      gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_prog), 1.0);
+      co_await RGFlushInterface();
 
-   gtk_widget_hide(_prog);
+      gtk_widget_hide(_prog);
 
-   _mapped = false;
+      _mapped = false;
+   });
 }

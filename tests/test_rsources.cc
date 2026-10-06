@@ -311,46 +311,104 @@ TEST_F(RSourcesTest, SourcepartsMixesFormatsInSortedOrder)
    EXPECT_EQ(recs[1]->Format, SourcesList::OneLine);
 }
 
-// Only the Enabled state is written back for deb822 stanzas so far, in place;
-// every other in-memory change is ignored and the rest of the file is kept.
-TEST_F(RSourcesTest, Deb822OnlyEnabledIsWrittenBack)
+static const char *UBUNTU_SOURCES =
+   "Enabled: yes\n"
+   "Types: deb deb-src\n"
+   "URIs: http://de.archive.ubuntu.com/ubuntu/\n"
+   "Suites: noble\n"
+   "Components: main restricted universe multiverse\n"
+   "Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\n"
+   "\n"
+   "Enabled: yes\n"
+   "Types: deb deb-src\n"
+   "URIs: http://security.ubuntu.com/ubuntu/\n"
+   "Suites: noble-security\n"
+   "Components: main restricted universe multiverse\n"
+   "Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\n";
+
+static void set_sections(SourcesList::SourceRecord *rec, const vector<string> &secs)
 {
-   const string ubuntu =
-      "# See sources.list(5) for details\n"
-      "Types: deb\n"
-      "URIs: http://archive.ubuntu.com/ubuntu/\n"
-      "Suites: noble noble-updates noble-backports\n"
-      "Components: main universe restricted multiverse\n"
-      "Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\n";
-   box.put("sources.list.d/ubuntu.sources", ubuntu);
+   delete[] rec->Sections;
+   rec->NumSections = secs.size();
+   rec->Sections = new string[rec->NumSections];
+   for (unsigned i = 0; i < rec->NumSections; i++)
+      rec->Sections[i] = secs[i];
+}
+
+// Edits to a deb822 record are written back field by field, inside the
+// stanza; everything not edited, including the other stanza, stays as it was.
+TEST_F(RSourcesTest, Deb822EditsAreWrittenBackInPlace)
+{
+   box.put("sources.list.d/ubuntu.sources", UBUNTU_SOURCES);
    box.put("sources.list.d/ppa.sources", string("Enabled: yes\n") + STANZA_A);
-   box.put("sources.list", "deb http://deb.debian.org/debian bookworm main\n");
 
    SourcesList lst;
    EXPECT_TRUE(lst.ReadSources());
-   SourcesList::SourceRecord *ubuntu_rec = nullptr;
-   for (SourcesList::SourceRecord *rec : lst.SourceRecords)
-      if (rec->SourceFile == box.path("sources.list.d/ubuntu.sources"))
-         ubuntu_rec = rec;
-   ASSERT_NE(ubuntu_rec, nullptr);
+   ASSERT_EQ(records(lst).size(), 3u);
+   SourcesList::SourceRecord *rec = nullptr;
+   for (SourcesList::SourceRecord *r : lst.SourceRecords)
+      if (r->SourceFile == box.path("sources.list.d/ubuntu.sources") && r->Dist == "noble")
+         rec = r;
+   ASSERT_NE(rec, nullptr);
 
-   ubuntu_rec->Type |= SourcesList::Disabled;
-   ubuntu_rec->URI = "http://changed.example/";
+   rec->Type = SourcesList::Deb | SourcesList::Disabled; // drop deb-src, disable
+   rec->URI = "http://changed.example/ubuntu/";
+   rec->Dist = "noble noble-updates";
+   set_sections(rec, {"main", "universe"});
    EXPECT_TRUE(lst.UpdateSources());
 
-   string expected = ubuntu;
-   expected.insert(expected.find("Types: deb\n"), "Enabled: no\n");
+   string expected = UBUNTU_SOURCES;
+   expected.replace(expected.find("Enabled: yes\n"), 13, "Enabled: no\n");
+   expected.replace(expected.find("Types: deb deb-src\n"), 19, "Types: deb\n");
+   expected.replace(expected.find("URIs: http://de.archive.ubuntu.com/ubuntu/\n"), 43,
+                    "URIs: http://changed.example/ubuntu/\n");
+   expected.replace(expected.find("Suites: noble\n"), 14, "Suites: noble noble-updates\n");
+   expected.replace(expected.find("Components: main restricted universe multiverse\n"), 48,
+                    "Components: main universe\n");
    EXPECT_EQ(box.get("sources.list.d/ubuntu.sources"), expected);
+   EXPECT_EQ(box.get("sources.list.d/ubuntu.sources.bak"), UBUNTU_SOURCES);
    EXPECT_EQ(box.get("sources.list.d/ppa.sources"), string("Enabled: yes\n") + STANZA_A);
-   // the one-line file is still rewritten as before
-   EXPECT_NE(box.get("sources.list").find("deb http://deb.debian.org/debian/ bookworm main"),
-             string::npos);
 
-   // and back: the line we added is rewritten, not removed
-   ubuntu_rec->Type &= ~static_cast<unsigned int>(SourcesList::Disabled);
-   EXPECT_TRUE(lst.UpdateSources());
-   expected.replace(expected.find("Enabled: no\n"), 12, "Enabled: yes\n");
+   // the dialog's cancel path writes the untouched copy back: a no-op
+   SourcesList saved;
+   EXPECT_TRUE(saved.ReadSources());
+   EXPECT_TRUE(saved.UpdateSources());
    EXPECT_EQ(box.get("sources.list.d/ubuntu.sources"), expected);
+}
+
+// The record shows $(ARCH) expanded, but an unchanged field is not written,
+// so the variable survives in the file.
+TEST_F(RSourcesTest, Deb822UnchangedFieldsKeepArchVariable)
+{
+   _config->Set("APT::Architecture", "riscv64");
+   const string body =
+      "Types: deb\nURIs: http://a.example/$(ARCH)/debian\nSuites: stable\nComponents: main\n";
+   box.put("sources.list.d/a.sources", body);
+
+   SourcesList lst;
+   EXPECT_TRUE(lst.ReadSources());
+   auto recs = records(lst);
+   ASSERT_EQ(recs.size(), 1u);
+   SourcesList::SourceRecord *rec = const_cast<SourcesList::SourceRecord *>(recs[0]);
+   EXPECT_EQ(rec->URI, "http://a.example/riscv64/debian");
+
+   rec->Dist = "testing";
+   EXPECT_TRUE(lst.UpdateSources());
+   EXPECT_EQ(box.get("sources.list.d/a.sources"),
+             "Types: deb\nURIs: http://a.example/$(ARCH)/debian\nSuites: testing\nComponents: main\n");
+}
+
+TEST_F(RSourcesTest, Deb822ClearedComponentsRemoveTheField)
+{
+   box.put("sources.list.d/a.sources", STANZA_A);
+   SourcesList lst;
+   EXPECT_TRUE(lst.ReadSources());
+   auto recs = records(lst);
+   ASSERT_EQ(recs.size(), 1u);
+   set_sections(const_cast<SourcesList::SourceRecord *>(recs[0]), {});
+   EXPECT_TRUE(lst.UpdateSources());
+   EXPECT_EQ(box.get("sources.list.d/a.sources"),
+             "Types: deb\nURIs: http://a.example/debian\nSuites: stable\n");
 }
 
 // A stanza apt would reject still counts for the stanza index, so the writer

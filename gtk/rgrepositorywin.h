@@ -61,6 +61,9 @@ class RGRepositoryEditor : RGGtkBuilderWindow
    GtkWidget *_entrySect;
    GtkWidget *_optType;
    GtkListStore *_optTypeMenu;
+   // deb822 rows: a stanza may be deb and deb-src at once
+   GtkWidget *_checkDeb;
+   GtkWidget *_checkDebSrc;
    GtkWidget *_entryDist;
    // GtkWidget *_cbEnabled;
 

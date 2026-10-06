@@ -43,7 +43,9 @@
 #include <glib/gtypes.h>
 #include <gobject/gclosure.h>
 #include <gtk/gtk.h>
+#include <sstream>
 #include <string>
+#include <vector>
 
 class RGWindow;
 
@@ -98,8 +100,8 @@ static string SourceHint(const SourcesList::SourceRecord *rec)
    g_free(text);
    if (rec->Format == SourcesList::Deb822) {
       hint += " ";
-      hint += _("This source uses the deb822 format. Only enabling and "
-                "disabling it is supported here yet.");
+      hint += _("This source uses the deb822 format and can not be "
+                "removed or reordered here yet.");
    }
    return hint;
 }
@@ -260,6 +262,10 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    //"checkbutton_enabled"));
 
    _optType = GTK_WIDGET(gtk_builder_get_object(_builder, "combo_type"));
+   _checkDeb = GTK_WIDGET(gtk_builder_get_object(_builder, "check_type_deb"));
+   _checkDebSrc =
+      GTK_WIDGET(gtk_builder_get_object(_builder, "check_type_debsrc"));
+   assert(_checkDeb && _checkDebSrc);
 
    renderer = gtk_cell_renderer_text_new();
    gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(_optType), renderer, TRUE);
@@ -596,30 +602,30 @@ void RGRepositoryEditor::doEdit()
    gtk_tree_model_get(
       GTK_TREE_MODEL(_sourcesListStore), _lastIter, STATUS_COLUMN, &status, -1);
 
-   if (rec->Format == SourcesList::Deb822) {
-      // only the Enabled state can be written back for deb822 stanzas so far
-      if (status)
-         rec->Type &= ~static_cast<unsigned int>(SourcesList::Disabled);
-      else
-         rec->Type |= SourcesList::Disabled;
-      gtk_list_store_set(_sourcesListStore,
-                         _lastIter,
-                         DISABLED_COLOR_COLUMN,
-                         status ? NULL : &_gray,
-                         -1);
-      return;
-   }
-
    rec->Type = 0;
    if (!status)
       rec->Type |= SourcesList::Disabled;
 
+   const bool deb822 = rec->Format == SourcesList::Deb822;
    GtkTreeIter item;
-   int type;
-   gtk_combo_box_get_active_iter(GTK_COMBO_BOX(_optType), &item);
-   gtk_tree_model_get(GTK_TREE_MODEL(_optTypeMenu), &item, 1, &type, -1);
+   int type = ITEM_TYPE_DEB;
+   if (deb822) {
+      if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_checkDeb)))
+         rec->Type |= SourcesList::Deb;
+      if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_checkDebSrc)))
+         rec->Type |= SourcesList::DebSrc;
+      // a stanza without a type is invalid, fall back to the common case
+      if ((rec->Type & (SourcesList::Deb | SourcesList::DebSrc)) == 0)
+         rec->Type |= SourcesList::Deb;
+      type = -1;
+   } else {
+      gtk_combo_box_get_active_iter(GTK_COMBO_BOX(_optType), &item);
+      gtk_tree_model_get(GTK_TREE_MODEL(_optTypeMenu), &item, 1, &type, -1);
+   }
 
    switch (type) {
+      case -1: // deb822, handled above
+         break;
       case ITEM_TYPE_DEB:
          rec->Type |= SourcesList::Deb;
          break;
@@ -660,18 +666,22 @@ void RGRepositoryEditor::doEdit()
    rec->Dist = gtk_entry_get_text(GTK_ENTRY(_entryDist));
 
    delete[] rec->Sections;
-   rec->NumSections = 0;
-
-   const char *Section = gtk_entry_get_text(GTK_ENTRY(_entrySect));
-   if (Section != 0 && Section[0] != 0)
-      rec->NumSections++;
-
+   vector<string> sections;
+   const string Section = gtk_entry_get_text(GTK_ENTRY(_entrySect));
+   if (deb822) {
+      // deb822 fields are lists; the one-line writer keeps the entry as one
+      // string because it writes it out verbatim anyway
+      stringstream ss(Section);
+      string s;
+      while (ss >> s)
+         sections.push_back(s);
+   } else if (Section.empty() == false) {
+      sections.push_back(Section);
+   }
+   rec->NumSections = sections.size();
    rec->Sections = new string[rec->NumSections];
-   rec->NumSections = 0;
-   Section = gtk_entry_get_text(GTK_ENTRY(_entrySect));
-
-   if (Section != 0 && Section[0] != 0)
-      rec->Sections[rec->NumSections++] = Section;
+   for (unsigned int I = 0; I < rec->NumSections; I++)
+      rec->Sections[I] = sections[I];
 
    string Sect;
    for (unsigned int I = 0; I < rec->NumSections; I++) {
@@ -773,14 +783,22 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
       const SourcesList::SourceRecord *rec;
       gtk_tree_model_get(model, &iter, RECORD_COLUMN, &rec, -1);
 
-      // deb822 stanzas can only be enabled and disabled yet, see
-      // SourcesList::FileFormat
-      const bool editable = rec->Format != SourcesList::Deb822;
-      gtk_widget_set_sensitive(me->_editTable, editable);
-      gtk_widget_set_sensitive(me->_upBut, editable);
-      gtk_widget_set_sensitive(me->_downBut, editable);
-      gtk_widget_set_sensitive(me->_deleteBut, editable);
+      gtk_widget_set_sensitive(me->_editTable, TRUE);
+      // deb822 stanzas can be edited but not yet removed or reordered,
+      // see SourcesList::FileFormat
+      const bool deb822 = rec->Format == SourcesList::Deb822;
+      gtk_widget_set_sensitive(me->_upBut, !deb822);
+      gtk_widget_set_sensitive(me->_downBut, !deb822);
+      gtk_widget_set_sensitive(me->_deleteBut, !deb822);
       gtk_label_set_text(GTK_LABEL(me->_hintLabel), SourceHint(rec).c_str());
+
+      gtk_widget_set_visible(me->_optType, !deb822);
+      gtk_widget_set_visible(me->_checkDeb, deb822);
+      gtk_widget_set_visible(me->_checkDebSrc, deb822);
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(me->_checkDeb),
+                                   (rec->Type & SourcesList::Deb) != 0);
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(me->_checkDebSrc),
+                                   (rec->Type & SourcesList::DebSrc) != 0);
 
       int id = ITEM_TYPE_DEB;
       if (rec->Type & SourcesList::DebSrc)

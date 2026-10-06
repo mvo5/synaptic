@@ -201,48 +201,91 @@ static vector<string> FindMultiValue(const pkgTagSection &Sec,
    return parts;
 }
 
+// What a deb822 stanza contributes to a SourceRecord, with apt's rules for
+// Types, Enabled and multi-value fields. Ok is false for a stanza apt would
+// reject.
+struct StanzaFields
+{
+   bool Ok = false;
+   unsigned int Type = 0;
+   std::string URI;
+   std::string Dist;
+   std::vector<std::string> Components;
+};
+
+static StanzaFields ParseStanza(const pkgTagSection &Sec)
+{
+   StanzaFields F;
+   for (const string &T : FindMultiValue(Sec, "Types")) {
+      if (T == "deb")
+         F.Type |= SourcesList::Deb;
+      else if (T == "deb-src")
+         F.Type |= SourcesList::DebSrc;
+      else
+         return F;
+   }
+   if (F.Type == 0)
+      return F;
+
+   // as in apt's ParseStanza(): absent means enabled, and so does an
+   // unparseable value; StringToBool("") alone would say disabled
+   string Enabled = Sec.FindS("Enabled");
+   if (Enabled.empty() == false && StringToBool(Enabled) == false)
+      F.Type |= SourcesList::Disabled;
+
+   // expanded like SetURI() does it, but without its trailing slash, which
+   // only makes sense for a single URI
+   vector<string> uris = FindMultiValue(Sec, "URIs");
+   for (string &uri : uris)
+      uri = ExpandArch(uri);
+   F.URI = APT::String::Join(uris, " ");
+   // apt expands $(ARCH) in deb822 suites too
+   vector<string> suites = FindMultiValue(Sec, "Suites");
+   for (string &suite : suites)
+      suite = ExpandArch(suite);
+   F.Dist = APT::String::Join(suites, " ");
+
+   F.Components = FindMultiValue(Sec, "Components");
+   F.Ok = true;
+   return F;
+}
+
+static vector<string> SectionsOf(const SourcesList::SourceRecord &rec)
+{
+   return vector<string>(rec.Sections, rec.Sections + rec.NumSections);
+}
+
+static string TypesField(unsigned int Type)
+{
+   vector<string> types;
+   if (Type & SourcesList::Deb)
+      types.push_back("deb");
+   if (Type & SourcesList::DebSrc)
+      types.push_back("deb-src");
+   return APT::String::Join(types, " ");
+}
+
 bool SourcesList::ReadDeb822SourcePart(string path)
 {
    bool record_ok = true;
    RDeb822File File(path);
    bool read_ok = File.Read([&](const pkgTagSection &Sec, unsigned Index) {
+      const StanzaFields F = ParseStanza(Sec);
+      if (F.Ok == false) {
+         record_ok = false;
+         return;
+      }
       SourceRecord rec;
       rec.SourceFile = path;
       rec.Format = Deb822;
       rec.StanzaIndex = Index;
-
-      bool types_ok = true;
-      for (const string &T : FindMultiValue(Sec, "Types"))
-         if (rec.SetType(T) == false)
-            types_ok = false;
-      if (!types_ok || rec.Type == 0) {
-         record_ok = false;
-         return;
-      }
-      // as in apt's ParseStanza(): absent means enabled, and so does an
-      // unparseable value; StringToBool("") alone would say disabled
-      string Enabled = Sec.FindS("Enabled");
-      if (Enabled.empty() == false && StringToBool(Enabled) == false)
-         rec.Type |= Disabled;
-
-      // expanded like SetURI() does it, but without its trailing slash, which
-      // only makes sense for a single URI
-      vector<string> uris = FindMultiValue(Sec, "URIs");
-      for (string &uri : uris)
-         uri = ExpandArch(uri);
-      rec.URI = APT::String::Join(uris, " ");
-      // apt expands $(ARCH) in deb822 suites too
-      vector<string> suites = FindMultiValue(Sec, "Suites");
-      for (string &suite : suites)
-         suite = ExpandArch(suite);
-      rec.Dist = APT::String::Join(suites, " ");
-
-      vector<string> comps = FindMultiValue(Sec, "Components");
-      rec.NumSections = comps.size();
+      rec.Type = F.Type;
+      rec.URI = F.URI;
+      rec.Dist = F.Dist;
+      rec.NumSections = F.Components.size();
       rec.Sections = new string[rec.NumSections];
       for (unsigned short i = 0; i < rec.NumSections; i++)
-         rec.Sections[i] = comps[i];
-
+         rec.Sections[i] = F.Components[i];
       AddSourceNode(rec);
    });
    return read_ok && record_ok;
@@ -357,10 +400,38 @@ bool SourcesList::UpdateDeb822Sources()
 
    for (const auto &entry : byFile) {
       RDeb822File File(entry.first);
-      if (File.Read() == false)
+      map<unsigned, StanzaFields> onDisk;
+      if (File.Read([&](const pkgTagSection &Sec, unsigned Index) {
+             onDisk[Index] = ParseStanza(Sec);
+          }) == false)
          return false;
-      for (const SourceRecord *rec : entry.second)
-         File.SetEnabled(rec->StanzaIndex, (rec->Type & Disabled) == 0);
+
+      for (const SourceRecord *rec : entry.second) {
+         const unsigned Index = rec->StanzaIndex;
+         auto it = onDisk.find(Index);
+         if (it == onDisk.end() || it->second.Ok == false)
+            continue;
+         const StanzaFields &was = it->second;
+
+         // Only fields the user changed are written. The record holds $(ARCH)
+         // expanded for display, so writing an unchanged field back would
+         // replace the variable in the file with its expansion.
+         File.SetEnabled(Index, (rec->Type & Disabled) == 0);
+         const unsigned int TypeMask = Deb | DebSrc;
+         if ((rec->Type & TypeMask) != (was.Type & TypeMask))
+            File.SetField(Index, "Types", TypesField(rec->Type));
+         if (rec->URI != was.URI)
+            File.SetField(Index, "URIs", rec->URI);
+         if (rec->Dist != was.Dist)
+            File.SetField(Index, "Suites", rec->Dist);
+         if (SectionsOf(*rec) != was.Components) {
+            if (rec->NumSections == 0)
+               File.RemoveField(Index, "Components");
+            else
+               File.SetField(Index, "Components",
+                             APT::String::Join(SectionsOf(*rec), " "));
+         }
+      }
       if (File.Write() == false)
          return false;
    }

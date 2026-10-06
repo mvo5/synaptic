@@ -480,6 +480,33 @@ TEST_F(RDeb822FileTest, WriteKeepsAOneTimeBackup)
    EXPECT_NE(box.get(rel), UBUNTU_FILE);
 }
 
+TEST_F(RDeb822FileTest, SameValueWithDifferentSpacingIsANoop)
+{
+   const string body = "Types: deb\nURIs: http://a/\nSuites:  stable   testing\t\nComponents:\n main\n contrib\n";
+   EXPECT_EQ(roundtrip(body, [](RDeb822File &f) {
+                EXPECT_FALSE(f.SetField(0, "Suites", "stable testing"));
+                EXPECT_FALSE(f.SetField(0, "Components", "main contrib"));
+                EXPECT_FALSE(f.Changed());
+             }),
+             body);
+}
+
+TEST_F(RDeb822FileTest, RemoveFieldDropsItsLinesOnly)
+{
+   const string body =
+      "Types: deb\nURIs: http://a/\nSuites: s\nComponents:\n main\n# keep\n contrib\n\n"
+      "Types: deb\nURIs: http://b/\nSuites: t\n";
+   EXPECT_EQ(roundtrip(body, [](RDeb822File &f) {
+                EXPECT_TRUE(f.RemoveField(0, "Components"));
+                EXPECT_FALSE(f.RemoveField(0, "Components"));
+                EXPECT_FALSE(f.RemoveField(1, "Signed-By"));
+                // offsets of the following stanza are still right
+                EXPECT_TRUE(f.SetField(1, "Suites", "u"));
+             }),
+             "Types: deb\nURIs: http://a/\nSuites: s\n# keep\n\n"
+             "Types: deb\nURIs: http://b/\nSuites: u\n");
+}
+
 int main(int argc, char **argv)
 {
    ::testing::InitGoogleTest(&argc, argv);

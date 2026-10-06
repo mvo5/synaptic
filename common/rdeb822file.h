@@ -45,9 +45,11 @@ class RDeb822File
    unsigned StanzaCount() const;
 
    // Replaces the field's line(s) with "Key: Value", or inserts that in front
-   // of the stanza's first field. Returns true if the text changed.
+   // of the stanza's first field. Returns true if the text changed; a value
+   // that only differs in whitespace from what is there counts as unchanged.
    bool SetField(unsigned Index, const std::string &Key,
                  const std::string &Value);
+   bool RemoveField(unsigned Index, const std::string &Key);
    // An absent Enabled field means enabled, as it does for apt
    bool SetEnabled(unsigned Index, bool Enabled);
 

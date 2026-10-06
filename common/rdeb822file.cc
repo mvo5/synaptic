@@ -94,6 +94,23 @@ static LineKind ClassifyLine(const string &Text, size_t Start, size_t End)
    return FieldStart;
 }
 
+// Whitespace runs collapsed to one space, so "a   b" and "a b" compare equal
+static string Collapsed(const string &Text)
+{
+   string Out;
+   for (char c : Text) {
+      if (isspace(c)) {
+         if (Out.empty() == false && Out.back() != ' ')
+            Out += ' ';
+      } else {
+         Out += c;
+      }
+   }
+   if (Out.empty() == false && Out.back() == ' ')
+      Out.pop_back();
+   return Out;
+}
+
 static string Trimmed(const string &Text, size_t Start, size_t End)
 {
    while (Start < End && isspace(Text[Start]))
@@ -166,7 +183,7 @@ bool RDeb822File::SetField(unsigned Index, const string &Key, const string &Valu
       return false;
 
    const Field Old = FindField(Index, Key);
-   if (Old.Found && Old.Value == Value)
+   if (Old.Found && Collapsed(Old.Value) == Collapsed(Value))
       return false;
 
    size_t InsertAt;
@@ -198,6 +215,27 @@ bool RDeb822File::SetField(unsigned Index, const string &Key, const string &Valu
    for (unsigned I = Index + 1; I < _stanzas.size(); I++) {
       _stanzas[I].Start += Delta;
       _stanzas[I].End += Delta;
+   }
+   return true;
+}
+
+bool RDeb822File::RemoveField(unsigned Index, const string &Key)
+{
+   if (Index >= _stanzas.size())
+      return false;
+   const Field Old = FindField(Index, Key);
+   if (Old.Found == false)
+      return false;
+
+   size_t Removed = 0;
+   for (auto L = Old.Lines.rbegin(); L != Old.Lines.rend(); ++L) {
+      _text.erase(L->Start, L->End - L->Start);
+      Removed += L->End - L->Start;
+   }
+   _stanzas[Index].End -= Removed;
+   for (unsigned I = Index + 1; I < _stanzas.size(); I++) {
+      _stanzas[I].Start -= Removed;
+      _stanzas[I].End -= Removed;
    }
    return true;
 }

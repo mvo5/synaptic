@@ -95,14 +95,9 @@ enum {
 // Shown under the edit fields for the selected source
 static string SourceHint(const SourcesList::SourceRecord *rec)
 {
-   gchar *text = g_strdup_printf(_("Defined in %s."), rec->SourceFile.c_str());
+   gchar *text = g_strdup_printf(_("Defined in %s"), rec->SourceFile.c_str());
    string hint = text;
    g_free(text);
-   if (rec->Format == SourcesList::Deb822) {
-      hint += " ";
-      hint += _("This source uses the deb822 format and can not be "
-                "removed or reordered here yet.");
-   }
    return hint;
 }
 
@@ -784,12 +779,12 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
       gtk_tree_model_get(model, &iter, RECORD_COLUMN, &rec, -1);
 
       gtk_widget_set_sensitive(me->_editTable, TRUE);
-      // deb822 stanzas can be edited but not yet removed or reordered,
-      // see SourcesList::FileFormat
+      gtk_widget_set_sensitive(me->_deleteBut, TRUE);
+      // apt gives the order of deb822 stanzas no meaning, so there is
+      // nothing to reorder
       const bool deb822 = rec->Format == SourcesList::Deb822;
       gtk_widget_set_sensitive(me->_upBut, !deb822);
       gtk_widget_set_sensitive(me->_downBut, !deb822);
-      gtk_widget_set_sensitive(me->_deleteBut, !deb822);
       gtk_label_set_text(GTK_LABEL(me->_hintLabel), SourceHint(rec).c_str());
 
       gtk_widget_set_visible(me->_optType, !deb822);

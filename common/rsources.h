@@ -30,6 +30,8 @@
 #include <iostream>
 #include <list>
 #include <string>
+#include <utility>
+#include <vector>
 
 class SourcesList
 {
@@ -95,6 +97,8 @@ class SourcesList
  private:
    SourceRecord *AddSourceNode(SourceRecord &);
    VendorRecord *AddVendorNode(VendorRecord &);
+   // deb822 stanzas removed in the dialog, deleted from their file on save
+   std::vector<std::pair<std::string, unsigned>> _removedStanzas;
 
  public:
    SourceRecord *AddSource(RecType Type,

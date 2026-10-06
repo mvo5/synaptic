@@ -553,6 +553,36 @@ TEST_F(RSourcesTest, WriteSourcesFileFollowsSymlinks)
    EXPECT_FALSE(FileExists(link + ".bak"));
 }
 
+TEST_F(RSourcesTest, Deb822RemovedRecordIsDeletedOnSave)
+{
+   box.put("sources.list.d/ubuntu.sources", UBUNTU_SOURCES);
+   SourcesList lst;
+   EXPECT_TRUE(lst.ReadSources());
+
+   SourcesList::SourceRecord *security = nullptr, *archive = nullptr;
+   for (SourcesList::SourceRecord *r : lst.SourceRecords) {
+      if (r->Dist == "noble-security")
+         security = r;
+      else if (r->Dist == "noble")
+         archive = r;
+   }
+   ASSERT_NE(security, nullptr);
+   ASSERT_NE(archive, nullptr);
+
+   lst.RemoveSource(security);
+   archive->Dist = "noble noble-updates";
+   EXPECT_TRUE(lst.UpdateSources());
+
+   string expected = UBUNTU_SOURCES;
+   expected.erase(expected.find("\nEnabled: yes\nTypes: deb deb-src\nURIs: http://security"));
+   expected.replace(expected.find("Suites: noble\n"), 14, "Suites: noble noble-updates\n");
+   EXPECT_EQ(box.get("sources.list.d/ubuntu.sources"), expected);
+
+   // a second save has nothing left to delete
+   EXPECT_TRUE(lst.UpdateSources());
+   EXPECT_EQ(box.get("sources.list.d/ubuntu.sources"), expected);
+}
+
 int main(int argc, char **argv)
 {
    ::testing::InitGoogleTest(&argc, argv);

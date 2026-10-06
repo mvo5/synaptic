@@ -371,6 +371,8 @@ SourcesList::SourceRecord *SourcesList::AddSource(RecType Type,
 
 void SourcesList::RemoveSource(SourceRecord *&rec)
 {
+   if (rec->Format == Deb822)
+      _removedStanzas.push_back({rec->SourceFile, rec->StanzaIndex});
    SourceRecords.remove(rec);
    delete rec;
    rec = 0;
@@ -397,6 +399,8 @@ bool SourcesList::UpdateDeb822Sources()
    for (SourceRecord *rec : SourceRecords)
       if (rec->Format == Deb822)
          byFile[rec->SourceFile].push_back(rec);
+   for (const auto &removed : _removedStanzas)
+      byFile[removed.first];
 
    for (const auto &entry : byFile) {
       RDeb822File File(entry.first);
@@ -432,9 +436,13 @@ bool SourcesList::UpdateDeb822Sources()
                              APT::String::Join(SectionsOf(*rec), " "));
          }
       }
+      for (const auto &removed : _removedStanzas)
+         if (removed.first == entry.first)
+            File.RemoveStanza(removed.second);
       if (File.Write() == false)
          return false;
    }
+   _removedStanzas.clear();
    return true;
 }
 

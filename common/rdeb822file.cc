@@ -179,7 +179,7 @@ RDeb822File::Field RDeb822File::FindField(unsigned Index, const string &Key) con
 
 bool RDeb822File::SetField(unsigned Index, const string &Key, const string &Value)
 {
-   if (Index >= _stanzas.size())
+   if (Index >= _stanzas.size() || _stanzas[Index].Removed)
       return false;
 
    const Field Old = FindField(Index, Key);
@@ -221,7 +221,7 @@ bool RDeb822File::SetField(unsigned Index, const string &Key, const string &Valu
 
 bool RDeb822File::RemoveField(unsigned Index, const string &Key)
 {
-   if (Index >= _stanzas.size())
+   if (Index >= _stanzas.size() || _stanzas[Index].Removed)
       return false;
    const Field Old = FindField(Index, Key);
    if (Old.Found == false)
@@ -240,9 +240,85 @@ bool RDeb822File::RemoveField(unsigned Index, const string &Key)
    return true;
 }
 
+// Start of the line before the one starting at Pos, or npos at the top
+static size_t PrevLineStart(const string &Text, size_t Pos)
+{
+   if (Pos == 0)
+      return string::npos;
+   if (Pos == 1)
+      return 0;
+   size_t Newline = Text.rfind('\n', Pos - 2);
+   return Newline == string::npos ? 0 : Newline + 1;
+}
+
+bool RDeb822File::RemoveStanza(unsigned Index)
+{
+   if (Index >= _stanzas.size() || _stanzas[Index].Removed)
+      return false;
+
+   // the fields, from the first to the last field or continuation line
+   size_t First = string::npos, Last = string::npos;
+   for (const Span &L : StanzaLines(Index)) {
+      const LineKind Kind = ClassifyLine(_text, L.Start, L.End);
+      if (Kind == FieldStart) {
+         if (First == string::npos)
+            First = L.Start;
+         Last = L.End;
+      } else if (Kind == Continuation && First != string::npos) {
+         Last = L.End;
+      }
+   }
+   if (First == string::npos)
+      return false;
+
+   // plus the comment lines directly above, which may sit in the previous
+   // stanza's span
+   size_t DelStart = First;
+   for (size_t Prev = PrevLineStart(_text, DelStart); Prev != string::npos;
+        Prev = PrevLineStart(_text, DelStart)) {
+      if (ClassifyLine(_text, Prev, DelStart) != Comment)
+         break;
+      DelStart = Prev;
+   }
+   // plus the blank lines that separated it from what follows
+   size_t DelEnd = Last;
+   while (DelEnd < _text.size()) {
+      size_t Newline = _text.find('\n', DelEnd);
+      size_t LineEnd = Newline == string::npos ? _text.size() : Newline + 1;
+      if (ClassifyLine(_text, DelEnd, LineEnd) != Blank)
+         break;
+      DelEnd = LineEnd;
+   }
+   // deleting the last stanza: take the blank lines before it too, so the
+   // file does not end in a blank line
+   if (DelEnd == _text.size()) {
+      for (size_t Prev = PrevLineStart(_text, DelStart); Prev != string::npos;
+           Prev = PrevLineStart(_text, DelStart)) {
+         if (ClassifyLine(_text, Prev, DelStart) != Blank)
+            break;
+         DelStart = Prev;
+      }
+   }
+
+   const size_t Len = DelEnd - DelStart;
+   _text.erase(DelStart, Len);
+   for (unsigned I = 0; I < _stanzas.size(); I++) {
+      Span &S = _stanzas[I];
+      if (I == Index) {
+         S = {DelStart, DelStart, true};
+      } else if (S.Start >= DelEnd) {
+         S.Start -= Len;
+         S.End -= Len;
+      } else if (S.End > DelStart) {
+         S.End = DelStart;
+      }
+   }
+   return true;
+}
+
 bool RDeb822File::SetEnabled(unsigned Index, bool Enabled)
 {
-   if (Index >= _stanzas.size())
+   if (Index >= _stanzas.size() || _stanzas[Index].Removed)
       return false;
    const Field Old = FindField(Index, "Enabled");
    // apt: only an explicit false-ish value disables

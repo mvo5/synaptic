@@ -35,6 +35,18 @@ class RDeb822FileTest : public ::testing::Test
    }
 };
 
+static const char *STANZA_A =
+   "Types: deb\n"
+   "URIs: http://a.example/debian\n"
+   "Suites: stable\n"
+   "Components: main\n";
+
+static const char *STANZA_B =
+   "Types: deb\n"
+   "URIs: http://b.example/debian\n"
+   "Suites: testing\n"
+   "Components: main\n";
+
 static const char *TWO_STANZAS =
    "# leading comment\n"
    "Types: deb\n"
@@ -505,6 +517,71 @@ TEST_F(RDeb822FileTest, RemoveFieldDropsItsLinesOnly)
              }),
              "Types: deb\nURIs: http://a/\nSuites: s\n# keep\n\n"
              "Types: deb\nURIs: http://b/\nSuites: u\n");
+}
+
+TEST_F(RDeb822FileTest, RemoveStanzaTakesAttachedCommentAndSeparator)
+{
+   // "# introduces B" sits directly above B and goes with it; the trailing
+   // comment is set apart by a blank line and stays
+   string expected = TWO_STANZAS;
+   const size_t from = expected.find("# introduces B\n");
+   const size_t to = expected.find("# trailing comment\n");
+   expected.erase(from, to - from);
+   EXPECT_EQ(roundtrip(TWO_STANZAS, [](RDeb822File &f) { EXPECT_TRUE(f.RemoveStanza(1)); }),
+             expected);
+}
+
+TEST_F(RDeb822FileTest, RemoveFirstStanzaKeepsDetachedHeader)
+{
+   EXPECT_EQ(roundtrip("# header\n\n# about A\nTypes: deb\nURIs: http://a/\nSuites: s\n\n"
+                       "Types: deb\nURIs: http://b/\nSuites: t\n",
+                       [](RDeb822File &f) { EXPECT_TRUE(f.RemoveStanza(0)); }),
+             "# header\n\nTypes: deb\nURIs: http://b/\nSuites: t\n");
+}
+
+TEST_F(RDeb822FileTest, RemoveLastStanzaLeavesNoTrailingBlankLine)
+{
+   EXPECT_EQ(roundtrip(string(STANZA_A) + "\n\n" + STANZA_B,
+                       [](RDeb822File &f) { EXPECT_TRUE(f.RemoveStanza(1)); }),
+             STANZA_A);
+   EXPECT_EQ(roundtrip(string(STANZA_A) + "\n" + STANZA_B + "\n# tail\n",
+                       [](RDeb822File &f) { EXPECT_TRUE(f.RemoveStanza(1)); }),
+             string(STANZA_A) + "\n# tail\n");
+}
+
+TEST_F(RDeb822FileTest, RemovedStanzaKeepsLaterIndexesValid)
+{
+   const string c = "Types: deb\nURIs: http://c/\nSuites: u\n";
+   EXPECT_EQ(roundtrip(string(STANZA_A) + "\n" + STANZA_B + "\n" + c, [](RDeb822File &f) {
+                EXPECT_TRUE(f.RemoveStanza(1));
+                EXPECT_FALSE(f.RemoveStanza(1));
+                EXPECT_FALSE(f.SetField(1, "Suites", "x"));
+                EXPECT_FALSE(f.SetEnabled(1, false));
+                EXPECT_TRUE(f.SetField(2, "Suites", "v"));
+                EXPECT_TRUE(f.SetEnabled(0, false));
+             }),
+             "Enabled: no\n" + string(STANZA_A) + "\nTypes: deb\nURIs: http://c/\nSuites: v\n");
+}
+
+TEST_F(RDeb822FileTest, RemoveEveryStanza)
+{
+   EXPECT_EQ(roundtrip(string(STANZA_A) + "\n" + STANZA_B, [](RDeb822File &f) {
+                EXPECT_TRUE(f.RemoveStanza(0));
+                EXPECT_TRUE(f.RemoveStanza(1));
+             }),
+             "");
+   EXPECT_EQ(roundtrip("# header\n\n" + string(STANZA_A), [](RDeb822File &f) {
+                EXPECT_TRUE(f.RemoveStanza(0));
+             }),
+             "# header\n");
+}
+
+TEST_F(RDeb822FileTest, RemoveStanzaInCrlfFile)
+{
+   EXPECT_EQ(roundtrip("Types: deb\r\nURIs: http://a/\r\nSuites: s\r\n\r\n"
+                       "# b\r\nTypes: deb\r\nURIs: http://b/\r\nSuites: t\r\n",
+                       [](RDeb822File &f) { EXPECT_TRUE(f.RemoveStanza(1)); }),
+             "Types: deb\r\nURIs: http://a/\r\nSuites: s\r\n");
 }
 
 int main(int argc, char **argv)

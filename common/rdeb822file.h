@@ -50,6 +50,10 @@ class RDeb822File
    bool SetField(unsigned Index, const std::string &Key,
                  const std::string &Value);
    bool RemoveField(unsigned Index, const std::string &Key);
+   // Deletes the stanza's fields together with the comment lines directly
+   // above them. Comments set apart by a blank line stay, so one that
+   // introduces the next stanza is not lost. Later stanzas keep their index.
+   bool RemoveStanza(unsigned Index);
    // An absent Enabled field means enabled, as it does for apt
    bool SetEnabled(unsigned Index, bool Enabled);
 
@@ -63,6 +67,7 @@ class RDeb822File
    {
       size_t Start;
       size_t End;
+      bool Removed = false;
    };
    struct Field
    {

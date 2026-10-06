@@ -58,6 +58,7 @@ class RDeb822File
    bool SetEnabled(unsigned Index, bool Enabled);
 
    bool Changed() const;
+   const std::string &OriginalText() const;
    // Through WriteSourcesFile(): atomic, with a one-time .bak; a no-op when
    // nothing changed
    bool Write();

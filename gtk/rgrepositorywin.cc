@@ -746,6 +746,7 @@ void RGRepositoryEditor::DoOK(GtkWidget *, gpointer data)
    pkgSourceList List;
    if (!List.ReadMainList()) {
       me->_userDialog->showErrors();
+      me->_lst.RevertDeb822Sources();
       me->_savedList.UpdateSources();
       return;
    }

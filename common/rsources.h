@@ -29,6 +29,7 @@
 
 #include <iostream>
 #include <list>
+#include <map>
 #include <string>
 #include <utility>
 #include <vector>
@@ -99,6 +100,8 @@ class SourcesList
    VendorRecord *AddVendorNode(VendorRecord &);
    // deb822 stanzas removed in the dialog, deleted from their file on save
    std::vector<std::pair<std::string, unsigned>> _removedStanzas;
+   // deb822 files as they were before the last UpdateSources() changed them
+   std::map<std::string, std::string> _deb822Originals;
 
  public:
    SourceRecord *AddSource(RecType Type,
@@ -117,6 +120,10 @@ class SourcesList
    bool ReadSources();
    bool UpdateSources();
    bool UpdateDeb822Sources();
+   // Puts back the deb822 files the last UpdateSources() changed, verbatim.
+   // Restoring from a saved record list would go by stanza index, which is
+   // stale once a stanza was deleted.
+   bool RevertDeb822Sources();
 
    VendorRecord *AddVendor(std::string VendorID,
                            std::string FingerPrint,

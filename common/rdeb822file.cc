@@ -334,6 +334,11 @@ bool RDeb822File::Changed() const
    return _text != _original;
 }
 
+const string &RDeb822File::OriginalText() const
+{
+   return _original;
+}
+
 bool RDeb822File::Write()
 {
    if (Changed() == false)

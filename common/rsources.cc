@@ -395,6 +395,7 @@ void SourcesList::SwapSources(SourceRecord *&rec_one, SourceRecord *&rec_two)
 // drop Signed-By, unknown fields and comments. Only Enabled is written so far.
 bool SourcesList::UpdateDeb822Sources()
 {
+   _deb822Originals.clear();
    map<string, vector<SourceRecord *>> byFile;
    for (SourceRecord *rec : SourceRecords)
       if (rec->Format == Deb822)
@@ -439,11 +440,23 @@ bool SourcesList::UpdateDeb822Sources()
       for (const auto &removed : _removedStanzas)
          if (removed.first == entry.first)
             File.RemoveStanza(removed.second);
+      if (File.Changed())
+         _deb822Originals[entry.first] = File.OriginalText();
       if (File.Write() == false)
          return false;
    }
    _removedStanzas.clear();
    return true;
+}
+
+bool SourcesList::RevertDeb822Sources()
+{
+   bool ok = true;
+   for (const auto &entry : _deb822Originals)
+      if (WriteSourcesFile(entry.first, entry.second) == false)
+         ok = false;
+   _deb822Originals.clear();
+   return ok;
 }
 
 bool SourcesList::UpdateSources()

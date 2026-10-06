@@ -583,6 +583,39 @@ TEST_F(RSourcesTest, Deb822RemovedRecordIsDeletedOnSave)
    EXPECT_EQ(box.get("sources.list.d/ubuntu.sources"), expected);
 }
 
+// The dialog's undo path after a save apt rejects: the deb822 files come
+// back verbatim, even when a stanza was deleted and the indices shifted.
+TEST_F(RSourcesTest, Deb822RevertRestoresFilesVerbatim)
+{
+   const string third = string("\n") + STANZA_B;
+   box.put("sources.list.d/ubuntu.sources", UBUNTU_SOURCES + third);
+   box.put("sources.list.d/ppa.sources", STANZA_A);
+   SourcesList lst;
+   EXPECT_TRUE(lst.ReadSources());
+
+   SourcesList::SourceRecord *archive = nullptr, *testing = nullptr;
+   for (SourcesList::SourceRecord *r : lst.SourceRecords) {
+      if (r->Dist == "noble")
+         archive = r;
+      else if (r->Dist == "testing")
+         testing = r;
+   }
+   ASSERT_NE(archive, nullptr);
+   ASSERT_NE(testing, nullptr);
+   lst.RemoveSource(archive);
+   testing->URI = "not a valid uri";
+   EXPECT_TRUE(lst.UpdateSources());
+   EXPECT_NE(box.get("sources.list.d/ubuntu.sources"), UBUNTU_SOURCES + third);
+
+   EXPECT_TRUE(lst.RevertDeb822Sources());
+   EXPECT_EQ(box.get("sources.list.d/ubuntu.sources"), UBUNTU_SOURCES + third);
+   EXPECT_EQ(box.get("sources.list.d/ppa.sources"), STANZA_A);
+   // the one-time backup is from the first write and is not disturbed
+   EXPECT_EQ(box.get("sources.list.d/ubuntu.sources.bak"), UBUNTU_SOURCES + third);
+   // nothing left to revert
+   EXPECT_TRUE(lst.RevertDeb822Sources());
+}
+
 int main(int argc, char **argv)
 {
    ::testing::InitGoogleTest(&argc, argv);

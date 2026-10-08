@@ -1076,6 +1076,19 @@ vector<string> RPackage::getCandidateOriginSiteUrls()
 }
 
 
+// "Lock Version" only recorded the pin in synaptic's own private
+// preferences file (RStateDir()/preferences), which apt-get/apt on the
+// command line never reads. Also set a real dpkg hold so the lock is
+// honoured outside synaptic too (Debian #276655).
+static void setDpkgHold(const string &pkgname, bool flag)
+{
+   FILE *dpkg = popen("dpkg --set-selections", "w");
+   if (dpkg == NULL)
+      return;
+   fprintf(dpkg, "%s %s\n", pkgname.c_str(), flag ? "hold" : "install");
+   pclose(dpkg);
+}
+
 void RPackage::setPinned(bool flag)
 {
    struct stat stat_buf;
@@ -1083,6 +1096,8 @@ void RPackage::setPinned(bool flag)
    string File = RStateDir() + "/preferences";
 
    _boolFlags = flag ? (_boolFlags | FPinned) : (_boolFlags & FPinned);
+
+   setDpkgHold(name(), flag);
 
    if (flag) {
       // pkg already in pin-file

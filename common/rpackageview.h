@@ -254,6 +254,7 @@ class RPackageViewFilter : public RPackageView
    {
       return _filterL.size();
    }
+
    RFilter *findFilter(unsigned int index)
    {
       if (index > _filterL.size())
@@ -261,9 +262,6 @@ class RPackageViewFilter : public RPackageView
       else
          return _filterL[index];
    }
-
-   // used by kynaptic
-   int getFilterIndex(RFilter *filter);
 
    std::vector<std::string> getFilterNames();
    const std::set<std::string> &getSections();

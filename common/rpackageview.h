@@ -69,14 +69,6 @@ class RPackageView
    virtual ~RPackageView()
    {}
 
-   bool hasSelection()
-   {
-      return _hasSelection;
-   }
-   std::string getSelected()
-   {
-      return _selectedName;
-   }
    bool hasPackage(RPackage *pkg);
    virtual bool setSelected(std::string name);
 

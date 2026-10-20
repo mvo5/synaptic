@@ -55,11 +55,6 @@ install_data(
 )
 
 install_data(
-  ['warning.svg'],
-  install_dir: pkg_icon_dir / 'scalable' / 'categories',
-)
-
-install_data(
   files('hicolor/256x256/apps/synaptic.png'),
   install_dir: datadir / 'icons' / 'hicolor' / '256x256' / 'apps',
 )

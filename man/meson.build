@@ -1,1 +1,7 @@
 install_man('synaptic.8')
+install_man('synaptic.es.8', locale: 'es')
+install_man('synaptic.hr.8', locale: 'hr')
+install_man('synaptic.ja.8', locale: 'ja')
+install_man('synaptic.pt_BR.8', locale: 'pt_BR')
+install_man('synaptic.ru.8', locale: 'ru')
+install_man('synaptic.tr.8', locale: 'tr')

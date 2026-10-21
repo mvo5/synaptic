@@ -1,3 +1,6 @@
+####################
+# Install the XML (yelp) manual.
+
 help_install_root = datadir / 'gnome' / 'help' / 'synaptic'
 foreach lang : ['C', 'es', 'hr', 'sv']
   install_data(
@@ -13,23 +16,23 @@ foreach lang : ['C', 'es', 'hr', 'sv']
   )
 endforeach
 
-# HTML manual: the fallback the Help menu opens when yelp is missing (rgmainwindow.cc)
+####################
+# Compile and install the  HTML manual (fallback for the Help menu when yelp is missing (rgmainwindow.cc)).
+
 xmlto = find_program('xmlto')
+
+html_install_root = pkg_datadir / 'html'
+
 custom_target(
   'synaptic-html',
-  input: files('C/synaptic.xml'),
-  output: 'html',
-  # drop xmlto's .proc intermediate so only the manual itself is shipped
-  command: [
-    'sh', '-c',
-    xmlto.full_path() + ' html --skip-validation -o "$1" "$2" && rm -f "$1"/*.proc',
-    'sh', '@OUTPUT@', '@INPUT@',
-  ],
+  input: 'C/synaptic.xml',
+  output: 'synaptic.html',
+  command: [ xmlto, 'html-nochunks', '--skip-validation', '-o', '@OUTDIR@', '@INPUT@', ],
   install: true,
-  install_dir: pkg_datadir,
+  install_dir: html_install_root,
 )
 
 install_subdir(
   'C/figures',
-  install_dir: pkg_datadir / 'html',
+  install_dir: html_install_root,
 )

@@ -180,23 +180,25 @@ void RAPTOptions::rereadDebconf()
    const char infodir[] = "/var/lib/dpkg/info";
    const char configext[] = ".config";
 
-   DIR *dir;
-   struct dirent *dent;
-   char *point;
-
-   if ((dir = opendir(infodir)) == NULL) {
+   DIR *dir = opendir(infodir);
+   if (dir == NULL) {
       // cerr << "Error opening " << infodir << endl;
       return;
    }
-   for (int i = 3; (dent = readdir(dir)); i++) {
-      if ((point = strrchr(dent->d_name, '.')) == NULL)
-         continue;
-      if (strcmp(point, configext) == 0) {
-         memset(point, 0, strlen(point));
-         // cout << (dent->d_name) << endl;
-         setPackageDebconf(dent->d_name, true);
+
+   while (true) {
+      struct dirent *dent = readdir(dir);
+      if (dent == NULL) break;
+
+      char *point = strrchr(dent->d_name, '.');
+      if (point != NULL) {
+         if (strcmp(point, configext) == 0) {
+            memset(point, 0, strlen(point));
+            setPackageDebconf(dent->d_name, true);
+         }
       }
    }
+
    closedir(dir);
 }
 

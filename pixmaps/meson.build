@@ -1,5 +1,3 @@
-pkg_icon_dir = pkg_datadir / 'icons' / 'hicolor'
-
 install_data(
   files(
     'update_small.png',
@@ -46,12 +44,12 @@ install_data(
     'hicolor/16x16/actions/package-upgrade.png',
     'hicolor/16x16/actions/system-upgrade.png',
   ),
-  install_dir: datadir / 'icons' / 'hicolor' / '16x16' / 'actions',
+  install_dir: pkg_datadir / 'icons' / 'hicolor' / '16x16' / 'actions',
 )
 
 install_data(
   files('hicolor/24x24/actions/system-upgrade.png'),
-  install_dir: datadir / 'icons' / 'hicolor' / '24x24' / 'actions',
+  install_dir: pkg_datadir / 'icons' / 'hicolor' / '24x24' / 'actions',
 )
 
 install_data(

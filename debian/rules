@@ -21,7 +21,7 @@ override_dh_auto_install:
 	# of the install (e.g. package-supported.{Ubuntu,Debian} and
 	# do run-time switching
 	if [ -f debian/package-supported.png.$(DIST) ]; then \
-		cp debian/package-supported.png.$(DIST) $(CURDIR)/debian/synaptic/usr/share/icons/hicolor/16x16/actions/package-supported.png; \
+		cp debian/package-supported.png.$(DIST) $(CURDIR)/debian/synaptic/usr/share/synaptic/icons/hicolor/16x16/actions/package-supported.png; \
 	fi
 
 override_dh_installman:

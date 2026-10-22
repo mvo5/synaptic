@@ -1,4 +1,4 @@
-gtk_sources = files(
+gui_sources = files(
   'gsynaptic.cc',
   'gtkpkglist.cc',
   'rgcacheprogress.cc',
@@ -29,21 +29,4 @@ gtk_sources = files(
   'rgwindow.cc',
   'rggtkbuilderwindow.cc',
   'rgpkgtreeview.cc',
-)
-
-resources = gnome.compile_resources(
-  'resources',
-  'gtkbuilder/synaptic.gresource.xml',
-  source_dir: '.'
-)
-
-executable(
-  'synaptic',
-  gtk_sources + resources,
-  install: true,
-  install_dir: bindir,
-  cpp_args: gtk_cpp_args + rpm_compile_args,
-  dependencies: gui_deps,
-  include_directories: [root_inc, common_inc, gtk_inc],
-  link_with: libsynaptic,
 )

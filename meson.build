@@ -24,7 +24,7 @@ cpp = meson.get_compiler('cpp')
 
 root_inc = include_directories('.')
 common_inc = include_directories('common')
-gtk_inc = include_directories('gtk')
+gui_inc = include_directories('gtk')
 
 threads_dep = dependency('threads')
 gtk_dep = dependency('gtk+-3.0', version: '>= 3.4.0')
@@ -153,23 +153,27 @@ gtk_cpp_args = [
   '-DGDK_PIXBUF_DISABLE_DEPRECATED',
 ]
 
-common_deps = [apt_pkg_dep]
-common_deps += rpm_deps
+common_deps = [
+  apt_pkg_dep,
+  rpm_deps,
+]
+
 if apt_inst_dep.found()
   common_deps += [apt_inst_dep]
 endif
+
 if have_xapian
   common_deps += [xapian_dep]
 endif
 
 gui_deps = [
+  apt_pkg_dep,
+  glib_dep,
   gtk_dep,
   pango_dep,
-  glib_dep,
-  apt_pkg_dep,
-  x11_dep,
-  util_dep,
   threads_dep,
+  util_dep,
+  x11_dep,
 ]
 gui_deps += rpm_deps
 if apt_inst_dep.found()
@@ -193,6 +197,22 @@ subdir('pixmaps')
 subdir('man')
 subdir('help')
 subdir('tests')
+
+resources = gnome.compile_resources(
+  'resources',
+  'gtk/gtkbuilder/synaptic.gresource.xml',
+  source_dir: 'gtk'
+)
+
+executable(
+  'synaptic',
+  common_sources + gui_sources + resources,
+  install: true,
+  install_dir: bindir,
+  cpp_args: gtk_cpp_args + rpm_compile_args,
+  dependencies: common_deps + gui_deps,
+  include_directories: [root_inc, common_inc, gui_inc],
+)
 
 gnome.post_install(
   gtk_update_icon_cache: true,

@@ -40,12 +40,35 @@ install_data(
     'hicolor/16x16/actions/package-purge.png',
     'hicolor/16x16/actions/package-reinstall.png',
     'hicolor/16x16/actions/package-remove.png',
-    'hicolor/16x16/actions/package-supported.png',
     'hicolor/16x16/actions/package-upgrade.png',
     'hicolor/16x16/actions/system-upgrade.png',
   ),
   install_dir: pkg_datadir / 'icons' / 'hicolor' / '16x16' / 'actions',
 )
+
+# Distro specific package-supported icon
+
+lsb_release = find_program('lsb_release', required: true)
+
+result = run_command('lsb_release', '-is')
+distro = result.stdout().strip().to_lower()
+
+fs = import('fs')
+
+image = 'hicolor/16x16/actions/package-supported.png'
+candidate = image + '.' + distro
+
+if fs.exists(candidate)
+  image = candidate
+endif
+
+install_data(
+  files(image),
+  install_dir: pkg_datadir / 'icons' / 'hicolor' / '16x16' / 'actions',
+  rename: ['package-supported.png']
+)
+
+#
 
 install_data(
   files('hicolor/24x24/actions/system-upgrade.png'),

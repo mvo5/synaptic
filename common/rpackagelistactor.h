@@ -1,4 +1,4 @@
-/* rcacheactor.h
+/* rpackagelistactor.h
  *
  * Copyright (c) 2003 Michael Vogt <mvo@debian.org>
  *

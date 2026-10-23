@@ -1018,8 +1018,6 @@ RGMainWindow::RGMainWindow(GtkApplication *app,
 gboolean RGMainWindow::xapianDoIndexUpdate(void *data)
 {
    RGMainWindow *me = (RGMainWindow *)data;
-   if (_config->FindB("Debug::Synaptic::Xapian", false))
-      std::cerr << "xapianDoIndexUpdate()" << std::endl;
 
    // no need to update if we run non-interactive
    if (_config->FindB("Volatile::Non-Interactive", false) == true)
@@ -1041,8 +1039,7 @@ gboolean RGMainWindow::xapianDoIndexUpdate(void *data)
       return false;
 
    // if we make it to this point, we need a xapian update
-   if (_config->FindB("Debug::Synaptic::Xapian", false))
-      std::cerr << "running update-apt-xapian-index" << std::endl;
+
    GPid pid;
    const char *argp[] = {"/usr/bin/nice",
                          "/usr/bin/ionice",
@@ -1079,12 +1076,11 @@ gboolean RGMainWindow::xapianDoIndexUpdate(void *data)
 void RGMainWindow::xapianIndexUpdateFinished(GPid pid, gint status, void *data)
 {
    RGMainWindow *me = (RGMainWindow *)data;
-   if (_config->FindB("Debug::Synaptic::Xapian", false))
-      std::cerr << "xapianIndexUpdateFinished: " << WEXITSTATUS(status)
-                << std::endl;
+
 #ifdef HAVE_XAPIAN
    me->_lister->openXapianIndex();
 #endif
+
    gtk_label_set_text(
       GTK_LABEL(gtk_builder_get_object(me->_builder, "label_fast_search")),
       _("Quick filter"));

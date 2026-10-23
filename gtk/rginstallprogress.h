@@ -38,7 +38,6 @@ class RPackageLister;
 
 class RGInstallProgressMsgs : public RGGtkBuilderWindow
 {
-
    GtkTextBuffer *_textBuffer;
    static void onCloseClicked(GtkWidget *self, void *data);
 
@@ -64,7 +63,6 @@ class RGInstallProgressMsgs : public RGGtkBuilderWindow
 
 class RGInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
 {
-
    GtkWidget *_label;
    GtkWidget *_labelSummary;
 

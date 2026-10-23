@@ -98,7 +98,4 @@ class RPackageStatus
    }
 
    bool isSupported(RPackage *pkg);
-
-   // return the time until the package is supported
-   bool maintenanceEndTime(RPackage *pkg, struct tm *support_end_tm);
 };

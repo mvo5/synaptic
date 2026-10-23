@@ -27,7 +27,6 @@
 #include "i18n.h"
 #include "rggtkbuilderwindow.h"
 #include "rgmainwindow.h"
-#include "rgslideshow.h"
 #include "rgutils.h"
 #include "rinstallprogress.h"
 #include "rpackage.h"
@@ -224,10 +223,6 @@ void RGInstallProgress::updateInterface()
                val = ((float)_donePackages) / _numPackages;
                gtk_progress_bar_set_fraction(GTK_PROGRESS_BAR(_pbarTotal), val);
                _donePackagesTotal += 1;
-               if (_ss) {
-                  _ss->setTotalSteps(_numPackagesTotal);
-                  _ss->step();
-               }
             }
          } else {
             sscanf(line + 3, "%f", &val);
@@ -331,15 +326,6 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main, RPackageLister *lister)
    _pbarTotal = GTK_WIDGET(gtk_builder_get_object(_builder, "progress_total"));
    _image = GTK_WIDGET(gtk_builder_get_object(_builder, "image"));
 
-   string ssDir = _config->Find("Synaptic::SlideShow", "");
-   if (!ssDir.empty()) {
-      _ss = new RGSlideShow(GTK_IMAGE(_image), ssDir);
-      _ss->refresh();
-      gtk_widget_show(_image);
-   } else {
-      _ss = NULL;
-   }
-
    _cssProviderBold = gtk_css_provider_new();
    GtkStyleContext *styleContext = gtk_widget_get_style_context(_label);
    gtk_css_provider_load_from_data(
@@ -374,7 +360,6 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main, RPackageLister *lister)
 
 RGInstallProgress::~RGInstallProgress()
 {
-   delete _ss;
    g_object_unref(_cssProvider);
    g_object_unref(_cssProviderBold);
 }

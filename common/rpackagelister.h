@@ -49,7 +49,6 @@
 
 class FileFd;
 class OpProgress;
-class RCacheActor;
 class RInstallProgress;
 class RPackage;
 class RPackageView;
@@ -129,8 +128,6 @@ class RPackageLister
    bool _cacheValid; // is the cache valid?
 
    int _installedCount; // # of installed packages
-
-   std::vector<RCacheActor *> _actors;
 
    RPackageViewFilter *_filterView; // the package view that does the filtering
    RPackageViewSearch

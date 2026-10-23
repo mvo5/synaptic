@@ -55,6 +55,7 @@ if gtest_dep.found()
     include_directories: [root_inc, common_inc, gtk_inc],
     link_with: libsynaptic,
   )
+
   test('test_rsources', test_rsources, env: test_env)
 
 endif

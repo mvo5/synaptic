@@ -334,7 +334,7 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
             gtk_tree_path_free(path);
             break;
          }
-         
+
          ok = gtk_tree_model_iter_next(_pkgList, &iter);
       }
       if (ok && gtk_tree_model_get_iter_first(_pkgList, &iter)) {

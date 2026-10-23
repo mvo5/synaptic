@@ -2361,22 +2361,6 @@ void RGMainWindow::cbHelpAction(GSimpleAction *action,
    RunAsSudoUserCommand(cmd);
 }
 
-void RGMainWindow::cbCloseFilterManagerAction(void *self, bool okcancel)
-{
-   RGMainWindow *me = (RGMainWindow *)self;
-
-   // FIXME: only do all this if the user didn't click "cancel" in the dialog
-
-   me->setInterfaceLocked(TRUE);
-
-   me->_lister->filterView()->refreshFilters();
-   me->refreshTable();
-   me->refreshSubViewList();
-
-   me->setInterfaceLocked(FALSE);
-}
-
-
 void RGMainWindow::cbShowFilterManagerWindow(GSimpleAction *action,
                                              GVariant *parameter,
                                              gpointer data)

@@ -355,7 +355,6 @@ class RGMainWindow : public RGGtkBuilderWindow, public RPackageObserver
                                          gpointer data);
    static void cbSaveFilterAction(void *self, RGFilterWindow *rwin);
    static void cbCloseFilterAction(void *self, RGFilterWindow *rwin);
-   static void cbCloseFilterManagerAction(void *self, bool okcancel);
 
    // search menu
    static void cbFindToolClicked(GSimpleAction *action,

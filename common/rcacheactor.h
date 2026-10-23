@@ -29,10 +29,7 @@
 #include "rpackage.h"
 #include "rpackagelister.h"
 
-#include <cstddef>
-#include <map>
 #include <regex.h>
-#include <string>
 #include <vector>
 
 class RCacheActor : public RCacheObserver
@@ -73,50 +70,4 @@ class RCacheActor : public RCacheObserver
    {
       _lister->unregisterCacheObserver(this);
    }
-};
-
-class RCacheActorRecommends : public RCacheActor
-{
- protected:
-   typedef std::vector<std::string> ListType;
-   typedef std::map<std::string, ListType> MapType;
-   typedef std::map<regex_t *, ListType> RegexMapType;
-
-   MapType _map;
-   MapType _map_wildcard;
-   RegexMapType _map_regex;
-
-   std::string _langLast;
-   ListType _langCache;
-
-   void setLanguageCache();
-
-   inline bool actOnPkg(std::string name, int Action)
-   {
-      RPackage *Pkg = _lister->getPackage(name);
-      if (Pkg != NULL) {
-         switch (Action) {
-            case ACTION_KEEP:
-               Pkg->setKeep();
-               break;
-            case ACTION_INSTALL:
-               Pkg->setInstall();
-               break;
-            case ACTION_REMOVE:
-               Pkg->setRemove();
-               break;
-         }
-         return true;
-      }
-      return false;
-   }
-
-
- public:
-   virtual void run(std::vector<RPackage *> &List, int Action);
-
-   virtual void notifyCachePostChange();
-
-   RCacheActorRecommends(RPackageLister *lister, std::string fileName);
-   virtual ~RCacheActorRecommends();
 };

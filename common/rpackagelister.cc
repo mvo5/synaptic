@@ -522,8 +522,6 @@ bool RPackageLister::openXapianIndex()
 void RPackageLister::applyInitialSelection()
 {
    _roptions->rereadOrphaned();
-   _roptions->rereadDebconf();
-
    for (unsigned i = 0; i < _packages.size(); i++) {
 
       if (_roptions->getPackageOrphaned(_packages[i]->name()))

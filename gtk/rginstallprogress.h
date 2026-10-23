@@ -32,7 +32,6 @@
 #include <string>
 
 class RGMainWindow;
-class RGSlideShow;
 class RGWindow;
 class RPackageLister;
 
@@ -78,8 +77,6 @@ class RGInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    std::map<std::string, std::string> _summaryMap;
 
    RGInstallProgressMsgs _msgs;
-
-   RGSlideShow *_ss;
 
    GtkCssProvider *_cssProvider;
    GtkCssProvider *_cssProviderBold;

@@ -41,6 +41,16 @@ if gtest_dep.found()
     link_with: libsynaptic,
   )
   test('test_rsources', test_rsources, env: test_env)
+
+  test_rdeb822file = executable(
+    'test_rdeb822file',
+    'test_rdeb822file.cc',
+    cpp_args: gtk_cpp_args + rpm_compile_args + ['-O0', '-g3'],
+    dependencies: test_common_deps + [gtest_dep],
+    include_directories: [root_inc, common_inc, gtk_inc],
+    link_with: libsynaptic,
+  )
+  test('test_rdeb822file', test_rdeb822file, env: test_env)
 endif
 
 test_gtkpkglist = executable(

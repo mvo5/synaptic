@@ -5,12 +5,14 @@
 
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/error.h>
+#include <apt-pkg/fileutl.h>
 #include <apt-pkg/init.h>
 #include <apt-pkg/pkgsystem.h>
 #include <gtest/gtest.h>
 #include <list>
 #include <string>
 #include <sys/stat.h>
+#include <unistd.h>
 #include <vector>
 
 using namespace std;
@@ -309,9 +311,9 @@ TEST_F(RSourcesTest, SourcepartsMixesFormatsInSortedOrder)
    EXPECT_EQ(recs[1]->Format, SourcesList::OneLine);
 }
 
-// Until there is a writer that edits stanzas in place, saving must not touch
-// .sources files at all, whatever happened to their records in memory.
-TEST_F(RSourcesTest, Deb822FilesAreNeverWritten)
+// Only the Enabled state is written back for deb822 stanzas so far, in place;
+// every other in-memory change is ignored and the rest of the file is kept.
+TEST_F(RSourcesTest, Deb822OnlyEnabledIsWrittenBack)
 {
    const string ubuntu =
       "# See sources.list(5) for details\n"
@@ -321,22 +323,176 @@ TEST_F(RSourcesTest, Deb822FilesAreNeverWritten)
       "Components: main universe restricted multiverse\n"
       "Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\n";
    box.put("sources.list.d/ubuntu.sources", ubuntu);
+   box.put("sources.list.d/ppa.sources", string("Enabled: yes\n") + STANZA_A);
    box.put("sources.list", "deb http://deb.debian.org/debian bookworm main\n");
 
    SourcesList lst;
    EXPECT_TRUE(lst.ReadSources());
-   for (SourcesList::SourceRecord *rec : lst.SourceRecords) {
-      if (rec->Format != SourcesList::Deb822)
-         continue;
-      rec->Type |= SourcesList::Disabled;
-      rec->URI = "http://changed.example/";
-   }
+   SourcesList::SourceRecord *ubuntu_rec = nullptr;
+   for (SourcesList::SourceRecord *rec : lst.SourceRecords)
+      if (rec->SourceFile == box.path("sources.list.d/ubuntu.sources"))
+         ubuntu_rec = rec;
+   ASSERT_NE(ubuntu_rec, nullptr);
+
+   ubuntu_rec->Type |= SourcesList::Disabled;
+   ubuntu_rec->URI = "http://changed.example/";
    EXPECT_TRUE(lst.UpdateSources());
 
-   EXPECT_EQ(box.get("sources.list.d/ubuntu.sources"), ubuntu);
+   string expected = ubuntu;
+   expected.insert(expected.find("Types: deb\n"), "Enabled: no\n");
+   EXPECT_EQ(box.get("sources.list.d/ubuntu.sources"), expected);
+   EXPECT_EQ(box.get("sources.list.d/ppa.sources"), string("Enabled: yes\n") + STANZA_A);
    // the one-line file is still rewritten as before
    EXPECT_NE(box.get("sources.list").find("deb http://deb.debian.org/debian/ bookworm main"),
              string::npos);
+
+   // and back: the line we added is rewritten, not removed
+   ubuntu_rec->Type &= ~static_cast<unsigned int>(SourcesList::Disabled);
+   EXPECT_TRUE(lst.UpdateSources());
+   expected.replace(expected.find("Enabled: no\n"), 12, "Enabled: yes\n");
+   EXPECT_EQ(box.get("sources.list.d/ubuntu.sources"), expected);
+}
+
+// A stanza apt would reject still counts for the stanza index, so the writer
+// and the records agree on which stanza is which.
+TEST_F(RSourcesTest, Deb822StanzaIndexSurvivesSkippedStanzas)
+{
+   box.put("sources.list.d/mix.sources",
+           string(STANZA_A) + "\n" + "URIs: http://no-types.example/\nSuites: s\n\n" + STANZA_B);
+
+   SourcesList lst;
+   EXPECT_FALSE(lst.ReadSources());
+   auto recs = records(lst);
+   ASSERT_EQ(recs.size(), 2u);
+   EXPECT_EQ(recs[0]->StanzaIndex, 0u);
+   EXPECT_EQ(recs[1]->StanzaIndex, 2u);
+
+   const_cast<SourcesList::SourceRecord *>(recs[1])->Type |= SourcesList::Disabled;
+   EXPECT_TRUE(lst.UpdateSources());
+   EXPECT_EQ(box.get("sources.list.d/mix.sources"),
+             string(STANZA_A) + "\n" + "URIs: http://no-types.example/\nSuites: s\n\n" +
+                "Enabled: no\n" + STANZA_B);
+}
+
+// The first save keeps the original next to the file; later saves leave that
+// backup alone, and files whose content would not change are not touched.
+TEST_F(RSourcesTest, SavingBacksUpOnceAndSkipsUnchangedFiles)
+{
+   const string main_orig = "deb http://deb.debian.org/debian bookworm main\n";
+   const string part_orig = "deb http://a.example/debian stable main\n";
+   box.put("sources.list", main_orig);
+   box.put("sources.list.d/a.list", part_orig);
+
+   SourcesList lst;
+   EXPECT_TRUE(lst.ReadSources());
+   EXPECT_TRUE(lst.UpdateSources());
+
+   // both files are normalised on save (trailing slash, trailing space)...
+   const string main_saved = box.get("sources.list");
+   const string part_saved = box.get("sources.list.d/a.list");
+   EXPECT_NE(main_saved, main_orig);
+   EXPECT_NE(part_saved, part_orig);
+   // ...and the originals are kept
+   EXPECT_EQ(box.get("sources.list.bak"), main_orig);
+   EXPECT_EQ(box.get("sources.list.d/a.list.bak"), part_orig);
+
+   // saving again changes nothing, so the backups still hold the originals
+   EXPECT_TRUE(lst.UpdateSources());
+   EXPECT_EQ(box.get("sources.list"), main_saved);
+   EXPECT_EQ(box.get("sources.list.bak"), main_orig);
+   EXPECT_EQ(box.get("sources.list.d/a.list.bak"), part_orig);
+
+   // a real change later on does not overwrite the first backup either
+   for (SourcesList::SourceRecord *rec : lst.SourceRecords)
+      if (!(rec->Type & SourcesList::Comment))
+         rec->Type |= SourcesList::Disabled;
+   EXPECT_TRUE(lst.UpdateSources());
+   EXPECT_NE(box.get("sources.list"), main_saved);
+   EXPECT_EQ(box.get("sources.list.bak"), main_orig);
+   EXPECT_EQ(box.get("sources.list.d/a.list.bak"), part_orig);
+}
+
+TEST_F(RSourcesTest, WriteSourcesFileKeepsModeAndCreatesMissingFiles)
+{
+   const string path = box.path("sources.list.d/new.list");
+   EXPECT_TRUE(WriteSourcesFile(path, "deb http://a/ s main\n"));
+   EXPECT_EQ(box.get("sources.list.d/new.list"), "deb http://a/ s main\n");
+   EXPECT_FALSE(FileExists(path + ".bak"));
+
+   chmod(path.c_str(), 0600);
+   EXPECT_TRUE(WriteSourcesFile(path, "deb http://b/ s main\n"));
+   struct stat st;
+   ASSERT_EQ(stat(path.c_str(), &st), 0);
+   EXPECT_EQ(st.st_mode & 0777, 0600u);
+   ASSERT_EQ(stat((path + ".bak").c_str(), &st), 0);
+   EXPECT_EQ(st.st_mode & 0777, 0600u);
+   EXPECT_EQ(box.get("sources.list.d/new.list.bak"), "deb http://a/ s main\n");
+
+   EXPECT_TRUE(WriteSourcesFile(path, "deb http://c/ s main\n"));
+   EXPECT_EQ(box.get("sources.list.d/new.list.bak"), "deb http://a/ s main\n");
+}
+
+// Reader corner cases taken from apt's own test suite.
+TEST_F(RSourcesTest, Deb822AptTestsuiteFixtures)
+{
+   _config->Set("APT::Architecture", "riscv64");
+   box.put("sources.list.d/a.sources",
+           "# that contains a : as well\n"
+           "#Types: meep\n"
+           "\n"
+           "# a free-standing comment appears\n"
+           "\n"
+           "Types: deb\n"
+           "#Types: deb-src\n"
+           "URIs: http://ftp.debian.org/debian\n"
+           "Suites: stable\n"
+           "Components: main\n"
+           "Description: summary\n"
+           "# comments are ignored\n");
+   box.put("sources.list.d/b.sources",
+           "#NOTE: Most preferred source listed first!\n"
+           "Types:          deb deb-src\n"
+           "URIs:http://ftp.uk.debian.org/debian/\n"
+           "Suites:         stretch\n"
+           "Components:     main contrib non-free\n");
+   box.put("sources.list.d/c.sources",
+           "Types: deb\n"
+           "URIs: http://ftp.tlh.debian.org/universe\n"
+           "Suites: stable/binary-$(ARCH)/\n"
+           "Enabled: false\n");
+
+   SourcesList lst;
+   EXPECT_TRUE(lst.ReadSources());
+   auto recs = records(lst);
+   ASSERT_EQ(recs.size(), 3u);
+   EXPECT_EQ(recs[0]->Type, SourcesList::Deb);
+   EXPECT_EQ(recs[0]->URI, "http://ftp.debian.org/debian");
+   EXPECT_EQ(sections(recs[0]), (vector<string>{"main"}));
+   EXPECT_EQ(recs[1]->Type, SourcesList::Deb | SourcesList::DebSrc);
+   EXPECT_EQ(recs[1]->URI, "http://ftp.uk.debian.org/debian/");
+   EXPECT_EQ(recs[1]->Dist, "stretch");
+   EXPECT_EQ(sections(recs[1]), (vector<string>{"main", "contrib", "non-free"}));
+   EXPECT_EQ(recs[2]->Type, SourcesList::Deb | SourcesList::Disabled);
+   EXPECT_EQ(recs[2]->Dist, "stable/binary-riscv64/");
+   EXPECT_EQ(recs[2]->NumSections, 0);
+}
+
+// Debian's package ships sources files as symlinks in some setups; the edit
+// must land in the target, not replace the link with a regular file.
+TEST_F(RSourcesTest, WriteSourcesFileFollowsSymlinks)
+{
+   const string target = box.path("real.sources");
+   const string link = box.path("sources.list.d/link.sources");
+   box.put("real.sources", "Types: deb\nURIs: http://a/\nSuites: s\n");
+   ASSERT_EQ(symlink(target.c_str(), link.c_str()), 0);
+
+   EXPECT_TRUE(WriteSourcesFile(link, "Types: deb\nURIs: http://b/\nSuites: s\n"));
+   struct stat st;
+   ASSERT_EQ(lstat(link.c_str(), &st), 0);
+   EXPECT_TRUE(S_ISLNK(st.st_mode));
+   EXPECT_EQ(box.get("real.sources"), "Types: deb\nURIs: http://b/\nSuites: s\n");
+   EXPECT_EQ(box.get("real.sources.bak"), "Types: deb\nURIs: http://a/\nSuites: s\n");
+   EXPECT_FALSE(FileExists(link + ".bak"));
 }
 
 int main(int argc, char **argv)

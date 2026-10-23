@@ -98,8 +98,8 @@ static string SourceHint(const SourcesList::SourceRecord *rec)
    g_free(text);
    if (rec->Format == SourcesList::Deb822) {
       hint += " ";
-      hint += _("This source uses the deb822 format and can not be edited "
-                "here yet.");
+      hint += _("This source uses the deb822 format. Only enabling and "
+                "disabling it is supported here yet.");
    }
    return hint;
 }
@@ -120,15 +120,6 @@ void RGRepositoryEditor::item_toggled(GtkCellRendererToggle *cell,
    gtk_tree_model_get_iter(model, &iter, path);
    gtk_tree_model_get(
       model, &iter, STATUS_COLUMN, &toggle_item, SECTIONS_COLUMN, &section, -1);
-
-   SourcesList::SourceRecord *rec;
-   gtk_tree_model_get(model, &iter, RECORD_COLUMN, &rec, -1);
-   if (rec->Format == SourcesList::Deb822) {
-      // read-only for now, see SourcesList::FileFormat
-      g_free(section);
-      gtk_tree_path_free(path);
-      return;
-   }
 
    /* do something with the value */
    toggle_item ^= 1;
@@ -600,13 +591,26 @@ void RGRepositoryEditor::doEdit()
    SourcesList::SourceRecord *rec;
    gtk_tree_model_get(model, _lastIter, RECORD_COLUMN, &rec, -1);
    assert(rec);
-   if (rec->Format == SourcesList::Deb822)
-      return;
 
-   rec->Type = 0;
    gboolean status;
    gtk_tree_model_get(
       GTK_TREE_MODEL(_sourcesListStore), _lastIter, STATUS_COLUMN, &status, -1);
+
+   if (rec->Format == SourcesList::Deb822) {
+      // only the Enabled state can be written back for deb822 stanzas so far
+      if (status)
+         rec->Type &= ~static_cast<unsigned int>(SourcesList::Disabled);
+      else
+         rec->Type |= SourcesList::Disabled;
+      gtk_list_store_set(_sourcesListStore,
+                         _lastIter,
+                         DISABLED_COLOR_COLUMN,
+                         status ? NULL : &_gray,
+                         -1);
+      return;
+   }
+
+   rec->Type = 0;
    if (!status)
       rec->Type |= SourcesList::Disabled;
 
@@ -765,7 +769,7 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
       const SourcesList::SourceRecord *rec;
       gtk_tree_model_get(model, &iter, RECORD_COLUMN, &rec, -1);
 
-      // deb822 stanzas are shown but not editable yet, see
+      // deb822 stanzas can only be enabled and disabled yet, see
       // SourcesList::FileFormat
       const bool editable = rec->Format != SourcesList::Deb822;
       gtk_widget_set_sensitive(me->_editTable, editable);

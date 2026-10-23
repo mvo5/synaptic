@@ -141,63 +141,7 @@ bool RAPTOptions::restore()
    // deborphan stuff
    rereadOrphaned();
 
-   // debconf stuff
-   rereadDebconf();
-
    return true;
-}
-
-bool RAPTOptions::getPackageDebconf(const char *package)
-{
-   string tmp = string(package);
-
-   if (_packageOptions.find(tmp) == _packageOptions.end())
-      return false;
-
-   // cout << "getPackageOrphaned("<<package<<") called"<<endl;
-   return _packageOptions[tmp].isDebconf;
-}
-
-
-void RAPTOptions::setPackageDebconf(const char *package, bool flag)
-{
-   // cout << "debconf called pkg: " << package << endl;
-   _packageOptions[string(package)].isDebconf = flag;
-}
-
-void RAPTOptions::rereadDebconf()
-{
-   // cout << "void RAPTOptions::rereadDebconf()" << endl;
-
-   // forget about any previously debconf packages
-   for (packageOptionsIter it = _roptions->_packageOptions.begin();
-        it != _roptions->_packageOptions.end();
-        it++) {
-      (*it).second.isDebconf = false;
-   }
-
-   // read dir
-   const char infodir[] = "/var/lib/dpkg/info";
-   const char configext[] = ".config";
-
-   DIR *dir;
-   struct dirent *dent;
-   char *point;
-
-   if ((dir = opendir(infodir)) == NULL) {
-      // cerr << "Error opening " << infodir << endl;
-      return;
-   }
-   for (int i = 3; (dent = readdir(dir)); i++) {
-      if ((point = strrchr(dent->d_name, '.')) == NULL)
-         continue;
-      if (strcmp(point, configext) == 0) {
-         memset(point, 0, strlen(point));
-         // cout << (dent->d_name) << endl;
-         setPackageDebconf(dent->d_name, true);
-      }
-   }
-   closedir(dir);
 }
 
 void RAPTOptions::rereadOrphaned()

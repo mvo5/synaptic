@@ -61,12 +61,6 @@ class RAPTOptions
    void setPackageNew(const char *package, bool flag = true);
    void forgetNewPackages();
 
-   bool getFlag(const char *key);
-   std::string getString(const char *key);
-
-   void setFlag(const char *key, bool value);
-   void setString(const char *key, std::string value);
-
  private:
    std::map<std::string, packageOptions> _packageOptions;
    std::map<std::string, std::string> _options;

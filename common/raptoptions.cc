@@ -57,7 +57,6 @@ istream &operator>>(istream &is, RAPTOptions::packageOptions &o)
    return is;
 }
 
-
 bool RAPTOptions::store()
 {
    ofstream out;
@@ -73,7 +72,6 @@ bool RAPTOptions::store()
    }
    return true;
 }
-
 
 bool RAPTOptions::restore()
 {
@@ -158,7 +156,6 @@ bool RAPTOptions::getPackageDebconf(const char *package)
    return _packageOptions[tmp].isDebconf;
 }
 
-
 void RAPTOptions::setPackageDebconf(const char *package, bool flag)
 {
    // cout << "debconf called pkg: " << package << endl;
@@ -231,7 +228,6 @@ void RAPTOptions::rereadOrphaned()
    pclose(fp);
 }
 
-
 bool RAPTOptions::getPackageOrphaned(const char *package)
 {
    string tmp = string(package);
@@ -243,13 +239,11 @@ bool RAPTOptions::getPackageOrphaned(const char *package)
    return _packageOptions[tmp].isOrphaned;
 }
 
-
 void RAPTOptions::setPackageOrphaned(const char *package, bool flag)
 {
    // cout << "orphaned called pkg: " << package << endl;
    _packageOptions[string(package)].isOrphaned = flag;
 }
-
 
 bool RAPTOptions::getPackageLock(const char *package)
 {
@@ -260,7 +254,6 @@ bool RAPTOptions::getPackageLock(const char *package)
 
    return _packageOptions[tmp].isLocked;
 }
-
 
 void RAPTOptions::setPackageLock(const char *package, bool lock)
 {
@@ -289,33 +282,4 @@ void RAPTOptions::forgetNewPackages()
         it++) {
       (*it).second.isNew = false;
    }
-}
-
-bool RAPTOptions::getFlag(const char *key)
-{
-   if (_options.find(key) != _options.end())
-      return _options[string(key)] == "true";
-   else
-      return false;
-}
-
-
-string RAPTOptions::getString(const char *key)
-{
-   if (_options.find(key) != _options.end())
-      return _options[string(key)];
-   else
-      return "";
-}
-
-
-void RAPTOptions::setFlag(const char *key, bool value)
-{
-   _options[string(key)] = string(value ? "true" : "false");
-}
-
-
-void RAPTOptions::setString(const char *key, string value)
-{
-   _options[string(key)] = value;
 }

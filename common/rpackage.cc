@@ -195,11 +195,6 @@ string RPackage::arch()
    return _package->Arch();
 }
 
-const char *RPackage::vendor()
-{
-   return "dunno";
-}
-
 const char *RPackage::installedVersion()
 {
    if ((*_package)->CurrentVer == 0)

@@ -552,7 +552,6 @@ void RGPreferencesWindow::readGeneral()
    //         "keep","install"
    gtk_combo_box_set_active(GTK_COMBO_BOX(_comboRemovalAction), delAction - 2);
 
-
    // System upgrade:
    // upgradeType (ask=-1,normal=0,dist-upgrade=1)
    int i = _config->FindI("Synaptic::upgradeType", 1);
@@ -561,18 +560,12 @@ void RGPreferencesWindow::readGeneral()
    i = _config->FindI("Synaptic::update::type", 0);
    gtk_combo_box_set_active(GTK_COMBO_BOX(_comboUpdateAsk), i);
 
-
    // Number of undo operations:
-
-#ifdef HAVE_RPM
-   int UndoStackSize = 3;
-#else
    int UndoStackSize = 20;
-#endif
+
    gtk_spin_button_set_value(
       GTK_SPIN_BUTTON(_maxUndoE),
       _config->FindI("Synaptic::undoStackSize", UndoStackSize));
-
 
    // Apply changes in a terminal window
    bool UseTerminal = false;
@@ -580,11 +573,9 @@ void RGPreferencesWindow::readGeneral()
    gtk_widget_set_sensitive(GTK_WIDGET(_optionUseTerminal), false);
    _config->Set("Synaptic::UseTerminal", false);
 #else
-#   ifndef HAVE_RPM
-#      ifndef WITH_DPKG_STATUSFD
-   UseTerminal = true;
-#      endif
-#   endif
+   #ifndef WITH_DPKG_STATUSFD
+      UseTerminal = true;
+   #endif
 #endif
    gtk_toggle_button_set_active(
       GTK_TOGGLE_BUTTON(_optionUseTerminal),
@@ -1131,20 +1122,6 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *lister)
       _("Let synaptic pick the best version for you. "
         "If unsure use this option. "));
 
-
-   // hide the "remove with configuration" from rpm users
-#ifdef HAVE_RPM
-   GtkWidget *w =
-      GTK_WIDGET(gtk_builder_get_object(_builder, "menuitem_purge"));
-   gtk_widget_hide(w);
-   int delAction = _config->FindI("Synaptic::delAction", PKG_DELETE);
-   // purge not available
-   if (delAction == PKG_PURGE)
-      delAction = PKG_DELETE;
-   gtk_widget_hide(GTK_WIDGET(_comboRemovalAction));
-   gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(_builder,"label_removal"));
-#endif
-
    // set data for the checkbutton
    g_object_set_data(gtk_builder_get_object
                       (_builder, "checkbutton_user_font"), "me", this);
@@ -1161,8 +1138,8 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *lister)
    GtkTreeViewColumn *column;
    renderer = gtk_cell_renderer_toggle_new ();
    g_object_set(renderer, "activatable", TRUE, NULL);
-   g_signal_connect(renderer, "toggled", 
- 		    (GCallback) cbToggleColumn, this);
+   g_signal_connect(renderer, "toggled",
+          (GCallback) cbToggleColumn, this);
    column = gtk_tree_view_column_new_with_attributes(_("Visible"),
                                                       renderer,
                                                       "active", TREE_CHECKBOX_COLUMN,
@@ -1170,9 +1147,9 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *lister)
    gtk_tree_view_append_column (GTK_TREE_VIEW(_treeView), column);
    renderer = gtk_cell_renderer_text_new ();
    column = gtk_tree_view_column_new_with_attributes (_("Name"),
-						      renderer,
-						      "text", TREE_VISIBLE_NAME_COLUMN,
-						      NULL);
+                        renderer,
+                        "text", TREE_VISIBLE_NAME_COLUMN,
+                        NULL);
    gtk_tree_view_append_column (GTK_TREE_VIEW(_treeView), column);
 
 

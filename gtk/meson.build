@@ -42,7 +42,7 @@ executable(
   gtk_sources + resources,
   install: true,
   install_dir: bindir,
-  cpp_args: gtk_cpp_args + rpm_compile_args,
+  cpp_args: gtk_cpp_args,
   dependencies: gui_deps,
   include_directories: [root_inc, common_inc, gtk_inc],
   link_with: libsynaptic,

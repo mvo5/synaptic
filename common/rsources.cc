@@ -137,7 +137,7 @@ bool SourcesList::ReadSourcePart(string listpath)
             // return _error->Error(_("Syntax error in line %s"), buf);
          }
       }
-#ifndef HAVE_RPM
+
       // check for absolute dist
       if (rec.Dist.empty() == false && rec.Dist[rec.Dist.size() - 1] == '/') {
          // make sure there's no section
@@ -149,7 +149,6 @@ bool SourcesList::ReadSourcePart(string listpath)
          AddSourceNode(rec);
          continue;
       }
-#endif
 
       const char *tmp = p;
       rec.NumSections = 0;
@@ -288,11 +287,7 @@ bool SourcesList::ReadSources()
 SourcesList::SourceRecord *SourcesList::AddEmptySource()
 {
    SourceRecord rec;
-#ifdef HAVE_RPM
-   rec.Type = Rpm;
-#else
    rec.Type = Deb;
-#endif
    rec.VendorID = "";
    rec.SourceFile = _config->FindFile("Dir::Etc::sourcelist");
    rec.Dist = "";

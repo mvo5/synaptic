@@ -49,18 +49,6 @@ class RGWindow;
 
 using namespace std;
 
-#if HAVE_RPM
-enum {
-   ITEM_TYPE_RPM,
-   ITEM_TYPE_RPMSRC,
-   ITEM_TYPE_RPMDIR,
-   ITEM_TYPE_RPMSRCDIR,
-   ITEM_TYPE_REPOMD,
-   ITEM_TYPE_REPOMDSRC,
-   ITEM_TYPE_DEB,
-   ITEM_TYPE_DEBSRC
-};
-#else
 enum {
    ITEM_TYPE_DEB,
    ITEM_TYPE_DEBSRC,
@@ -71,7 +59,6 @@ enum {
    ITEM_TYPE_REPOMD,
    ITEM_TYPE_REPOMDSRC
 };
-#endif
 
 enum {
    STATUS_COLUMN,
@@ -222,9 +209,8 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
                                                      DISABLED_COLOR_COLUMN,
                                                      NULL);
    gtk_tree_view_append_column(GTK_TREE_VIEW(_sourcesListView), column);
-#ifndef HAVE_RPM
+
    gtk_tree_view_column_set_visible(column, FALSE);
-#endif
 
    // uri
    renderer = gtk_cell_renderer_text_new();
@@ -277,42 +263,9 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    _optTypeMenu = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_INT);
 
    GtkTreeIter item;
-#if HAVE_RPM
-   gtk_list_store_append(_optTypeMenu, &item);
-   gtk_list_store_set(
-      _optTypeMenu, &item, COL_NAME, "rpm", COL_TYPE, ITEM_TYPE_RPM, -1);
 
    gtk_list_store_append(_optTypeMenu, &item);
-   gtk_list_store_set(
-      _optTypeMenu, &item, COL_NAME, "rpm-src", COL_TYPE, ITEM_TYPE_RPMSRC, -1);
 
-   gtk_list_store_append(_optTypeMenu, &item);
-   gtk_list_store_set(
-      _optTypeMenu, &item, COL_NAME, "rpm-dir", COL_TYPE, ITEM_TYPE_RPMDIR, -1);
-
-   gtk_list_store_append(_optTypeMenu, &item);
-   gtk_list_store_set(_optTypeMenu,
-                      &item,
-                      COL_NAME,
-                      "rpm-src-dir",
-                      COL_TYPE,
-                      ITEM_TYPE_RPMSRCDIR,
-                      -1);
-
-   gtk_list_store_append(_optTypeMenu, &item);
-   gtk_list_store_set(
-      _optTypeMenu, &item, COL_NAME, "repomd", COL_TYPE, ITEM_TYPE_REPOMD, -1);
-
-   gtk_list_store_append(_optTypeMenu, &item);
-   gtk_list_store_set(_optTypeMenu,
-                      &item,
-                      COL_NAME,
-                      "repomd-src",
-                      COL_TYPE,
-                      ITEM_TYPE_REPOMDSRC,
-                      -1);
-#else
-   gtk_list_store_append(_optTypeMenu, &item);
    gtk_list_store_set(_optTypeMenu,
                       &item,
                       COL_NAME,
@@ -322,6 +275,7 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
                       -1);
 
    gtk_list_store_append(_optTypeMenu, &item);
+
    gtk_list_store_set(_optTypeMenu,
                       &item,
                       COL_NAME,
@@ -329,10 +283,9 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
                       COL_TYPE,
                       ITEM_TYPE_DEBSRC,
                       -1);
-#endif
+
    gtk_combo_box_set_model(GTK_COMBO_BOX(_optType),
                            GTK_TREE_MODEL(_optTypeMenu));
-
 
    // the (rpm) vendor menu
    _optVendor = GTK_WIDGET(gtk_builder_get_object(_builder, "combo_vendor"));
@@ -348,14 +301,12 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    gtk_combo_box_set_model(GTK_COMBO_BOX(_optVendor),
                            GTK_TREE_MODEL(_optVendorMenu));
 
-#ifndef HAVE_RPM
    // debian can't use the vendors menu, so we hide it
    gtk_widget_hide(GTK_WIDGET(_optVendor));
    GtkWidget *vendors =
       GTK_WIDGET(gtk_builder_get_object(_builder, "button_edit_vendors"));
    assert(vendors);
    gtk_widget_hide(GTK_WIDGET(vendors));
-#endif
 
    _entryURI = GTK_WIDGET(gtk_builder_get_object(_builder, "entry_uri"));
    assert(_entryURI);

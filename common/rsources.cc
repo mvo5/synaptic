@@ -398,21 +398,13 @@ bool SourcesList::SourceRecord::SetType(string S)
       Type |= Deb;
    else if (S == "deb-src")
       Type |= DebSrc;
-   else if (S == "rpm")
-      Type |= Rpm;
-   else if (S == "rpm-src")
-      Type |= RpmSrc;
-   else if (S == "rpm-dir")
-      Type |= RpmDir;
-   else if (S == "rpm-src-dir")
-      Type |= RpmSrcDir;
    else if (S == "repomd")
       Type |= Repomd;
    else if (S == "repomd-src")
       Type |= RepomdSrc;
    else
       return false;
-   // cout << S << " settype " << (Type | Repomd) << endl;
+
    return true;
 }
 
@@ -429,14 +421,6 @@ string SourcesList::SourceRecord::GetType() const
       return "deb";
    else if ((Type & DebSrc) != 0)
       return "deb-src";
-   else if ((Type & Rpm) != 0)
-      return "rpm";
-   else if ((Type & RpmSrc) != 0)
-      return "rpm-src";
-   else if ((Type & RpmDir) != 0)
-      return "rpm-dir";
-   else if ((Type & RpmSrcDir) != 0)
-      return "rpm-src-dir";
    else if ((Type & Repomd) != 0)
       return "repomd";
    else if ((Type & RepomdSrc) != 0)
@@ -590,14 +574,6 @@ ostream &operator<<(ostream &os, const SourcesList::SourceRecord &rec)
       os << "Deb";
    if ((rec.Type & SourcesList::DebSrc) != 0)
       os << "DebSrc";
-   if ((rec.Type & SourcesList::Rpm) != 0)
-      os << "Rpm";
-   if ((rec.Type & SourcesList::RpmSrc) != 0)
-      os << "RpmSrc";
-   if ((rec.Type & SourcesList::RpmDir) != 0)
-      os << "RpmDir";
-   if ((rec.Type & SourcesList::RpmSrcDir) != 0)
-      os << "RpmSrcDir";
    if ((rec.Type & SourcesList::Repomd) != 0)
       os << "Repomd";
    if ((rec.Type & SourcesList::RepomdSrc) != 0)
@@ -608,11 +584,6 @@ ostream &operator<<(ostream &os, const SourcesList::SourceRecord &rec)
    os << "URI: " << rec.URI << endl;
    os << "Dist: " << rec.Dist << endl;
    os << "Section(s):" << endl;
-#if 0
-   for (unsigned int J = 0; J < rec.NumSections; J++) {
-      cout << "\t" << rec.Sections[J] << endl;
-   }
-#endif
    os << endl;
    return os;
 }

@@ -37,12 +37,12 @@ class SourcesList
    enum RecType {
       Deb = 1 << 0,
       DebSrc = 1 << 1,
-      Rpm = 1 << 2,
-      RpmSrc = 1 << 3,
+      Ununsed_2 = 1 << 2,
+      Ununsed_3 = 1 << 3,
       Disabled = 1 << 4,
       Comment = 1 << 5,
-      RpmDir = 1 << 6,
-      RpmSrcDir = 1 << 7,
+      Ununsed_6 = 1 << 6,
+      Ununsed_7 = 1 << 7,
       Repomd = 1 << 8,
       RepomdSrc = 1 << 9
    };

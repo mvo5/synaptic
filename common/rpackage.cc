@@ -181,7 +181,6 @@ const char *RPackage::homepage()
    return "";
 }
 
-
 string RPackage::arch()
 {
    pkgCache::VerIterator ver;
@@ -193,11 +192,6 @@ string RPackage::arch()
       return ver.Arch();
 
    return _package->Arch();
-}
-
-const char *RPackage::vendor()
-{
-   return "dunno";
 }
 
 const char *RPackage::installedVersion()

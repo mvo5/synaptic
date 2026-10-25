@@ -94,13 +94,6 @@ class SourcesList
    VendorRecord *AddVendorNode(VendorRecord &);
 
  public:
-   SourceRecord *AddSource(RecType Type,
-                           std::string VendorID,
-                           std::string URI,
-                           std::string Dist,
-                           std::string *Sections,
-                           unsigned short count,
-                           std::string SourceFile);
    SourceRecord *AddEmptySource();
    void RemoveSource(SourceRecord *&);
    void SwapSources(SourceRecord *&, SourceRecord *&);

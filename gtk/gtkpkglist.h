@@ -29,18 +29,6 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-#define GTK_TYPE_PKG_LIST (gtk_pkg_list_get_type())
-#define GTK_PKG_LIST(obj)                                                      \
-   (G_TYPE_CHECK_INSTANCE_CAST((obj), GTK_TYPE_PKG_LIST, GtkPkgList))
-#define GTK_PKG_LIST_CLASS(klass)                                              \
-   (G_TYPE_CHECK_CLASS_CAST((klass), GTK_TYPE_PKG_LIST, GtkPkgListClass))
-#define GTK_IS_PKG_LIST(obj)                                                   \
-   (G_TYPE_CHECK_INSTANCE_TYPE((obj), GTK_TYPE_PKG_LIST))
-#define GTK_IS_PKG_LIST_CLASS(klass)                                           \
-   (G_TYPE_CHECK_CLASS_TYPE((klass), GTK_TYPE_PKG_LIST))
-#define GTK_PKG_LIST_GET_CLASS(obj)                                            \
-   (G_TYPE_INSTANCE_GET_CLASS((obj), GTK_TYPE_PKG_LIST, GtkPkgListClass))
-
 class RPackageLister;
 
 typedef struct _GtkPkgList GtkPkgList;

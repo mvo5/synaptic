@@ -181,7 +181,6 @@ const char *RPackage::homepage()
    return "";
 }
 
-
 string RPackage::arch()
 {
    pkgCache::VerIterator ver;

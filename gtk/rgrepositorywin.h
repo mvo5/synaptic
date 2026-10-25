@@ -40,7 +40,6 @@ class RGUserDialog;
 class RGWindow;
 
 typedef std::list<SourcesList::SourceRecord *>::iterator SourcesListIter;
-typedef std::list<SourcesList::VendorRecord *>::iterator VendorsListIter;
 
 class RGRepositoryEditor : RGGtkBuilderWindow
 {
@@ -55,8 +54,6 @@ class RGRepositoryEditor : RGGtkBuilderWindow
 
    GtkWidget *_editTable;
    GtkWidget *_hintLabel;
-   GtkWidget *_optVendor;
-   GtkListStore *_optVendorMenu;
    GtkWidget *_entryURI;
    GtkWidget *_entrySect;
    GtkWidget *_optType;
@@ -75,9 +72,6 @@ class RGRepositoryEditor : RGGtkBuilderWindow
    // GdkRGBA channels are doubles in 0..1, not 16-bit GdkColor values
    const GdkRGBA _gray = {0xAA / 255.0, 0xAA / 255.0, 0xAA / 255.0, 1.0};
 
-   void UpdateVendorMenu();
-   int VendorMenuIndex(std::string VendorID);
-
    // static event handlers
    static void DoClear(GtkWidget *, gpointer);
    static void DoAdd(GtkWidget *, gpointer);
@@ -85,7 +79,6 @@ class RGRepositoryEditor : RGGtkBuilderWindow
    static void DoRemove(GtkWidget *, gpointer);
    static void DoOK(GtkWidget *, gpointer);
    static void DoCancel(GtkWidget *, gpointer);
-   static void VendorsWindow(GtkWidget *, gpointer);
    static void SelectionChanged(GtkTreeSelection *selection, gpointer data);
 
    // treeview item toggled

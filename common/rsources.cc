@@ -295,31 +295,6 @@ SourcesList::SourceRecord *SourcesList::AddEmptySource()
    return AddSourceNode(rec);
 }
 
-SourcesList::SourceRecord *SourcesList::AddSource(RecType Type,
-                                                  string VendorID,
-                                                  string URI,
-                                                  string Dist,
-                                                  string *Sections,
-                                                  unsigned short count,
-                                                  string SourceFile)
-{
-   SourceRecord rec;
-   rec.Type = Type;
-   rec.VendorID = VendorID;
-   rec.SourceFile = SourceFile;
-
-   if (rec.SetURI(URI) == false) {
-      return NULL;
-   }
-   rec.Dist = Dist;
-   rec.NumSections = count;
-   rec.Sections = new string[count];
-   for (unsigned int i = 0; i < count; i++)
-      rec.Sections[i] = Sections[i];
-
-   return AddSourceNode(rec);
-}
-
 void SourcesList::RemoveSource(SourceRecord *&rec)
 {
    SourceRecords.remove(rec);

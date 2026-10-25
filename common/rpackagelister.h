@@ -360,9 +360,6 @@ class RPackageLister
          return std::vector<std::string>();
    }
 
-   // multiarch
-   bool isMultiarchSystem();
-
    // notification stuff about changes in packages
    void notifyPreChange(RPackage *pkg);
    void notifyPostChange(RPackage *pkg);

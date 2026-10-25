@@ -52,10 +52,6 @@ using namespace std;
 enum {
    ITEM_TYPE_DEB,
    ITEM_TYPE_DEBSRC,
-   ITEM_TYPE_RPM,
-   ITEM_TYPE_RPMSRC,
-   ITEM_TYPE_RPMDIR,
-   ITEM_TYPE_RPMSRCDIR,
    ITEM_TYPE_REPOMD,
    ITEM_TYPE_REPOMDSRC
 };
@@ -573,18 +569,6 @@ void RGRepositoryEditor::doEdit()
       case ITEM_TYPE_DEBSRC:
          rec->Type |= SourcesList::DebSrc;
          break;
-      case ITEM_TYPE_RPM:
-         rec->Type |= SourcesList::Rpm;
-         break;
-      case ITEM_TYPE_RPMSRC:
-         rec->Type |= SourcesList::RpmSrc;
-         break;
-      case ITEM_TYPE_RPMDIR:
-         rec->Type |= SourcesList::RpmDir;
-         break;
-      case ITEM_TYPE_RPMSRCDIR:
-         rec->Type |= SourcesList::RpmSrcDir;
-         break;
       case ITEM_TYPE_REPOMD:
          rec->Type |= SourcesList::Repomd;
          break;
@@ -728,14 +712,6 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
       int id = ITEM_TYPE_DEB;
       if (rec->Type & SourcesList::DebSrc)
          id = ITEM_TYPE_DEBSRC;
-      else if (rec->Type & SourcesList::Rpm)
-         id = ITEM_TYPE_RPM;
-      else if (rec->Type & SourcesList::RpmSrc)
-         id = ITEM_TYPE_RPMSRC;
-      else if (rec->Type & SourcesList::RpmDir)
-         id = ITEM_TYPE_RPMDIR;
-      else if (rec->Type & SourcesList::RpmSrcDir)
-         id = ITEM_TYPE_RPMSRCDIR;
       else if (rec->Type & SourcesList::Repomd)
          id = ITEM_TYPE_REPOMD;
       else if (rec->Type & SourcesList::RepomdSrc)

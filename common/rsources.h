@@ -79,19 +79,10 @@ class SourcesList
       SourceRecord &operator=(const SourceRecord &);
    };
 
-   struct VendorRecord
-   {
-      std::string VendorID;
-      std::string FingerPrint;
-      std::string Description;
-   };
-
    std::list<SourceRecord *> SourceRecords;
-   std::list<VendorRecord *> VendorRecords;
 
  private:
    SourceRecord *AddSourceNode(SourceRecord &);
-   VendorRecord *AddVendorNode(VendorRecord &);
 
  public:
    SourceRecord *AddSource(RecType Type,
@@ -110,15 +101,7 @@ class SourcesList
    bool ReadSources();
    bool UpdateSources();
 
-   VendorRecord *AddVendor(std::string VendorID,
-                           std::string FingerPrint,
-                           std::string Description);
-   void RemoveVendor(VendorRecord *&);
-   bool ReadVendors();
-   bool UpdateVendors();
-
-   SourcesList()
-   {}
+   SourcesList() {}
    ~SourcesList();
 };
 

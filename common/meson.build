@@ -22,7 +22,6 @@ common_sources = files(
 libsynaptic = static_library(
   'synaptic',
   common_sources,
-  cpp_args: rpm_compile_args,
   dependencies: common_deps,
   include_directories: [root_inc, common_inc],
 )

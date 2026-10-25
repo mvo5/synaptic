@@ -149,7 +149,6 @@ const char *transtable[][2] = {
    {"contrib", _("contrib")},
    {NULL, NULL}};
 
-#ifndef HAVE_RPM
 string trans_section(string sec)
 {
    string str = sec;
@@ -181,9 +180,3 @@ string trans_section(string sec)
    }
    return str;
 }
-#else
-string trans_section(string sec)
-{
-   return dgettext("rpm", sec.c_str());
-}
-#endif

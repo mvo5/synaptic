@@ -234,7 +234,6 @@ const char *RPackage::priority()
       return NULL;
 }
 
-#ifndef HAVE_RPM
 string RPackage::installedFiles()
 {
    // Try the normal file name first:
@@ -269,7 +268,6 @@ string RPackage::installedFiles()
 
    return filelist;
 }
-#endif // HAVE_RPM
 
 const char *RPackage::description()
 {
@@ -1370,16 +1368,6 @@ static char *debParser(string descr)
    strcpy(descrBuffer, descr.c_str());
    return descrBuffer;
 }
-static char *rpmParser(string descr)
-{
-   string::size_type pos = descr.find('\n');
-   // delete first line
-   if (pos != string::npos)
-      descr.erase(0, pos + 2); // del "\n " too
-
-   strcpy(descrBuffer, descr.c_str());
-   return descrBuffer;
-}
 
 static char *stripWsParser(string descr)
 {
@@ -1388,7 +1376,6 @@ static char *stripWsParser(string descr)
 
    p = descr.c_str();
    end = p + descr.size(); // mvo: hackish, but works
-
 
    int state = 0;
    char *pp = (char *)descrBuffer;
@@ -1426,27 +1413,21 @@ static char *stripWsParser(string descr)
    return descrBuffer;
 }
 
-
 static char *parseDescription(string descr)
 {
-
    if (descr.size() + 1 > descrBufferSize) {
       delete[] descrBuffer;
       descrBufferSize = descr.size() + 1;
       descrBuffer = new char[descrBufferSize];
    }
-#ifdef HAVE_RPM
-   int parser = _config->FindI("Synaptic::descriptionParser", NO_PARSER);
-#else
+
    int parser = _config->FindI("Synaptic::descriptionParser", DEB_PARSER);
-#endif
+
    switch (parser) {
       case DEB_PARSER:
          return debParser(descr);
       case STRIP_WS_PARSER:
          return stripWsParser(descr);
-      case RPM_PARSER:
-         return rpmParser(descr);
       case NO_PARSER:
       default:
          strcpy(descrBuffer, descr.c_str());

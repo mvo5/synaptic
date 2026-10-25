@@ -43,7 +43,7 @@ class pkgAcquire;
 class pkgDepCache;
 class pkgRecords;
 
-enum { NO_PARSER, DEB_PARSER, STRIP_WS_PARSER, RPM_PARSER };
+enum { NO_PARSER, DEB_PARSER, STRIP_WS_PARSER };
 
 // taken from apt (pkgcache.cc) to make our life easier
 // (and added "RDepends" as last element)
@@ -145,10 +145,7 @@ class RPackage
    const char *summary();
    const char *description();
 
-#ifndef HAVE_RPM
    std::string installedFiles();
-#endif
-
    std::string arch();
 
    // package is also available for the native architecture

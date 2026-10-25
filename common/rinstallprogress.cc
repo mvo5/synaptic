@@ -37,11 +37,6 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#ifdef HAVE_RPM
-#   include <apt-pkg/configuration.h>
-#   include <fcntl.h>
-#endif
-
 using namespace std;
 
 string RInstallProgress::finishMsg =
@@ -78,51 +73,6 @@ std::optional<pkgPackageManager::OrderResult> RInstallProgress::start(
 {
    pkgPackageManager::OrderResult res;
 
-   // cout << "RInstallProgress::start()" << endl;
-
-#ifdef HAVE_RPM
-
-   _config->Set("RPM::Interactive", "false");
-
-   res = pm->DoInstallPreFork();
-   if (res == pkgPackageManager::Failed)
-      return res;
-
-   /*
-    * This will make a pipe from where we can read child's output
-    */
-   int fd[2];
-   pipe(fd);
-
-   _child_id = fork();
-
-   if (_child_id == 0) {
-      // make the write end of the pipe to the child become the new stdout
-      // and stderr (for the child)
-      dup2(fd[1], 1);
-      dup2(1, 2);
-      close(fd[0]);
-      close(fd[1]);
-
-      APT::Progress::PackageManagerProgressFd progress(-1);
-      res = pm->DoInstallPostFork(&progress);
-      // dump errors into cerr (pass it to the parent process)
-      _error->DumpErrors();
-      _exit(res);
-   }
-   // this is where we read stuff from the child
-   _childin = fd[0];
-   close(fd[1]);
-
-   // make it nonblocking
-   fcntl(_childin, F_SETFL, O_NONBLOCK);
-
-   _donePackages = 0;
-   _numPackages = numPackages;
-   _numPackagesTotal = numPackagesTotal;
-
-#else
-
    res = pm->DoInstallPreFork();
    if (res == pkgPackageManager::Failed)
       return res;
@@ -134,7 +84,6 @@ std::optional<pkgPackageManager::OrderResult> RInstallProgress::start(
       res = pm->DoInstallPostFork(&progress);
       _exit(res);
    }
-#endif
 
    return std::nullopt;
 }
@@ -152,10 +101,6 @@ std::optional<pkgPackageManager::OrderResult> RInstallProgress::poll()
       (pid > 0 && WIFEXITED(ret))
          ? (pkgPackageManager::OrderResult)WEXITSTATUS(ret)
          : pkgPackageManager::Failed;
-
-#ifdef HAVE_RPM
-   close(_childin);
-#endif
 
    return res;
 }

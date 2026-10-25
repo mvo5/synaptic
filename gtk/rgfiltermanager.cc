@@ -225,10 +225,6 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
       _statusB[i] = GTK_WIDGET(gtk_builder_get_object(_builder, s));
       // cout << "loaded: " << s << endl;
       assert(_statusB[i]);
-#ifdef HAVE_RPM // hide debian only boxes
-      if (i == 9 || i == 10)
-         gtk_widget_hide(_statusB[i]);
-#endif
       g_free(s);
    }
 

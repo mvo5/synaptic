@@ -401,10 +401,6 @@ int main(int argc, char **argv)
    bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
    bindtextdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
    textdomain(GETTEXT_PACKAGE);
-
-#   ifdef HAVE_RPM
-   bind_textdomain_codeset("rpm", "UTF-8");
-#   endif
 #endif
 
    GtkApplication *app = gtk_application_new("io.github.mvo5.synaptic",
@@ -545,11 +541,8 @@ static void applicationActivate(GApplication *app, gpointer user_data)
    if (s != "")
       _config->Set("APT::Default-Release", s);
 
-#ifndef HAVE_RPM
    mainWindow->setTitle(_("Synaptic Package Manager "));
-#else
-   mainWindow->setTitle(_config->Find("Synaptic::MyName", "Synaptic"));
-#endif
+
    // this is for stuff like "synaptic -t `uname -n`"
    s = _config->Find("Volatile::MyName", "");
    if (s.size() > 0)

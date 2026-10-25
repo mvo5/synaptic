@@ -36,7 +36,6 @@ class RGWindow;
 
 class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow
 {
-
    struct Item
    {
       std::string descr;
@@ -72,20 +71,22 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow
    // GdkPixmap *statusDraw(int width, int height, int status);
 
  public:
-   virtual bool MediaChange(std::string Media, std::string Drive);
-   virtual void IMSHit(pkgAcquire::ItemDesc &Itm);
-   virtual void Fetch(pkgAcquire::ItemDesc &Itm);
-   virtual void Done(pkgAcquire::ItemDesc &Itm);
-   virtual void Fail(pkgAcquire::ItemDesc &Itm);
-   virtual void Start();
-   virtual void Stop();
-   virtual void close() override;
 
-   bool Pulse(pkgAcquire *Owner);
+   // Methods of pkgAcquireStatus:
+   bool MediaChange(std::string Media, std::string Drive) override;
+   void IMSHit(pkgAcquire::ItemDesc &Itm) override;
+   void Fetch(pkgAcquire::ItemDesc &Itm) override;
+   void Done(pkgAcquire::ItemDesc &Itm) override;
+   void Fail(pkgAcquire::ItemDesc &Itm) override;
+   bool Pulse(pkgAcquire *Owner) override;
+   void Start() override;
+   void Stop() override;
+
+   // Methods of RGGtkBuilderWindow/RGWindow:
+   void close() override;
 
    // set description of the current task (main and additonal explaination)
    void setDescription(std::string mainText, std::string secondText = "");
-
 
    RGFetchProgress(RGWindow *win);
 };

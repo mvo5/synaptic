@@ -8,7 +8,6 @@ common_sources = files(
   'rpackagelister.cc',
   'rpackageview.cc',
   'rcdscanner.cc',
-  'rpmindexcopy.cc',
   'raptoptions.cc',
   'rsources.cc',
   'rcacheactor.cc',

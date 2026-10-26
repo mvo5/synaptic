@@ -252,7 +252,7 @@ GtkPkgList *gtk_pkg_list_new(RPackageLister *lister)
 
    // cout << "pkg_list_new()\n";
 
-   retval = (GtkPkgList *)g_object_new(GTK_TYPE_PKG_LIST, NULL);
+   retval = (GtkPkgList *)g_object_new(gtk_pkg_list_get_type(), NULL);
    assert(retval);
    retval->_lister = lister;
 
@@ -262,11 +262,7 @@ GtkPkgList *gtk_pkg_list_new(RPackageLister *lister)
 
 static void gtk_pkg_list_finalize(GObject *object)
 {
-   //  GtkPkgList *pkg_list = GTK_PKG_LIST (object);
-
-
    /* give back all memory */
-
 
    /* must chain up */
    (*parent_class->finalize)(object);
@@ -275,7 +271,7 @@ static void gtk_pkg_list_finalize(GObject *object)
 
 static GtkTreeModelFlags gtk_pkg_list_get_flags(GtkTreeModel *tree_model)
 {
-   g_return_val_if_fail(GTK_IS_PKG_LIST(tree_model), (GtkTreeModelFlags)0);
+   g_return_val_if_fail(G_TYPE_CHECK_INSTANCE_TYPE(tree_model, gtk_pkg_list_get_type()), (GtkTreeModelFlags)0);
 
    return GTK_TREE_MODEL_LIST_ONLY;
 }
@@ -285,7 +281,7 @@ static gint gtk_pkg_list_get_n_columns(GtkTreeModel *tree_model)
 {
    GtkPkgList *pkg_list = (GtkPkgList *)tree_model;
 
-   g_return_val_if_fail(GTK_IS_PKG_LIST(tree_model), 0);
+   g_return_val_if_fail(G_TYPE_CHECK_INSTANCE_TYPE(tree_model, gtk_pkg_list_get_type()), 0);
 
    return pkg_list->n_columns;
 }
@@ -293,14 +289,12 @@ static gint gtk_pkg_list_get_n_columns(GtkTreeModel *tree_model)
 
 static GType gtk_pkg_list_get_column_type(GtkTreeModel *tree_model, gint index)
 {
-   GtkPkgList *tree_store = (GtkPkgList *)tree_model;
-
-   g_return_val_if_fail(GTK_IS_PKG_LIST(tree_model), G_TYPE_INVALID);
-   g_return_val_if_fail(index < GTK_PKG_LIST(tree_model)->n_columns &&
-                           index >= 0,
+   g_return_val_if_fail(G_TYPE_CHECK_INSTANCE_TYPE(tree_model, gtk_pkg_list_get_type()), G_TYPE_INVALID);
+   g_return_val_if_fail(index < G_TYPE_CHECK_INSTANCE_CAST(tree_model, gtk_pkg_list_get_type(), GtkPkgList)->n_columns &&
+                        index >= 0,
                         G_TYPE_INVALID);
 
-   return tree_store->column_headers[index];
+   return ((GtkPkgList *) tree_model)->column_headers[index];
 }
 
 
@@ -308,18 +302,14 @@ static gboolean gtk_pkg_list_get_iter(GtkTreeModel *tree_model,
                                       GtkTreeIter *iter,
                                       GtkTreePath *path)
 {
-   g_return_val_if_fail(GTK_IS_PKG_LIST(tree_model), FALSE);
+   g_return_val_if_fail(G_TYPE_CHECK_INSTANCE_TYPE(tree_model, gtk_pkg_list_get_type()), FALSE);
 
-   GtkPkgList *pkg_list = (GtkPkgList *)tree_model;
-   gint *indices;
-   gint depth;
-   RPackage *pkg = NULL;
-
-   assert(GTK_IS_PKG_LIST(pkg_list));
    assert(path != NULL);
 
-   indices = gtk_tree_path_get_indices(path);
-   depth = gtk_tree_path_get_depth(path);
+   GtkPkgList *pkg_list = (GtkPkgList *)tree_model;
+
+   gint *indices = gtk_tree_path_get_indices(path);
+   gint depth = gtk_tree_path_get_depth(path);
 
    // we do not support more
    assert(depth <= 1);
@@ -336,15 +326,15 @@ static gboolean gtk_pkg_list_get_iter(GtkTreeModel *tree_model,
       cout << indices[0] << " >= " << pkg_list->_lister->viewPackagesSize()
            << endl;
 #endif
-      // gtk_tree_model_row_deleted(GTK_TREE_MODEL(pkg_list),path);
       return FALSE;
    }
 
-   pkg = pkg_list->_lister->getViewPackage(element);
-   assert(pkg);
+   RPackage *pkg = pkg_list->_lister->getViewPackage(element);
+   assert(pkg != NULL);
    iter->stamp = 140677;
    iter->user_data = pkg;
    iter->user_data2 = GINT_TO_POINTER(element);
+
    return TRUE;
 }
 
@@ -352,9 +342,8 @@ static GtkTreePath *gtk_pkg_list_get_path(GtkTreeModel *tree_model,
                                           GtkTreeIter *iter)
 {
    GtkTreePath *retval;
-   // GtkPkgList *pkg_list = GTK_PKG_LIST(tree_model);
 
-   g_return_val_if_fail(GTK_IS_PKG_LIST(tree_model), NULL);
+   g_return_val_if_fail(G_TYPE_CHECK_INSTANCE_TYPE(tree_model, gtk_pkg_list_get_type()), NULL);
    g_return_val_if_fail(iter != NULL, NULL);
    // g_return_val_if_fail(iter->user_data != NULL, NULL);
 
@@ -382,11 +371,13 @@ static void gtk_pkg_list_get_value(GtkTreeModel *tree_model,
                                    gint column,
                                    GValue *value)
 {
-   g_return_if_fail(GTK_IS_PKG_LIST(tree_model));
+   g_return_if_fail(G_TYPE_CHECK_INSTANCE_TYPE(tree_model, gtk_pkg_list_get_type()));
    g_return_if_fail(iter != NULL);
-   g_return_if_fail(column < GTK_PKG_LIST(tree_model)->n_columns);
 
-   g_value_init(value, GTK_PKG_LIST(tree_model)->column_headers[column]);
+   GtkPkgList *pkg_list = G_TYPE_CHECK_INSTANCE_CAST(tree_model, gtk_pkg_list_get_type(), GtkPkgList);
+
+   g_return_if_fail(column < pkg_list->n_columns);
+   g_value_init(value, pkg_list->column_headers[column]);
 
    RPackage *pkg = (RPackage *)iter->user_data;
 
@@ -398,7 +389,6 @@ static void gtk_pkg_list_get_value(GtkTreeModel *tree_model,
    }
 #endif
 
-   GtkPkgList *pkg_list = GTK_PKG_LIST(tree_model);
    int element = GPOINTER_TO_INT(iter->user_data2);
    if (element >= pkg_list->_lister->viewPackagesSize())
       return;
@@ -475,14 +465,14 @@ static void gtk_pkg_list_get_value(GtkTreeModel *tree_model,
 static gboolean gtk_pkg_list_iter_next(GtkTreeModel *tree_model,
                                        GtkTreeIter *iter)
 {
-   g_return_val_if_fail(GTK_IS_PKG_LIST(tree_model), FALSE);
+   g_return_val_if_fail(G_TYPE_CHECK_INSTANCE_TYPE(tree_model, gtk_pkg_list_get_type()), FALSE);
 
    if (iter == NULL)
       return FALSE;
    if (iter->user_data == NULL)
       return FALSE;
 
-   GtkPkgList *pkg_list = GTK_PKG_LIST(tree_model);
+   GtkPkgList *pkg_list = G_TYPE_CHECK_INSTANCE_CAST(tree_model, gtk_pkg_list_get_type(), GtkPkgList);
    int i, old;
 
    old = GPOINTER_TO_INT(iter->user_data2);
@@ -515,7 +505,7 @@ static gboolean gtk_pkg_list_iter_children(GtkTreeModel *tree_model,
                                            GtkTreeIter *parent)
 {
    g_return_val_if_fail(parent == NULL || parent->user_data != NULL, FALSE);
-   g_return_val_if_fail(GTK_IS_PKG_LIST(tree_model), FALSE);
+   g_return_val_if_fail(G_TYPE_CHECK_INSTANCE_TYPE(tree_model, gtk_pkg_list_get_type()), FALSE);
 
 #ifdef DEBUG_LIST
    cout << "iter_children: " << endl;
@@ -548,10 +538,10 @@ static gboolean gtk_pkg_list_iter_has_child(GtkTreeModel *tree_model,
 static gint gtk_pkg_list_iter_n_children(GtkTreeModel *tree_model,
                                          GtkTreeIter *iter)
 {
-   g_return_val_if_fail(GTK_IS_PKG_LIST(tree_model), -1);
+   g_return_val_if_fail(G_TYPE_CHECK_INSTANCE_TYPE(tree_model, gtk_pkg_list_get_type()), -1);
    g_return_val_if_fail(iter == NULL || iter->user_data != NULL, FALSE);
 
-   GtkPkgList *pkg_list = GTK_PKG_LIST(tree_model);
+   GtkPkgList *pkg_list = G_TYPE_CHECK_INSTANCE_CAST(tree_model, gtk_pkg_list_get_type(), GtkPkgList);
 
 #ifdef DEBUG_LIST
    cout << "iter_n_children" << endl;
@@ -568,7 +558,7 @@ static gboolean gtk_pkg_list_iter_nth_child(GtkTreeModel *tree_model,
                                             GtkTreeIter *parent,
                                             gint n)
 {
-   g_return_val_if_fail(GTK_IS_PKG_LIST(tree_model), FALSE);
+   g_return_val_if_fail(G_TYPE_CHECK_INSTANCE_TYPE(tree_model, gtk_pkg_list_get_type()), FALSE);
    GtkPkgList *pkg_list = (GtkPkgList *)tree_model;
 
    if (parent) {
@@ -605,10 +595,9 @@ static gboolean gtk_pkg_list_get_sort_column_id(GtkTreeSortable *sortable,
                                                 gint *sort_column_id,
                                                 GtkSortType *order)
 {
-   GtkPkgList *pkg_list = (GtkPkgList *)sortable;
-   g_return_val_if_fail(GTK_IS_PKG_LIST(sortable), FALSE);
+   g_return_val_if_fail(G_TYPE_CHECK_INSTANCE_TYPE(sortable, gtk_pkg_list_get_type()), FALSE);
 
-   // cout << " gtk_pkg_list_get_sort_column_id()" << endl;
+   GtkPkgList *pkg_list = (GtkPkgList *)sortable;
 
    if (sort_column_id)
       *sort_column_id = pkg_list->sort_column_id;
@@ -622,13 +611,11 @@ static void gtk_pkg_list_set_sort_column_id(GtkTreeSortable *sortable,
                                             gint sort_column_id,
                                             GtkSortType order)
 {
+   g_return_if_fail(G_TYPE_CHECK_INSTANCE_TYPE(sortable, gtk_pkg_list_get_type()));
+
    GtkPkgList *pkg_list = (GtkPkgList *)sortable;
-   g_return_if_fail(GTK_IS_PKG_LIST(sortable));
 
-   // cout << "gtk_pkg_list_set_sort_column_id(): " << sort_column_id << endl;
-
-   if ((pkg_list->sort_column_id == sort_column_id) &&
-       (pkg_list->order == order))
+   if ((pkg_list->sort_column_id == sort_column_id) && (pkg_list->order == order))
       return;
 
    pkg_list->sort_column_id = sort_column_id;
@@ -640,14 +627,14 @@ static void gtk_pkg_list_set_sort_column_id(GtkTreeSortable *sortable,
 
 static gboolean gtk_pkg_list_has_default_sort_func(GtkTreeSortable *sortable)
 {
-   g_return_val_if_fail(GTK_IS_PKG_LIST(sortable), FALSE);
+   g_return_val_if_fail(G_TYPE_CHECK_INSTANCE_TYPE(sortable, gtk_pkg_list_get_type()), FALSE);
    return TRUE;
 }
 
 static void gtk_pkg_list_sort(GtkPkgList *pkg_list)
 {
    // cout << "gtk_pkg_list_sort(GtkPkgList *pkg_list)" << endl;
-   g_return_if_fail(GTK_IS_PKG_LIST(pkg_list));
+   g_return_if_fail(G_TYPE_CHECK_INSTANCE_TYPE(pkg_list, gtk_pkg_list_get_type()));
 
    switch (pkg_list->sort_column_id) {
       case COLOR_COLUMN:

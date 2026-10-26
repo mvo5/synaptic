@@ -1563,34 +1563,3 @@ static pkgCache::PkgFileIterator _searchPkgFileIter(pkgCache::PkgIterator *Pkg,
    PF = pkgCache::PkgFileIterator(*Pkg->Cache());
    return PF;
 }
-
-// look for a release file that matches the given label and origin string
-string RPackage::getReleaseFileForOrigin(string label, string release)
-{
-   pkgIndexFile *index;
-   pkgCache::PkgFileIterator found =
-      _searchPkgFileIter(_package, label, string(release));
-   if (found.end())
-      return "";
-
-   // search for the matching meta-index
-   pkgSourceList *list = _lister->getCache()->list();
-   if (list->FindIndex(found, index)) {
-      vector<metaIndex *>::const_iterator I;
-      for (I = list->begin(); I != list->end(); I++) {
-         vector<pkgIndexFile *> *ifv = (*I)->GetIndexFiles();
-         if (find(ifv->begin(), ifv->end(), index) != ifv->end()) {
-            string uri = _config->FindDir("Dir::State::lists");
-            uri += URItoFileName((*I)->GetURI());
-            uri += "dists_";
-            uri += (*I)->GetDist();
-            uri += "_Release";
-            return uri;
-         }
-      }
-   }
-
-   return "";
-}
-
-// vim:ts=3:sw=3:et

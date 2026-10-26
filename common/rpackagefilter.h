@@ -308,15 +308,6 @@ class RReducedViewPackageFilter : public RPackageFilter
    virtual bool filter(RPackage *pkg);
    virtual bool read(Configuration &conf, std::string key);
    virtual bool write(std::ofstream &out, std::string pad);
-
-   void enable()
-   {
-      _enabled = true;
-   }
-   void disable()
-   {
-      _enabled = false;
-   }
 };
 
 extern const char *RPFFile;

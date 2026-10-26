@@ -31,8 +31,6 @@ class RGCacheProgress final : public OpProgress
 {
    GtkWidget *_parent;
    GtkWidget *_label;
-   GtkWidget *_prog;
-
    bool _mapped;
 
  public:

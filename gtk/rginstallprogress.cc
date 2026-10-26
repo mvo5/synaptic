@@ -260,53 +260,6 @@ void RGInstallProgress::updateInterface()
    }
 }
 
-class GeometryParser
-{
- protected:
-   int _width;
-   int _height;
-   int _xpos;
-   int _ypos;
-
-   bool ParseSize(char **size);
-   bool ParsePosition(char **pos);
-
- public:
-   int Width()
-   {
-      return _width;
-   };
-   int Height()
-   {
-      return _height;
-   };
-   int XPos()
-   {
-      return _xpos;
-   };
-   int YPos()
-   {
-      return _ypos;
-   };
-
-   bool HasSize()
-   {
-      return _width != -1 && _height != -1;
-   };
-   bool HasPosition()
-   {
-      return _xpos != -1 && _ypos != -1;
-   };
-
-   bool Parse(string Geo);
-
-   GeometryParser(string Geo = "")
-      : _width(-1), _height(-1), _xpos(-1), _ypos(-1)
-   {
-      Parse(Geo);
-   };
-};
-
 RGInstallProgress::RGInstallProgress(RGMainWindow *main, RPackageLister *lister)
    : RInstallProgress(), RGGtkBuilderWindow(main, "rginstall_progress"),
      _msgs(main)
@@ -315,14 +268,6 @@ RGInstallProgress::RGInstallProgress(RGMainWindow *main, RPackageLister *lister)
    setTitle(_("Applying Changes"));
 
    _startCounting = false;
-
-   string GeoStr = _config->Find("Synaptic::Geometry::InstProg", "");
-   GeometryParser Geo(GeoStr);
-   if (Geo.HasSize())
-      gtk_widget_set_size_request(GTK_WIDGET(_win), Geo.Width(), Geo.Height());
-   if (Geo.HasPosition())
-      gtk_window_set_transient_for(GTK_WINDOW(_win),
-                                   GTK_WINDOW(main->window()));
 
    _label = GTK_WIDGET(gtk_builder_get_object(_builder, "label_name"));
    _labelSummary =
@@ -377,82 +322,4 @@ RGInstallProgress::~RGInstallProgress()
    delete _ss;
    g_object_unref(_cssProvider);
    g_object_unref(_cssProviderBold);
-}
-
-bool GeometryParser::ParseSize(char **size)
-{
-   char *buf = *size;
-   char *p = buf;
-   while (*p >= '0' && *p <= '9')
-      p++;
-   if (*p != 'x')
-      return false;
-   *p++ = 0;
-   _width = atoi(buf);
-   buf = p;
-   while (*p >= '0' && *p <= '9')
-      p++;
-   if (*p != '+' && *p != '-' && *p != 0)
-      return false;
-   char tmp = *p;
-   *p = 0;
-   _height = atoi(buf);
-   *p = tmp;
-   *size = p;
-   return true;
-}
-
-bool GeometryParser::ParsePosition(char **pos)
-{
-   char *buf = *pos;
-   char *p = buf + 1;
-   if (*p < '0' || *p > '9')
-      return false;
-   while (*p >= '0' && *p <= '9')
-      p++;
-   if (*p != '+' && *p != '-')
-      return false;
-   char tmp = *p;
-   *p = 0;
-   _xpos = atoi(buf);
-   *p = tmp;
-   buf = p++;
-   if (*p < '0' || *p > '9')
-      return false;
-   while (*p >= '0' && *p <= '9')
-      p++;
-   if (*p != 0)
-      return false;
-   _ypos = atoi(buf);
-   *pos = p;
-   return true;
-}
-
-bool GeometryParser::Parse(string Geo)
-{
-   if (Geo.empty() == true)
-      return false;
-
-   char *buf = strdup(Geo.c_str());
-   char *p = buf;
-   bool ret = false;
-   if (*p == '+' || *p == '-') {
-      ret = ParsePosition(&p);
-   } else {
-      if (*p == '=')
-         p++;
-      ret = ParseSize(&p);
-      if (ret == true && (*p == '+' || *p == '-'))
-         ret = ParsePosition(&p);
-   }
-   free(buf);
-
-   if (ret == false) {
-      _width = -1;
-      _height = -1;
-      _xpos = -1;
-      _ypos = -1;
-   }
-
-   return ret;
 }

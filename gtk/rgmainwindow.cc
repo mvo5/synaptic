@@ -119,12 +119,6 @@ GtkCssProvider *RGMainWindow::_fastSearchCssProvider = NULL;
 
 void RGMainWindow::changeView(int view, string subView)
 {
-   if (_config->FindB("Debug::Synaptic::View", false))
-      ioprintf(clog,
-               "RGMainWindow::changeView(): view '%i' subView '%s'\n",
-               view,
-               subView.size() > 0 ? subView.c_str() : "(empty)");
-
    if (view >= N_PACKAGE_VIEWS) {
       // cerr << "changeView called with invalid view NR: " << view << endl;
       view = 0;
@@ -182,11 +176,6 @@ void RGMainWindow::changeView(int view, string subView)
 void RGMainWindow::refreshSubViewList()
 {
    string selected = selectedSubView();
-   if (_config->FindB("Debug::Synaptic::View", false))
-      ioprintf(clog,
-               "RGMainWindow::refreshSubViewList(): selectedView '%s'\n",
-               selected.size() > 0 ? selected.c_str() : "(empty)");
-
    vector<string> subViews = _lister->getSubViews();
 
    for (unsigned int i = 0; i < subViews.size(); i++)
@@ -291,11 +280,6 @@ bool RGMainWindow::showErrors()
 
 void RGMainWindow::notifyChange(RPackage *pkg)
 {
-   if (_config->FindB("Debug::Synaptic::View", false))
-      ioprintf(clog,
-               "RGMainWindow::notifyChange(): '%s'\n",
-               pkg != NULL ? pkg->name() : "(no pkg)");
-
    if (pkg != NULL)
       refreshTable(pkg);
 
@@ -315,16 +299,8 @@ void RGMainWindow::forgetNewPackages()
 
 void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
 {
-   if (_config->FindB("Debug::Synaptic::View", false))
-      ioprintf(clog,
-               "RGMainWindow::refreshTable(): pkg: '%s' adjust '%i'\n",
-               selectedPkg != NULL ? selectedPkg->name() : "(no pkg)",
-               setAdjustment);
-
    const gchar *str = gtk_entry_get_text(GTK_ENTRY(_entry_fast_search));
    if (str != NULL && strlen(str) > 1) {
-      if (_config->FindB("Debug::Synaptic::View", false))
-         cerr << "RGMainWindow::refreshTable: rerun limitBySearch" << endl;
       _lister->limitBySearch(str);
    }
 
@@ -348,18 +324,18 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
 
       bool ok = gtk_tree_view_get_visible_range(GTK_TREE_VIEW(_treeView), &start, NULL);
       // find and select the pkg we are looking for
-      ok &=  gtk_tree_model_get_iter_first(_pkgList, &iter); 
+      ok &=  gtk_tree_model_get_iter_first(_pkgList, &iter);
       while(ok) {
-	 gtk_tree_model_get(_pkgList, &iter, PKG_COLUMN, &pkg, -1);
-	 if(pkg == selectedPkg) {
-	    GtkTreePath* path = gtk_tree_model_get_path(_pkgList, &iter);
-	    gtk_tree_view_set_cursor(GTK_TREE_VIEW(_treeView), path, 
-		 		     NULL, false);
-	    gtk_tree_path_free(path);
-	    break;
-	 }
+         gtk_tree_model_get(_pkgList, &iter, PKG_COLUMN, &pkg, -1);
+         if(pkg == selectedPkg) {
+            GtkTreePath* path = gtk_tree_model_get_path(_pkgList, &iter);
+            gtk_tree_view_set_cursor(GTK_TREE_VIEW(_treeView), path,
+                    NULL, false);
+            gtk_tree_path_free(path);
+            break;
+         }
 
-	 ok = gtk_tree_model_iter_next(_pkgList, &iter);
+         ok = gtk_tree_model_iter_next(_pkgList, &iter);
       }
       if (ok && gtk_tree_model_get_iter_first(_pkgList, &iter)) {
           gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(_treeView), start, NULL, true, 0.0, 0.0);

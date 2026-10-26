@@ -95,10 +95,8 @@ void RPackageView::clearSelection()
 
 void RPackageView::refresh()
 {
-   if (_config->FindB("Debug::Synaptic::View", false))
-      ioprintf(clog, "RPackageView::refresh(): '%s'\n", getName().c_str());
-
    _view.clear();
+
    for (unsigned int i = 0; i < _all.size(); i++) {
       if (_all[i])
          addPackage(_all[i]);

@@ -696,7 +696,6 @@ void RGMainWindow::pkgAction(RGPkgAction action)
    _lister->saveState(state);
    if (ask)
       _lister->unregisterObserver(this);
-   _lister->notifyCachePreChange();
 
    // We block notifications in setInstall() and friends, since it'd
    // kill the algorithm in a long loop with many selected packages.
@@ -773,8 +772,6 @@ void RGMainWindow::pkgAction(RGPkgAction action)
       _lister->fixBroken();
 
    _lister->notifyPostChange(NULL);
-
-   _lister->notifyCachePostChange();
 
    bool changed = askStateChange(state, exclude);
 
@@ -3233,7 +3230,6 @@ void RGMainWindow::selectToInstall(vector<string> packagenames)
 
    // we always save the state (for undo)
    me->_lister->saveState(state);
-   me->_lister->notifyCachePreChange();
 
    for (unsigned int i = 0; i < packagenames.size(); i++) {
       RPackage *newpkg = (RPackage *)me->_lister->getPackage(packagenames[i]);
@@ -3261,7 +3257,6 @@ void RGMainWindow::selectToInstall(vector<string> packagenames)
    }
    me->setBusyCursor(false);
    me->_lister->notifyPostChange(NULL);
-   me->_lister->notifyCachePostChange();
 
    RPackage *pkg = me->selectedPackage();
    me->refreshTable(pkg);
@@ -3285,7 +3280,6 @@ void RGMainWindow::pkgInstallByNameHelper(GSimpleAction *action,
 
       // we always save the state (for undo)
       me->_lister->saveState(state);
-      me->_lister->notifyCachePreChange();
 
       // actual action
       newpkg->setNotify(false);
@@ -3301,8 +3295,8 @@ void RGMainWindow::pkgInstallByNameHelper(GSimpleAction *action,
          if (me->checkForFailedInst(instPkgs))
             me->_lister->restoreState(state);
       }
+
       me->_lister->notifyPostChange(NULL);
-      me->_lister->notifyCachePostChange();
 
       RPackage *pkg = me->selectedPackage();
       me->refreshTable(pkg);

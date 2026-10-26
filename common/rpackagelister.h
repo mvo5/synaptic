@@ -67,14 +67,6 @@ class RPackageObserver
    virtual void notifyPostFilteredChange() = 0;
 };
 
-class RCacheObserver
-{
- public:
-   virtual void notifyCacheOpen() = 0;
-   virtual void notifyCachePreChange() = 0;
-   virtual void notifyCachePostChange() = 0;
-};
-
 // base sort class
 // for a example use see sortPackages()
 template <class T> class sortFunc
@@ -191,7 +183,6 @@ class RPackageLister
    } _searchData;
 
    std::vector<RPackageObserver *> _packageObservers;
-   std::vector<RCacheObserver *> _cacheObservers;
 
    RUserDialog *_userDialog;
 
@@ -367,13 +358,6 @@ class RPackageLister
    void registerObserver(RPackageObserver *observer);
    void unregisterObserver(RPackageObserver *observer);
 
-   // notification stuff about changes in cache
-   void notifyCacheOpen();
-   void notifyCachePreChange();
-   void notifyCachePostChange();
-   void registerCacheObserver(RCacheObserver *observer);
-   void unregisterCacheObserver(RCacheObserver *observer);
-
    bool readSelections(std::istream &in);
    bool writeSelections(std::ostream &out, bool fullState);
 
@@ -381,6 +365,7 @@ class RPackageLister
    {
       return _cache;
    }
+
 #ifdef HAVE_XAPIAN
    Xapian::Database *xapiandatabase()
    {

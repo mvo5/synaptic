@@ -268,49 +268,6 @@ void RPackageLister::registerObserver(RPackageObserver *observer)
    _packageObservers.push_back(observer);
 }
 
-
-void RPackageLister::notifyCacheOpen()
-{
-   undoStack.clear();
-   redoStack.clear();
-   for (vector<RCacheObserver *>::const_iterator I = _cacheObservers.begin();
-        I != _cacheObservers.end();
-        I++) {
-      (*I)->notifyCacheOpen();
-   }
-}
-
-void RPackageLister::notifyCachePreChange()
-{
-   for (vector<RCacheObserver *>::const_iterator I = _cacheObservers.begin();
-        I != _cacheObservers.end();
-        I++) {
-      (*I)->notifyCachePreChange();
-   }
-}
-
-void RPackageLister::notifyCachePostChange()
-{
-   for (vector<RCacheObserver *>::const_iterator I = _cacheObservers.begin();
-        I != _cacheObservers.end();
-        I++) {
-      (*I)->notifyCachePostChange();
-   }
-}
-
-void RPackageLister::unregisterCacheObserver(RCacheObserver *observer)
-{
-   vector<RCacheObserver *>::iterator I;
-   I = find(_cacheObservers.begin(), _cacheObservers.end(), observer);
-   if (I != _cacheObservers.end())
-      _cacheObservers.erase(I);
-}
-
-void RPackageLister::registerCacheObserver(RCacheObserver *observer)
-{
-   _cacheObservers.push_back(observer);
-}
-
 bool RPackageLister::check()
 {
    if (_cache->deps() == NULL)
@@ -462,7 +419,8 @@ bool RPackageLister::openCache()
    reapplyFilter();
 
    // mvo: put it here for now
-   notifyCacheOpen();
+   undoStack.clear();
+   redoStack.clear();
 
    firstRun = false;
 

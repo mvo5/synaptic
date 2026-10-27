@@ -52,8 +52,6 @@ using namespace std;
 enum {
    ITEM_TYPE_DEB,
    ITEM_TYPE_DEBSRC,
-   ITEM_TYPE_REPOMD,
-   ITEM_TYPE_REPOMDSRC
 };
 
 enum {
@@ -482,12 +480,6 @@ void RGRepositoryEditor::doEdit()
       case ITEM_TYPE_DEBSRC:
          rec->Type |= SourcesList::DebSrc;
          break;
-      case ITEM_TYPE_REPOMD:
-         rec->Type |= SourcesList::Repomd;
-         break;
-      case ITEM_TYPE_REPOMDSRC:
-         rec->Type |= SourcesList::RepomdSrc;
-         break;
       default:
          _userDialog->error(_("Unknown source type"));
          return;
@@ -591,7 +583,6 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
                                           gpointer data)
 {
    RGRepositoryEditor *me = (RGRepositoryEditor *)data;
-   // cout << "RGRepositoryEditor::SelectionChanged()"<<endl;
 
    GtkTreeIter iter;
    GtkTreeModel *model;
@@ -613,13 +604,7 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
       gtk_widget_set_sensitive(me->_deleteBut, editable);
       gtk_label_set_text(GTK_LABEL(me->_hintLabel), SourceHint(rec).c_str());
 
-      int id = ITEM_TYPE_DEB;
-      if (rec->Type & SourcesList::DebSrc)
-         id = ITEM_TYPE_DEBSRC;
-      else if (rec->Type & SourcesList::Repomd)
-         id = ITEM_TYPE_REPOMD;
-      else if (rec->Type & SourcesList::RepomdSrc)
-         id = ITEM_TYPE_REPOMDSRC;
+      int id = ((rec->Type & SourcesList::DebSrc) != 0) ? ITEM_TYPE_DEBSRC : ITEM_TYPE_DEB;
       gtk_combo_box_set_active(GTK_COMBO_BOX(me->_optType), id);
 
       gtk_entry_set_text(GTK_ENTRY(me->_entryURI), utf8(rec->URI.c_str()));
@@ -635,7 +620,6 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
          gtk_editable_insert_text(GTK_EDITABLE(me->_entrySect), " ", -1, &pos);
       }
    } else {
-      // cout << "no selection" << endl;
       gtk_widget_set_sensitive(me->_editTable, FALSE);
       gtk_label_set_text(GTK_LABEL(me->_hintLabel), "");
 

@@ -373,10 +373,6 @@ bool SourcesList::SourceRecord::SetType(string S)
       Type |= Deb;
    else if (S == "deb-src")
       Type |= DebSrc;
-   else if (S == "repomd")
-      Type |= Repomd;
-   else if (S == "repomd-src")
-      Type |= RepomdSrc;
    else
       return false;
 
@@ -396,11 +392,7 @@ string SourcesList::SourceRecord::GetType() const
       return "deb";
    else if ((Type & DebSrc) != 0)
       return "deb-src";
-   else if ((Type & Repomd) != 0)
-      return "repomd";
-   else if ((Type & RepomdSrc) != 0)
-      return "repomd-src";
-   // cout << "type " << (Type & Repomd) << endl;
+
    return "unknown";
 }
 
@@ -549,10 +541,6 @@ ostream &operator<<(ostream &os, const SourcesList::SourceRecord &rec)
       os << "Deb";
    if ((rec.Type & SourcesList::DebSrc) != 0)
       os << "DebSrc";
-   if ((rec.Type & SourcesList::Repomd) != 0)
-      os << "Repomd";
-   if ((rec.Type & SourcesList::RepomdSrc) != 0)
-      os << "RepomdSrc";
    os << endl;
    os << "SourceFile: " << rec.SourceFile << endl;
    os << "VendorID: " << rec.VendorID << endl;

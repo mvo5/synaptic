@@ -201,19 +201,16 @@ bool RGUserDialog::message(const char *msg,
 
 // RGGtkBuilderUserDialog
 
-void RGGtkBuilderUserDialog::init(const char *name)
+RGGtkBuilderUserDialog::RGGtkBuilderUserDialog(RGWindow *parent, const char *name) : RGUserDialog(parent->window())
 {
-   builder = gtk_builder_new();
    std::string resource_path = std::string("/io/github/mvo5/synaptic/ui/dialog_") + name + ".ui";
+   _builder = gtk_builder_new_from_resource(resource_path.c_str());
 
-   GError *error = NULL;
-   if (!gtk_builder_add_from_resource(builder, resource_path.c_str(), &error)) {
-      g_warning("Couldn't load builder resource: %s", error->message);
-      g_error_free(error);
-   }
+   // Note: If an error occurs while locating the resource or parsing the description
+   // then gtk_builder_new_from_resource() aborts the program.
 
-   gchar *main_widget = g_strdup_printf("dialog_%s", name);
-   _dialog = GTK_WIDGET(gtk_builder_get_object(builder, main_widget));
+   std::string main_widget_name = std::string("dialog_") + name;
+   _dialog = GTK_WIDGET(gtk_builder_get_object(_builder, main_widget_name.c_str()));
    assert(_dialog != nullptr);
 
    gtk_window_set_icon_name(GTK_WINDOW(_dialog), "synaptic");
@@ -224,8 +221,6 @@ void RGGtkBuilderUserDialog::init(const char *name)
    }
 
    gtk_window_set_transient_for(GTK_WINDOW(_dialog), GTK_WINDOW(_parentWindow));
-
-   g_free(main_widget);
 }
 
 int RGGtkBuilderUserDialog::run()

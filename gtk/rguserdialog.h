@@ -79,20 +79,16 @@ class RGGtkBuilderUserDialog final : public RGUserDialog
  protected:
 
    GtkWidget *_dialog;
-   GtkBuilder *builder;
-
-   void init(const char *name);
+   GtkBuilder *_builder;
 
  public:
 
-   RGGtkBuilderUserDialog(RGWindow *parent, const char *name) : RGUserDialog(parent->window())
-   {
-      init(name);
-   }
+   RGGtkBuilderUserDialog(RGWindow *parent, const char *name);
 
    ~RGGtkBuilderUserDialog() override
    {
       gtk_widget_destroy(_dialog);
+      g_object_unref(_builder);
    };
 
    void setTitle(const std::string &title)
@@ -104,6 +100,6 @@ class RGGtkBuilderUserDialog final : public RGUserDialog
 
    GtkBuilder *getGtkBuilder()
    {
-      return builder;
+      return _builder;
    };
 };

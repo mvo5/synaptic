@@ -249,7 +249,7 @@ class RPackageViewFilter : public RPackageView
 
    RFilter *findFilter(unsigned int index)
    {
-      if (index > _filterL.size())
+      if (index >= _filterL.size())
          return NULL;
       else
          return _filterL[index];

@@ -1589,18 +1589,11 @@ void RGMainWindow::close()
    if (_interfaceLocked > 0) return;
 
    if (_unsavedChanges)
-   {
+   {  // There are pending changes: Ask the user whether he wants to quit.
       RGGtkBuilderUserDialog dia(this, "quit");
-      switch (dia.run())
-      {
-         case GTK_RESPONSE_OK:
-         case GTK_RESPONSE_YES:
-         case GTK_RESPONSE_CLOSE:
-         {
-            return;
-         }
-
-         default: break;
+      if (dia.run() != GTK_RESPONSE_OK)
+      {  // The user chose not to quit.
+         return;
       }
    }
 

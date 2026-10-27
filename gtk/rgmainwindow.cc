@@ -610,16 +610,9 @@ void RGMainWindow::cbInstallFromVersion(GSimpleAction *action,
 
    gtk_combo_box_set_active(GTK_COMBO_BOX(available_versions_combo), canidateNr);
 
-   switch (dia.run())
-   {
-      case GTK_RESPONSE_OK:
-      case GTK_RESPONSE_YES:
-      case GTK_RESPONSE_CLOSE:
-      {
-         break;
-      }
-
-      default: return; // user clicked cancel;
+   if (dia.run() != GTK_RESPONSE_OK)
+   {  // The user cancelled.
+      return;
    }
 
    int nr = gtk_combo_box_get_active(GTK_COMBO_BOX(available_versions_combo));

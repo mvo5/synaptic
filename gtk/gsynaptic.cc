@@ -215,15 +215,12 @@ static void SetLanguages()
 void welcome_dialog(RGMainWindow *mainWindow)
 {
    // show welcome dialog
-   if (_config->FindB("Synaptic::showWelcomeDialog", true) &&
-       !_config->FindB("Volatile::Upgrade-Mode", false)) {
-      RGGtkBuilderUserDialog dia(mainWindow);
-      dia.run("welcome");
-      GtkWidget *cb = GTK_WIDGET(
-         gtk_builder_get_object(dia.getGtkBuilder(), "checkbutton_show_again"));
+   if (_config->FindB("Synaptic::showWelcomeDialog", true) && !_config->FindB("Volatile::Upgrade-Mode", false)) {
+      RGGtkBuilderUserDialog dia(mainWindow, "welcome");
+      dia.run();
+      GtkWidget *cb = GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(), "checkbutton_show_again"));
       assert(cb);
-      _config->Set("Synaptic::showWelcomeDialog",
-                   gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
+      _config->Set("Synaptic::showWelcomeDialog", gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
    }
 }
 

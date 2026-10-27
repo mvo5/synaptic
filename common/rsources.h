@@ -37,14 +37,8 @@ class SourcesList
    enum RecType {
       Deb = 1 << 0,
       DebSrc = 1 << 1,
-      Ununsed_2 = 1 << 2,
-      Ununsed_3 = 1 << 3,
       Disabled = 1 << 4,
       Comment = 1 << 5,
-      Ununsed_6 = 1 << 6,
-      Ununsed_7 = 1 << 7,
-      Repomd = 1 << 8,
-      RepomdSrc = 1 << 9
    };
 
    // record the type because deb822 is read-only for now

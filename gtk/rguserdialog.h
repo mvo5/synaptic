@@ -36,20 +36,23 @@
 class RGUserDialog : public RUserDialog
 {
  protected:
-   GtkWidget *_parentWindow;
+
+   GtkWidget *const _parentWindow;
 
  public:
-   RGUserDialog() : _parentWindow(0) {};
+
+   RGUserDialog() : _parentWindow(NULL) {};
    RGUserDialog(RGWindow *parent) : _parentWindow(parent->window()) {};
    RGUserDialog(GtkWidget *parent) : _parentWindow(parent) {};
+   virtual ~RGUserDialog() = default;
 
-   virtual bool showErrors();
+   bool showErrors() override;
 
-   virtual bool message(
+   bool message(
       const char *msg,
       RUserDialog::DialogType dialog = RUserDialog::DialogInfo,
       RUserDialog::ButtonsType buttons = RUserDialog::ButtonsOk,
-      bool defaultResponse = true);
+      bool defaultResponse = true) override;
 };
 
 /*
@@ -71,28 +74,34 @@ class RGUserDialog : public RUserDialog
  * for specific widgets in the dialog (see gtkbuilder/dialog_upgrade.ui as
  * example.
 */
-class RGGtkBuilderUserDialog : public RGUserDialog
+class RGGtkBuilderUserDialog final : public RGUserDialog
 {
  protected:
+
    GtkWidget *_dialog;
-   GtkResponseType res;
    GtkBuilder *builder;
+
    void init(const char *name);
 
  public:
-   RGGtkBuilderUserDialog(RGWindow *parent);
-   RGGtkBuilderUserDialog(RGWindow *parent, const char *name);
-   virtual ~RGGtkBuilderUserDialog()
+
+   RGGtkBuilderUserDialog(RGWindow *parent, const char *name) : RGUserDialog(parent->window())
+   {
+      init(name);
+   }
+
+   ~RGGtkBuilderUserDialog() override
    {
       gtk_widget_destroy(_dialog);
    };
 
-   void setTitle(std::string title)
+   void setTitle(const std::string &title)
    {
       gtk_window_set_title(GTK_WINDOW(_dialog), title.c_str());
    }
 
-   int run(const char *name = NULL, bool return_gtk_response = false);
+   int run();
+
    GtkBuilder *getGtkBuilder()
    {
       return builder;

@@ -72,6 +72,7 @@
 #include <cmath>
 #include <cstring>
 #include <ctime>
+#include <format>
 #include <fstream>
 #include <functional>
 #include <gtk/gtk.h>
@@ -568,59 +569,58 @@ void RGMainWindow::cbInstallFromVersion(GSimpleAction *action,
                                         GVariant *parameter,
                                         gpointer data)
 {
-   // cout << "RGMainWindow::cbInstallFromVersion()" << endl;
+   RGMainWindow *me = (RGMainWindow *) data;
 
-   RGMainWindow *me = (RGMainWindow *)data;
    RPackage *pkg = me->selectedPackage();
+
    if (pkg == NULL)
+   {  // There's no package selected, nothing to do.
       return;
+   }
 
    RGGtkBuilderUserDialog dia(me, "change_version");
 
-   GtkWidget *label =
-      GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(), "label_text"));
-   gchar *str_name = g_strdup_printf(
-      _("Select the version of %s that should be forced for installation"),
-      pkg->name());
-   gchar *str = g_strdup_printf(
-      "<big><b>%s</b></big>\n\n%s",
-      str_name,
-      _("The package manager always selects the most applicable version "
-        "available. If you force a different version from the default one, "
-        "errors in the dependency handling can occur."));
-   gtk_label_set_markup(GTK_LABEL(label), str);
-   g_free(str_name);
-   g_free(str);
+   const string_view name(pkg->name());
+   string str_text = vformat(_("Select the version of {} that should be forced for installation"), make_format_args(name));
 
-   GtkWidget *available_versions_combo = GTK_WIDGET(gtk_builder_get_object(
-      dia.getGtkBuilder(), "combobox_available_versions"));
-   int canidateNr = 0;
+   GtkWidget *label = GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(), "label_text"));
+   gtk_label_set_markup(GTK_LABEL(label), str_text.c_str());
+
+   const gchar *str_warning = _("The package manager always selects the most applicable version available.\n"
+                                "If you force a different version from the default one, errors in the\n"
+                                "dependency handling can occur.");
+
+   GtkWidget *warning = GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(), "label_warning"));
+   gtk_label_set_markup(GTK_LABEL(warning), str_warning);
+
+   GtkComboBoxText *available_versions_combo = GTK_COMBO_BOX_TEXT(gtk_builder_get_object(dia.getGtkBuilder(), "combobox_available_versions"));
+
+   string_view available_version = [](const char* p) { return p ? string_view{p} : string_view{}; }(pkg->availableVersion());
+   int candidate_index = 0;
    vector<pair<string, string>> versions = pkg->getAvailableVersions();
-   for (unsigned int i = 0; i < versions.size(); i++) {
-      gchar *str = g_strdup_printf(
-         "%s (%s)", versions[i].first.c_str(), versions[i].second.c_str());
-      const char *verStr = pkg->availableVersion();
-      if (verStr && versions[i].first == string(verStr))
-         canidateNr = i;
-      gtk_combo_box_text_append_text(
-         GTK_COMBO_BOX_TEXT(available_versions_combo), str);
-      // cout << "got: " << str << endl;
-      g_free(str);
-   }
-   gtk_combo_box_set_active(GTK_COMBO_BOX(available_versions_combo),
-                            canidateNr);
-   if (!dia.run()) {
-      // cout << "cancel" << endl;
-      return; // user clicked cancel
+
+   for (const pair<string, string> &version : versions) {
+      if (!available_version.empty() && (version.first == available_version)) {
+         GtkTreeModel *model = gtk_combo_box_get_model(GTK_COMBO_BOX(available_versions_combo));
+         candidate_index = gtk_tree_model_iter_n_children(model, nullptr);
+      }
+      std::string str = version.first + " (" + version.second.c_str() + ')';
+      gtk_combo_box_text_append_text(available_versions_combo, str.c_str());
    }
 
-   int nr = gtk_combo_box_get_active(GTK_COMBO_BOX(available_versions_combo));
+   gtk_combo_box_set_active(GTK_COMBO_BOX(available_versions_combo), candidate_index);
+
+   if (dia.run() != GTK_RESPONSE_OK)
+   {  // The user cancelled.
+      return;
+   }
+
+   int active_index = gtk_combo_box_get_active(GTK_COMBO_BOX(available_versions_combo));
 
    pkg->setNotify(false);
    // nr-1 here as we add a "do not override" to the option menu
-   pkg->setVersion(versions[nr].first.c_str());
+   pkg->setVersion(versions[active_index].first.c_str());
    me->pkgAction(PKG_INSTALL_FROM_VERSION);
-
 
    if (!(pkg->getFlags() & RPackage::FInstall))
       pkg->unsetVersion(); // something went wrong

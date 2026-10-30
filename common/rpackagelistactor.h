@@ -32,24 +32,24 @@ class RPackage;
 
 class RPackageListActor : public RPackageObserver
 {
-
- public:
-   enum listEvent { PKG_ADDED, PKG_REMOVED };
-
  protected:
-   RPackageLister *_lister;
+
+   RPackageLister *const _lister;
    std::vector<RPackage *> _lastDisplayList;
 
  public:
+
+   enum listEvent { PKG_ADDED, PKG_REMOVED };
+
    virtual void run(std::vector<RPackage *> &List, int listEvent) = 0;
 
-   virtual void notifyPreFilteredChange()
+   void notifyPreFilteredChange() override
    {
       updateState();
    }
 
-   virtual void notifyPostFilteredChange();
-   virtual void notifyChange(RPackage *pkg)
+   void notifyPostFilteredChange() override;
+   void notifyChange(RPackage *pkg) override
    {}
 
    virtual void updateState()

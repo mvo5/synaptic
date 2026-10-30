@@ -76,7 +76,6 @@ enum {
 enum {
    STATUS_COLUMN,
    TYPE_COLUMN,
-   VENDOR_COLUMN,
    URI_COLUMN,
    DISTRIBUTION_COLUMN,
    SECTIONS_COLUMN,
@@ -178,7 +177,6 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
                                           G_TYPE_STRING,
                                           G_TYPE_STRING,
                                           G_TYPE_STRING,
-                                          G_TYPE_STRING,
                                           G_TYPE_POINTER,
                                           GDK_TYPE_RGBA);
 
@@ -211,20 +209,6 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
                                                      DISABLED_COLOR_COLUMN,
                                                      NULL);
    gtk_tree_view_append_column(GTK_TREE_VIEW(_sourcesListView), column);
-
-   // vendor
-   renderer = gtk_cell_renderer_text_new();
-   column = gtk_tree_view_column_new_with_attributes(_("Vendor"),
-                                                     renderer,
-                                                     "text",
-                                                     VENDOR_COLUMN,
-                                                     "foreground-rgba",
-                                                     DISABLED_COLOR_COLUMN,
-                                                     NULL);
-   gtk_tree_view_append_column(GTK_TREE_VIEW(_sourcesListView), column);
-#ifndef HAVE_RPM
-   gtk_tree_view_column_set_visible(column, FALSE);
-#endif
 
    // uri
    renderer = gtk_cell_renderer_text_new();
@@ -330,38 +314,15 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
                       ITEM_TYPE_DEBSRC,
                       -1);
 #endif
-   gtk_combo_box_set_model(GTK_COMBO_BOX(_optType),
-                           GTK_TREE_MODEL(_optTypeMenu));
 
-
-   // the (rpm) vendor menu
-   _optVendor = GTK_WIDGET(gtk_builder_get_object(_builder, "combo_vendor"));
-   renderer = gtk_cell_renderer_text_new();
-   gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(_optVendor), renderer, TRUE);
-   gtk_cell_layout_set_attributes(
-      GTK_CELL_LAYOUT(_optVendor), renderer, "text", 0, NULL);
-   _optVendorMenu = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_STRING);
-
-   gtk_list_store_append(_optVendorMenu, &item);
-   gtk_list_store_set(_optVendorMenu, &item, 0, _("(no vendor)"), 1, "", -1);
-
-   gtk_combo_box_set_model(GTK_COMBO_BOX(_optVendor),
-                           GTK_TREE_MODEL(_optVendorMenu));
-
-#ifndef HAVE_RPM
-   // debian can't use the vendors menu, so we hide it
-   gtk_widget_hide(GTK_WIDGET(_optVendor));
-   GtkWidget *vendors =
-      GTK_WIDGET(gtk_builder_get_object(_builder, "button_edit_vendors"));
-   assert(vendors);
-   gtk_widget_hide(GTK_WIDGET(vendors));
-#endif
+   gtk_combo_box_set_model(GTK_COMBO_BOX(_optType), GTK_TREE_MODEL(_optTypeMenu));
 
    _entryURI = GTK_WIDGET(gtk_builder_get_object(_builder, "entry_uri"));
    assert(_entryURI);
-   _entryDist =
-      GTK_WIDGET(gtk_builder_get_object(_builder, "entry_distribution"));
+
+   _entryDist = GTK_WIDGET(gtk_builder_get_object(_builder, "entry_distribution"));
    assert(_entryDist);
+
    _entrySect = GTK_WIDGET(gtk_builder_get_object(_builder, "entry_sections"));
    assert(_entrySect);
 
@@ -374,12 +335,6 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
       GTK_WIDGET(gtk_builder_get_object(_builder, "button_cancel")),
       "clicked",
       G_CALLBACK(DoCancel),
-      this);
-
-   g_signal_connect(
-      GTK_WIDGET(gtk_builder_get_object(_builder, "button_edit_vendors")),
-      "clicked",
-      G_CALLBACK(VendorsWindow),
       this);
 
    /*
@@ -439,14 +394,9 @@ bool RGRepositoryEditor::Run()
          _("Ignoring invalid record(s) in sources.list file!"));
       // return false;
    }
+
    // keep a backup of the orginal list
    _savedList.ReadSources();
-
-   if (_lst.ReadVendors() == false) {
-      _error->Error(_("Cannot read vendors.list file"));
-      _userDialog->showErrors();
-      return false;
-   }
 
    GtkTreeIter iter;
    for (SourcesListIter it = _lst.SourceRecords.begin();
@@ -467,8 +417,6 @@ bool RGRepositoryEditor::Run()
                          !((*it)->Type & SourcesList::Disabled),
                          TYPE_COLUMN,
                          utf8((*it)->TypeLabel().c_str()),
-                         VENDOR_COLUMN,
-                         utf8((*it)->VendorID.c_str()),
                          URI_COLUMN,
                          utf8((*it)->URI.c_str()),
                          DISTRIBUTION_COLUMN,
@@ -482,55 +430,14 @@ bool RGRepositoryEditor::Run()
                          -1);
    }
 
-
-   UpdateVendorMenu();
-
    gtk_main();
    return _applied;
 }
 
-void RGRepositoryEditor::UpdateVendorMenu()
-{
-   GtkTreeIter item;
-   gtk_list_store_clear(_optVendorMenu);
-
-   gtk_list_store_append(_optVendorMenu, &item);
-   gtk_list_store_set(_optVendorMenu, &item, 0, _("(no vendor)"), 1, "", -1);
-
-   for (VendorsListIter it = _lst.VendorRecords.begin();
-        it != _lst.VendorRecords.end();
-        it++) {
-      gtk_list_store_append(_optVendorMenu, &item);
-      gtk_list_store_set(_optVendorMenu,
-                         &item,
-                         0,
-                         (*it)->VendorID.c_str(),
-                         1,
-                         (*it)->VendorID.c_str(),
-                         -1);
-   }
-}
-
-int RGRepositoryEditor::VendorMenuIndex(string VendorID)
-{
-   int index = 0;
-   for (VendorsListIter it = _lst.VendorRecords.begin();
-        it != _lst.VendorRecords.end();
-        it++) {
-      index += 1;
-      if ((*it)->VendorID == VendorID)
-         return index;
-   }
-   return 0;
-}
-
 void RGRepositoryEditor::DoClear(GtkWidget *, gpointer data)
 {
-   RGRepositoryEditor *me = (RGRepositoryEditor *)data;
-   // cout << "RGRepositoryEditor::DoClear(GtkWidget *, gpointer data)"<<endl;
-
+   RGRepositoryEditor *me = (RGRepositoryEditor *) data;
    gtk_combo_box_set_active(GTK_COMBO_BOX(me->_optType), 0);
-   gtk_combo_box_set_active(GTK_COMBO_BOX(me->_optVendor), 0);
    gtk_entry_set_text(GTK_ENTRY(me->_entryURI), "");
    gtk_entry_set_text(GTK_ENTRY(me->_entryDist), "");
    gtk_entry_set_text(GTK_ENTRY(me->_entrySect), "");
@@ -550,8 +457,6 @@ void RGRepositoryEditor::DoAdd(GtkWidget *, gpointer data)
                       STATUS_COLUMN,
                       1,
                       TYPE_COLUMN,
-                      "",
-                      VENDOR_COLUMN,
                       "",
                       URI_COLUMN,
                       "",
@@ -645,13 +550,6 @@ void RGRepositoryEditor::doEdit()
          return;
    }
 
-#if 0 // PORTME, no vendor id support right now
-   gtk_combo_box_get_active_iter(GTK_COMBO_BOX(_optVendor), &item);
-   gtk_tree_model_get(GTK_TREE_MODEL(_optVendorMenu), &item,
-                      1, &type,
-                      -1);
-   rec->VendorID = type;
-#endif
    rec->URI = gtk_entry_get_text(GTK_ENTRY(_entryURI));
    rec->Dist = gtk_entry_get_text(GTK_ENTRY(_entryDist));
 
@@ -682,8 +580,6 @@ void RGRepositoryEditor::doEdit()
                       !(rec->Type & SourcesList::Disabled),
                       TYPE_COLUMN,
                       utf8(rec->TypeLabel().c_str()),
-                      VENDOR_COLUMN,
-                      utf8(rec->VendorID.c_str()),
                       URI_COLUMN,
                       utf8(rec->URI.c_str()),
                       DISTRIBUTION_COLUMN,
@@ -789,10 +685,8 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
          id = ITEM_TYPE_REPOMD;
       else if (rec->Type & SourcesList::RepomdSrc)
          id = ITEM_TYPE_REPOMDSRC;
-      gtk_combo_box_set_active(GTK_COMBO_BOX(me->_optType), id);
 
-      gtk_combo_box_set_active(GTK_COMBO_BOX(me->_optVendor),
-                               me->VendorMenuIndex(rec->VendorID));
+      gtk_combo_box_set_active(GTK_COMBO_BOX(me->_optType), id);
 
       gtk_entry_set_text(GTK_ENTRY(me->_entryURI), utf8(rec->URI.c_str()));
       gtk_entry_set_text(GTK_ENTRY(me->_entryDist), utf8(rec->Dist.c_str()));
@@ -815,20 +709,6 @@ void RGRepositoryEditor::SelectionChanged(GtkTreeSelection *selection,
       gtk_widget_set_sensitive(me->_downBut, FALSE);
       gtk_widget_set_sensitive(me->_deleteBut, FALSE);
    }
-}
-
-void RGRepositoryEditor::VendorsWindow(GtkWidget *, void *data)
-{
-#if 0 // PORTME
-   RGRepositoryEditor *me = (RGRepositoryEditor *) data;
-   RGVendorsEditor w(me, me->_lst);
-   w.Run();
-   GtkWidget *menuitem = gtk_menu_get_active(GTK_MENU(me->_optVendorMenu));
-   string VendorID = (char *)g_object_get_data(G_OBJECT(menuitem), "id");
-   me->UpdateVendorMenu();
-   gtk_option_menu_set_history(GTK_OPTION_MENU(me->_optVendor),
-                               me->VendorMenuIndex(VendorID));
-#endif
 }
 
 void RGRepositoryEditor::DoUpDown(GtkWidget *self, gpointer data)

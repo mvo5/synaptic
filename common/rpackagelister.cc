@@ -31,7 +31,6 @@
 
 #include "i18n.h"
 #include "raptoptions.h"
-#include "rcacheactor.h"
 #include "rconfiguration.h"
 #include "rinstallprogress.h"
 #include "rpackage.h"
@@ -134,20 +133,10 @@ RPackageLister::RPackageLister()
    _pkgStatus.init();
 
    cleanCommitLog();
-#if 0
-   string Recommends = _config->Find("Synaptic::RecommendsFile",
-                                     "/etc/apt/metadata");
-   if (FileExists(Recommends))
-      _actors.push_back(new RCacheActorRecommends(this, Recommends));
-#endif
 }
 
 RPackageLister::~RPackageLister()
 {
-   for (vector<RCacheActor *>::iterator I = _actors.begin(); I != _actors.end();
-        I++)
-      delete (*I);
-
    delete _cache;
 }
 

@@ -19,7 +19,7 @@
 
 #pragma once
 
-#include "config.h"
+#include "config.h" // IWYU pragma: associated
 
 #ifdef HAVE_DEBTAGS
 
@@ -35,7 +35,6 @@
 
 #   include "gsynaptic.h"
 #   include "rpackagelister.h"
-#   include "rcacheactor.h"
 #   include "rpackagelistactor.h"
 #   include "rtagcollbuilder.h"
 #   include "rgutils.h"

@@ -21,7 +21,6 @@
 
 #include "config.h" // IWYU pragma: associated
 
-#include "rcacheactor.h"
 #include "rgutils.h"
 #include "rpackagelistactor.h"
 
@@ -66,35 +65,3 @@ struct _GtkPkgListClass
 
 GType gtk_pkg_list_get_type();
 GtkPkgList *gtk_pkg_list_new(RPackageLister *lister);
-
-class RCacheActorPkgList : public RCacheActor
-{
-
- protected:
-   GtkPkgList *_pkgList;
-   GtkTreeView *_pkgView;
-
- public:
-   virtual void run(std::vector<RPackage *> &List, int Action);
-
-   RCacheActorPkgList(RPackageLister *lister,
-                      GtkPkgList *pkgList,
-                      GtkTreeView *pkgView)
-      : RCacheActor(lister), _pkgList(pkgList), _pkgView(pkgView) {};
-};
-
-class RPackageListActorPkgList : public RPackageListActor
-{
-
- protected:
-   GtkPkgList *_pkgList;
-   GtkTreeView *_pkgView;
-
- public:
-   virtual void run(std::vector<RPackage *> &List, int listEvent);
-
-   RPackageListActorPkgList(RPackageLister *lister,
-                            GtkPkgList *pkgList,
-                            GtkTreeView *pkgView)
-      : RPackageListActor(lister), _pkgList(pkgList), _pkgView(pkgView) {};
-};

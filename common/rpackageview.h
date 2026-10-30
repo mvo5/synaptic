@@ -90,6 +90,7 @@ class RPackageView
    {
       return _selectedView.begin();
    }
+
    virtual iterator end()
    {
       return _selectedView.end();
@@ -101,34 +102,34 @@ class RPackageView
    virtual void refresh();
 };
 
-
-class RPackageViewSections : public RPackageView
+class RPackageViewSections final : public RPackageView
 {
  public:
-   RPackageViewSections(std::vector<RPackage *> &allPkgs)
-      : RPackageView(allPkgs)
+
+   RPackageViewSections(std::vector<RPackage *> &allPkgs) : RPackageView(allPkgs)
    {}
 
-   std::string getName() const
+   std::string getName() const override
    {
       return _("Sections");
    };
 
-   void addPackage(RPackage *package);
+   void addPackage(RPackage *package) override;
 };
 
-class RPackageViewAlphabetic : public RPackageView
+class RPackageViewAlphabetic final : public RPackageView
 {
  public:
-   RPackageViewAlphabetic(std::vector<RPackage *> &allPkgs)
-      : RPackageView(allPkgs)
+
+   RPackageViewAlphabetic(std::vector<RPackage *> &allPkgs) : RPackageView(allPkgs)
    {}
-   std::string getName() const
+
+   std::string getName() const override
    {
       return _("Alphabetic");
    }
 
-   void addPackage(RPackage *package)
+   void addPackage(RPackage *package) override
    {
       char letter[2] = {' ', '\0'};
       letter[0] = toupper(package->name()[0]);
@@ -136,34 +137,42 @@ class RPackageViewAlphabetic : public RPackageView
    }
 };
 
-class RPackageViewArchitecture : public RPackageView
+class RPackageViewArchitecture final : public RPackageView
 {
  public:
-   RPackageViewArchitecture(std::vector<RPackage *> &allPkgs)
-      : RPackageView(allPkgs)
+
+   RPackageViewArchitecture(std::vector<RPackage *> &allPkgs) : RPackageView(allPkgs)
    {}
-   std::string getName() const
+
+   std::string getName() const override
    {
       return _("Architecture");
    }
 
-   void addPackage(RPackage *package);
+   void addPackage(RPackage *package) override
+   {
+      // FIXME: add pseudo arch for packages only in one group arch but not the other
+      std::string arch = "arch: " + package->arch();
+      _view[arch].push_back(package);
+   }
 };
 
-class RPackageViewOrigin : public RPackageView
+class RPackageViewOrigin final : public RPackageView
 {
  public:
+
    RPackageViewOrigin(std::vector<RPackage *> &allPkgs) : RPackageView(allPkgs)
    {}
-   std::string getName() const
+
+   std::string getName() const override
    {
       return _("Origin");
    }
 
-   void addPackage(RPackage *package);
+   void addPackage(RPackage *package) override;
 };
 
-class RPackageViewStatus : public RPackageView
+class RPackageViewStatus final : public RPackageView
 {
  protected:
    // mark the software as unsupported in status view
@@ -171,17 +180,18 @@ class RPackageViewStatus : public RPackageView
    std::vector<std::string> supportedComponents;
 
  public:
+
    RPackageViewStatus(std::vector<RPackage *> &allPkgs);
 
-   std::string getName() const
+   std::string getName() const override
    {
       return _("Status");
    }
 
-   void addPackage(RPackage *package);
+   void addPackage(RPackage *package) override;
 };
 
-class RPackageViewSearch : public RPackageView
+class RPackageViewSearch final : public RPackageView
 {
    struct searchItem
    {
@@ -189,6 +199,7 @@ class RPackageViewSearch : public RPackageView
       std::string searchName;
       int searchType;
    };
+
    // the search history
    std::map<std::string, searchItem> searchHistory;
    searchItem _currentSearchItem;
@@ -197,8 +208,8 @@ class RPackageViewSearch : public RPackageView
    bool xapianSearch();
 
  public:
-   RPackageViewSearch(std::vector<RPackage *> &allPkgs)
-      : RPackageView(allPkgs), found(0)
+
+   RPackageViewSearch(std::vector<RPackage *> &allPkgs) : RPackageView(allPkgs), found(0)
    {}
 
    int setSearch(std::string searchName,
@@ -206,35 +217,41 @@ class RPackageViewSearch : public RPackageView
                  std::string searchString,
                  OpProgress &searchProgress);
 
-   std::string getName() const
+   std::string getName() const override
    {
       return _("Search History");
    }
 
    // return search history here
-   virtual std::vector<std::string> getSubViews() const;
-   virtual bool setSelected(std::string name);
+   std::vector<std::string> getSubViews() const override;
+   bool setSelected(std::string name) override;
 
-   void addPackage(RPackage *package);
+   void addPackage(RPackage *package) override;
 
    // no-op
-   virtual void refresh()
+   void refresh() override
    {}
 };
 
-
-class RPackageViewFilter : public RPackageView
+class RPackageViewFilter final : public RPackageView
 {
  protected:
+
    std::vector<RFilter *> _filterL;
    std::set<std::string> _sectionList; // list of all available package sections
 
  public:
+
    void storeFilters();
    void restoreFilters();
+
    // called after the filtereditor was run
    void refreshFilters();
-   void refresh();
+
+   void refresh() override
+   {
+      refreshFilters();
+   }
 
    bool registerFilter(RFilter *filter);
    void unregisterFilter(RFilter *filter);
@@ -242,6 +259,7 @@ class RPackageViewFilter : public RPackageView
    void makePresetFilters();
 
    RFilter *findFilter(std::string name);
+
    unsigned int nrOfFilters()
    {
       return _filterL.size();
@@ -261,18 +279,21 @@ class RPackageViewFilter : public RPackageView
    RPackageViewFilter(std::vector<RPackage *> &allPkgs);
 
    // build packages list on "demand"
-   virtual iterator begin();
+   iterator begin() override;
 
    // we never need to clear because we build the view "on-demand"
-   virtual void clear()
+   void clear() override
    {
       clearSelection();
    }
 
-   std::string getName() const
+   std::string getName() const override
    {
       return _("Custom");
    }
 
-   void addPackage(RPackage *package);
+   void addPackage(RPackage *package) override
+   {
+      // nothing to do for now, may add some sort of caching later
+   }
 };

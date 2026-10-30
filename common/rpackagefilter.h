@@ -38,8 +38,8 @@ class RPackage;
 
 class RPackageFilter
 {
-
  public:
+
    virtual const char *type() = 0;
 
    virtual bool filter(RPackage *pkg) = 0;
@@ -50,33 +50,35 @@ class RPackageFilter
 
    RPackageFilter()
    {}
+
    virtual ~RPackageFilter()
    {}
 };
 
-
 extern const char *RPFSection;
 
-class RSectionPackageFilter : public RPackageFilter
+class RSectionPackageFilter final : public RPackageFilter
 {
-
  protected:
+
    std::vector<std::string> _groups;
    bool _inclusive; // include or exclude the packages
 
  public:
+
    RSectionPackageFilter() : _inclusive(false)
    {}
-   virtual ~RSectionPackageFilter()
+
+   ~RSectionPackageFilter() override
    {}
 
-   inline virtual void reset()
+   inline void reset() override
    {
       clear();
       _inclusive = false;
    }
 
-   inline virtual const char *type()
+   inline const char *type() override
    {
       return RPFSection;
    }
@@ -85,26 +87,28 @@ class RSectionPackageFilter : public RPackageFilter
    {
       _inclusive = flag;
    }
+
    bool inclusive();
 
    inline void addSection(std::string group)
    {
       _groups.push_back(group);
    }
+
    int count();
    std::string section(int index);
    void clear();
-
-   virtual bool filter(RPackage *pkg);
-   virtual bool read(Configuration &conf, std::string key);
-   virtual bool write(std::ofstream &out, std::string pad);
+   bool filter(RPackage *pkg) override;
+   bool read(Configuration &conf, std::string key) override;
+   bool write(std::ofstream &out, std::string pad) override;
 };
 
 extern const char *RPFPattern;
 
-class RPatternPackageFilter : public RPackageFilter
+class RPatternPackageFilter final : public RPackageFilter
 {
  public:
+
    typedef enum {
       Name,
       Description,
@@ -121,8 +125,8 @@ class RPatternPackageFilter : public RPackageFilter
       Component // package component (e.g. main)
    } DepType;
 
-
  protected:
+
    struct Pattern
    {
       DepType where;
@@ -130,6 +134,7 @@ class RPatternPackageFilter : public RPackageFilter
       bool exclusive;
       std::vector<regex_t *> regexps;
    };
+
    std::vector<Pattern> _patterns;
 
    bool and_mode; // patterns are applied in "AND" mode if true, "OR" if false
@@ -138,28 +143,28 @@ class RPatternPackageFilter : public RPackageFilter
    inline bool filterVersion(Pattern pat, RPackage *pkg);
    inline bool filterDescription(Pattern pat, RPackage *pkg);
    inline bool filterMaintainer(Pattern pat, RPackage *pkg);
-   inline bool filterDepends(Pattern pat,
-                             RPackage *pkg,
-                             pkgCache::Dep::DepType filterType);
+   inline bool filterDepends(Pattern pat, RPackage *pkg, pkgCache::Dep::DepType filterType);
    inline bool filterProvides(Pattern pat, RPackage *pkg);
    inline bool filterRDepends(Pattern pat, RPackage *pkg);
    inline bool filterOrigin(Pattern pat, RPackage *pkg);
    inline bool filterComponent(Pattern pat, RPackage *pkg);
 
  public:
+
    static const char *TypeName[];
 
    RPatternPackageFilter() : and_mode(true)
    {}
-   RPatternPackageFilter(RPatternPackageFilter &f);
-   virtual ~RPatternPackageFilter();
 
-   inline virtual void reset()
+   RPatternPackageFilter(RPatternPackageFilter &f);
+   ~RPatternPackageFilter() override;
+
+   inline void reset() override
    {
       clear();
    }
 
-   inline virtual const char *type()
+   inline const char *type() override
    {
       return RPFPattern;
    }
@@ -182,30 +187,32 @@ class RPatternPackageFilter : public RPackageFilter
    }
 
    void clear();
+
    bool getAndMode()
    {
       return and_mode;
    }
+
    void setAndMode(bool b)
    {
       and_mode = b;
    }
 
-   virtual bool filter(RPackage *pkg);
-   virtual bool read(Configuration &conf, std::string key);
-   virtual bool write(std::ofstream &out, std::string pad);
+   bool filter(RPackage *pkg) override;
+   bool read(Configuration &conf, std::string key) override;
+   bool write(std::ofstream &out, std::string pad) override;
 };
-
 
 extern const char *RPFStatus;
 
-class RStatusPackageFilter : public RPackageFilter
+class RStatusPackageFilter final : public RPackageFilter
 {
-
  protected:
+
    int _status;
 
  public:
+
    enum Types {
       Installed = 1 << 0,
       Upgradable = 1 << 1, // installed but upgradable
@@ -228,12 +235,13 @@ class RStatusPackageFilter : public RPackageFilter
 
    RStatusPackageFilter() : _status(~0)
    {}
-   inline virtual void reset()
+
+   inline void reset() override
    {
       _status = ~0;
    }
 
-   inline virtual const char *type()
+   inline const char *type() override
    {
       return RPFStatus;
    }
@@ -242,46 +250,45 @@ class RStatusPackageFilter : public RPackageFilter
    {
       _status = status;
    }
+
    inline int status()
    {
       return _status;
    }
 
-   virtual bool filter(RPackage *pkg);
-   virtual bool read(Configuration &conf, std::string key);
-   virtual bool write(std::ofstream &out, std::string pad);
+   bool filter(RPackage *pkg) override;
+   bool read(Configuration &conf, std::string key) override;
+   bool write(std::ofstream &out, std::string pad) override;
 };
-
 
 extern const char *RPFPriority;
 
-class RPriorityPackageFilter : public RPackageFilter
+class RPriorityPackageFilter final : public RPackageFilter
 {
-
  public:
+
    RPriorityPackageFilter()
    {}
 
-   inline virtual void reset()
+   inline void reset() override
    {}
 
-   inline virtual const char *type()
+   inline const char *type() override
    {
       return RPFPriority;
    }
 
-   virtual bool filter(RPackage *pkg);
-   virtual bool read(Configuration &conf, std::string key);
-   virtual bool write(std::ofstream &out, std::string pad);
+   bool filter(RPackage *pkg) override;
+   bool read(Configuration &conf, std::string key) override;
+   bool write(std::ofstream &out, std::string pad) override;
 };
-
 
 extern const char *RPFReducedView;
 
-class RReducedViewPackageFilter : public RPackageFilter
+class RReducedViewPackageFilter final : public RPackageFilter
 {
-
  protected:
+
    bool _enabled;
 
    std::set<std::string> _hide;
@@ -291,28 +298,31 @@ class RReducedViewPackageFilter : public RPackageFilter
    void addFile(std::string FileName);
 
  public:
+
    RReducedViewPackageFilter() : _enabled(false)
    {}
-   ~RReducedViewPackageFilter();
 
-   inline virtual void reset()
+   ~RReducedViewPackageFilter() override;
+
+   inline void reset() override
    {
       _hide.clear();
    }
 
-   inline virtual const char *type()
+   inline const char *type() override
    {
       return RPFReducedView;
    }
 
-   virtual bool filter(RPackage *pkg);
-   virtual bool read(Configuration &conf, std::string key);
-   virtual bool write(std::ofstream &out, std::string pad);
+   bool filter(RPackage *pkg) override;
+   bool read(Configuration &conf, std::string key) override;
+   bool write(std::ofstream &out, std::string pad) override;
 
    void enable()
    {
       _enabled = true;
    }
+
    void disable()
    {
       _enabled = false;
@@ -321,40 +331,41 @@ class RReducedViewPackageFilter : public RPackageFilter
 
 extern const char *RPFFile;
 
-class RFilePackageFilter : public RPackageFilter
+class RFilePackageFilter final : public RPackageFilter
 {
-
  protected:
+
    std::string filename;
    std::set<std::string> pkgs;
 
  public:
+
    RFilePackageFilter()
    {}
-   virtual ~RFilePackageFilter()
+
+   ~RFilePackageFilter() override
    {}
 
-   inline virtual void reset()
+   inline void reset() override
    {}
-   inline virtual const char *type()
+
+   inline const char *type() override
    {
       return RPFFile;
    }
 
    bool addFile(std::string file);
 
-   virtual bool filter(RPackage *pkg);
-   virtual bool read(Configuration &conf, std::string key);
-   virtual bool write(std::ofstream &out, std::string pad);
+   bool filter(RPackage *pkg) override;
+   bool read(Configuration &conf, std::string key) override;
+   bool write(std::ofstream &out, std::string pad) override;
 };
 
-
-struct RFilter
+struct RFilter final
 {
-
  public:
-   RFilter()
-      : section(), pattern(), status(), priority(), reducedview(), preset()
+
+   RFilter() : section(), pattern(), status(), priority(), reducedview(), preset()
    {}
 
    void setName(std::string name);
@@ -375,5 +386,6 @@ struct RFilter
    bool preset;
 
  protected:
+
    std::string name;
 };

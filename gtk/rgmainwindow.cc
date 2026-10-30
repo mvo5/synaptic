@@ -580,7 +580,7 @@ void RGMainWindow::cbInstallFromVersion(GSimpleAction *action,
 
    RGGtkBuilderUserDialog dia(me, "change_version");
 
-   const string_view name(pkg->name());
+   string name = format("<span alpha=\"60%\">{}</span>", pkg->name());
    string str_text = vformat(_("Select the version of {} that should be forced for installation"), make_format_args(name));
 
    GtkWidget *label = GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(), "label_text"));

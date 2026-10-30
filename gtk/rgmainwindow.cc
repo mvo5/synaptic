@@ -607,11 +607,12 @@ void RGMainWindow::cbInstallFromVersion(GSimpleAction *action,
       // cout << "got: " << str << endl;
       g_free(str);
    }
-   gtk_combo_box_set_active(GTK_COMBO_BOX(available_versions_combo),
-                            canidateNr);
-   if (!dia.run()) {
-      // cout << "cancel" << endl;
-      return; // user clicked cancel
+
+   gtk_combo_box_set_active(GTK_COMBO_BOX(available_versions_combo), canidateNr);
+
+   if (dia.run() != GTK_RESPONSE_OK)
+   {  // The user cancelled.
+      return;
    }
 
    int nr = gtk_combo_box_get_active(GTK_COMBO_BOX(available_versions_combo));
@@ -1540,7 +1541,6 @@ void RGMainWindow::saveState()
 
 bool RGMainWindow::restoreState()
 {
-
    // see if we have broken packages (might be better in some
    // RGMainWindow::preGuiStart funktion)
    int installed, broken, toInstall, toRemove;
@@ -1577,21 +1577,24 @@ bool RGMainWindow::restoreState()
    return true;
 }
 
-
 void RGMainWindow::close()
 {
-   if (_interfaceLocked > 0)
-      return;
+   if (_interfaceLocked > 0) return;
 
-   RGGtkBuilderUserDialog dia(this);
-   if (_unsavedChanges == false || dia.run("quit")) {
-      _error->Discard();
-      saveState();
-      showErrors();
-      exit(0);
+   if (_unsavedChanges)
+   {  // There are pending changes: Ask the user whether he wants to quit.
+      RGGtkBuilderUserDialog dia(this, "quit");
+      if (dia.run() != GTK_RESPONSE_OK)
+      {  // The user chose not to quit.
+         return;
+      }
    }
-}
 
+   _error->Discard();
+   saveState();
+   showErrors();
+   exit(0);
+}
 
 void RGMainWindow::setInterfaceLocked(bool flag)
 {
@@ -1629,7 +1632,6 @@ void RGMainWindow::setTreeLocked(bool flag)
       gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), _pkgList);
    }
 }
-
 
 // --------------------------------------------------------------------------
 // Callbacks
@@ -2761,13 +2763,11 @@ void RGMainWindow::cbShowWelcomeDialog(GSimpleAction *action,
                                        gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *)data;
-   RGGtkBuilderUserDialog dia(me);
-   dia.run("welcome");
-   GtkWidget *cb = GTK_WIDGET(
-      gtk_builder_get_object(dia.getGtkBuilder(), "checkbutton_show_again"));
+   RGGtkBuilderUserDialog dia(me, "welcome");
+   dia.run();
+   GtkWidget *cb = GTK_WIDGET(gtk_builder_get_object(dia.getGtkBuilder(), "checkbutton_show_again"));
    assert(cb);
-   _config->Set("Synaptic::showWelcomeDialog",
-                gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
+   _config->Set("Synaptic::showWelcomeDialog", gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(cb)));
 }
 
 gboolean RGMainWindow::xapianDoSearch(void *data)
@@ -2919,7 +2919,6 @@ void RGMainWindow::cbFixBrokenClicked(GSimpleAction *action,
    me->showErrors();
 }
 
-
 void RGMainWindow::cbUpgradeClicked(GSimpleAction *action,
                                     GVariant *parameter,
                                     gpointer data)
@@ -2927,33 +2926,29 @@ void RGMainWindow::cbUpgradeClicked(GSimpleAction *action,
    RGMainWindow *me = (RGMainWindow *)data;
    RPackage *pkg = me->selectedPackage();
    bool dist_upgrade;
-   int res;
 
    if (!me->_lister->check()) {
       me->_userDialog->error(_("Could not upgrade the system!\n"
                                "Fix broken packages first."));
       return;
    }
+
    // check if we have saved upgrade type
    UpgradeType upgrade =
       (UpgradeType)_config->FindI("Synaptic::UpgradeType", UPGRADE_DIST);
 
    // special case for non-interactive upgrades
-   if (_config->FindB("Volatile::Non-Interactive", false))
+   if (_config->FindB("Volatile::Non-Interactive", false)) {
       if (_config->FindB("Volatile::Upgrade-Mode", false))
          upgrade = UPGRADE_NORMAL;
       else if (_config->FindB("Volatile::DistUpgrade-Mode", false))
          upgrade = UPGRADE_DIST;
-
+   }
 
    if (upgrade == UPGRADE_ASK) {
       // ask what type of upgrade the user wants
-      GtkBuilder *builder;
-      GtkWidget *button;
-
-      RGGtkBuilderUserDialog dia(me);
-      res = dia.run("upgrade", true);
-      switch (res) {
+      RGGtkBuilderUserDialog dia(me, "upgrade");
+      switch (int res = dia.run()) {
          case GTK_RESPONSE_CANCEL:
          case GTK_RESPONSE_DELETE_EVENT:
             return;
@@ -2964,15 +2959,16 @@ void RGMainWindow::cbUpgradeClicked(GSimpleAction *action,
             dist_upgrade = false;
             break;
          default:
-            cerr << "unknown return " << res
-                 << " from UpgradeDialog, please report" << endl;
+            cerr << "unknown return " << res << " from UpgradeDialog, please report" << endl;
+            return;
       }
-      builder = dia.getGtkBuilder();
+
       // see if the user wants the answer saved
-      button =
-         GTK_WIDGET(gtk_builder_get_object(builder, "checkbutton_remember"));
-      if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button)))
+      GtkBuilder *builder = dia.getGtkBuilder();
+      GtkWidget *button = GTK_WIDGET(gtk_builder_get_object(builder, "checkbutton_remember"));
+      if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button))) {
          _config->Set("Synaptic::upgradeType", dist_upgrade);
+      }
    } else {
       // use the saved answer (don't ask)
       dist_upgrade = upgrade;
@@ -2987,18 +2983,15 @@ void RGMainWindow::cbUpgradeClicked(GSimpleAction *action,
    RPackageLister::pkgState state;
    me->_lister->saveState(state);
 
-   if (dist_upgrade)
-      res = me->_lister->distUpgrade();
-   else
-      res = me->_lister->upgrade();
+   bool res = (dist_upgrade) ? me->_lister->distUpgrade() : me->_lister->upgrade();
 
    if (me->askStateChange(state)) {
       me->refreshTable(pkg);
-
-      if (res)
+      if (res) {
          me->setStatusText(_("Successfully marked available upgrades"));
-      else
+      } else {
          me->setStatusText(_("Failed to mark all available upgrades!"));
+      }
    } else {
       // if the user canceled the action, just show the default message
       me->setStatusText();

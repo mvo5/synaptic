@@ -34,6 +34,7 @@
 #include "rpackagelister.h"
 
 #include <apt-pkg/configuration.h>
+#include <cassert>
 #include <cstdio>
 #include <cstdlib>
 #include <gtk/gtk.h>
@@ -47,46 +48,45 @@ class RGWindow;
 
 using namespace std;
 
-RGInstallProgressMsgs::RGInstallProgressMsgs(RGWindow *win)
-   : RGGtkBuilderWindow(win, "rginstall_progress_msgs"), _currentPackage(0),
-     _hasHeader(false)
+GtkTextBuffer *RGInstallProgressMsgs::createTextBuffer(GtkBuilder *builder)
 {
+   GtkWidget *textView = GTK_WIDGET(gtk_builder_get_object(builder, "textview"));
+   return gtk_text_view_get_buffer(GTK_TEXT_VIEW(textView));
+}
+
+RGInstallProgressMsgs::RGInstallProgressMsgs(RGWindow *win)
+   : RGGtkBuilderWindow(win, "rginstall_progress_msgs"),
+     _textBuffer(createTextBuffer(_builder)),
+     _cssProvider(gtk_css_provider_new()),
+     _currentPackage(nullptr), _hasHeader(false)
+{
+   assert(_cssProvider != nullptr);
+
    setTitle(_("Package Manager output"));
-   GtkWidget *textView =
-      GTK_WIDGET(gtk_builder_get_object(_builder, "textview"));
-   _textBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(textView));
+
    g_signal_connect(gtk_builder_get_object(_builder, "close"),
                     "clicked",
                     G_CALLBACK(onCloseClicked),
                     this);
-   _cssProvider = gtk_css_provider_new();
+
+   GtkWidget *textView = GTK_WIDGET(gtk_builder_get_object(_builder, "textview"));
    GtkStyleContext *styleContext = gtk_widget_get_style_context(textView);
    gtk_css_provider_load_from_data(
       _cssProvider,
       "TextView { font-family: helvetica; font-size: 10pt; }",
       -1,
       NULL);
+
    gtk_style_context_add_provider(styleContext,
                                   GTK_STYLE_PROVIDER(_cssProvider),
                                   GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-   PangoFontDescription *font;
-   font = pango_font_description_from_string("helvetica bold 10");
+
+   PangoFontDescription *font = pango_font_description_from_string("helvetica bold 10");
    gtk_text_buffer_create_tag(_textBuffer, "bold", "font-desc", font, NULL);
    skipTaskbar(true);
 }
 
-RGInstallProgressMsgs::~RGInstallProgressMsgs()
-{
-   g_object_unref(_cssProvider);
-}
-
 void RGInstallProgressMsgs::onCloseClicked(GtkWidget *self, void *data)
-{
-   // RGInstallProgressMsgs *me = (RGInstallProgressMsgs*)data;
-   gtk_main_quit();
-}
-
-void RGInstallProgressMsgs::close()
 {
    gtk_main_quit();
 }
@@ -116,17 +116,6 @@ void RGInstallProgressMsgs::addLine(const char *text)
    }
    addText(text);
    addText("\n");
-}
-
-void RGInstallProgressMsgs::newPackage(const char *name)
-{
-   _currentPackage = name;
-   _hasHeader = false;
-}
-
-bool RGInstallProgressMsgs::empty()
-{
-   return gtk_text_buffer_get_char_count(_textBuffer) == 0;
 }
 
 void RGInstallProgressMsgs::run()
@@ -309,55 +298,46 @@ class GeometryParser
 
 RGInstallProgress::RGInstallProgress(RGMainWindow *main, RPackageLister *lister)
    : RInstallProgress(), RGGtkBuilderWindow(main, "rginstall_progress"),
-     _msgs(main)
+   _label(GTK_WIDGET(gtk_builder_get_object(_builder, "label_name"))),
+   _labelSummary(GTK_WIDGET(gtk_builder_get_object(_builder, "label_summary"))),
+   _pbar(GTK_WIDGET(gtk_builder_get_object(_builder, "progress_package"))),
+   _pbarTotal(GTK_WIDGET(gtk_builder_get_object(_builder, "progress_total"))),
+   _cssProvider(gtk_css_provider_new()),
+   _cssProviderBold(gtk_css_provider_new()),
+   _msgs(main)
 {
+   assert(_label != nullptr);
+   assert(_labelSummary != nullptr);
+   assert(_pbar != nullptr);
+   assert(_pbarTotal != nullptr);
+   assert(_cssProvider != nullptr);
+   assert(_cssProviderBold != nullptr);
+
    prepare(lister);
    setTitle(_("Applying Changes"));
 
    _startCounting = false;
 
-   string GeoStr = _config->Find("Synaptic::Geometry::InstProg", "");
-   GeometryParser Geo(GeoStr);
-   if (Geo.HasSize())
-      gtk_widget_set_size_request(GTK_WIDGET(_win), Geo.Width(), Geo.Height());
-   if (Geo.HasPosition())
-      gtk_window_set_transient_for(GTK_WINDOW(_win),
-                                   GTK_WINDOW(main->window()));
-
-   _label = GTK_WIDGET(gtk_builder_get_object(_builder, "label_name"));
-   _labelSummary =
-      GTK_WIDGET(gtk_builder_get_object(_builder, "label_summary"));
-   _pbar = GTK_WIDGET(gtk_builder_get_object(_builder, "progress_package"));
-   _pbarTotal = GTK_WIDGET(gtk_builder_get_object(_builder, "progress_total"));
-   _image = GTK_WIDGET(gtk_builder_get_object(_builder, "image"));
-
-   string ssDir = _config->Find("Synaptic::SlideShow", "");
-   if (!ssDir.empty()) {
-      _ss = new RGSlideShow(GTK_IMAGE(_image), ssDir);
-      _ss->refresh();
-      gtk_widget_show(_image);
-   } else {
-      _ss = NULL;
-   }
-
-   _cssProviderBold = gtk_css_provider_new();
    GtkStyleContext *styleContext = gtk_widget_get_style_context(_label);
+
    gtk_css_provider_load_from_data(
       _cssProviderBold,
       "Label { font-family: helvetica; font-size: 10pt; font-weight: bold; }",
       -1,
       NULL);
+
    gtk_style_context_add_provider(styleContext,
                                   GTK_STYLE_PROVIDER(_cssProviderBold),
                                   GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-   _cssProvider = gtk_css_provider_new();
    styleContext = gtk_widget_get_style_context(_labelSummary);
+
    gtk_css_provider_load_from_data(
       _cssProvider,
       "Label { font-family: helvetica; font-size: 10pt; }",
       -1,
       NULL);
+
    gtk_style_context_add_provider(styleContext,
                                   GTK_STYLE_PROVIDER(_cssProvider),
                                   GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);

@@ -137,7 +137,7 @@ bool SourcesList::ReadSourcePart(string listpath)
             // return _error->Error(_("Syntax error in line %s"), buf);
          }
       }
-#ifndef HAVE_RPM
+
       // check for absolute dist
       if (rec.Dist.empty() == false && rec.Dist[rec.Dist.size() - 1] == '/') {
          // make sure there's no section
@@ -149,7 +149,6 @@ bool SourcesList::ReadSourcePart(string listpath)
          AddSourceNode(rec);
          continue;
       }
-#endif
 
       const char *tmp = p;
       rec.NumSections = 0;
@@ -288,40 +287,11 @@ bool SourcesList::ReadSources()
 SourcesList::SourceRecord *SourcesList::AddEmptySource()
 {
    SourceRecord rec;
-#ifdef HAVE_RPM
-   rec.Type = Rpm;
-#else
    rec.Type = Deb;
-#endif
    rec.VendorID = "";
    rec.SourceFile = _config->FindFile("Dir::Etc::sourcelist");
    rec.Dist = "";
    rec.NumSections = 0;
-   return AddSourceNode(rec);
-}
-
-SourcesList::SourceRecord *SourcesList::AddSource(RecType Type,
-                                                  string VendorID,
-                                                  string URI,
-                                                  string Dist,
-                                                  string *Sections,
-                                                  unsigned short count,
-                                                  string SourceFile)
-{
-   SourceRecord rec;
-   rec.Type = Type;
-   rec.VendorID = VendorID;
-   rec.SourceFile = SourceFile;
-
-   if (rec.SetURI(URI) == false) {
-      return NULL;
-   }
-   rec.Dist = Dist;
-   rec.NumSections = count;
-   rec.Sections = new string[count];
-   for (unsigned int i = 0; i < count; i++)
-      rec.Sections[i] = Sections[i];
-
    return AddSourceNode(rec);
 }
 
@@ -403,21 +373,9 @@ bool SourcesList::SourceRecord::SetType(string S)
       Type |= Deb;
    else if (S == "deb-src")
       Type |= DebSrc;
-   else if (S == "rpm")
-      Type |= Rpm;
-   else if (S == "rpm-src")
-      Type |= RpmSrc;
-   else if (S == "rpm-dir")
-      Type |= RpmDir;
-   else if (S == "rpm-src-dir")
-      Type |= RpmSrcDir;
-   else if (S == "repomd")
-      Type |= Repomd;
-   else if (S == "repomd-src")
-      Type |= RepomdSrc;
    else
       return false;
-   // cout << S << " settype " << (Type | Repomd) << endl;
+
    return true;
 }
 
@@ -434,19 +392,7 @@ string SourcesList::SourceRecord::GetType() const
       return "deb";
    else if ((Type & DebSrc) != 0)
       return "deb-src";
-   else if ((Type & Rpm) != 0)
-      return "rpm";
-   else if ((Type & RpmSrc) != 0)
-      return "rpm-src";
-   else if ((Type & RpmDir) != 0)
-      return "rpm-dir";
-   else if ((Type & RpmSrcDir) != 0)
-      return "rpm-src-dir";
-   else if ((Type & Repomd) != 0)
-      return "repomd";
-   else if ((Type & RepomdSrc) != 0)
-      return "repomd-src";
-   // cout << "type " << (Type & Repomd) << endl;
+
    return "unknown";
 }
 
@@ -595,29 +541,12 @@ ostream &operator<<(ostream &os, const SourcesList::SourceRecord &rec)
       os << "Deb";
    if ((rec.Type & SourcesList::DebSrc) != 0)
       os << "DebSrc";
-   if ((rec.Type & SourcesList::Rpm) != 0)
-      os << "Rpm";
-   if ((rec.Type & SourcesList::RpmSrc) != 0)
-      os << "RpmSrc";
-   if ((rec.Type & SourcesList::RpmDir) != 0)
-      os << "RpmDir";
-   if ((rec.Type & SourcesList::RpmSrcDir) != 0)
-      os << "RpmSrcDir";
-   if ((rec.Type & SourcesList::Repomd) != 0)
-      os << "Repomd";
-   if ((rec.Type & SourcesList::RepomdSrc) != 0)
-      os << "RepomdSrc";
    os << endl;
    os << "SourceFile: " << rec.SourceFile << endl;
    os << "VendorID: " << rec.VendorID << endl;
    os << "URI: " << rec.URI << endl;
    os << "Dist: " << rec.Dist << endl;
    os << "Section(s):" << endl;
-#if 0
-   for (unsigned int J = 0; J < rec.NumSections; J++) {
-      cout << "\t" << rec.Sections[J] << endl;
-   }
-#endif
    os << endl;
    return os;
 }

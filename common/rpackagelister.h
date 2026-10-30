@@ -39,10 +39,6 @@
 #include <string>
 #include <vector>
 
-#ifdef HAVE_RPM
-#   include <apt-pkg/depcache.h>
-#endif
-
 #ifdef HAVE_XAPIAN
 #   include <xapian.h>
 #endif
@@ -165,11 +161,7 @@ class RPackageLister
    } listSortMode;
    listSortMode _sortMode;
 
-#ifdef HAVE_RPM
-   typedef pkgDepCache::State pkgState;
-#else
    typedef std::vector<int> pkgState;
-#endif
 
  private:
    std::vector<RPackageView *> _views;

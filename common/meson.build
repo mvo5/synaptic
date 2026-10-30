@@ -8,7 +8,6 @@ common_sources = files(
   'rpackagelister.cc',
   'rpackageview.cc',
   'rcdscanner.cc',
-  'rpmindexcopy.cc',
   'raptoptions.cc',
   'rsources.cc',
   'rcacheactor.cc',
@@ -22,7 +21,6 @@ common_sources = files(
 libsynaptic = static_library(
   'synaptic',
   common_sources,
-  cpp_args: rpm_compile_args,
   dependencies: common_deps,
   include_directories: [root_inc, common_inc],
 )

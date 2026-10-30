@@ -348,21 +348,21 @@ void RGMainWindow::refreshTable(RPackage *selectedPkg, bool setAdjustment)
 
       bool ok = gtk_tree_view_get_visible_range(GTK_TREE_VIEW(_treeView), &start, NULL);
       // find and select the pkg we are looking for
-      ok &=  gtk_tree_model_get_iter_first(_pkgList, &iter); 
+      ok &=  gtk_tree_model_get_iter_first(_pkgList, &iter);
       while(ok) {
-	 gtk_tree_model_get(_pkgList, &iter, PKG_COLUMN, &pkg, -1);
-	 if(pkg == selectedPkg) {
-	    GtkTreePath* path = gtk_tree_model_get_path(_pkgList, &iter);
-	    gtk_tree_view_set_cursor(GTK_TREE_VIEW(_treeView), path, 
-		 		     NULL, false);
-	    gtk_tree_path_free(path);
-	    break;
-	 }
+         gtk_tree_model_get(_pkgList, &iter, PKG_COLUMN, &pkg, -1);
+         if(pkg == selectedPkg) {
+            GtkTreePath* path = gtk_tree_model_get_path(_pkgList, &iter);
+            gtk_tree_view_set_cursor(GTK_TREE_VIEW(_treeView), path,
+                      NULL, false);
+            gtk_tree_path_free(path);
+            break;
+         }
 
-	 ok = gtk_tree_model_iter_next(_pkgList, &iter);
+         ok = gtk_tree_model_iter_next(_pkgList, &iter);
       }
       if (ok && gtk_tree_model_get_iter_first(_pkgList, &iter)) {
-          gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(_treeView), start, NULL, true, 0.0, 0.0);
+         gtk_tree_view_scroll_to_cell(GTK_TREE_VIEW(_treeView), start, NULL, true, 0.0, 0.0);
       }
       gtk_tree_path_free(start);
    }
@@ -1169,16 +1169,7 @@ void RGMainWindow::buildInterface()
       gtk_widget_hide(widget);
    }
 
-#ifdef HAVE_RPM
-   // TODO: hide?
-   setActionEnabled("mark-purge", false);
-   setActionEnabled("configure", false);
-   setActionEnabled("browse-documentation", false);
-   setActionEnabled("download-changelog", false);
-#endif
-
-   if (!FileExists(
-          _config->Find("Synaptic::taskHelperProg", "/usr/bin/tasksel")))
+   if (!FileExists(_config->Find("Synaptic::taskHelperProg", "/usr/bin/tasksel")))
       setActionEnabled("mark-packages-by-task", false); // TODO: hide?
 
    GtkWidget *pkgCommonTextView;
@@ -1207,10 +1198,8 @@ void RGMainWindow::buildInterface()
       gtk_widget_show(
          GTK_WIDGET(gtk_builder_get_object(_builder, "button_details")));
    }
-#ifndef HAVE_RPM
-   gtk_widget_show(
-      GTK_WIDGET(gtk_builder_get_object(_builder, "scrolledwindow_filelist")));
-#endif
+
+   gtk_widget_show(GTK_WIDGET(gtk_builder_get_object(_builder, "scrolledwindow_filelist")));
 
    // Handle the combobox stuff for dependencies in PpkgInfoInMain mode
    // ourselves
@@ -2674,34 +2663,25 @@ void RGMainWindow::cbProceedClicked(GSimpleAction *action,
    }
    me->_lister->writeSelections(out, false);
 
-
    RInstallProgress *iprogress;
+
 #ifdef HAVE_TERMINAL
-#   ifdef HAVE_RPM
-   bool UseTerminal = false;
-#   else
-// no RPM
-#      ifdef WITH_DPKG_STATUSFD
-   bool UseTerminal = false;
-#      else
-   bool UseTerminal = true;
-#      endif // DPKG
-#   endif    // HAVE_RPM
+   #ifdef WITH_DPKG_STATUSFD
+      bool UseTerminal = false;
+   #else
+      bool UseTerminal = true;
+   #endif // DPKG
    if (_config->FindB("Synaptic::UseTerminal", UseTerminal) == true)
       iprogress = new RGTermInstallProgress(me);
    else
 #endif // HAVE_TERMINAL
 
-
-#ifdef HAVE_RPM
-      iprogress = new RGInstallProgress(me, me->_lister);
-#else
-#   ifdef WITH_DPKG_STATUSFD
+#ifdef WITH_DPKG_STATUSFD
    iprogress = new RGDebInstallProgress(me, me->_lister);
-#   else
+#else
    iprogress = new RGDummyInstallProgress();
-#   endif // WITH_DPKG_STATUSFD
-#endif    // HAVE_RPM
+#endif // WITH_DPKG_STATUSFD
+
    me->_installProgress = dynamic_cast<RGWindow *>(iprogress);
 
    // bool result = me->_lister->commitChanges(fprogress, iprogress);
@@ -3116,16 +3096,11 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
 
    GMenu *popupMenuModel = g_menu_new();
    g_menu_append(popupMenuModel, _("Unmark"), "win.unmark");
-   g_menu_append(
-      popupMenuModel, _("Mark for Installation"), "win.mark-install");
-   g_menu_append(
-      popupMenuModel, _("Mark for Reinstallation"), "win.mark-reinstall");
+   g_menu_append(popupMenuModel, _("Mark for Installation"), "win.mark-install");
+   g_menu_append(popupMenuModel, _("Mark for Reinstallation"), "win.mark-reinstall");
    g_menu_append(popupMenuModel, _("Mark for Upgrade"), "win.mark-upgrade");
    g_menu_append(popupMenuModel, _("Mark for Removal"), "win.mark-delete");
-#ifndef HAVE_RPM
-   g_menu_append(
-      popupMenuModel, _("Mark for Complete Removal"), "win.mark-purge");
-#endif
+   g_menu_append(popupMenuModel, _("Mark for Complete Removal"), "win.mark-purge");
 
 #if 0 // disabled for now
    g_menu_append(popupMenuModel, _("Remove Including Orphaned Dependencies"), "win.mark-delete-with-deps");
@@ -3139,7 +3114,6 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
    g_menu_append(propsSubmenu, _("Properties"), "win.package-properties");
    g_menu_append_section(popupMenuModel, nullptr, G_MENU_MODEL(propsSubmenu));
 
-#ifndef HAVE_RPM // recommends stuff
    if (selected_pkgs.size() == 1) {
       GMenu *recommendsSection = g_menu_new();
 
@@ -3164,7 +3138,6 @@ void RGMainWindow::cbTreeviewPopupMenu(GtkWidget *treeview,
       g_menu_append_section(
          popupMenuModel, nullptr, G_MENU_MODEL(recommendsSection));
    }
-#endif
 
    GdkRectangle rect{0, 0, 0, 0};
    gtk_tree_view_convert_bin_window_to_widget_coords(
@@ -3360,8 +3333,7 @@ void RGMainWindow::cbAddDownloadedFilesClicked(GSimpleAction *action,
                                                gpointer data)
 {
    RGMainWindow *me = (RGMainWindow *)data;
-#ifndef HAVE_RPM
-   // cout << "cbAddDownloadedFilesClicked()" << endl;
+
    GtkWidget *filesel;
    filesel = gtk_file_chooser_dialog_new(_("Select directory"),
                                          GTK_WINDOW(me->window()),
@@ -3409,8 +3381,4 @@ void RGMainWindow::cbAddDownloadedFilesClicked(GSimpleAction *action,
 
    // click proceed
    me->cbProceedClicked(nullptr, nullptr, me);
-
-#else
-   me->_userDialog->error("Sorry, not implemented for rpm, patches welcome");
-#endif
 }

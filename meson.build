@@ -40,32 +40,6 @@ if not cpp.has_header('apt-pkg/configuration.h', dependencies: apt_pkg_dep)
   error('You need the apt-pkg headers installed to compile synaptic.')
 endif
 
-rpm_deps = []
-rpm_compile_args = []
-have_rpm = false
-if cpp.has_header('rpm/rpmlib.h', args: ['-I/usr/include/rpm'])
-  rpm_compile_args = ['-I/usr/include/rpm']
-  rpm_dep_v4 = [
-    cpp.find_library('rpm', required: false),
-    cpp.find_library('rpmio', required: false),
-    cpp.find_library('rpmdb', required: false),
-    cpp.find_library('popt', required: false),
-  ]
-  if rpm_dep_v4[0].found() and rpm_dep_v4[1].found() and rpm_dep_v4[2].found() and rpm_dep_v4[3].found()
-    rpm_deps = rpm_dep_v4
-    have_rpm = true
-  else
-    rpm_dep_v3 = [
-      cpp.find_library('rpm', required: false),
-      cpp.find_library('popt', required: false),
-    ]
-    if rpm_dep_v3[0].found() and rpm_dep_v3[1].found()
-      rpm_deps = rpm_dep_v3
-      have_rpm = true
-    endif
-  endif
-endif
-
 have_apt_auth = cpp.has_header('apt-pkg/metaindex.h', dependencies: apt_pkg_dep)
 have_aptpkg_cdrom = cpp.has_header('apt-pkg/cdrom.h', dependencies: apt_pkg_dep)
 
@@ -109,9 +83,6 @@ conf.set_quoted('SYNAPTICSTATEDIR', localstatedir)
 conf.set_quoted('VERSION', meson.project_version())
 conf.set('ENABLE_NLS', 1)
 
-if have_rpm
-  conf.set('HAVE_RPM', 1)
-endif
 if get_option('scripts')
   conf.set('WITH_LUA', 1)
 endif
@@ -154,7 +125,6 @@ gtk_cpp_args = [
 ]
 
 common_deps = [apt_pkg_dep]
-common_deps += rpm_deps
 if apt_inst_dep.found()
   common_deps += [apt_inst_dep]
 endif
@@ -171,7 +141,6 @@ gui_deps = [
   util_dep,
   threads_dep,
 ]
-gui_deps += rpm_deps
 if apt_inst_dep.found()
   gui_deps += [apt_inst_dep]
 endif

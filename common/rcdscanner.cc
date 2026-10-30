@@ -41,12 +41,7 @@
 #   include <iostream>
 #   include <sys/stat.h>
 #   include <unistd.h>
-
-#   ifdef HAVE_RPM
-#      include "rpmindexcopy.h"
-#   else
-#      include <apt-pkg/indexcopy.h>
-#   endif
+#   include <apt-pkg/indexcopy.h>
 
 using namespace std;
 
@@ -392,13 +387,8 @@ bool RCDScanner::finish(RCDScanProgress *progress)
       return false;
    }
    // Copy the package files to the state directory
-#   ifdef HAVE_RPM
-   RPMPackageCopy Copy;
-   RPMSourceCopy SrcCopy;
-#   else
    PackageCopy Copy;
    SourceCopy SrcCopy;
-#   endif
 
    progress->update(_("Copying package lists..."), STEP_COPY);
 
@@ -478,10 +468,6 @@ bool DropBinaryArch(vector<string> &List)
 int Score(string Path)
 {
    int Res = 0;
-#   ifdef HAVE_RPM
-   if (Path.find("base/") != string::npos)
-      Res = 1;
-#   else
    if (Path.find("stable/") != string::npos)
       Res += 29;
    if (Path.find("/binary-") != string::npos)
@@ -504,7 +490,6 @@ int Score(string Path)
       Res += 10;
    if (Path.find("/debian/") != string::npos)
       Res -= 10;
-#   endif
    return Res;
 }
 
@@ -560,39 +545,23 @@ bool DropRepeats(vector<string> &List, const char *Name)
 
 void RCDScanner::cleanPkgList(vector<string> &list)
 {
-#   ifdef HAVE_RPM
-   DropRepeats(list, "pkglist");
-#   else
    DropBinaryArch(list);
    DropRepeats(list, "Packages");
-#   endif
 }
 
 void RCDScanner::cleanSrcList(vector<string> &list)
 {
-#   ifdef HAVE_RPM
-   DropRepeats(list, "srclist");
-#   else
    DropRepeats(list, "Sources");
-#   endif
 }
 
 string RCDScanner::pkgSourceType() const
 {
-#   ifdef HAVE_RPM
-   return "rpm";
-#   else
    return "deb";
-#   endif
 }
 
 string RCDScanner::srcSourceType() const
 {
-#   ifdef HAVE_RPM
-   return "rpm-src";
-#   else
    return "deb-src";
-#   endif
 }
 
 #   if 0
@@ -633,11 +602,6 @@ bool RCDScanner::scanDirectory(string CD, RCDScanProgress *progress, int Depth)
    if (stat(".aptignr", &Buf) == 0)
       return true;
 
-#   ifdef HAVE_RPM
-   bool Found = false;
-   if (stat("release", &Buf) == 0)
-      Found = true;
-#   else
    /* Aha! We found some package files. We assume that everything under
       this dir is controlled by those package files so we don't look down
       anymore */
@@ -655,7 +619,6 @@ bool RCDScanner::scanDirectory(string CD, RCDScanProgress *progress, int Depth)
       if (_config->FindB("APT::CDROM::Thorough", false) == false)
          return true;
    }
-#   endif
 
    DIR *D = opendir(".");
    if (D == 0)
@@ -667,32 +630,9 @@ bool RCDScanner::scanDirectory(string CD, RCDScanProgress *progress, int Depth)
       if (strcmp(Dir->d_name, ".") == 0 || strcmp(Dir->d_name, "..") == 0 ||
           // strcmp(Dir->d_name,"source") == 0 ||
           strcmp(Dir->d_name, ".disk") == 0 ||
-#   ifdef HAVE_RPM
-          strncmp(Dir->d_name, "RPMS", 4) == 0 ||
-          strncmp(Dir->d_name, "doc", 3) == 0)
-#   else
           strcmp(Dir->d_name, "experimental") == 0 ||
           strcmp(Dir->d_name, "binary-all") == 0)
-#   endif
          continue;
-
-#   ifdef HAVE_RPM
-      if (strncmp(Dir->d_name, "pkglist.", 8) == 0 &&
-          strcmp(Dir->d_name + strlen(Dir->d_name) - 4, ".bz2") == 0) {
-         _pkgList.push_back(CD + string(Dir->d_name));
-         Found = true;
-         continue;
-      }
-      if (strncmp(Dir->d_name, "srclist.", 8) == 0 &&
-          strcmp(Dir->d_name + strlen(Dir->d_name) - 4, ".bz2") == 0) {
-         _srcList.push_back(CD + string(Dir->d_name));
-         Found = true;
-         continue;
-      }
-      if (_config->FindB("APT::CDROM::Thorough", false) == false &&
-          Found == true)
-         continue;
-#   endif
 
       // See if the name is a sub directory
       struct stat Buf;

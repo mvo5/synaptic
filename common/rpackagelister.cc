@@ -47,6 +47,7 @@
 #include <apt-pkg/clean.h>
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/depcache.h>
+#include <apt-pkg/debfile.h>
 #include <apt-pkg/error.h>
 #include <apt-pkg/fileutl.h>
 #include <apt-pkg/hashes.h>
@@ -79,10 +80,6 @@
 #include <unistd.h>
 #include <utility>
 #include <vector>
-
-#ifndef HAVE_RPM
-#   include <apt-pkg/debfile.h>
-#endif
 
 #ifdef WITH_LUA
 #   include <apt-pkg/luaiface.h>
@@ -1008,11 +1005,7 @@ void RPackageLister::saveUndoState(pkgState &state)
    undoStack.push_front(state);
    redoStack.clear();
 
-#ifdef HAVE_RPM
-   unsigned int maxStackSize = _config->FindI("Synaptic::undoStackSize", 3);
-#else
    unsigned int maxStackSize = _config->FindI("Synaptic::undoStackSize", 20);
-#endif
    while (undoStack.size() > maxStackSize)
       undoStack.pop_back();
 }
@@ -1023,7 +1016,6 @@ void RPackageLister::saveUndoState()
    saveState(state);
    saveUndoState(state);
 }
-
 
 void RPackageLister::undo()
 {
@@ -1056,84 +1048,6 @@ void RPackageLister::redo()
    restoreState(state);
 }
 
-
-#ifdef HAVE_RPM
-void RPackageLister::saveState(RPackageLister::pkgState &state)
-{
-   state.Save(_cache->deps());
-}
-
-void RPackageLister::restoreState(RPackageLister::pkgState &state)
-{
-   state.Restore();
-}
-
-bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
-                                     vector<RPackage *> &toKeep,
-                                     vector<RPackage *> &toInstall,
-                                     vector<RPackage *> &toReInstall,
-                                     vector<RPackage *> &toUpgrade,
-                                     vector<RPackage *> &toRemove,
-                                     vector<RPackage *> &toDowngrade,
-                                     vector<RPackage *> &notAuthenticated,
-                                     const vector<RPackage *> &exclude,
-                                     bool sorted)
-{
-   bool changed = false;
-
-   state.UnIgnoreAll();
-   if (exclude.empty() == false) {
-      for (vector<RPackage *>::iterator I = exclude.begin(); I != exclude.end();
-           I++)
-         state.Ignore(*(*I)->package());
-   }
-
-   pkgDepCache &Cache = *_cache->deps();
-   for (unsigned int i = 0; i != _packages.size(); i++) {
-      RPackage *RPkg = _packages[i];
-      pkgCache::PkgIterator &Pkg = *RPkg->package();
-      pkgDepCache::StateCache &PkgState = Cache[Pkg];
-      if (PkgState.Mode != state[Pkg].Mode && state.Ignored(Pkg) == false) {
-         if (PkgState.Upgrade()) {
-            toUpgrade.push_back(RPkg);
-            changed = true;
-         } else if (PkgState.NewInstall()) {
-            toInstall.push_back(RPkg);
-            changed = true;
-         } else if (PkgState.Install()) {
-            toReInstall.push_back(RPkg);
-            changed = true;
-         } else if (PkgState.Delete()) {
-            toRemove.push_back(RPkg);
-            changed = true;
-         } else if (PkgState.Keep()) {
-            toKeep.push_back(RPkg);
-            changed = true;
-         } else if (PkgState.Downgrade()) {
-            toDowngrade.push_back(RPkg);
-            changed = true;
-         }
-      }
-   }
-
-   if (sorted == true && changed == true) {
-      if (toKeep.empty() == false)
-         sort(toKeep.begin(), toKeep.end(), bla());
-      if (toInstall.empty() == false)
-         sort(toInstall.begin(), toInstall.end(), bla());
-      if (toReInstall.empty() == false)
-         sort(toReInstall.begin(), toReInstall.end(), bla());
-      if (toUpgrade.empty() == false)
-         sort(toUpgrade.begin(), toUpgrade.end(), bla());
-      if (toRemove.empty() == false)
-         sort(toRemove.begin(), toRemove.end(), bla());
-      if (toDowngrade.empty() == false)
-         sort(toDowngrade.begin(), toDowngrade.end(), bla());
-   }
-
-   return changed;
-}
-#else
 void RPackageLister::saveState(RPackageLister::pkgState &state)
 {
    // cout << "RPackageLister::saveState()" << endl;
@@ -1171,7 +1085,6 @@ void RPackageLister::restoreState(RPackageLister::pkgState &state)
    }
    notifyChange(NULL);
 }
-
 
 bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
                                      vector<RPackage *> &toKeep,
@@ -1266,7 +1179,6 @@ bool RPackageLister::getStateChanges(RPackageLister::pkgState &state,
 
    return changed;
 }
-#endif
 
 void RPackageLister::getDetailedSummary(vector<RPackage *> &held,
                                         vector<RPackage *> &kept,
@@ -1374,8 +1286,6 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
 
    _updating = true;
 
-
-#ifndef HAVE_RPM
    // apt-0.7.10 has the new UpdateList code in algorithms, we use it
    string s;
    bool res = ListUpdate(*status, *_cache->list(), 5000);
@@ -1385,69 +1295,8 @@ bool RPackageLister::updateCache(pkgAcquireStatus *status, string &error)
          error += s;
       }
    }
+
    return res;
-#else
-   // Create the download object
-   pkgAcquire Fetcher(status);
-
-   bool Failed = false;
-
-   if (_cache->list()->GetReleases(&Fetcher) == false)
-      return false;
-   Fetcher.Run();
-   for (pkgAcquire::ItemIterator I = Fetcher.ItemsBegin();
-        I != Fetcher.ItemsEnd();
-        I++) {
-      if ((*I)->Status == pkgAcquire::Item::StatDone)
-         continue;
-      (*I)->Finished();
-      Failed = true;
-   }
-   if (Failed == true)
-      _error->Warning(_("Release files for some repositories could not be "
-                        "retrieved or authenticated. Such repositories are "
-                        "being ignored."));
-
-   if (!_cache->list()->GetIndexes(&Fetcher))
-      return false;
-
-   // Run it
-   if (Fetcher.Run() == pkgAcquire::Failed)
-      return false;
-
-   // bool AuthFailed = false;
-   Failed = false;
-   string failedURI; /* = _("Some index files failed to download, they "
-          "have been ignored, or old ones used instead:\n");
-           */
-   for (pkgAcquire::ItemIterator I = Fetcher.ItemsBegin();
-        I != Fetcher.ItemsEnd();
-        I++) {
-      if ((*I)->Status == pkgAcquire::Item::StatDone)
-         continue;
-      (*I)->Finished();
-      if ((*I)->ErrorText.empty())
-         failedURI += (*I)->DescURI() + "\n";
-      else
-         failedURI += (*I)->DescURI() + ": " + (*I)->ErrorText + "\n";
-      Failed = true;
-   }
-
-   // Clean out any old list files
-   if (!Failed && _config->FindB("APT::Get::List-Cleanup", true) == true) {
-      if (Fetcher.Clean(_config->FindDir("Dir::State::lists")) == false ||
-          Fetcher.Clean(_config->FindDir("Dir::State::lists") + "partial/") ==
-             false)
-         return false;
-   }
-   if (Failed == true) {
-      // cout << failedURI << endl;
-      error = failedURI;
-      //_error->Error(failedURI.c_str());
-      return false;
-   }
-   return true;
-#endif
 }
 
 bool RPackageLister::getDownloadUris(vector<string> &uris)
@@ -1504,15 +1353,9 @@ bool RPackageLister::commitChanges(pkgAcquireStatus *status,
    while (1) {
       bool Transient = false;
 
-#ifdef HAVE_RPM
-      if (fetcher.Run() == pkgAcquire::Failed) {
-         return false;
-      }
-#else
       if (fetcher.Run(50000) == pkgAcquire::Failed) {
          return false;
       }
-#endif
 
       string serverError;
 
@@ -2004,9 +1847,6 @@ bool RPackageLister::readSelections(istream &in)
 
 bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
 {
-#ifndef HAVE_RPM
-   // cout << "addArchiveToCache() " << archive << endl;
-
    // do sanity checking on the file (do we need this
    // version, arch, or a different one etc)
    FileFd in(archive, FileFd::ReadOnly);
@@ -2070,11 +1910,7 @@ bool RPackageLister::addArchiveToCache(string archive, string &pkgname)
    CopyFile(in, out);
 
    return true;
-#else
-   return false;
-#endif
 }
-
 
 #ifdef HAVE_XAPIAN
 bool RPackageLister::limitBySearch(string searchString)

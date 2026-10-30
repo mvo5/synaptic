@@ -48,12 +48,6 @@ using namespace std;
 static string ConfigFilePath;
 static string ConfigFileDir;
 
-// #ifndef HAVE_RPM
-// bool _ReadConfigFile(Configuration &Conf,string FName,bool AsSectional =
-// false,
-//                  unsigned Depth = 0);
-// #endif
-
 static void dumpToFile(const Configuration::Item *Top, ostream &out, string pad)
 {
    while (Top) {

@@ -33,13 +33,22 @@
 class RGGtkBuilderWindow : public RGWindow
 {
  protected:
-   GtkBuilder *_builder;
-   GdkCursor *_busyCursor;
+
+   GtkBuilder *const _builder = gtk_builder_new();
+   GdkCursor *const _busyCursor;
+
+   GtkWidget *const _win;
 
  public:
-   RGGtkBuilderWindow(RGWindow *parent,
-                      std::string name,
-                      std::string main_widget = "");
+
+   RGGtkBuilderWindow(RGWindow *parent, const std::string &name, const std::string &main_widget = "");
+
+   virtual ~RGGtkBuilderWindow()
+   {
+      gtk_widget_destroy(_win);
+      g_object_unref(_builder);
+      g_object_unref(_busyCursor);
+   };
 
    void skipTaskbar(bool value)
    {
@@ -53,15 +62,16 @@ class RGGtkBuilderWindow : public RGWindow
    bool setLabel(const char *name, const char *value);
    bool setMarkup(const char *widget_name, const char *value);
    bool setLabel(const char *name, const long value);
-   bool setTextView(const char *widget_name,
-                    const char *value,
-                    bool useHeadline = false);
+   bool setTextView(const char *widget_name, const char *value, bool useHeadline = false);
    bool setPixmap(const char *widget_name, GdkPixbuf *value);
-   bool setTreeList(const char *widget_name,
-                    std::vector<std::string> values,
-                    bool useMarkup = false);
+   bool setTreeList(const char *widget_name, std::vector<std::string> values, bool useMarkup = false);
 
-   GtkBuilder *getGtkBuilder()
+   inline GtkWidget *window() const override
+   {
+      return _win;
+   }
+
+   inline GtkBuilder *getGtkBuilder() const
    {
       return _builder;
    }

@@ -38,45 +38,41 @@
 
 using namespace std;
 
+static GtkWidget *GetWindowFromResource(GtkBuilder *builder, const string &name, const string &mainName)
+{
+   assert(builder != nullptr);
+
+   string resource_path = "/io/github/mvo5/synaptic/ui/window_" + name + ".ui";
+
+   if (gtk_builder_add_from_resource(builder, resource_path.c_str(), NULL) == 0) {
+      g_error("Couldn't load builder resource: %s", resource_path.c_str());
+      return nullptr;
+   }
+
+   string windowName = "window_" + (mainName.empty() ? name : mainName);
+   return GTK_WIDGET(gtk_builder_get_object(builder, windowName.c_str()));
+}
+
 /*  the convention is that the top window is named:
    "window_$windowname" in your gtkbuilder-source
 */
-RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent,
-                                       string name,
-                                       string mainName)
+RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent, const string &name, const string &mainName) :
+   _builder(gtk_builder_new()),
+   _busyCursor(gdk_cursor_new_for_display(gdk_display_get_default(), GDK_WATCH)),
+   _win(GetWindowFromResource(_builder, name, mainName))
 {
-   _busyCursor =
-      gdk_cursor_new_for_display(gdk_display_get_default(), GDK_WATCH);
-   _builder = gtk_builder_new();
+   assert(_builder != nullptr);
+   assert(_busyCursor != nullptr);
+   assert(_win != nullptr);
 
-   gchar *main_widget = NULL;
-   GError *error = NULL;
+   g_signal_connect(G_OBJECT(_win), "delete-event", G_CALLBACK(windowCloseCallback), this);
 
-   if (mainName.empty())
-      main_widget = g_strdup_printf("window_%s", name.c_str());
-   else
-      main_widget = g_strdup_printf("window_%s", mainName.c_str());
-
-   std::string resource_path =
-      "/io/github/mvo5/synaptic/ui/window_" + name + ".ui";
-   if (!gtk_builder_add_from_resource(
-          _builder, resource_path.c_str(), &error)) {
-      g_warning("Couldn't load builder resource: %s", error->message);
-      g_error_free(error);
+   if (parent != NULL) {
+      gtk_window_set_transient_for(GTK_WINDOW(_win), GTK_WINDOW(parent->window()));
    }
-
-   _win = GTK_WIDGET(gtk_builder_get_object(_builder, main_widget));
-   assert(_win);
-   init();
-
-   if (parent != NULL)
-      gtk_window_set_transient_for(GTK_WINDOW(_win),
-                                   GTK_WINDOW(parent->window()));
 
    gtk_window_set_position(GTK_WINDOW(_win), GTK_WIN_POS_CENTER_ON_PARENT);
    gtk_window_set_icon_name(GTK_WINDOW(_win), "synaptic");
-
-   g_free(main_widget);
 }
 
 bool RGGtkBuilderWindow::setLabel(const char *widget_name, const char *value)

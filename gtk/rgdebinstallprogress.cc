@@ -37,6 +37,7 @@
 #   include <apt-pkg/error.h>
 #   include <apt-pkg/install-progress.h>
 #   include <apt-pkg/packagemanager.h>
+#   include <cassert>
 #   include <cerrno>
 #   include <cmath>
 #   include <cstring>
@@ -360,7 +361,6 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
       gtk_widget_hide(_autoClose);
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_autoClose),
                                 _config->FindB("Synaptic::closeZvt", false));
-   //_image = GTK_WIDGET(gtk_builder_get_object(_builder, "image"));
 
    // work around for kdesudo blocking our SIGCHLD (LP: #156041)
    sigset_t sset;
@@ -382,32 +382,28 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
    } else {
       s = "monospace 8"s;
    }
-   PangoFontDescription *fontdesc =
-      pango_font_description_from_string(s.c_str());
+   PangoFontDescription *fontdesc = pango_font_description_from_string(s.c_str());
    vte_terminal_set_font(VTE_TERMINAL(_term), fontdesc);
    pango_font_description_free(fontdesc);
 
-   gtk_box_pack_start(
-      GTK_BOX(GTK_WIDGET(gtk_builder_get_object(_builder, "hbox_vte"))),
-      _term,
-      TRUE,
-      TRUE,
-      0);
-   g_signal_connect(
-      G_OBJECT(_term), "key-press-event", G_CALLBACK(key_press_event), this);
-   g_signal_connect(G_OBJECT(_term),
-                    "button-press-event",
-                    (GCallback)cbTerminalClicked,
-                    this);
+   g_signal_connect(G_OBJECT(_term), "key-press-event", G_CALLBACK(key_press_event), this);
+   g_signal_connect(G_OBJECT(_term), "button-press-event", (GCallback) cbTerminalClicked, this);
 
+   GtkWidget *vte_box = GTK_WIDGET(gtk_builder_get_object(_builder, "hbox_vte"));
+
+   gtk_box_pack_start(GTK_BOX(vte_box), _term, TRUE, TRUE, 0);
+   gtk_widget_set_hexpand(_term, TRUE);
+   gtk_widget_set_vexpand(_term, TRUE);
    gtk_widget_show(_term);
 
-   gtk_box_pack_end(
-      GTK_BOX(GTK_WIDGET(gtk_builder_get_object(_builder, "hbox_vte"))),
-      scrollbar,
-      FALSE,
-      FALSE,
-      0);
+   gtk_box_pack_end(GTK_BOX(vte_box), scrollbar, FALSE, FALSE, 0);
+   gtk_widget_show(scrollbar);
+
+   GtkWidget *expander = GTK_WIDGET(gtk_builder_get_object(_builder, "expander_terminal"));
+   assert(expander != nullptr);
+
+   gtk_expander_set_resize_toplevel(GTK_EXPANDER(expander), TRUE);
+   g_signal_connect(expander, "notify::expanded", G_CALLBACK(cbExpandedChanged), this);
 
    // Terminal contextual menu
    GtkWidget *menuitem;
@@ -427,8 +423,6 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
                     (void *)EDIT_SELECT_ALL);
    gtk_menu_shell_append(GTK_MENU_SHELL(_popupMenu), menuitem);
    gtk_widget_show(menuitem);
-
-   gtk_widget_show(scrollbar);
 
    gtk_window_set_default_size(GTK_WINDOW(_win), 500, -1);
 
@@ -528,6 +522,29 @@ void RGDebInstallProgress::cbMenuitemClicked(GtkMenuItem *menuitem,
    RGDebInstallProgress *me =
       (RGDebInstallProgress *)g_object_get_data(G_OBJECT(menuitem), "me");
    me->terminalAction(me->_term, (TermAction)GPOINTER_TO_INT(user_data));
+}
+
+#include <gtk/gtk.h>
+
+gboolean RGDebInstallProgress::resizeDialog(gpointer user_data)
+{
+   GtkWidget *dialog = (GtkWidget *) user_data;
+   GtkRequisition minimum;
+   GtkRequisition natural;
+   gtk_widget_get_preferred_size(dialog, &minimum, &natural);
+   gtk_window_resize(GTK_WINDOW(dialog), natural.width, natural.height);
+   return G_SOURCE_REMOVE;
+}
+
+void RGDebInstallProgress::cbExpandedChanged(GtkExpander *expander, GParamSpec *param_spec, RGDebInstallProgress *self)
+{
+   GtkWidget *window = GTK_WIDGET(gtk_builder_get_object(self->_builder, "window_rgdebinstall_progress"));
+
+   // The window is only resizable while the expander is expanded.
+   gtk_window_set_resizable(GTK_WINDOW(window), gtk_expander_get_expanded(expander));
+
+   // Schedule a resizing of the window to the natural size after the expander finished expanding/collapsing.
+   g_idle_add(resizeDialog, g_object_ref(window));
 }
 
 void RGDebInstallProgress::terminalAction(GtkWidget *terminal,

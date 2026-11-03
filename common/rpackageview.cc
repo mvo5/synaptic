@@ -99,9 +99,9 @@ void RPackageView::refresh()
       ioprintf(clog, "RPackageView::refresh(): '%s'\n", getName().c_str());
 
    _view.clear();
-   for (unsigned int i = 0; i < _all.size(); i++) {
-      if (_all[i])
-         addPackage(_all[i]);
+
+   for (RPackage *package : _all) {
+      if (package != nullptr) addPackage(package);
    }
 }
 
@@ -264,20 +264,17 @@ bool RPackageViewSearch::setSelected(string name)
    // if we do not have the search name in the current view,
    // check if we only have it in the searchHistory and if so,
    // redo the search
+
    if (_view.find(name) == _view.end()) {
-      map<string, searchItem>::iterator J = searchHistory.find(name);
-      if (J != searchHistory.end()) {
-         // cerr << "found in search history, reapplying search" << endl;
-         string s;
-         OpProgress progress;
-         for (int i = 0; i < (*J).second.searchStrings.size(); i++)
-            s += string(" ") + (*J).second.searchStrings[i];
+      map<string, searchItem>::iterator searchItem = searchHistory.find(name);
+      if (searchItem != searchHistory.end()) {
+         string searchString;
+         for (const string &value : searchItem->second.searchStrings) {
+            searchString += ' ' + value;
+         }
          // do search but do not add to history (we have it there already)
-         setSearch((*J).second.searchName,
-                   (*J).second.searchType,
-                   s,
-                   // FIXME: re-use progress from setSearch()
-                   progress);
+         OpProgress progress;  // FIXME: re-use progress from setSearch()
+         setSearch(searchItem->second.searchName, searchItem->second.searchType, searchString, progress);
       }
    }
 
@@ -300,7 +297,7 @@ int RPackageViewSearch::setSearch(string aSearchName,
                                   string searchString,
                                   OpProgress &searchProgress)
 {
-   found = 0;
+   found = 0;  // Note: Incremented by addPackage().
 
    _currentSearchItem.searchType = type;
    _currentSearchItem.searchName = aSearchName;
@@ -321,13 +318,18 @@ int RPackageViewSearch::setSearch(string aSearchName,
 
    // setup search progress (0 done, _all.size() in total, 1 subtask)
    searchProgress.OverallProgress(0, _all.size(), 1, _("Searching"));
-   // reapply search when a new search strng is given
-   for (unsigned int i = 0; i < _all.size(); i++)
-      if (_all[i]) {
-         searchProgress.Progress(i);
-         addPackage(_all[i]);
+
+   // reapply search when a new search string is given
+   size_t current = 1;
+   for (RPackage *package : _all) {
+      if (package != nullptr) {
+         searchProgress.Progress(current++);
+         addPackage(package);
       }
+   }
+
    searchProgress.Done();
+
    return found;
 }
 //------------------------------------------------------------------

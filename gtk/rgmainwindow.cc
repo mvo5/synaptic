@@ -1220,14 +1220,16 @@ void RGMainWindow::buildInterface()
                     "changed",
                     G_CALLBACK(cbDependsMenuChanged),
                     this);
+
    GtkListStore *relTypes = gtk_list_store_new(1, G_TYPE_STRING);
-   GtkTreeIter relIter;
-   for (int i = 0; relOptions[i] != NULL; i++) {
+   for (size_t i = 0; relOptions[i] != NULL; i++) {
+      GtkTreeIter relIter;
       gtk_list_store_append(relTypes, &relIter);
       gtk_list_store_set(relTypes, &relIter, 0, _(relOptions[i]), -1);
    }
-   gtk_combo_box_set_model(GTK_COMBO_BOX(comboDepends),
-                           GTK_TREE_MODEL(relTypes));
+   gtk_combo_box_set_model(GTK_COMBO_BOX(comboDepends), GTK_TREE_MODEL(relTypes));
+   g_object_unref(relTypes); // Unreference the list store as it is now managed by the treeview.
+
    GtkCellRenderer *relRenderText = gtk_cell_renderer_text_new();
    gtk_cell_layout_clear(GTK_CELL_LAYOUT(comboDepends));
    gtk_cell_layout_pack_start(

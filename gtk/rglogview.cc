@@ -125,15 +125,13 @@ void RGLogView::readLogs()
    }
    g_dir_close(dir);
 
-   GtkTreeModel *sort_model;
-   /* Create the first tree */
-   sort_model = gtk_tree_model_sort_new_with_model(GTK_TREE_MODEL(store));
+   if (_treeModel != nullptr) g_object_unref(_treeModel);
 
-   gtk_tree_sortable_set_sort_column_id(
-      GTK_TREE_SORTABLE(sort_model), COLUMN_LOG_FILENAME, GTK_SORT_DESCENDING);
-   gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView),
-                           GTK_TREE_MODEL(sort_model));
-   _realModel = sort_model;
+   _treeModel = gtk_tree_model_sort_new_with_model(GTK_TREE_MODEL(store));
+   g_object_unref(store);
+
+   gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(_treeModel), COLUMN_LOG_FILENAME, GTK_SORT_DESCENDING);
+   gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), GTK_TREE_MODEL(_treeModel));
 }
 
 void RGLogView::cbCloseClicked(GtkWidget *self, void *data)
@@ -264,7 +262,7 @@ void RGLogView::cbButtonFind(GtkWidget *self, void *data)
    RGLogView *me = (RGLogView *)data;
    GtkTreeModel *filter_model, *empty_row_filter;
 
-   GtkTreeModel *model = me->_realModel;
+   GtkTreeModel *model = me->_treeModel;
    if (model == NULL) {
       g_warning("model==NULL in cbButtonFind");
       return;
@@ -276,7 +274,7 @@ void RGLogView::cbButtonFind(GtkWidget *self, void *data)
    // reset to old model
    if (strlen(me->findStr) == 0) {
       me->findStr = NULL;
-      gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), me->_realModel);
+      gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), me->_treeModel);
       return;
    }
 

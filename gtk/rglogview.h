@@ -35,6 +35,7 @@ class RGWindow;
 class RGLogView : public RGGtkBuilderWindow
 {
  protected:
+
    static void cbCloseClicked(GtkWidget *self, void *data);
    static void cbButtonFind(GtkWidget *self, void *data);
    static void cbTreeSelectionChanged(GtkTreeSelection *selection,
@@ -51,17 +52,21 @@ class RGLogView : public RGGtkBuilderWindow
 
    // data
    const gchar *findStr;
-   GtkTreeModel *_realModel;
+   GtkTreeModel *_treeModel = nullptr;
 
    // set new logbuffer text
    void clearLogBuf();
    void appendLogBuf(std::string text);
 
  public:
+
    RGLogView(RGWindow *parent);
+
+   ~RGLogView() override
+   {
+      if (_treeModel != nullptr) g_object_unref(_treeModel);
+   };
 
    virtual void show();
    void readLogs();
-
-   virtual ~RGLogView() {};
 };

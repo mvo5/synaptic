@@ -159,7 +159,9 @@ void RGRepositoryEditor::item_toggled(GtkCellRendererToggle *cell,
 
 
 RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
-   : RGGtkBuilderWindow(parent, "repositories"), _dirty(false)
+   : RGGtkBuilderWindow(parent, "repositories"),
+     _sourcesListStore(gtk_list_store_new(N_SOURCES_COLUMNS, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_POINTER, GDK_TYPE_RGBA)),
+     _dirty(false)
 {
    // cout << "RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)"<<endl;
    assert(_win);
@@ -171,29 +173,13 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    gtk_window_set_modal(GTK_WINDOW(_win), TRUE);
    // gtk_window_set_policy(GTK_WINDOW(_win), TRUE, TRUE, FALSE);
 
-   // build gtktreeview
-   _sourcesListStore = gtk_list_store_new(N_SOURCES_COLUMNS,
-                                          G_TYPE_BOOLEAN,
-                                          G_TYPE_STRING,
-                                          G_TYPE_STRING,
-                                          G_TYPE_STRING,
-                                          G_TYPE_STRING,
-                                          G_TYPE_STRING,
-                                          G_TYPE_POINTER,
-                                          GDK_TYPE_RGBA);
-
-   _sourcesListView =
-      GTK_WIDGET(gtk_builder_get_object(_builder, "treeview_repositories"));
-   gtk_tree_view_set_model(GTK_TREE_VIEW(_sourcesListView),
-                           GTK_TREE_MODEL(_sourcesListStore));
-
-   GtkCellRenderer *renderer;
-   GtkTreeViewColumn *column;
+   _sourcesListView = GTK_WIDGET(gtk_builder_get_object(_builder, "treeview_repositories"));
+   gtk_tree_view_set_model(GTK_TREE_VIEW(_sourcesListView), GTK_TREE_MODEL(_sourcesListStore));
 
    // status
-   renderer = gtk_cell_renderer_toggle_new();
+   GtkCellRenderer *renderer = gtk_cell_renderer_toggle_new();
    g_object_set_data(G_OBJECT(renderer), "me", this);
-   column = gtk_tree_view_column_new_with_attributes(
+   GtkTreeViewColumn *column = gtk_tree_view_column_new_with_attributes(
       _("Enabled"), renderer, "active", STATUS_COLUMN, NULL);
    g_signal_connect(renderer,
                     "toggled",
@@ -424,13 +410,11 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    show();
 }
 
-
 RGRepositoryEditor::~RGRepositoryEditor()
 {
-   // gtk_widget_destroy(_win);
+   g_object_unref(_sourcesListStore);
    delete _userDialog;
 }
-
 
 bool RGRepositoryEditor::Run()
 {

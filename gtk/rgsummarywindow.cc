@@ -48,9 +48,8 @@ class RGWindow;
 
 using namespace std;
 
-void RGSummaryWindow::buildTree(RGSummaryWindow *me)
+void RGSummaryWindow::buildTree(GtkBuilder *builder, RPackageLister *lister, GtkTreeStore *treeStore)
 {
-   RPackageLister *lister = me->_lister;
    GtkTreeIter iter, iter_child;
 
    vector<RPackage *> held;
@@ -85,7 +84,7 @@ void RGSummaryWindow::buildTree(RGSummaryWindow *me)
    if (notAuthenticated.size() > 0) {
       GtkWidget *label;
       label =
-         GTK_WIDGET(gtk_builder_get_object(me->_builder, "label_auth_warning"));
+         GTK_WIDGET(gtk_builder_get_object(builder, "label_auth_warning"));
       assert(label);
       // FIXME: make this a message from a trust class (and remeber to
       // change the text in rgchangeswindow then too)
@@ -102,24 +101,24 @@ void RGSummaryWindow::buildTree(RGSummaryWindow *me)
       g_free(msg);
 
       /* not authenticated */
-      gtk_tree_store_append(me->_treeStore, &iter, NULL);
+      gtk_tree_store_append(treeStore, &iter, NULL);
       gtk_tree_store_set(
-         me->_treeStore, &iter, PKG_COLUMN, _("NOT AUTHENTICATED"), -1);
+         treeStore, &iter, PKG_COLUMN, _("NOT AUTHENTICATED"), -1);
 
       for (vector<string>::const_iterator p = notAuthenticated.begin();
            p != notAuthenticated.end();
            p++) {
-         gtk_tree_store_append(me->_treeStore, &iter_child, &iter);
+         gtk_tree_store_append(treeStore, &iter_child, &iter);
          gtk_tree_store_set(
-            me->_treeStore, &iter_child, PKG_COLUMN, (*p).c_str(), -1);
+            treeStore, &iter_child, PKG_COLUMN, (*p).c_str(), -1);
       }
    }
 #endif
 
    if (essential.size() > 0) {
       /* (Essentail) removed */
-      gtk_tree_store_append(me->_treeStore, &iter, NULL);
-      gtk_tree_store_set(me->_treeStore,
+      gtk_tree_store_append(treeStore, &iter, NULL);
+      gtk_tree_store_set(treeStore,
                          &iter,
                          PKG_COLUMN,
                          _("<b>(ESSENTIAL) to be removed</b>"),
@@ -128,44 +127,44 @@ void RGSummaryWindow::buildTree(RGSummaryWindow *me)
       for (vector<RPackage *>::const_iterator p = essential.begin();
            p != essential.end();
            p++) {
-         gtk_tree_store_append(me->_treeStore, &iter_child, &iter);
+         gtk_tree_store_append(treeStore, &iter_child, &iter);
          gtk_tree_store_set(
-            me->_treeStore, &iter_child, PKG_COLUMN, (*p)->name(), -1);
+            treeStore, &iter_child, PKG_COLUMN, (*p)->name(), -1);
       }
    }
    if (toDowngrade.size() > 0) {
       /* removed */
-      gtk_tree_store_append(me->_treeStore, &iter, NULL);
+      gtk_tree_store_append(treeStore, &iter, NULL);
       gtk_tree_store_set(
-         me->_treeStore, &iter, PKG_COLUMN, _("<b>To be DOWNGRADED</b>"), -1);
+         treeStore, &iter, PKG_COLUMN, _("<b>To be DOWNGRADED</b>"), -1);
       for (vector<RPackage *>::const_iterator p = toDowngrade.begin();
            p != toDowngrade.end();
            p++) {
-         gtk_tree_store_append(me->_treeStore, &iter_child, &iter);
+         gtk_tree_store_append(treeStore, &iter_child, &iter);
          gtk_tree_store_set(
-            me->_treeStore, &iter_child, PKG_COLUMN, (*p)->name(), -1);
+            treeStore, &iter_child, PKG_COLUMN, (*p)->name(), -1);
       }
    }
 
    if (toRemove.size() > 0) {
       /* removed */
-      gtk_tree_store_append(me->_treeStore, &iter, NULL);
+      gtk_tree_store_append(treeStore, &iter, NULL);
       gtk_tree_store_set(
-         me->_treeStore, &iter, PKG_COLUMN, _("<b>To be removed</b>"), -1);
+         treeStore, &iter, PKG_COLUMN, _("<b>To be removed</b>"), -1);
       for (vector<RPackage *>::const_iterator p = toRemove.begin();
            p != toRemove.end();
            p++) {
-         gtk_tree_store_append(me->_treeStore, &iter_child, &iter);
+         gtk_tree_store_append(treeStore, &iter_child, &iter);
          gtk_tree_store_set(
-            me->_treeStore, &iter_child, PKG_COLUMN, (*p)->name(), -1);
+            treeStore, &iter_child, PKG_COLUMN, (*p)->name(), -1);
       }
    }
 
    if (toPurge.size() > 0) {
       /* removed */
-      gtk_tree_store_append(me->_treeStore, &iter, NULL);
+      gtk_tree_store_append(treeStore, &iter, NULL);
       gtk_tree_store_set(
-         me->_treeStore,
+         treeStore,
          &iter,
          PKG_COLUMN,
          _("<b>To be completely removed (including configuration files)</b>"),
@@ -173,70 +172,70 @@ void RGSummaryWindow::buildTree(RGSummaryWindow *me)
       for (vector<RPackage *>::const_iterator p = toPurge.begin();
            p != toPurge.end();
            p++) {
-         gtk_tree_store_append(me->_treeStore, &iter_child, &iter);
+         gtk_tree_store_append(treeStore, &iter_child, &iter);
          gtk_tree_store_set(
-            me->_treeStore, &iter_child, PKG_COLUMN, (*p)->name(), -1);
+            treeStore, &iter_child, PKG_COLUMN, (*p)->name(), -1);
       }
    }
 
    if (toUpgrade.size() > 0) {
-      gtk_tree_store_append(me->_treeStore, &iter, NULL);
+      gtk_tree_store_append(treeStore, &iter, NULL);
       gtk_tree_store_set(
-         me->_treeStore, &iter, PKG_COLUMN, _("To be upgraded"), -1);
+         treeStore, &iter, PKG_COLUMN, _("To be upgraded"), -1);
       for (vector<RPackage *>::const_iterator p = toUpgrade.begin();
            p != toUpgrade.end();
            p++) {
-         gtk_tree_store_append(me->_treeStore, &iter_child, &iter);
+         gtk_tree_store_append(treeStore, &iter_child, &iter);
          gtk_tree_store_set(
-            me->_treeStore, &iter_child, PKG_COLUMN, (*p)->name(), -1);
+            treeStore, &iter_child, PKG_COLUMN, (*p)->name(), -1);
       }
    }
 
    if (toInstall.size() > 0) {
-      gtk_tree_store_append(me->_treeStore, &iter, NULL);
+      gtk_tree_store_append(treeStore, &iter, NULL);
       gtk_tree_store_set(
-         me->_treeStore, &iter, PKG_COLUMN, _("To be installed"), -1);
+         treeStore, &iter, PKG_COLUMN, _("To be installed"), -1);
       for (vector<RPackage *>::const_iterator p = toInstall.begin();
            p != toInstall.end();
            p++) {
-         gtk_tree_store_append(me->_treeStore, &iter_child, &iter);
+         gtk_tree_store_append(treeStore, &iter_child, &iter);
          gtk_tree_store_set(
-            me->_treeStore, &iter_child, PKG_COLUMN, (*p)->name(), -1);
+            treeStore, &iter_child, PKG_COLUMN, (*p)->name(), -1);
       }
    }
 
    if (toReInstall.size() > 0) {
-      gtk_tree_store_append(me->_treeStore, &iter, NULL);
+      gtk_tree_store_append(treeStore, &iter, NULL);
       gtk_tree_store_set(
-         me->_treeStore, &iter, PKG_COLUMN, _("To be re-installed"), -1);
+         treeStore, &iter, PKG_COLUMN, _("To be re-installed"), -1);
       for (vector<RPackage *>::const_iterator p = toReInstall.begin();
            p != toReInstall.end();
            p++) {
-         gtk_tree_store_append(me->_treeStore, &iter_child, &iter);
+         gtk_tree_store_append(treeStore, &iter_child, &iter);
          gtk_tree_store_set(
-            me->_treeStore, &iter_child, PKG_COLUMN, (*p)->name(), -1);
+            treeStore, &iter_child, PKG_COLUMN, (*p)->name(), -1);
       }
    }
 
    if (held.size() > 0) {
-      gtk_tree_store_append(me->_treeStore, &iter, NULL);
-      gtk_tree_store_set(me->_treeStore, &iter, PKG_COLUMN, _("Unchanged"), -1);
+      gtk_tree_store_append(treeStore, &iter, NULL);
+      gtk_tree_store_set(treeStore, &iter, PKG_COLUMN, _("Unchanged"), -1);
       for (vector<RPackage *>::const_iterator p = held.begin(); p != held.end();
            p++) {
-         gtk_tree_store_append(me->_treeStore, &iter_child, &iter);
+         gtk_tree_store_append(treeStore, &iter_child, &iter);
          gtk_tree_store_set(
-            me->_treeStore, &iter_child, PKG_COLUMN, (*p)->name(), -1);
+            treeStore, &iter_child, PKG_COLUMN, (*p)->name(), -1);
       }
    }
 }
 
-void RGSummaryWindow::buildLabel(RGSummaryWindow *me)
+void RGSummaryWindow::buildLabel(GtkBuilder *builder, RPackageLister *lister)
 {
    GtkWidget *info;
    string text;
    gchar *str;
 
-   info = GTK_WIDGET(gtk_builder_get_object(me->_builder, "label_details"));
+   info = GTK_WIDGET(gtk_builder_get_object(builder, "label_details"));
 
    vector<RPackage *> held;
    vector<RPackage *> kept;
@@ -250,7 +249,7 @@ void RGSummaryWindow::buildLabel(RGSummaryWindow *me)
    vector<string> notAuthenticated;
    double sizeChange;
 
-   me->_lister->getDetailedSummary(held,
+   lister->getDetailedSummary(held,
                                    kept,
                                    essential,
                                    toInstall,
@@ -358,50 +357,39 @@ void RGSummaryWindow::clickedDetails(GtkWidget *self, void *data)
 }
 
 RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
-   : RGGtkBuilderWindow(wwin, "summary")
+   : RGGtkBuilderWindow(wwin, "summary"),
+     _dlonlyB(GTK_WIDGET(gtk_builder_get_object(_builder, "checkbutton_download_only")))
 {
-   GtkWidget *button;
+   assert(_dlonlyB != nullptr);
 
    _potentialBreak = false;
-   _lister = lister;
 
    setTitle(_("Summary"));
    // gtk_window_set_default_size(GTK_WINDOW(_win), 400, 250);
 
-   _summaryL = GTK_WIDGET(gtk_builder_get_object(_builder, "label_summary"));
-   assert(_summaryL);
-
-   _summarySpaceL =
-      GTK_WIDGET(gtk_builder_get_object(_builder, "label_summary_space"));
-   assert(_summarySpaceL);
-
    // details label
-   buildLabel(this);
+   buildLabel(_builder, lister);
 
    // new tree store
-   _treeStore = gtk_tree_store_new(N_COLUMNS, G_TYPE_STRING);
-   buildTree(this);
-   _tree = GTK_WIDGET(gtk_builder_get_object(_builder, "treeview_summary"));
+   GtkTreeStore *_treeStore = gtk_tree_store_new(N_COLUMNS, G_TYPE_STRING);
+   buildTree(_builder, lister, _treeStore);
+   GtkWidget *_tree = GTK_WIDGET(gtk_builder_get_object(_builder, "treeview_summary"));
    assert(_tree);
 
    GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
    // GtkTreeViewColumn *column =
    // gtk_tree_view_column_new_with_attributes("Summary",renderer, PKG_COLUMN,
    // "pkg", NULL);
-   GtkTreeViewColumn *column;
-   column = gtk_tree_view_column_new_with_attributes(
+   GtkTreeViewColumn *column = gtk_tree_view_column_new_with_attributes(
       _("Marked Changes"), renderer, "markup", PKG_COLUMN, NULL);
    /* Add the column to the view. */
    gtk_tree_view_append_column(GTK_TREE_VIEW(_tree), column);
    gtk_widget_show(_tree);
-   /* set model last */
+
    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree), GTK_TREE_MODEL(_treeStore));
+   g_object_unref(_treeStore); // Unreference the list store as it is now managed by the treeview.
 
-   _dlonlyB =
-      GTK_WIDGET(gtk_builder_get_object(_builder, "checkbutton_download_only"));
-
-   _checkSigsB = GTK_WIDGET(
-      gtk_builder_get_object(_builder, "checkbutton_check_signatures"));
+   GtkWidget *_checkSigsB = GTK_WIDGET(gtk_builder_get_object(_builder, "checkbutton_check_signatures"));
    assert(_checkSigsB);
 #ifdef HAVE_RPM
    bool check = _config->FindB("RPM::GPG-Check", true);
@@ -409,17 +397,13 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    gtk_widget_show(_checkSigsB);
 #endif
 
-   button =
-      GTK_WIDGET(gtk_builder_get_object(_builder, "togglebutton_details"));
-   g_signal_connect(
-      G_OBJECT(button), "clicked", G_CALLBACK(clickedDetails), this);
+   GtkWidget *button = GTK_WIDGET(gtk_builder_get_object(_builder, "togglebutton_details"));
+   g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(clickedDetails), this);
 
    int toInstall, toReInstall, toRemove, toUpgrade, toDowngrade;
    int held, kept, essential, unAuthenticated;
    double sizeChange, dlSize;
    int dlCount;
-   GString *msg = g_string_new("");
-   GString *msg_space = g_string_new("");
 
    lister->getSummary(held,
                       kept,
@@ -432,6 +416,8 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
                       unAuthenticated,
                       sizeChange);
    lister->getDownloadSummary(dlCount, dlSize);
+
+   GString *msg = g_string_new("");
 
 #if 0
    if (held) {
@@ -495,6 +481,14 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    if (msg->str[msg->len - 1] == '\n')
       msg = g_string_truncate(msg, msg->len - 1);
 
+   GtkWidget *_summaryL = GTK_WIDGET(gtk_builder_get_object(_builder, "label_summary"));
+   assert(_summaryL);
+   gtk_label_set_markup(GTK_LABEL(_summaryL), msg->str);
+
+   g_string_free(msg, TRUE);
+
+   GString *msg_space = g_string_new("");
+
    /* this stuff goes to the msg_space string */
    if (sizeChange > 0) {
       g_string_append_printf(msg_space,
@@ -510,10 +504,12 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    g_string_append_printf(
       msg_space, _("\n%s have to be downloaded"), SizeToStr(dlSize).c_str());
 
-   gtk_label_set_markup(GTK_LABEL(_summaryL), msg->str);
+   GtkWidget *_summarySpaceL = GTK_WIDGET(gtk_builder_get_object(_builder, "label_summary_space"));
+   assert(_summarySpaceL);
    gtk_label_set_markup(GTK_LABEL(_summarySpaceL), msg_space->str);
-   g_string_free(msg, TRUE);
+
    g_string_free(msg_space, TRUE);
+
    if (!_config->FindB("Volatile::HideMainwindow", false))
       skipTaskbar(true);
    else

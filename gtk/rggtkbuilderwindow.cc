@@ -163,6 +163,8 @@ bool RGGtkBuilderWindow::setTreeList(const char *widget_name,
    }
 
    gtk_tree_view_set_model(GTK_TREE_VIEW(widget), GTK_TREE_MODEL(store));
+   g_object_unref(store); // Unreference the list store as it is now managed by the treeview.
+
    return true;
 }
 

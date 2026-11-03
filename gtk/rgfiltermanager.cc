@@ -61,10 +61,12 @@ using namespace std;
 //  Origin
 //  Component
 
-RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
-                                             RPackageViewFilter *filterview)
-   : RGGtkBuilderWindow(win, "filters"), _selectedPath(NULL),
-     _selectedFilter(NULL), _filterview(filterview)
+RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win, RPackageViewFilter *filterview)
+   : RGGtkBuilderWindow(win, "filters"),
+     _filterListStore(gtk_list_store_new(N_COLUMNS, G_TYPE_STRING, G_TYPE_POINTER)),
+     _selectedPath(NULL),
+     _selectedFilter(NULL),
+     _filterview(filterview)
 {
    GtkListStore *comboStore;
    GtkTreeIter comboIter;
@@ -176,8 +178,6 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
    _filterEntry = GTK_WIDGET(gtk_builder_get_object(_builder, "entry_filters"));
    _filterList =
       GTK_WIDGET(gtk_builder_get_object(_builder, "treeview_filters"));
-   _filterListStore =
-      gtk_list_store_new(N_COLUMNS, G_TYPE_STRING, G_TYPE_POINTER);
    GtkCellRenderer *renderer;
    GtkTreeViewColumn *column;
 

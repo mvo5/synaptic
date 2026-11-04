@@ -96,10 +96,6 @@ class RPackage
    std::string _defaultCandVer;
 
    bool _notify;
-
-   // Virtual pkgs provided by this one.
-   // FIXME: broken right now
-   // bool isShallowDependency(RPackage *pkg);
    int _boolFlags;
 
  public:
@@ -241,8 +237,7 @@ class RPackage
 
    void setNotify(bool flag = true);
 
-   // Shallow doesnt remove things other pkgs depend on.
-   void setRemoveWithDeps(bool shallow, bool purge = false);
+   void setRemoveWithDeps(bool purge = false);
 
    // mainpulate the candiate version
    bool setVersion(std::string verTag);

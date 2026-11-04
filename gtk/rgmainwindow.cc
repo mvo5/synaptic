@@ -1426,10 +1426,12 @@ void RGMainWindow::pkgRemoveHelper(RPackage *pkg, bool purge, bool withDeps)
          return;
       }
    }
-   if (!withDeps)
+
+   if (!withDeps) {
       pkg->setRemove(purge);
-   else
-      pkg->setRemoveWithDeps(true, false);
+   } else {
+      pkg->setRemoveWithDeps(false);
+   }
 }
 
 void RGMainWindow::pkgKeepHelper(RPackage *pkg)

@@ -65,7 +65,7 @@
 #include <vector>
 
 #ifdef WITH_LUA
-#   include <apt-pkg/luaiface.h>
+#include <apt-pkg/luaiface.h>
 #endif
 
 #include "raptoptions.h"
@@ -76,7 +76,6 @@ static int descrBufferSize = 4096;
 static char *descrBuffer = new char[descrBufferSize];
 
 static char *parseDescription(string descr);
-
 
 RPackage::RPackage(RPackageLister *lister,
                    pkgDepCache *depcache,
@@ -96,19 +95,10 @@ RPackage::RPackage(RPackageLister *lister,
       _defaultCandVer = State.CandVersion;
 }
 
-
 RPackage::~RPackage()
 {
    delete _package;
 }
-
-#if 0
-void RPackage::addVirtualPackage(pkgCache::PkgIterator dep)
-{
-   _virtualPackages.push_back(dep);
-   _provides.push_back(dep.Name());
-}
-#endif
 
 const char *RPackage::section()
 {
@@ -138,7 +128,6 @@ const char *RPackage::srcPackage()
    return name();
 }
 
-
 const char *RPackage::summary()
 {
    static string _summary;
@@ -153,7 +142,6 @@ const char *RPackage::summary()
    }
    return "";
 }
-
 
 const char *RPackage::maintainer()
 {
@@ -217,7 +205,6 @@ pkgCache::VerIterator RPackage::availableVersionIter()
    //       return NULL;
    return State.CandidateVerIter(*_depcache);
 }
-
 
 const char *RPackage::priority()
 {
@@ -320,7 +307,6 @@ string RPackage::findTagFromPkgRecord(const char *tag)
 
    return string();
 }
-
 
 long RPackage::installedSize()
 {
@@ -441,81 +427,6 @@ bool RPackage::isMultiArchDuplicate()
    return (_package->Group().FindPkg() != *_package);
 }
 
-#if 0
-bool RPackage::isWeakDep(pkgCache::DepIterator &dep)
-{
-   if (dep->Type != pkgCache::Dep::Suggests
-       && dep->Type != pkgCache::Dep::Recommends)
-      return false;
-   else
-      return true;
-}
-
-
-bool RPackage::enumWDeps(const char *&type, const char *&what,
-                         bool &satisfied)
-{
-   pkgCache::VerIterator ver;
-   pkgDepCache::StateCache & state = (*_depcache)[*_package];
-
-
-   if (state.Keep() || state.Held()) {
-      ver = (*_depcache)[*_package].InstVerIter(*_depcache);
-
-      if (ver.end())
-         ver = _package->VersionList();
-   } else {
-      ver = _package->VersionList();
-   }
-   if (ver.end())
-      return false;
-
-   _wdepI = ver.DependsList();
-   // uninitialized but doesn't matter, they just have to be equal
-   _wdepStart = _wdepEnd;
-
-   return nextWDeps(type, what, satisfied);
-}
-
-
-bool RPackage::nextWDeps(const char *&type, const char *&what,
-                         bool &satisfied)
-{
-   static char buffer[32];
-
-   while (1) {
-      if (_wdepStart == _wdepEnd) {
-         if (_wdepI.end())
-            return false;
-
-         _wdepI.GlobOr(_wdepStart, _wdepEnd);
-
-         snprintf(buffer, sizeof(buffer), "%s", _wdepEnd.DepType());
-      } else {
-         _wdepStart++;
-
-         snprintf(buffer, sizeof(buffer), "| %s", _wdepEnd.DepType());
-      }
-
-      satisfied = false;
-      if (!isWeakDep(_wdepEnd))
-         continue;
-
-      if (((*_depcache)[_wdepStart] & pkgDepCache::DepGInstall) ==
-          pkgDepCache::DepGInstall)
-         satisfied = true;
-
-      type = buffer;
-
-      pkgCache::PkgIterator depPkg = _wdepStart.TargetPkg();
-      what = depPkg.Name();
-
-      break;
-   }
-   return true;
-}
-#endif
-
 vector<DepInformation> RPackage::enumRDeps()
 {
    vector<DepInformation> deps;
@@ -550,87 +461,6 @@ vector<DepInformation> RPackage::enumRDeps()
    }
    return deps;
 }
-
-#if 0
-bool RPackage::enumRDeps(const char *&dep, const char *&what)
-{
-   _rdepI = _package->RevDependsList();
-
-   _vpackI = 0;
-
-   return nextRDeps(dep, what);
-}
-
-
-bool RPackage::nextRDeps(const char *&dep, const char *&what)
-{
-   while (_rdepI.end()) {
-      if ((unsigned)_vpackI == _virtualPackages.size())
-         return false;
-
-      _rdepI = _virtualPackages[_vpackI].RevDependsList();
-      _vpackI++;
-   }
-   what = _rdepI.TargetPkg().Name();
-   dep = _rdepI.ParentPkg().Name();
-
-   _rdepI++;
-
-   return true;
-}
-#endif
-
-#if 0
-bool RPackage::enumAvailDeps(const char *&type, const char *&what,
-                             const char *&pkg, const char *&which,
-                             char *&summary, bool &satisfied)
-{
-   pkgCache::VerIterator ver;
-   //   pkgDepCache::StateCache & state = (*_depcache)[*_package];
-
-   //ver = _package->VersionList();
-   ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
-
-   if (ver.end())
-      return false;
-
-   _depI = ver.DependsList();
-   // uninitialized but doesn't matter, they just have to be equal
-   _depStart = _depEnd;
-
-   return nextDeps(type, what, pkg, which, summary, satisfied);
-}
-
-
-vector<RPackage *> RPackage::getInstalledDeps()
-{
-   vector < RPackage *>deps;
-   pkgCache::VerIterator ver;
-
-   ver = (*_depcache)[*_package].InstVerIter(*_depcache);
-
-   if (ver.end())
-      ver = _package->VersionList();
-
-   if (ver.end())
-      return deps;
-
-   _depI = ver.DependsList();
-   // uninitialized but doesn't matter, they just have to be equal
-
-   pkgCache::DepIterator depIter = _depI;
-   while (!depIter.end()) {
-      pkgCache::PkgIterator depPkg = depIter.TargetPkg();
-      string name = depPkg.Name();
-      deps.push_back(_lister->getPackage(name));
-      depIter++;
-   }
-
-   return deps;
-}
-
-#endif
-
 
 /* Mostly taken from apt-get.cc:ShowBroken() */
 string RPackage::showWhyInstBroken()
@@ -773,7 +603,6 @@ string RPackage::showWhyInstBroken()
    return out.str();
 }
 
-
 vector<DepInformation> RPackage::enumDeps(bool useCanidateVersion)
 {
    vector<DepInformation> deps;
@@ -893,7 +722,6 @@ void RPackage::setAuto(bool flag)
    _depcache->MarkAuto(*_package, flag);
 }
 
-
 void RPackage::setKeep()
 {
    _depcache->MarkKeep(*_package, false);
@@ -901,7 +729,6 @@ void RPackage::setKeep()
       _lister->notifyChange(this);
    setReInstall(false);
 }
-
 
 void RPackage::setInstall()
 {
@@ -916,7 +743,6 @@ void RPackage::setInstall()
       Fix.Protect(*_package);
       Fix.Resolve(true);
    }
-
 
 #ifdef WITH_LUA
    _lua->SetDepCache(_depcache);
@@ -936,7 +762,6 @@ void RPackage::setReInstall(bool flag)
    if (_notify)
       _lister->notifyChange(this);
 }
-
 
 void RPackage::setRemove(bool purge)
 {
@@ -973,12 +798,9 @@ string RPackage::getScreenshotFile(pkgAcquire *fetcher, bool thumb)
       snprintf(
          uri, 512, "https://screenshots.debian.net/screenshot/%s", name());
 
-   // cerr << "uri is: " << uri << endl;
-
    string filename = RTmpDir() + "/tmp_sh";
    unlink(filename.c_str());
-   new pkgAcqFile(
-      fetcher, uri, HashStringList(), 0, descr, name(), "", filename);
+   new pkgAcqFile(fetcher, uri, HashStringList(), 0, descr, name(), "", filename);
 
    fetcher->Run();
 
@@ -996,12 +818,7 @@ string RPackage::getChangelogFile(pkgAcquire *fetcher)
    // no need to translate this, the changelog is in english anyway
    string filename = RTmpDir() + "/tmp_cl";
 
-   new pkgAcqFile(
-      fetcher, uri, HashStringList(), 0, descr, name(), "", filename);
-   // cerr << "**DEBUG** origin: " << origin() << endl;
-   // cerr << "**DEBUG** uri: " << uri << endl;
-   // cerr << "**DEBUG** filename: " << filename << endl;
-
+   new pkgAcqFile(fetcher, uri, HashStringList(), 0, descr, name(), "", filename);
 
    ofstream out(filename.c_str());
    if (fetcher->Run() == pkgAcquire::Failed) {
@@ -1069,7 +886,6 @@ vector<string> RPackage::getCandidateOriginSiteUrls()
    }
    return res;
 }
-
 
 // "Lock Version" only recorded the pin in synaptic's own private
 // preferences file (RStateDir()/preferences), which apt-get/apt on the
@@ -1144,47 +960,6 @@ void RPackage::setPinned(bool flag)
    }
 }
 
-
-// FIXME: this function is broken right now (and it never really wasn't :/
-#if 0
-bool RPackage::isShallowDependency(RPackage *pkg)
-{
-   pkgCache::DepIterator rdepI;
-
-   // check whether someone else depends on a virtual pkg of this
-   for (int i = -1; i < (int)pkg->_virtualPackages.size(); i++) {
-      if (i < 0) {
-         rdepI = pkg->_package->RevDependsList();
-      } else {
-         pkgCache::PkgIterator it = pkg->_virtualPackages[i];
-         rdepI = it.RevDependsList();
-      }
-
-      while (!rdepI.end()) {
-
-         // check whether the dependant is installed
-         if (rdepI.ParentPkg().CurrentVer().end()) {    // not installed
-            // XXX check whether its marked for install
-            rdepI++;
-            continue;
-         }
-         // check whether the dependant isn't the own package
-         if (rdepI.ParentPkg() == *_package) {
-            rdepI++;
-            continue;
-         }
-         // XXX should check for dependencies that depend on
-         // dependencies of the same package
-
-         return false;
-      }
-   }
-
-   return true;
-}
-#endif
-
-
 // format: first version, second archives
 vector<pair<string, string>> RPackage::getAvailableVersions()
 {
@@ -1210,7 +985,6 @@ vector<pair<string, string>> RPackage::getAvailableVersions()
 
    return versions;
 }
-
 
 bool RPackage::setVersion(string verTag)
 {
@@ -1268,7 +1042,7 @@ vector<string> RPackage::provides()
 /* mvo: actually shallow = false does not make a lot of sense as it
  *      will remove packages very brutally (like removing libc6)
  */
-void RPackage::setRemoveWithDeps(bool shallow, bool purge)
+void RPackage::setRemoveWithDeps(bool purge)
 {
    setRemove();
 
@@ -1278,19 +1052,17 @@ void RPackage::setRemoveWithDeps(bool shallow, bool purge)
 
    deps.GlobOr(start, end);
 
-   while (1) {
+   while (true)
+   {
       if (start == end) {
          deps++;
-         if (deps.end())
-            break;
+         if (deps.end()) break;
          deps.GlobOr(start, end);
       } else {
          start++;
       }
 
-      if (!_depcache->IsImportantDep(start))
-         continue;
-
+      if (!_depcache->IsImportantDep(start)) continue;
 
       pkgCache::PkgIterator depPkg = start.TargetPkg();
 
@@ -1305,25 +1077,16 @@ void RPackage::setRemoveWithDeps(bool shallow, bool purge)
       }
 
       RPackage *depackage = _lister->getPackage(depPkg);
-      // cout << "testing(RPackage): " << depackage->name() << endl;
 
-      if (!depackage)
-         continue;
+      if (!depackage) continue;
 
       // skip important packages
-      if (depackage->getFlags() & FImportant)
-         continue;
+      if (depackage->getFlags() & FImportant) continue;
 
-      // skip dependencies that are dependants of other packages
-      // if shallow=true
-      /*if (shallow && !isShallowDependency(depackage)) {
-         continue;
-      }*/
       // set this package for removal
       depackage->setRemove(purge);
    }
 }
-
 
 // description parser stuff
 static char *debParser(string descr)
@@ -1489,7 +1252,6 @@ string RPackage::component()
 #endif
    return res;
 }
-
 
 string RPackage::label()
 {

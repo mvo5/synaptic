@@ -31,8 +31,11 @@
 
 class RGWindow
 {
- protected:
+ private:
+
    GtkWidget *_win;
+
+ protected:
 
    static gboolean windowCloseCallback(GtkWidget *widget,
                                        GdkEvent *event,

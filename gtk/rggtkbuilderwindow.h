@@ -33,13 +33,37 @@
 class RGGtkBuilderWindow : public RGWindow
 {
  protected:
-   GtkBuilder *_builder;
-   GdkCursor *_busyCursor;
+
+   GtkBuilder *const _builder;
+
+ private:
+
+   GdkCursor *const _busyCursor;
+   GtkWidget *const _win;
+   const gulong onDeleteEventHandlerId;
+
+ protected:
+
+   // If there is an error locating the resource, then the program will be aborted.
+   static GtkWidget *getWindow(GtkBuilder *builder, const std::string_view name);
+
+   // If there is an error locating the resource or parsing the description, then the program will be aborted.
+   static GtkBuilder *getBuilderFromResource(const std::string_view name);
 
  public:
-   RGGtkBuilderWindow(RGWindow *parent,
-                      std::string name,
-                      std::string main_widget = "");
+
+   // The corresponding resource (file) name is window_{name}.ui, and the respective window definition
+   // name in the resource is window_{name}.
+
+   RGGtkBuilderWindow(RGWindow *parent, const std::string &name);
+
+   virtual ~RGGtkBuilderWindow()
+   {
+      g_signal_handler_disconnect(G_OBJECT(_win), onDeleteEventHandlerId);
+      gtk_widget_destroy(_win);
+      g_object_unref(_builder);
+      g_object_unref(_busyCursor);
+   };
 
    void skipTaskbar(bool value)
    {
@@ -56,6 +80,11 @@ class RGGtkBuilderWindow : public RGWindow
    void setTextView(const char *widget_name, const char *value, bool useHeadline = false);
    void setPixmap(const char *widget_name, GdkPixbuf *value);
    void setTreeList(const char *widget_name, const std::vector<std::string> &values, bool useMarkup = false);
+
+   inline GtkWidget *window() const override
+   {
+      return _win;
+   }
 
    inline GtkBuilder *getGtkBuilder() const
    {

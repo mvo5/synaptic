@@ -47,21 +47,17 @@ class RGGtkBuilderWindow : public RGWindow
    }
 
    // show busy cursor over main window
-   void setBusyCursor(bool flag = true);
+   void setBusyCursor(bool isBusy = true);
 
    // functions to set various widgets
-   bool setLabel(const char *name, const char *value);
-   bool setMarkup(const char *widget_name, const char *value);
-   bool setLabel(const char *name, const long value);
-   bool setTextView(const char *widget_name,
-                    const char *value,
-                    bool useHeadline = false);
-   bool setPixmap(const char *widget_name, GdkPixbuf *value);
-   bool setTreeList(const char *widget_name,
-                    std::vector<std::string> values,
-                    bool useMarkup = false);
+   void setLabel(const char *name, const char *value);
+   void setLabel(const char *name, const long value);
+   void setMarkup(const char *widget_name, const char *value);
+   void setTextView(const char *widget_name, const char *value, bool useHeadline = false);
+   void setPixmap(const char *widget_name, GdkPixbuf *value);
+   void setTreeList(const char *widget_name, const std::vector<std::string> &values, bool useMarkup = false);
 
-   GtkBuilder *getGtkBuilder()
+   inline GtkBuilder *getGtkBuilder() const
    {
       return _builder;
    }

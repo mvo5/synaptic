@@ -79,78 +79,55 @@ RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent,
    g_free(main_widget);
 }
 
-bool RGGtkBuilderWindow::setLabel(const char *widget_name, const char *value)
+void RGGtkBuilderWindow::setLabel(const char *widget_name, const char *value)
 {
-   GtkWidget *widget =
-      GTK_WIDGET(gtk_builder_get_object(_builder, widget_name));
+   GtkWidget *widget = GTK_WIDGET(gtk_builder_get_object(_builder, widget_name));
    if (widget == NULL) {
-      cout << "widget == NULL with: " << widget_name << endl;
-      return false;
+      g_error("widget == NULL with: %s", widget_name);
    }
 
    const gchar *utf8value = utf8(value);
-
-   if (!utf8value)
-      utf8value = _("N/A");
+   if (utf8value == nullptr) utf8value = _("N/A");
    gtk_label_set_label(GTK_LABEL(widget), utf8value);
-   return true;
 }
 
-bool RGGtkBuilderWindow::setMarkup(const char *widget_name, const char *value)
+void RGGtkBuilderWindow::setLabel(const char *widget_name, const long value)
 {
-   GtkWidget *widget =
-      GTK_WIDGET(gtk_builder_get_object(_builder, widget_name));
+   GtkWidget *widget = GTK_WIDGET(gtk_builder_get_object(_builder, widget_name));
    if (widget == NULL) {
-      cout << "widget == NULL with: " << widget_name << endl;
-      return false;
+      g_error("widget == NULL with: %s", widget_name);
+   }
+
+   // TRANSLATORS: "N/A" is an abbreviation for "not applicable" (on forms).
+   // It happens when e.g. a package has no installed version (or no downloadable version).
+   string strVal = (value <= 0) ? _("N/A") : SizeToStr(value);
+   gtk_label_set_label(GTK_LABEL(widget), utf8(strVal.c_str()));
+}
+
+void RGGtkBuilderWindow::setMarkup(const char *widget_name, const char *value)
+{
+   GtkWidget *widget = GTK_WIDGET(gtk_builder_get_object(_builder, widget_name));
+   if (widget == NULL) {
+      g_error("widget == NULL with: %s", widget_name);
    }
 
    const gchar *utf8value = utf8(value);
-
-   if (!utf8value)
-      utf8value = _("N/A");
+   if (utf8value == nullptr) utf8value = _("N/A");
    gtk_label_set_markup(GTK_LABEL(widget), utf8value);
-   return true;
 }
 
-bool RGGtkBuilderWindow::setLabel(const char *widget_name, const long value)
+void RGGtkBuilderWindow::setTreeList(const char *widget_name, const vector<string> &values, bool use_markup)
 {
-   string strVal;
-   GtkWidget *widget =
-      GTK_WIDGET(gtk_builder_get_object(_builder, widget_name));
+   GtkWidget *widget = GTK_WIDGET(gtk_builder_get_object(_builder, widget_name));
    if (widget == NULL) {
-      cout << "widget == NULL with: " << widget_name << endl;
-      return false;
-   }
-   // we can never have values of zero or less
-   if (value <= 0)
-      // TRANSLATORS: this is a abbreviation for "not applicable" (on forms)
-      // happens when e.g. a package has no installed version (or no
-      // downloadable version)
-      strVal = _("N/A");
-   else
-      strVal = SizeToStr(value);
-   gtk_label_set_label(GTK_LABEL(widget), utf8(strVal.c_str()));
-   return true;
-}
-
-bool RGGtkBuilderWindow::setTreeList(const char *widget_name,
-                                     vector<string> values,
-                                     bool use_markup)
-{
-   GtkWidget *widget =
-      GTK_WIDGET(gtk_builder_get_object(_builder, widget_name));
-   if (widget == NULL) {
-      cout << "widget == NULL with: " << widget_name << endl;
-      return false;
+      g_error("widget == NULL with: %s", widget_name);
    }
 
    // create column (if needed)
    if (gtk_tree_view_get_column(GTK_TREE_VIEW(widget), 0) == NULL) {
-      GtkCellRenderer *renderer = gtk_cell_renderer_text_new(); // cell renderer
+      GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
       const char *type = use_markup ? "markup" : "text";
-      GtkTreeViewColumn *column = gtk_tree_view_column_new_with_attributes(
-         "SubView", renderer, type, 0, NULL);
+      GtkTreeViewColumn *column = gtk_tree_view_column_new_with_attributes("SubView", renderer, type, 0, NULL);
       gtk_tree_view_append_column(GTK_TREE_VIEW(widget), column);
    }
 
@@ -160,66 +137,48 @@ bool RGGtkBuilderWindow::setTreeList(const char *widget_name,
    }
    gtk_tree_view_set_model(GTK_TREE_VIEW(widget), GTK_TREE_MODEL(store));
    g_object_unref(store); // Unreference the list store as it is now managed by the treeview.
-
-   return true;
 }
 
-bool RGGtkBuilderWindow::setTextView(const char *widget_name,
-                                     const char *value,
-                                     bool use_headline)
+void RGGtkBuilderWindow::setTextView(const char *widget_name, const char *value, bool use_headline)
 {
-   GtkTextIter start, end;
-
-   GtkWidget *view = GTK_WIDGET(gtk_builder_get_object(_builder, widget_name));
+   GtkTextView *view = GTK_TEXT_VIEW(gtk_builder_get_object(_builder, widget_name));
    if (view == NULL) {
-      cout << "textview == NULL with: " << widget_name << endl;
-      return false;
+      g_error("textview == NULL with: %s", widget_name);
    }
 
-   GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(view));
+   GtkTextBuffer *buffer = gtk_text_view_get_buffer(view);
    const gchar *utf8value = utf8(value);
-   if (!utf8value)
-      utf8value = _("N/A");
+   if (utf8value == nullptr) utf8value = _("N/A");
    gtk_text_buffer_set_text(buffer, utf8value, -1);
+
+   GtkTextIter start, end;
 
    if (use_headline) {
       GtkTextTagTable *tag_table = gtk_text_buffer_get_tag_table(buffer);
       if (gtk_text_tag_table_lookup(tag_table, "bold") == NULL) {
-         gtk_text_buffer_create_tag(
-            buffer, "bold", "weight", PANGO_WEIGHT_BOLD, "scale", 1.1, NULL);
+         gtk_text_buffer_create_tag(buffer, "bold", "weight", PANGO_WEIGHT_BOLD, "scale", 1.1, NULL);
       }
       gtk_text_buffer_get_iter_at_offset(buffer, &start, 0);
-
       gtk_text_buffer_get_iter_at_offset(buffer, &end, 0);
       gtk_text_iter_forward_line(&end);
-
       gtk_text_buffer_apply_tag_by_name(buffer, "bold", &start, &end);
    }
 
    gtk_text_buffer_get_iter_at_offset(buffer, &start, 0);
-   gtk_text_view_scroll_to_iter(GTK_TEXT_VIEW(view), &start, 0, FALSE, 0, 0);
-   return true;
+   gtk_text_view_scroll_to_iter(view, &start, 0, FALSE, 0, 0);
 }
 
-bool RGGtkBuilderWindow::setPixmap(const char *widget_name, GdkPixbuf *value)
+void RGGtkBuilderWindow::setPixmap(const char *widget_name, GdkPixbuf *value)
 {
    GtkWidget *pix = GTK_WIDGET(gtk_builder_get_object(_builder, widget_name));
    if (pix == NULL) {
-      cout << "textview == NULL with: " << widget_name << endl;
-      return false;
+      g_error("textview == NULL with: %s", widget_name);
    }
-   gtk_image_set_from_pixbuf(GTK_IMAGE(pix), value);
 
-   return true;
+   gtk_image_set_from_pixbuf(GTK_IMAGE(pix), value);
 }
 
-void RGGtkBuilderWindow::setBusyCursor(bool flag)
+void RGGtkBuilderWindow::setBusyCursor(bool isBusy)
 {
-   if (flag) {
-      if (gtk_widget_get_visible(_win))
-         gdk_window_set_cursor(gtk_widget_get_window(window()), _busyCursor);
-   } else {
-      if (gtk_widget_get_visible(_win))
-         gdk_window_set_cursor(gtk_widget_get_window(window()), NULL);
-   }
+   gdk_window_set_cursor(gtk_widget_get_window(window()), (isBusy) ? _busyCursor : NULL);
 }

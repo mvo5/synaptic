@@ -32,51 +32,44 @@
 #include <cassert>
 #include <cstddef>
 #include <gtk/gtk.h>
-#include <iostream>
 #include <string>
 #include <vector>
 
 using namespace std;
 
-/*  the convention is that the top window is named:
-   "window_$windowname" in your gtkbuilder-source
-*/
-RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent,
-                                       string name,
-                                       string mainName)
+// If there is an error locating the resource, then the program will be aborted.
+GtkWidget *RGGtkBuilderWindow::getWindow(GtkBuilder *builder, const std::string_view name)
 {
-   _busyCursor =
-      gdk_cursor_new_for_display(gdk_display_get_default(), GDK_WATCH);
-   _builder = gtk_builder_new();
+   std::string windowName = std::format("window_{}", name);
+   GtkWidget *window = GTK_WIDGET(gtk_builder_get_object(builder, windowName.c_str()));
+   assert(window != nullptr);
+   return window;
+}
 
-   gchar *main_widget = NULL;
-   GError *error = NULL;
+// If there is an error locating the resource or parsing the description, then the program will be aborted.
+GtkBuilder *RGGtkBuilderWindow::getBuilderFromResource(const std::string_view name)
+{
+   std::string resource_path = std::format("/io/github/mvo5/synaptic/ui/window_{}.ui", name);
+   return gtk_builder_new_from_resource(resource_path.c_str());
+}
 
-   if (mainName.empty())
-      main_widget = g_strdup_printf("window_%s", name.c_str());
-   else
-      main_widget = g_strdup_printf("window_%s", mainName.c_str());
+// The corresponding resource (file) is name window_{name}..ui, and the respective window definition
+// in the resource is names window_{name}.
 
-   std::string resource_path =
-      "/io/github/mvo5/synaptic/ui/window_" + name + ".ui";
-   if (!gtk_builder_add_from_resource(
-          _builder, resource_path.c_str(), &error)) {
-      g_warning("Couldn't load builder resource: %s", error->message);
-      g_error_free(error);
+RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent, const string &name)
+   : _builder(getBuilderFromResource(name)),
+     _busyCursor(gdk_cursor_new_for_display(gdk_display_get_default(), GDK_WATCH)),
+     _win(getWindow(_builder, name)),
+     onDeleteEventHandlerId(g_signal_connect(G_OBJECT(_win), "delete-event", G_CALLBACK(onDeleteEventCallback), this))
+{
+   assert(_busyCursor != nullptr);
+
+   if (parent != NULL) {
+      gtk_window_set_transient_for(GTK_WINDOW(_win), GTK_WINDOW(parent->window()));
    }
-
-   _win = GTK_WIDGET(gtk_builder_get_object(_builder, main_widget));
-   assert(_win);
-   init();
-
-   if (parent != NULL)
-      gtk_window_set_transient_for(GTK_WINDOW(_win),
-                                   GTK_WINDOW(parent->window()));
 
    gtk_window_set_position(GTK_WINDOW(_win), GTK_WIN_POS_CENTER_ON_PARENT);
    gtk_window_set_icon_name(GTK_WINDOW(_win), "synaptic");
-
-   g_free(main_widget);
 }
 
 void RGGtkBuilderWindow::setLabel(const char *widget_name, const char *value)

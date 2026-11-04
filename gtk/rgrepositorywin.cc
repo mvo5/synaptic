@@ -162,14 +162,14 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
    : RGGtkBuilderWindow(parent, "repositories"), _dirty(false)
 {
    // cout << "RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)"<<endl;
-   assert(_win);
-   _userDialog = new RGUserDialog(_win);
+   assert(window());
+   _userDialog = new RGUserDialog(window());
    _applied = false;
    _lastIter = NULL;
 
    setTitle(_("Repositories"));
-   gtk_window_set_modal(GTK_WINDOW(_win), TRUE);
-   // gtk_window_set_policy(GTK_WINDOW(_win), TRUE, TRUE, FALSE);
+   gtk_window_set_modal(GTK_WINDOW(window()), TRUE);
+   // gtk_window_set_policy(GTK_WINDOW(window()), TRUE, TRUE, FALSE);
 
    // build gtktreeview
    _sourcesListStore = gtk_list_store_new(N_SOURCES_COLUMNS,
@@ -419,7 +419,7 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
       GTK_WIDGET(gtk_builder_get_object(_builder, "label_source_hint"));
    assert(_hintLabel);
 
-   gtk_window_resize(GTK_WINDOW(_win), 620, 400);
+   gtk_window_resize(GTK_WINDOW(window()), 620, 400);
    skipTaskbar(true);
    show();
 }
@@ -427,7 +427,7 @@ RGRepositoryEditor::RGRepositoryEditor(RGWindow *parent)
 
 RGRepositoryEditor::~RGRepositoryEditor()
 {
-   // gtk_widget_destroy(_win);
+   // gtk_widget_destroy(window());
    delete _userDialog;
 }
 

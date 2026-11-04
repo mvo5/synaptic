@@ -54,12 +54,12 @@ class RGWindow
 
    inline virtual void hide()
    {
-      gtk_widget_hide(_win);
+      gtk_widget_hide(window());
    }
 
    inline virtual void show()
    {
-      gtk_widget_show(_win);
+      gtk_widget_show(window());
    }
 
    explicit RGWindow(RGWindow *parent, std::string name);

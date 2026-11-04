@@ -59,7 +59,7 @@ RGChangesWindow::RGChangesWindow(RGWindow *wwin)
    gtk_tree_view_append_column(GTK_TREE_VIEW(_tree), column);
    gtk_widget_show(_tree);
 
-   gtk_dialog_set_default_response(GTK_DIALOG(_win), GTK_RESPONSE_OK);
+   gtk_dialog_set_default_response(GTK_DIALOG(window()), GTK_RESPONSE_OK);
 }
 
 void RGChangesWindow::confirm(RPackageLister *lister,

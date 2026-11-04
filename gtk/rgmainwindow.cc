@@ -876,8 +876,8 @@ RGMainWindow::RGMainWindow(GtkApplication *app,
      _treeView(0), _tasksWin(0), _iconLegendPanel(0), _pkgDetails(0),
      _logView(0), _installProgress(0), _fetchProgress(0), _fastSearchEventID(-1)
 {
-   assert(_win);
-   gtk_application_add_window(GTK_APPLICATION(app), GTK_WINDOW(_win));
+   assert(window());
+   gtk_application_add_window(GTK_APPLICATION(app), GTK_WINDOW(window()));
 
    const GActionEntry entries[] = {
       {"read-markings", cbOpenClicked},
@@ -931,10 +931,10 @@ RGMainWindow::RGMainWindow(GtkApplication *app,
    g_action_map_add_action_entries(
       G_ACTION_MAP(group), entries, G_N_ELEMENTS(entries), this);
    gtk_widget_insert_action_group(
-      GTK_WIDGET(_win), "win", G_ACTION_GROUP(group));
+      GTK_WIDGET(window()), "win", G_ACTION_GROUP(group));
 
    GtkAccelGroup *accel_group = gtk_accel_group_new();
-   gtk_window_add_accel_group(GTK_WINDOW(_win), accel_group);
+   gtk_window_add_accel_group(GTK_WINDOW(window()), accel_group);
    setActionShortcut(this, accel_group, "quit", GDK_KEY_Q, GDK_CONTROL_MASK);
    setActionShortcut(this, accel_group, "undo", GDK_KEY_Z, GDK_CONTROL_MASK);
    setActionShortcut(this, accel_group, "redo", GDK_KEY_Z, GDK_SHIFT_MASK);
@@ -1123,18 +1123,18 @@ void RGMainWindow::buildInterface()
    GtkWidget *widget;
 
    // here is a pointer to rgmainwindow for every widget that needs it
-   g_object_set_data(G_OBJECT(_win), "me", this);
+   g_object_set_data(G_OBJECT(window()), "me", this);
 
-   gtk_window_set_icon_name(GTK_WINDOW(_win), "synaptic");
+   gtk_window_set_icon_name(GTK_WINDOW(window()), "synaptic");
 
-   gtk_window_resize(GTK_WINDOW(_win),
+   gtk_window_resize(GTK_WINDOW(window()),
                      _config->FindI("Synaptic::windowWidth", 640),
                      _config->FindI("Synaptic::windowHeight", 480));
-   gtk_window_move(GTK_WINDOW(_win),
+   gtk_window_move(GTK_WINDOW(window()),
                    _config->FindI("Synaptic::windowX", 100),
                    _config->FindI("Synaptic::windowY", 100));
    if (_config->FindB("Synaptic::Maximized", false))
-      gtk_window_maximize(GTK_WINDOW(_win));
+      gtk_window_maximize(GTK_WINDOW(window()));
    RGFlushInterface();
 
    if (_fastSearchCssProvider == NULL) {
@@ -1371,13 +1371,13 @@ void RGMainWindow::buildInterface()
 
 bool RGMainWindow::isActionEnabled(const char *action_name)
 {
-   GActionGroup *win_actions = gtk_widget_get_action_group(_win, "win");
+   GActionGroup *win_actions = gtk_widget_get_action_group(window(), "win");
    return g_action_group_get_action_enabled(win_actions, action_name);
 }
 
 void RGMainWindow::setActionEnabled(const char *action_name, bool enabled)
 {
-   GActionGroup *win_actions = gtk_widget_get_action_group(_win, "win");
+   GActionGroup *win_actions = gtk_widget_get_action_group(window(), "win");
    GAction *action =
       g_action_map_lookup_action(G_ACTION_MAP(win_actions), action_name);
    g_simple_action_set_enabled(G_SIMPLE_ACTION(action), enabled);
@@ -1385,7 +1385,7 @@ void RGMainWindow::setActionEnabled(const char *action_name, bool enabled)
 
 void RGMainWindow::setActionState(const char *action_name, GVariant *value)
 {
-   GActionGroup *win_actions = gtk_widget_get_action_group(_win, "win");
+   GActionGroup *win_actions = gtk_widget_get_action_group(window(), "win");
    GAction *action =
       g_action_map_lookup_action(G_ACTION_MAP(win_actions), action_name);
    g_simple_action_set_state(G_SIMPLE_ACTION(action), value);
@@ -1393,7 +1393,7 @@ void RGMainWindow::setActionState(const char *action_name, GVariant *value)
 
 void RGMainWindow::activateAction(const char *action_name, GVariant *value)
 {
-   GActionGroup *win_actions = gtk_widget_get_action_group(_win, "win");
+   GActionGroup *win_actions = gtk_widget_get_action_group(window(), "win");
    g_action_group_activate_action(win_actions, action_name, value);
 }
 
@@ -1518,15 +1518,15 @@ void RGMainWindow::saveState()
                 gtk_paned_get_position(GTK_PANED(hpaned)));
 
    GtkAllocation allocation;
-   gtk_widget_get_allocation(_win, &allocation);
+   gtk_widget_get_allocation(window(), &allocation);
    _config->Set("Synaptic::windowWidth", allocation.width);
    _config->Set("Synaptic::windowHeight", allocation.height);
    gint x, y;
-   gtk_window_get_position(GTK_WINDOW(_win), &x, &y);
+   gtk_window_get_position(GTK_WINDOW(window()), &x, &y);
    _config->Set("Synaptic::windowX", x);
    _config->Set("Synaptic::windowY", y);
    _config->Set("Synaptic::ToolbarState", (int)_toolbarStyle);
-   if (gdk_window_get_state(gtk_widget_get_window(_win)) &
+   if (gdk_window_get_state(gtk_widget_get_window(window())) &
        GDK_WINDOW_STATE_MAXIMIZED)
       _config->Set("Synaptic::Maximized", true);
    else
@@ -1602,9 +1602,9 @@ void RGMainWindow::setInterfaceLocked(bool flag)
       if (_interfaceLocked > 1)
          return;
 
-      gtk_widget_set_sensitive(_win, FALSE);
-      if (gtk_widget_get_visible(_win))
-         gdk_window_set_cursor(gtk_widget_get_window(_win), _busyCursor);
+      gtk_widget_set_sensitive(window(), FALSE);
+      if (gtk_widget_get_visible(window()))
+         gdk_window_set_cursor(gtk_widget_get_window(window()), _busyCursor);
    } else {
       assert(_interfaceLocked > 0);
 
@@ -1612,9 +1612,9 @@ void RGMainWindow::setInterfaceLocked(bool flag)
       if (_interfaceLocked > 0)
          return;
 
-      gtk_widget_set_sensitive(_win, TRUE);
-      if (gtk_widget_get_visible(_win))
-         gdk_window_set_cursor(gtk_widget_get_window(_win), NULL);
+      gtk_widget_set_sensitive(window(), TRUE);
+      if (gtk_widget_get_visible(window()))
+         gdk_window_set_cursor(gtk_widget_get_window(window()), NULL);
    }
 
    // fast enough with the new fixed-height mode
@@ -2068,7 +2068,7 @@ void RGMainWindow::cbShowSourcesWindow(GSimpleAction *action,
       argv[1] = "-n";
       argv[2] = "-t";
       argv[3] = g_strdup_printf(
-         "%lu", GDK_WINDOW_XID(gtk_widget_get_window(me->_win)));
+         "%lu", GDK_WINDOW_XID(gtk_widget_get_window(me->window())));
       argv[4] = NULL;
       g_spawn_async(NULL,
                     const_cast<char **>(argv),

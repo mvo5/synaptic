@@ -63,7 +63,7 @@ RGWindow::~RGWindow()
 
 void RGWindow::setTitle(std::string title)
 {
-   gtk_window_set_title(GTK_WINDOW(_win), (char *)title.c_str());
+   gtk_window_set_title(GTK_WINDOW(window()), (char *)title.c_str());
 }
 
 void RGWindow::close()

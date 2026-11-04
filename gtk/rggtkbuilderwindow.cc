@@ -67,7 +67,8 @@ RGGtkBuilderWindow::RGGtkBuilderWindow(RGWindow *parent,
 
    _win = GTK_WIDGET(gtk_builder_get_object(_builder, main_widget));
    assert(_win);
-   init();
+
+   g_signal_connect(G_OBJECT(_win), "delete-event", G_CALLBACK(onDeleteEventCallback), this);
 
    if (parent != NULL)
       gtk_window_set_transient_for(GTK_WINDOW(_win),

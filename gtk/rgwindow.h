@@ -34,16 +34,13 @@ class RGWindow
  protected:
 
    GtkWidget *_win;
+   gulong _onDeleteEventHandlerId;
 
-   static gboolean windowCloseCallback(GtkWidget *widget,
-                                       GdkEvent *event,
-                                       gpointer data);
+   static gboolean onDeleteEventCallback(GtkWidget *widget, GdkEvent *event, RGWindow *self);
    virtual void close();
 
-   void init();
-
    // Constructor called by classes which create their own window object.
-   RGWindow() : _win(nullptr)
+   RGWindow() : _win(nullptr), _onDeleteEventHandlerId(0)
    {}
 
  public:
@@ -54,6 +51,7 @@ class RGWindow
    {
       if (_win != nullptr)
       {
+         if (_onDeleteEventHandlerId != 0) g_signal_handler_disconnect(_win, _onDeleteEventHandlerId);
          gtk_widget_destroy(_win);
       }
    }

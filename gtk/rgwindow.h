@@ -32,6 +32,7 @@
 class RGWindow
 {
  protected:
+
    GtkWidget *_win;
 
    static gboolean windowCloseCallback(GtkWidget *widget,
@@ -41,10 +42,22 @@ class RGWindow
 
    void init();
 
+   // Constructor called by classes which create their own window object.
    RGWindow() : _win(nullptr)
    {}
 
  public:
+
+   explicit RGWindow(RGWindow *parent, std::string name);
+
+   virtual ~RGWindow()
+   {
+      if (_win != nullptr)
+      {
+         gtk_widget_destroy(_win);
+      }
+   }
+
    inline virtual GtkWidget *window()
    {
       return _win;
@@ -61,7 +74,4 @@ class RGWindow
    {
       gtk_widget_show(window());
    }
-
-   explicit RGWindow(RGWindow *parent, std::string name);
-   virtual ~RGWindow();
 };

@@ -45,7 +45,6 @@ void RGWindow::init()
       G_OBJECT(_win), "delete-event", G_CALLBACK(windowCloseCallback), this);
 }
 
-
 RGWindow::RGWindow(RGWindow *parent, std::string name)
 {
    _win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -54,11 +53,6 @@ RGWindow::RGWindow(RGWindow *parent, std::string name)
    init();
 
    gtk_window_set_transient_for(GTK_WINDOW(_win), GTK_WINDOW(parent->window()));
-}
-
-RGWindow::~RGWindow()
-{
-   gtk_widget_destroy(_win);
 }
 
 void RGWindow::setTitle(std::string title)

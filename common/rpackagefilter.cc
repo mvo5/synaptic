@@ -197,12 +197,12 @@ bool RPatternPackageFilter::filterDescription(Pattern pat, RPackage *pkg)
 {
    bool found = true;
    const char *s1 = pkg->summary();
-   const char *s2 = pkg->description();
+   std::string s2 = pkg->description();
    for (unsigned int i = 0; i < pat.regexps.size(); i++) {
       if (regexec(pat.regexps[i], s1, 0, NULL, 0) == 0) {
          found &= true;
       } else {
-         if (regexec(pat.regexps[i], s2, 0, NULL, 0) == 0)
+         if (regexec(pat.regexps[i], s2.c_str(), 0, NULL, 0) == 0)
             found &= true;
          else
             found = false;

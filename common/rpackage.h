@@ -143,7 +143,7 @@ class RPackage
    const char *priority();
 
    const char *summary();
-   const char *description();
+   std::string description() const;
 
 #ifndef HAVE_RPM
    std::string installedFiles();

@@ -444,8 +444,8 @@ static void gtk_pkg_list_get_value(GtkTreeModel *tree_model,
          g_value_set_string(value, str);
          break;
       case DESCR_COLUMN:
-         str = utf8(pkg->summary());
-         g_value_set_string(value, str);
+         std::string str = utf8(pkg->summary());
+         g_value_set_string(value, str.c_str());
          break;
       case PKG_COLUMN:
          g_value_set_pointer(value, pkg);

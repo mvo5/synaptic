@@ -138,22 +138,17 @@ const char *RPackage::srcPackage()
    return name();
 }
 
-
-const char *RPackage::summary()
+std::string RPackage::summary() const
 {
-   static string _summary;
-
-   pkgCache::VerIterator ver =
-      (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if (!ver.end()) {
       pkgCache::DescIterator Desc = ver.TranslatedDescription();
       pkgRecords::Parser &parser = _records->Lookup(Desc.FileList());
-      _summary = parser.ShortDesc();
-      return _summary.c_str();
+      return parser.ShortDesc();
+   } else {
+      return "";
    }
-   return "";
 }
-
 
 const char *RPackage::maintainer()
 {

@@ -142,7 +142,7 @@ class RPackage
    const char *section();
    const char *priority();
 
-   const char *summary();
+   std::string summary() const;
    const char *description();
 
 #ifndef HAVE_RPM

@@ -251,7 +251,7 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
       g_free(str);
    }
 
-   char *pkg_summary = g_strdup_printf("%s\n%s", pkg->name(), pkg->summary());
+   char *pkg_summary = g_strdup_printf("%s\n%s", pkg->name(), pkg->summary().c_str());
    me->setTextView("textview_pkgcommon", pkg_summary, true);
    g_free(pkg_summary);
 
@@ -304,13 +304,16 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
       gtk_text_buffer_create_tag(
          buf, "bold", "weight", PANGO_WEIGHT_BOLD, "scale", 1.1, NULL);
    }
-   // set summary
-   s = utf8(pkg->summary());
+
    gtk_text_buffer_get_start_iter(buf, &it);
-   gtk_text_buffer_insert(buf, &it, s, -1);
+
+   // set summary
+   string summary = utf8(pkg->summary());
+   gtk_text_buffer_insert(buf, &it, summary.c_str(), -1);
    gtk_text_buffer_get_start_iter(buf, &start);
    gtk_text_buffer_apply_tag_by_name(buf, "bold", &start, &it);
-   // set emblems
+
+          // set emblems
    GdkPixbuf *supported = RGPackageStatus::pkgStatus.getSupportedPix(pkg);
    if (supported != NULL) {
       // insert space

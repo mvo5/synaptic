@@ -414,7 +414,7 @@ static void gtk_tag_tree_get_value(GtkTreeModel *tree_model,
       case DESCR_COLUMN:
          if (pkg == NULL)
             return;
-         str = utf8(pkg->summary());
+         str = utf8(pkg->summary().c_str());
          g_value_set_string(value, str);
          break;
       case PKG_COLUMN:

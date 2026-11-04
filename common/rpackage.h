@@ -197,7 +197,7 @@ class RPackage
    std::string getRawRecord(bool useCandidateVersion = true);
 
    // sourcepkg
-   const char *srcPackage();
+   std::string srcPackage() const;
 
    // relative to version that would be installed
    const char *availableVersion();

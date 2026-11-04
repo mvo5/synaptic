@@ -154,14 +154,10 @@ bool RGGtkBuilderWindow::setTreeList(const char *widget_name,
       gtk_tree_view_append_column(GTK_TREE_VIEW(widget), column);
    }
 
-   // store stuff
    GtkListStore *store = gtk_list_store_new(1, G_TYPE_STRING);
-   GtkTreeIter iter;
-   for (unsigned int i = 0; i < values.size(); i++) {
-      gtk_list_store_append(store, &iter);
-      gtk_list_store_set(store, &iter, 0, utf8(values[i].c_str()), -1);
+   for (const string &value : values) {
+      gtk_list_store_insert_with_values(store, nullptr, -1, 0, utf8(value.c_str()), -1);
    }
-
    gtk_tree_view_set_model(GTK_TREE_VIEW(widget), GTK_TREE_MODEL(store));
    g_object_unref(store); // Unreference the list store as it is now managed by the treeview.
 

@@ -419,18 +419,6 @@ int RPackage::getFlags()
    return flags | _boolFlags;
 }
 
-const char *RPackage::name()
-{
-#ifdef WITH_APT_MULTIARCH_SUPPORT
-   return fullname.c_str();
-#else
-   const char *s = _package->Name();
-   if (s == NULL)
-      return "";
-   return s;
-#endif
-}
-
 bool RPackage::isMultiArchDuplicate()
 {
    // Installed packages are never "hidden"

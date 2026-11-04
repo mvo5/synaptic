@@ -36,6 +36,7 @@
 #include <apt-pkg/configuration.h>
 #include <cstdio>
 #include <cstdlib>
+#include <format>
 #include <gtk/gtk.h>
 #include <map>
 #include <string.h>
@@ -174,20 +175,15 @@ void RGInstallProgress::finishUpdate()
 
 void RGInstallProgress::prepare(RPackageLister *lister)
 {
-   for (unsigned int row = 0; row < lister->packagesSize(); row++) {
-      RPackage *elem = lister->getPackage(row);
-
-      // Is it going to be seen?
-      if (!(elem->getFlags() & RPackage::FInstall))
-         continue;
-
-      const char *name = elem->name();
-      const char *ver = elem->availableVersion();
-      const char *pos = strchr(ver, ':');
-      if (pos)
-         ver = pos + 1;
-      string namever = string(name) + "-" + string(ver);
-      _summaryMap[namever] = elem->summary();
+   for (RPackage *package : lister->getPackages()) {
+      if ((package->getFlags() & RPackage::FInstall) != 0)
+      {  // The package is to be installed: Show it!
+         const char *ver = package->availableVersion();
+         const char *pos = strchr(ver, ':');
+         if (pos != nullptr) ver = pos + 1;
+         string namever = std::format("{}-{}", package->name(), ver);
+         _summaryMap[namever] = package->summary();
+      }
    }
 }
 

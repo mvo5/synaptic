@@ -24,6 +24,7 @@
 
 #include "rgwindow.h"
 
+#include <cassert>
 #include <gtk/gtk.h>
 #include <string>
 
@@ -33,20 +34,17 @@ gboolean RGWindow::onDeleteEventCallback(GtkWidget *window, GdkEvent *event, RGW
    return true;   // Return TRUE to prevent the default close/destroy behavior.
 }
 
-RGWindow::RGWindow(RGWindow *parent, std::string name)
+GtkWidget *RGWindow::newWindow(RGWindow *parent, const std::string &name)
 {
-   _win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-   gtk_window_set_title(GTK_WINDOW(_win), (char *)name.c_str());
-   _onDeleteEventHandlerId = g_signal_connect(G_OBJECT(_win), "delete-event", G_CALLBACK(onDeleteEventCallback), this);
-   gtk_window_set_transient_for(GTK_WINDOW(_win), GTK_WINDOW(parent->window()));
+   GtkWidget *win = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+   assert(win != nullptr);
+   gtk_window_set_title(GTK_WINDOW(win), name.c_str());
+   gtk_window_set_transient_for(GTK_WINDOW(win), GTK_WINDOW(parent->window()));
+   return win;
 }
 
-void RGWindow::setTitle(std::string title)
+RGWindow::RGWindow(RGWindow *parent, const std::string &name) :
+   _win(newWindow(parent, name)),
+   _onDeleteEventHandlerId(g_signal_connect(G_OBJECT(_win), "delete-event", G_CALLBACK(onDeleteEventCallback), this))
 {
-   gtk_window_set_title(GTK_WINDOW(window()), (char *)title.c_str());
-}
-
-void RGWindow::close()
-{
-   hide();
 }

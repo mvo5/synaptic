@@ -31,13 +31,21 @@
 
 class RGWindow
 {
+ private:
+
+   static GtkWidget *newWindow(RGWindow *parent, const std::string &name);
+
  protected:
 
    GtkWidget *_win;
-   gulong _onDeleteEventHandlerId;
+   const gulong _onDeleteEventHandlerId;
 
    static gboolean onDeleteEventCallback(GtkWidget *widget, GdkEvent *event, RGWindow *self);
-   virtual void close();
+
+   inline virtual void close()
+   {
+      hide();
+   }
 
    // Constructor called by classes which create their own window object.
    RGWindow() : _win(nullptr), _onDeleteEventHandlerId(0)
@@ -45,7 +53,7 @@ class RGWindow
 
  public:
 
-   explicit RGWindow(RGWindow *parent, std::string name);
+   explicit RGWindow(RGWindow *parent, const std::string &name);
 
    virtual ~RGWindow()
    {
@@ -56,12 +64,15 @@ class RGWindow
       }
    }
 
-   inline virtual GtkWidget *window()
+   inline virtual GtkWidget *window() const
    {
       return _win;
    }
 
-   virtual void setTitle(std::string title);
+   inline virtual void setTitle(const std::string &title)
+   {
+      gtk_window_set_title(GTK_WINDOW(window()), title.c_str());
+   }
 
    inline virtual void hide()
    {

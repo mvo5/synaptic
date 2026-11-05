@@ -39,6 +39,7 @@
 #include <apt-pkg/configuration.h>
 #include <cassert>
 #include <cstring>
+#include <format>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gdk/gdk.h>
 #include <glib-object.h>
@@ -393,33 +394,19 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
 
 #ifndef HAVE_RPM
    // file list
-   gtk_widget_show(GTK_WIDGET(
-      gtk_builder_get_object(me->getGtkBuilder(), "scrolledwindow_filelist")));
+   gtk_widget_show(GTK_WIDGET(gtk_builder_get_object(me->getGtkBuilder(), "scrolledwindow_filelist")));
    me->setTextView("textview_files", pkg->installedFiles().c_str());
 #endif
 
    // versions
-   gchar *str;
-   vector<string> list;
-   vector<pair<string, string>> versions = pkg->getAvailableVersions();
-   for (int i = 0; i < versions.size(); i++) {
-      // TRANSLATORS: this the format of the available versions in
-      // the "Properties/Available versions" window
-      // e.g. "0.56 (unstable)"
-      //      "0.53.4 (testing)"
-      str = g_strdup_printf(
-         _("%s (%s)"), versions[i].first.c_str(), versions[i].second.c_str());
-      list.push_back(str);
-      g_free(str);
-   }
-   me->setTreeList("treeview_versions", list);
+   vector<string> versions;
 
-   /*
-   g_signal_connect(gtk_builder_get_object
-                    (me->getGtkBuilder(), "combobox_depends"),
-                    "changed",
-                    G_CALLBACK(cbDependsMenuChanged), me);
-   */
+   for (const pair<string, string> &version : pkg->getAvailableVersions()) {
+      string str = format("{} ({})", version.first, version.second);
+      versions.push_back(str);
+   }
+
+   me->setTreeList("treeview_versions", versions);
 }
 
 void RGPkgDetailsWindow::cbDependsMenuChanged(GtkWidget *self, void *data)

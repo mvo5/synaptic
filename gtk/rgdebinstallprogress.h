@@ -116,6 +116,7 @@ class RGDebInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    GtkCssProvider *_cssProvider;
 
  protected:
+
    virtual void close() override;
 
    virtual void prepare(RPackageLister *lister);
@@ -126,18 +127,15 @@ class RGDebInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    static void cbCancel(GtkWidget *self, void *data);
    static void cbClose(GtkWidget *self, void *data);
    static void content_changed(GObject *object, gpointer user_data);
-   static void expander_callback(GObject *object,
-                                 GParamSpec *param_spec,
-                                 gpointer user_data);
-   static gboolean key_press_event(GtkWidget *widget,
-                                   GdkEventKey *event,
-                                   gpointer user_data);
-   static gboolean cbTerminalClicked(GtkWidget *widget,
-                                     GdkEventButton *event,
-                                     gpointer user_data);
+   static gboolean key_press_event(GtkWidget *widget, GdkEventKey *event, gpointer user_data);
+   static gboolean cbTerminalClicked(GtkWidget *widget, GdkEventButton *event, gpointer user_data);
    static void cbMenuitemClicked(GtkMenuItem *menuitem, gpointer user_data);
+   static void cbExpandedChanged(GtkExpander *expander, GParamSpec *param_spec, RGDebInstallProgress *self);
+
+   static gboolean resizeDialog(gpointer user_data);
 
  public:
+
    RGDebInstallProgress(RGMainWindow *main, RPackageLister *lister);
    virtual ~RGDebInstallProgress();
 

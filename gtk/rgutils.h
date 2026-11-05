@@ -53,6 +53,7 @@ void gtk_get_color_from_string(const char *cpp, GdkRGBA **colp);
 
 const char *utf8_to_locale(const char *str);
 const char *utf8(const char *str);
+std::string utf8(const std::string& str);
 
 std::string SizeToStr(double Bytes);
 bool RunAsSudoUserCommand(std::vector<const gchar *> cmd);

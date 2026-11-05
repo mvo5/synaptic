@@ -172,9 +172,6 @@ class RPackage
    // get origin "origin" release header (e.g. Ubuntu,
    std::string getCandidateOriginStr();
 
-   // get the release file for the givel origin label string
-   std::string getReleaseFileForOrigin(std::string label, std::string release);
-
    // get installed component (like main, contrib, non-free)
    std::string component();
 

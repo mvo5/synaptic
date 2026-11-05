@@ -68,7 +68,9 @@ void RGFetchProgress::close()
 }
 
 RGFetchProgress::RGFetchProgress(RGWindow *win)
-   : RGGtkBuilderWindow(win, "fetch"), _cursorDirty(false)
+   : RGGtkBuilderWindow(win, "fetch"),
+     _tableListStore(gtk_list_store_new(N_FETCH_COLUMNS, G_TYPE_INT, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING)),
+     _cursorDirty(false)
 {
    GtkCellRenderer *renderer;
    GtkTreeViewColumn *column;
@@ -78,12 +80,6 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
    assert(_mainProgressBar);
 
    _table = GTK_WIDGET(gtk_builder_get_object(_builder, "treeview_fetch"));
-   _tableListStore = gtk_list_store_new(N_FETCH_COLUMNS,
-                                        G_TYPE_INT,
-                                        G_TYPE_STRING,
-                                        G_TYPE_STRING,
-                                        G_TYPE_STRING,
-                                        G_TYPE_STRING);
    gtk_tree_view_set_model(GTK_TREE_VIEW(_table),
                            GTK_TREE_MODEL(_tableListStore));
 

@@ -48,7 +48,7 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow
    std::vector<Item> _items;
 
    GtkWidget *_table;
-   GtkListStore *_tableListStore;
+   GtkListStore *const _tableListStore;
    std::set<int> _tableRows;
 
    GtkWidget *_mainProgressBar; // GtkProgressBar
@@ -88,4 +88,9 @@ class RGFetchProgress : public pkgAcquireStatus, public RGGtkBuilderWindow
 
 
    RGFetchProgress(RGWindow *win);
+
+   ~RGFetchProgress()
+   {
+      g_object_unref(_tableListStore);
+   }
 };

@@ -198,60 +198,58 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
 
 void RPackageViewSearch::addPackage(RPackage *pkg)
 {
-   string str;
-   const char *tmp = NULL;
-   bool global_found = true;
-
-   if (!pkg || _currentSearchItem.searchStrings.empty())
+   if ((pkg == nullptr) || _currentSearchItem.searchStrings.empty()) {
       return;
+   }
 
-   // build the string
-   switch (_currentSearchItem.searchType) {
-      case RPatternPackageFilter::Name:
-         tmp = pkg->name();
-         break;
-      case RPatternPackageFilter::Version:
-         tmp = pkg->availableVersion();
-         break;
-      case RPatternPackageFilter::Description:
+   string str;
+
+   switch (_currentSearchItem.searchType)
+   {
+      case RPatternPackageFilter::Name: {
          str = pkg->name();
-         str += string(pkg->summary());
-         str += string(pkg->description());
          break;
-      case RPatternPackageFilter::Maintainer:
-         tmp = pkg->maintainer();
+      }
+
+      case RPatternPackageFilter::Version: {
+         str = pkg->availableVersion();
          break;
+      }
+
+      case RPatternPackageFilter::Description: {
+         str = string() + pkg->name() + pkg->summary() + pkg->description();
+         break;
+      }
+
+      case RPatternPackageFilter::Maintainer: {
+         str = pkg->maintainer();
+         break;
+      }
+
       case RPatternPackageFilter::Depends: {
-         vector<DepInformation> d = pkg->enumDeps(true);
-         for (unsigned int i = 0; i < d.size(); i++)
-            str += string(d[i].name);
+         for (const DepInformation &d : pkg->enumDeps(true)) str += d.name;
          break;
       }
+
       case RPatternPackageFilter::Provides: {
-         vector<string> d = pkg->provides();
-         for (unsigned int i = 0; i < d.size(); i++)
-            str += d[i];
+         for (const string &d : pkg->provides()) str += d;
          break;
       }
    }
 
-   if (tmp != NULL)
-      str = tmp;
+   if (str.empty()) {
+      return;
+   }
 
-   // find the search pattern in the string "str"
-   for (unsigned int i = 0; i < _currentSearchItem.searchStrings.size(); i++) {
-      string searchString = _currentSearchItem.searchStrings[i];
-
-      if (!str.empty() && strcasestr(str.c_str(), searchString.c_str())) {
-         global_found &= true;
-      } else {
-         global_found &= false;
+   // Look for the search patterns in the string "str"
+   for (const string &searchString : _currentSearchItem.searchStrings) {
+      if (strcasestr(str.c_str(), searchString.c_str()) == nullptr) {
+         return;
       }
    }
-   if (global_found) {
-      _view[_currentSearchItem.searchName].push_back(pkg);
-      found++;
-   }
+
+   _view[_currentSearchItem.searchName].push_back(pkg);
+   found++;
 
    // FIXME: we push a _lot_ of empty pkgs here :(
    // push a empty package in the view to make sure that the view is actually

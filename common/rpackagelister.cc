@@ -688,9 +688,9 @@ struct componentSortFunc
 
 struct sectionSortFunc
 {
-   bool operator()(RPackage *x, RPackage *y)
+   bool operator()(const RPackage *x, const RPackage *y)
    {
-      return std::strcmp(x->section(), y->section()) < 0;
+      return x->section() < y->section();
    }
 };
 

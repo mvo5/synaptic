@@ -110,14 +110,12 @@ void RPackage::addVirtualPackage(pkgCache::PkgIterator dep)
 }
 #endif
 
-const char *RPackage::section()
+std::string RPackage::section() const
 {
-   pkgCache::VerIterator ver =
-      (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if (!ver.end()) {
       const char *s = ver.Section();
-      if (s != NULL)
-         return s;
+      if (s != NULL) return s;
    }
 
    return _("Unknown");

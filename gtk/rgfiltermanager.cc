@@ -259,15 +259,6 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
    g_signal_connect(
       G_OBJECT(select), "changed", G_CALLBACK(patternSelectionChanged), this);
 
-   // remove the debtags tab
-#ifndef HAVE_DEBTAGS
-   GtkWidget *notebook =
-      GTK_WIDGET(gtk_builder_get_object(_builder, "notebook_details"));
-   assert(notebook);
-   // if(first_run)
-   gtk_notebook_remove_page(GTK_NOTEBOOK(notebook), 3);
-#endif
-
    // set the details filter to not sesitive
    gtk_widget_set_sensitive(_filterDetailsBox, false);
 

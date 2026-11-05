@@ -175,27 +175,6 @@ class RGFilterManagerWindow : public RGGtkBuilderWindow
    RPackageViewFilter *_filterview;
    std::vector<RFilter *> _saveFilters;
 
-#ifdef HAVE_DEBTAGS
-   // the tags stuff
-   GtkTreeView *_availableTagsView;
-   GtkListStore *_availableTagsList;
-
-   GtkTreeView *_includedTagsView;
-   GtkListStore *_includedTagsList;
-
-   GtkTreeView *_excludedTagsView;
-   GtkListStore *_excludedTagsList;
-
-   static void treeViewExcludeClicked(GtkTreeView *treeview,
-                                      GtkTreePath *arg1,
-                                      GtkTreeViewColumn *arg2,
-                                      gpointer user_data);
-   static void treeViewIncludeClicked(GtkTreeView *treeview,
-                                      GtkTreePath *arg1,
-                                      GtkTreeViewColumn *arg2,
-                                      gpointer user_data);
-#endif
-
  public:
    RGFilterManagerWindow(RGWindow *win, RPackageViewFilter *filterview);
 

@@ -13,8 +13,6 @@ common_sources = files(
   'rsources.cc',
   'rcacheactor.cc',
   'rpackagelistactor.cc',
-  'rtagcollbuilder.cc',
-  'rtagcollfilter.cc',
   'ruserdialog.cc',
   'sections_trans.cc',
 )

@@ -46,14 +46,9 @@ using namespace std;
 
 SourcesList::~SourcesList()
 {
-   for (list<SourceRecord *>::iterator it = SourceRecords.begin();
-        it != SourceRecords.end();
-        it++)
+   for (list<SourceRecord *>::iterator it = SourceRecords.begin(); it != SourceRecords.end(); it++) {
       delete *it;
-   for (list<VendorRecord *>::iterator it = VendorRecords.begin();
-        it != VendorRecords.end();
-        it++)
-      delete *it;
+   }
 }
 
 SourcesList::SourceRecord *SourcesList::AddSourceNode(SourceRecord &rec)
@@ -486,104 +481,6 @@ SourcesList::SourceRecord &SourcesList::SourceRecord::operator=(
    return *this;
 }
 
-SourcesList::VendorRecord *SourcesList::AddVendorNode(VendorRecord &rec)
-{
-   VendorRecord *newrec = new VendorRecord;
-   *newrec = rec;
-   VendorRecords.push_back(newrec);
-
-   return newrec;
-}
-
-bool SourcesList::ReadVendors()
-{
-   Configuration Cnf;
-
-   string CnfFile = _config->FindFile("Dir::Etc::vendorlist");
-   if (FileExists(CnfFile) == true)
-      if (ReadConfigFile(Cnf, CnfFile, true) == false)
-         return false;
-
-   for (list<VendorRecord *>::const_iterator I = VendorRecords.begin();
-        I != VendorRecords.end();
-        I++)
-      delete *I;
-   VendorRecords.clear();
-
-   // Process 'simple-key' type sections
-   const Configuration::Item *Top = Cnf.Tree("simple-key");
-   for (Top = (Top == 0 ? 0 : Top->Child); Top != 0; Top = Top->Next) {
-      Configuration Block(Top);
-      VendorRecord Vendor;
-
-      Vendor.VendorID = Top->Tag;
-      Vendor.FingerPrint = Block.Find("Fingerprint");
-      Vendor.Description = Block.Find("Name");
-
-      char *buffer = new char[Vendor.FingerPrint.length() + 1];
-      char *p = buffer;
-      ;
-      for (string::const_iterator I = Vendor.FingerPrint.begin();
-           I != Vendor.FingerPrint.end();
-           I++) {
-         if (*I != ' ' && *I != '\t')
-            *p++ = *I;
-      }
-      *p = 0;
-      Vendor.FingerPrint = buffer;
-      delete[] buffer;
-
-      if (Vendor.FingerPrint.empty() == true ||
-          Vendor.Description.empty() == true) {
-         _error->Error(_("Vendor block %s is invalid"),
-                       Vendor.VendorID.c_str());
-         continue;
-      }
-
-      AddVendorNode(Vendor);
-   }
-
-   return !_error->PendingError();
-}
-
-SourcesList::VendorRecord *SourcesList::AddVendor(string VendorID,
-                                                  string FingerPrint,
-                                                  string Description)
-{
-   VendorRecord rec;
-   rec.VendorID = VendorID;
-   rec.FingerPrint = FingerPrint;
-   rec.Description = Description;
-   return AddVendorNode(rec);
-}
-
-bool SourcesList::UpdateVendors()
-{
-   ofstream ofs(_config->FindFile("Dir::Etc::vendorlist").c_str(), ios::out);
-   if (!ofs != 0)
-      return false;
-
-   for (list<VendorRecord *>::iterator it = VendorRecords.begin();
-        it != VendorRecords.end();
-        it++) {
-      ofs << "simple-key \"" << (*it)->VendorID << "\" {" << endl;
-      ofs << "\tFingerPrint \"" << (*it)->FingerPrint << "\";" << endl;
-      ofs << "\tName \"" << (*it)->Description << "\";" << endl;
-      ofs << "}" << endl;
-   }
-
-   ofs.close();
-   return true;
-}
-
-
-void SourcesList::RemoveVendor(VendorRecord *&rec)
-{
-   VendorRecords.remove(rec);
-   delete rec;
-   rec = 0;
-}
-
 ostream &operator<<(ostream &os, const SourcesList::SourceRecord &rec)
 {
    os << "Type: ";
@@ -621,13 +518,3 @@ ostream &operator<<(ostream &os, const SourcesList::SourceRecord &rec)
    os << endl;
    return os;
 }
-
-ostream &operator<<(ostream &os, const SourcesList::VendorRecord &rec)
-{
-   os << "VendorID: " << rec.VendorID << endl;
-   os << "FingerPrint: " << rec.FingerPrint << endl;
-   os << "Description: " << rec.Description << endl;
-   return os;
-}
-
-// vim:sts=4:sw=4

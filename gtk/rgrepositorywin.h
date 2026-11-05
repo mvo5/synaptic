@@ -34,7 +34,6 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 #include <list>
-#include <string>
 
 class RGUserDialog;
 class RGWindow;
@@ -50,7 +49,7 @@ class RGRepositoryEditor : RGGtkBuilderWindow
 
    // the gtktreeview
    GtkWidget *_sourcesListView;
-   GtkListStore *_sourcesListStore;
+   GtkListStore *const _sourcesListStore;
    GtkTreeIter *_lastIter;
 
    GtkWidget *_editTable;
@@ -95,10 +94,10 @@ class RGRepositoryEditor : RGGtkBuilderWindow
    // get values
    void doEdit();
 
-
  public:
-   RGRepositoryEditor(RGWindow *parent);
-   ~RGRepositoryEditor();
+
+   explicit RGRepositoryEditor(RGWindow *parent);
+   ~RGRepositoryEditor() override;
 
    bool Run();
 };

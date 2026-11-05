@@ -24,7 +24,6 @@ int main(int argc, char **argv)
    lister->setView(PACKAGE_VIEW_SEARCH);
    OpProgress progress;
 
-   _config->Set("Debug::Synaptic::View", "true");
    unsigned long now = clock();
    lister->searchView()->setSearch(
       "synaptic", RPatternPackageFilter::Description, "synaptic", progress);

@@ -11,7 +11,6 @@ common_sources = files(
   'rpmindexcopy.cc',
   'raptoptions.cc',
   'rsources.cc',
-  'rcacheactor.cc',
   'rpackagelistactor.cc',
   'rtagcollbuilder.cc',
   'rtagcollfilter.cc',

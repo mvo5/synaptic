@@ -219,7 +219,7 @@ void RPackageViewSearch::addPackage(RPackage *pkg)
          str += string(pkg->description());
          break;
       case RPatternPackageFilter::Maintainer:
-         tmp = pkg->maintainer();
+         str = pkg->maintainer();
          break;
       case RPatternPackageFilter::Depends: {
          vector<DepInformation> d = pkg->enumDeps(true);

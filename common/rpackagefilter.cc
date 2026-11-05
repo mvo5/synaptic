@@ -214,9 +214,9 @@ bool RPatternPackageFilter::filterDescription(Pattern pat, RPackage *pkg)
 bool RPatternPackageFilter::filterMaintainer(Pattern pat, RPackage *pkg)
 {
    bool found = true;
-   const char *maint = pkg->maintainer();
+   std::string maint = pkg->maintainer();
    for (unsigned int i = 0; i < pat.regexps.size(); i++) {
-      if (regexec(pat.regexps[i], maint, 0, NULL, 0) == 0) {
+      if (regexec(pat.regexps[i], maint.c_str(), 0, NULL, 0) == 0) {
          found &= true;
       } else {
          found = false;

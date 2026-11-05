@@ -119,7 +119,6 @@ bool RGUserDialog::showErrors()
    return true;
 }
 
-
 bool RGUserDialog::message(const char *msg,
                            RUserDialog::DialogType dialog,
                            RUserDialog::ButtonsType buttons,
@@ -201,56 +200,32 @@ bool RGUserDialog::message(const char *msg,
 }
 
 // RGGtkBuilderUserDialog
-RGGtkBuilderUserDialog::RGGtkBuilderUserDialog(RGWindow *parent,
-                                               const char *name)
+
+RGGtkBuilderUserDialog::RGGtkBuilderUserDialog(RGWindow *parent, const char *name) : RGUserDialog(parent->window())
 {
-   _parentWindow = parent->window();
-   init(name);
-}
+   std::string resource_path = std::string("/io/github/mvo5/synaptic/ui/dialog_") + name + ".ui";
+   _builder = gtk_builder_new_from_resource(resource_path.c_str());
 
-RGGtkBuilderUserDialog::RGGtkBuilderUserDialog(RGWindow *parent) : builder(0)
-{
-   _parentWindow = parent->window();
-}
+   // Note: If an error occurs while locating the resource or parsing the description
+   // then gtk_builder_new_from_resource() aborts the program.
 
-void RGGtkBuilderUserDialog::init(const char *name)
-{
-   gchar *main_widget = NULL;
-   GError *error = NULL;
+   std::string main_widget_name = std::string("dialog_") + name;
+   _dialog = GTK_WIDGET(gtk_builder_get_object(_builder, main_widget_name.c_str()));
+   assert(_dialog != nullptr);
 
-   // cerr << "RGGtkBuilderUserDialog::init() '" << name << "'" << endl;
-
-   builder = gtk_builder_new();
-   std::string resource_path =
-      std::string("/io/github/mvo5/synaptic/ui/dialog_") + name + ".ui";
-   main_widget = g_strdup_printf("dialog_%s", name);
-   if (!gtk_builder_add_from_resource(builder, resource_path.c_str(), &error)) {
-      g_warning("Couldn't load builder resource: %s", error->message);
-      g_error_free(error);
-   }
-   _dialog = GTK_WIDGET(gtk_builder_get_object(builder, main_widget));
-   assert(_dialog);
    gtk_window_set_icon_name(GTK_WINDOW(_dialog), "synaptic");
-
    gtk_window_set_position(GTK_WINDOW(_dialog), GTK_WIN_POS_CENTER_ON_PARENT);
-   if (gtk_window_get_modal(GTK_WINDOW(_dialog)))
-      gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_dialog), TRUE);
-   gtk_window_set_transient_for(GTK_WINDOW(_dialog), GTK_WINDOW(_parentWindow));
 
-   g_free(main_widget);
+   if (gtk_window_get_modal(GTK_WINDOW(_dialog))) {
+      gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_dialog), TRUE);
+   }
+
+   gtk_window_set_transient_for(GTK_WINDOW(_dialog), GTK_WINDOW(_parentWindow));
 }
 
-int RGGtkBuilderUserDialog::run(const char *name, bool return_gtk_response)
+int RGGtkBuilderUserDialog::run()
 {
-   if (name != NULL)
-      init(name);
-
-   res = (GtkResponseType)gtk_dialog_run(GTK_DIALOG(_dialog));
+   int res = gtk_dialog_run(GTK_DIALOG(_dialog));
    gtk_widget_hide(_dialog);
-
-   if (return_gtk_response)
-      return res;
-   else
-      return (res == GTK_RESPONSE_OK) || (res == GTK_RESPONSE_YES) ||
-             (res == GTK_RESPONSE_CLOSE);
+   return res;
 }

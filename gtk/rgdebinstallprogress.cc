@@ -283,8 +283,7 @@ void RGDebInstallProgress::conffile(gchar *conffile, gchar *status)
       gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
    gtk_text_buffer_set_text(text_buffer, diff.c_str(), -1);
 
-   int res = dia.run(NULL, true);
-   if (res == GTK_RESPONSE_YES)
+   if (dia.run() == GTK_RESPONSE_YES)
       vte_terminal_feed_child(VTE_TERMINAL(_term), "y\n", 2);
    else
       vte_terminal_feed_child(VTE_TERMINAL(_term), "n\n", 2);

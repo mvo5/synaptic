@@ -32,6 +32,7 @@
 
 #include <apt-pkg/fileutl.h>
 #include <cassert>
+#include <chrono>
 #include <cstdio>
 #include <cstring>
 #include <ctime>
@@ -53,21 +54,20 @@ enum { LOG_TYPE_TOPLEVEL, LOG_TYPE_FILE };
 void RGLogView::readLogs()
 {
    map<int, GtkTreeIter> history_map;
-   int history_key;
 
-   GtkTreeStore *store = gtk_tree_store_new(
-      N_LOG_COLUMNS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INT);
+   GtkTreeStore *store = gtk_tree_store_new(N_LOG_COLUMNS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INT);
 
-   GtkTreeIter month_iter; /* Parent iter */
-   GtkTreeIter date_iter;  /* Child iter  */
-
-   unsigned int year, month, day, hour, min, sec;
-   char str[128];
-   const gchar *logfile;
    GDir *dir = g_dir_open(RLogDir().c_str(), 0, NULL);
-   while ((logfile = g_dir_read_name(dir)) != NULL) {
+
+   while (true) {
+      const gchar *logfile = g_dir_read_name(dir);
+      if (logfile == NULL) break;
+
+      int year;
+      unsigned int month, day, hour, min, sec;
+
       if (sscanf(logfile,
-                 "%4u-%2u-%2u.%2u%2u%2u.log",
+                 "%4i-%2u-%2u.%2u%2u%2u.log",
                  &year,
                  &month,
                  &day,
@@ -76,64 +76,63 @@ void RGLogView::readLogs()
                  &sec) != 6)
          continue;
 
-      struct tm t;
-      t.tm_year = year - 1900;
-      t.tm_mon = month - 1;
-      t.tm_mday = day;
-      t.tm_hour = hour;
-      t.tm_min = min;
-      t.tm_sec = sec;
-      GDate *date = g_date_new_dmy(day, (GDateMonth)month, year);
-      // need to convert here:
-      // glib: 1=Monday to 7=Sunday
-      // libc: 0=Sunday to 6=Saturday
-      t.tm_wday = g_date_get_weekday(date);
-      t.tm_wday %= 7;
+      const chrono::year_month_day date
+      {
+         std::chrono::year(year),
+         std::chrono::month(month),
+         std::chrono::day(day)
+      };
 
-      history_key = year * 100 + month;
-      if (history_map.count(history_key) == 0) {
-         gtk_tree_store_append(store, &month_iter, NULL);
-         strftime(str, 128, "%B %Y", &t);
-         gchar *sort_key = g_strdup_printf("%i", history_key);
+      GtkTreeIter parent_iter;
+
+      int history_key = year * 100 + month;
+      if (history_map.count(history_key) == 0)
+      {
+         gtk_tree_store_append(store, &parent_iter, NULL);
+
+         string month_year_str = std::format(std::locale(""), "{:L%B %Y}", date);
+         string sort_key = std::format("{:%Y%m}", date);
+
          gtk_tree_store_set(store,
-                            &month_iter,
+                            &parent_iter,
                             COLUMN_LOG_DAY,
-                            utf8(str),
+                            month_year_str.c_str(),
                             COLUMN_LOG_FILENAME,
-                            sort_key,
+                            sort_key.c_str(),
                             COLUMN_LOG_TYPE,
                             LOG_TYPE_TOPLEVEL,
                             -1);
-         g_free(sort_key);
-         history_map.insert(std::make_pair(history_key, month_iter));
-      } else {
-         month_iter = history_map[history_key];
+
+         history_map.insert(std::make_pair(history_key, parent_iter));
+      }
+      else
+      {
+         parent_iter = history_map[history_key];
       }
 
-      strftime(str, 512, "%x %R", &t);
-      gtk_tree_store_append(store, &date_iter, &month_iter);
+      const chrono::hh_mm_ss<std::chrono::seconds> time(chrono::hours(hour) + chrono::minutes(min) + chrono::seconds(sec));
+
+      string date_str = std::format(std::locale(""), "{:L%x} {:L%R}", date, time);
+
+      GtkTreeIter child_iter;
+
+      gtk_tree_store_append(store, &child_iter, &parent_iter);
       gtk_tree_store_set(store,
-                         &date_iter,
+                         &child_iter,
                          COLUMN_LOG_DAY,
-                         utf8(str),
+                         date_str.c_str(),
                          COLUMN_LOG_FILENAME,
                          logfile,
                          COLUMN_LOG_TYPE,
                          LOG_TYPE_FILE,
                          -1);
-      g_free(date);
    }
+
    g_dir_close(dir);
 
-   GtkTreeModel *sort_model;
-   /* Create the first tree */
-   sort_model = gtk_tree_model_sort_new_with_model(GTK_TREE_MODEL(store));
-
-   gtk_tree_sortable_set_sort_column_id(
-      GTK_TREE_SORTABLE(sort_model), COLUMN_LOG_FILENAME, GTK_SORT_DESCENDING);
-   gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView),
-                           GTK_TREE_MODEL(sort_model));
-   _realModel = sort_model;
+   _treeModel = gtk_tree_model_sort_new_with_model(GTK_TREE_MODEL(store));
+   gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(_treeModel), COLUMN_LOG_FILENAME, GTK_SORT_DESCENDING);
+   gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), _treeModel);
 }
 
 void RGLogView::cbCloseClicked(GtkWidget *self, void *data)
@@ -208,7 +207,6 @@ gboolean RGLogView::filter_func(GtkTreeModel *model,
    if (type == LOG_TYPE_TOPLEVEL)
       return TRUE;
 
-
    string logfile = RLogDir() + string(file);
 
    ifstream in(logfile.c_str());
@@ -264,7 +262,7 @@ void RGLogView::cbButtonFind(GtkWidget *self, void *data)
    RGLogView *me = (RGLogView *)data;
    GtkTreeModel *filter_model, *empty_row_filter;
 
-   GtkTreeModel *model = me->_realModel;
+   GtkTreeModel *model = me->_treeModel;
    if (model == NULL) {
       g_warning("model==NULL in cbButtonFind");
       return;
@@ -276,7 +274,7 @@ void RGLogView::cbButtonFind(GtkWidget *self, void *data)
    // reset to old model
    if (strlen(me->findStr) == 0) {
       me->findStr = NULL;
-      gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), me->_realModel);
+      gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), me->_treeModel);
       return;
    }
 
@@ -291,7 +289,6 @@ void RGLogView::cbButtonFind(GtkWidget *self, void *data)
    gtk_tree_model_filter_set_visible_func(
       GTK_TREE_MODEL_FILTER(empty_row_filter), empty_row_filter_func, me, NULL);
    gtk_tree_view_set_model(GTK_TREE_VIEW(me->_treeView), empty_row_filter);
-
 
    int toplevel_children =
       gtk_tree_model_iter_n_children(empty_row_filter, NULL);
@@ -313,46 +310,38 @@ void RGLogView::show()
    RGWindow::show();
 }
 
-RGLogView::RGLogView(RGWindow *parent)
-   : RGGtkBuilderWindow(parent, "logview"), findStr(NULL)
+RGLogView::RGLogView(RGWindow *parent) : RGGtkBuilderWindow(parent, "logview"), findStr(NULL)
 {
    GtkWidget *vbox = GTK_WIDGET(gtk_builder_get_object(_builder, "vbox_main"));
-   assert(vbox);
+   assert(vbox != nullptr);
 
    _entryFind = GTK_WIDGET(gtk_builder_get_object(_builder, "entry_find"));
-   assert(_entryFind);
+   assert(_entryFind != nullptr);
 
    _treeView = GTK_WIDGET(gtk_builder_get_object(_builder, "treeview_dates"));
-   assert(_treeView);
+   assert(_treeView != nullptr);
 
-   GtkCellRenderer *renderer;
-   GtkTreeViewColumn *column;
-
-   renderer = gtk_cell_renderer_text_new();
-   column = gtk_tree_view_column_new_with_attributes(
-      "Date", renderer, "markup", COLUMN_LOG_DAY, NULL);
+   GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
+   GtkTreeViewColumn *column = gtk_tree_view_column_new_with_attributes("Date", renderer, "markup", COLUMN_LOG_DAY, NULL);
    gtk_tree_view_append_column(GTK_TREE_VIEW(_treeView), column);
 
-   // find button
    g_signal_connect(gtk_builder_get_object(_builder, "button_find"),
                     "clicked",
                     G_CALLBACK(cbButtonFind),
                     this);
-   // close
+
    g_signal_connect(gtk_builder_get_object(_builder, "button_close"),
                     "clicked",
                     G_CALLBACK(cbCloseClicked),
                     this);
 
-
    /* Setup the selection handler */
-   GtkTreeSelection *select;
-   select = gtk_tree_view_get_selection(GTK_TREE_VIEW(_treeView));
+   GtkTreeSelection *select = gtk_tree_view_get_selection(GTK_TREE_VIEW(_treeView));
    gtk_tree_selection_set_mode(select, GTK_SELECTION_SINGLE);
-   g_signal_connect(
-      G_OBJECT(select), "changed", G_CALLBACK(cbTreeSelectionChanged), this);
+   g_signal_connect(G_OBJECT(select), "changed", G_CALLBACK(cbTreeSelectionChanged), this);
+
    _textView = GTK_WIDGET(gtk_builder_get_object(_builder, "textview_log"));
-   assert(_textView);
+   assert(_textView != nullptr);
 
    g_signal_connect(gtk_builder_get_object(_builder, "entry_find"),
                     "activate",
@@ -360,6 +349,5 @@ RGLogView::RGLogView(RGWindow *parent)
                     this);
 
    GtkTextBuffer *buf = gtk_text_view_get_buffer(GTK_TEXT_VIEW(_textView));
-   _markTag =
-      gtk_text_buffer_create_tag(buf, "mark", "background", "yellow", NULL);
+   _markTag = gtk_text_buffer_create_tag(buf, "mark", "background", "yellow", NULL);
 }

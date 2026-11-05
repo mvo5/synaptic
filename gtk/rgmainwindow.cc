@@ -3312,47 +3312,41 @@ void RGMainWindow::pkgInstallByNameHelper(GSimpleAction *action,
    }
 }
 
-void RGMainWindow::cbGenerateDownloadScriptClicked(GSimpleAction *action,
-                                                   GVariant *parameter,
-                                                   gpointer data)
+void RGMainWindow::cbGenerateDownloadScriptClicked(GSimpleAction *action, GVariant *parameter, gpointer data)
 {
-   // cout << "cbGenerateDownloadScriptClicked()" << endl;
-   RGMainWindow *me = (RGMainWindow *)data;
+   RGMainWindow *mainWindow = (RGMainWindow *) data;
 
-   int installed, broken, toInstall, toRemove;
-   double sizeChange;
-   me->_lister->getStats(installed, broken, toInstall, toRemove, sizeChange);
-   if (toInstall == 0) {
-      me->_userDialog->message("Nothing to install/upgrade\n\n"
+   if (mainWindow->_lister->getCache()->deps()->InstCount() == 0) {
+      mainWindow->_userDialog->message("Nothing to install/upgrade\n\n"
                                "Please select the \"Mark all Upgrades\" "
                                "button or some packages to install/upgrade.");
       return;
    }
 
    vector<string> uris;
-   if (!me->_lister->getDownloadUris(uris))
-      return;
+   if (!mainWindow->_lister->getDownloadUris(uris)) return;
 
-   GtkWidget *filesel;
-   filesel = gtk_file_chooser_dialog_new(_("Save script"),
-                                         GTK_WINDOW(me->window()),
+   GtkWidget *filesel = gtk_file_chooser_dialog_new(_("Save script"),
+                                         GTK_WINDOW(mainWindow->window()),
                                          GTK_FILE_CHOOSER_ACTION_SAVE,
-                                         _("_Cancel"),
-                                         GTK_RESPONSE_CANCEL,
-                                         _("_Save"),
-                                         GTK_RESPONSE_ACCEPT,
+                                         _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                         _("_Save"), GTK_RESPONSE_ACCEPT,
                                          NULL);
+
    int res = gtk_dialog_run(GTK_DIALOG(filesel));
    const char *file = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(filesel));
    gtk_widget_destroy(filesel);
+
    if (res != GTK_RESPONSE_ACCEPT)
+   {  // The user cancelled.
       return;
+   }
 
    // FIXME: this is prototype code, hardcoding wget here suckx
    ofstream out(file);
    out << "#!/bin/sh" << endl;
-   for (int i = 0; i < uris.size(); i++) {
-      out << "wget -c " << uris[i] << endl;
+   for (const string &uri : uris) {
+      out << "wget -c " << uri << endl;
    }
    chmod(file, 0755);
 }

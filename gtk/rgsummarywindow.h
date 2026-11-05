@@ -33,23 +33,15 @@
 class RGWindow;
 class RPackageLister;
 
-class RGSummaryWindow : public RGGtkBuilderWindow
+class RGSummaryWindow final : public RGGtkBuilderWindow
 {
-   GtkWidget *_topF;
-   GtkWidget *_middleF;
-   GtkWidget *_summaryL;
-   GtkWidget *_summarySpaceL;
    bool _potentialBreak;
-   RPackageLister *_lister;
-   GtkWidget *_dlonlyB;
-   GtkWidget *_checkSigsB;
+   GtkWidget *const _dlonlyB;
 
    enum { PKG_COLUMN, N_COLUMNS };
-   GtkWidget *_tree;
-   GtkTreeStore *_treeStore;
 
-   static void buildTree(RGSummaryWindow *me);
-   static void buildLabel(RGSummaryWindow *me);
+   static void buildTree(GtkBuilder *builder, RPackageLister *lister, GtkTreeStore *treeStore);
+   static void buildLabel(GtkBuilder *builder, RPackageLister *lister);
    static void clickedDetails(GtkWidget *w, void *data);
 
  public:

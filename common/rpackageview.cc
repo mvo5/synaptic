@@ -216,7 +216,7 @@ void RPackageViewSearch::addPackage(RPackage *pkg)
       case RPatternPackageFilter::Description:
          str = pkg->name();
          str += string(pkg->summary());
-         str += string(pkg->description());
+         str += pkg->description();
          break;
       case RPatternPackageFilter::Maintainer:
          tmp = pkg->maintainer();

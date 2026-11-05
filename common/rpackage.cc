@@ -266,17 +266,13 @@ string RPackage::installedFiles()
 }
 #endif // HAVE_RPM
 
-const char *RPackage::description()
+string RPackage::description() const
 {
-   static string _description;
-   pkgCache::VerIterator ver =
-      (*_depcache)[*_package].CandidateVerIter(*_depcache);
-
+   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if (!ver.end()) {
       pkgCache::DescIterator Desc = ver.TranslatedDescription();
       pkgRecords::Parser &parser = _records->Lookup(Desc.FileList());
-      _description = parseDescription(parser.LongDesc());
-      return _description.c_str();
+      return parseDescription(parser.LongDesc());
    } else {
       return "";
    }

@@ -193,7 +193,6 @@ void RPackageViewStatus::addPackage(RPackage *pkg)
       _view[str].push_back(pkg);
 }
 
-
 //------------------------------------------------------------------
 
 void RPackageViewSearch::addPackage(RPackage *pkg)
@@ -330,6 +329,7 @@ int RPackageViewSearch::setSearch(string aSearchName,
    searchProgress.Done();
    return found;
 }
+
 //------------------------------------------------------------------
 
 RPackageViewFilter::RPackageViewFilter(vector<RPackage *> &allPkgs)
@@ -372,25 +372,12 @@ RPackageViewFilter::iterator RPackageViewFilter::begin()
    return _selectedView.begin();
 }
 
-void RPackageViewFilter::refresh()
-{
-   // cout << "RPackageViewFilter::refresh() " << endl;
-
-   refreshFilters();
-}
-
-
 vector<string> RPackageViewFilter::getFilterNames()
 {
    vector<string> filters;
    for (unsigned int i = 0; i != _filterL.size(); i++)
       filters.push_back(_filterL[i]->getName());
    return filters;
-}
-
-void RPackageViewFilter::addPackage(RPackage *pkg)
-{
-   // nothing to do for now, may add some sort of caching later
 }
 
 const set<string> &RPackageViewFilter::getSections()
@@ -644,16 +631,3 @@ void RPackageViewOrigin::addPackage(RPackage *package)
       }
    }
 }
-
-void RPackageViewArchitecture::addPackage(RPackage *package)
-{
-   string arch = "arch: " + package->arch();
-
-   // FIXME: add pseudo arch for packages only in one group arch
-   //        but not the other
-
-
-   _view[arch].push_back(package);
-}
-
-// vim:sts=3:sw=3

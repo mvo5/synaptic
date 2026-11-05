@@ -263,25 +263,6 @@ bool RPatternPackageFilter::filterProvides(Pattern pat, RPackage *pkg)
    return found;
 }
 
-#if 0
-bool RPatternPackageFilter::filterWeakDepends(Pattern pat, RPackage *pkg)
-{
-
-   bool found = false;
-   const char *depType, *depPkg, *depName;
-   bool ok;
-   if (pkg->enumWDeps(depType, depPkg, ok)) {
-      do {
-	 if (regexec(pat.regexps[0], depPkg, 0, NULL, 0) == 0) {
-	    found = true;
-	    break;
-	 }
-      } while (pkg->nextWDeps(depName, depPkg, ok));
-   }
-   return found;
-}
-#endif
-
 bool RPatternPackageFilter::filterRDepends(Pattern pat, RPackage *pkg)
 {
    vector<DepInformation> deps = pkg->enumRDeps();
@@ -297,6 +278,7 @@ bool RPatternPackageFilter::filterRDepends(Pattern pat, RPackage *pkg)
    }
    return false;
 }
+
 bool RPatternPackageFilter::filterOrigin(Pattern pat, RPackage *pkg)
 {
    bool found = false;

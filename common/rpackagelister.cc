@@ -483,13 +483,8 @@ bool RPackageLister::xapianIndexNeedsUpdate()
 {
    struct stat buf;
 
-   if (_config->FindB("Debug::Synaptic::Xapian", false))
-      std::cerr << "xapainIndexNeedsUpdate()" << std::endl;
-
    // check the xapian index
    if (FileExists("/usr/sbin/update-apt-xapian-index") && (!_xapianDatabase)) {
-      if (_config->FindB("Debug::Synaptic::Xapian", false))
-         std::cerr << "xapain index not build yet" << std::endl;
       return true;
    }
 
@@ -497,9 +492,6 @@ bool RPackageLister::xapianIndexNeedsUpdate()
    // because we use u-a-x-i --update
    stat(_config->FindFile("Dir::Cache::pkgcache").c_str(), &buf);
    if (xapianIndexTimestamp() < buf.st_mtime) {
-      if (_config->FindB("Debug::Synaptic::Xapian", false))
-         std::cerr << "xapian outdated "
-                   << buf.st_mtime - xapianIndexTimestamp() << std::endl;
       return true;
    }
 
@@ -2129,9 +2121,6 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
          pos += 1;
       }
 
-      if (_config->FindB("Debug::Synaptic::Xapian", false))
-         std::cerr << "searching for : " << unsplitSearchString << std::endl;
-
       // Build the query
       // apply a weight factor to XP term to increase relevancy on package name
       Xapian::Query query =
@@ -2145,12 +2134,6 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
          Xapian::Query(Xapian::Query::OP_SCALE_WEIGHT, xpQuery, 3));
       enquire.set_query(query);
       Xapian::MSet matches = enquire.get_mset(0, maxItems);
-
-      if (_config->FindB("Debug::Synaptic::Xapian", false)) {
-         cerr << "enquire: " << enquire.get_description() << endl;
-         cerr << "matches estimated: " << matches.get_matches_estimated()
-              << " results found" << endl;
-      }
 
       // Retrieve the results
       int top_percent = 0;
@@ -2173,10 +2156,6 @@ bool RPackageLister::xapianSearch(string unsplitSearchString)
             break;
          }
 
-         if (_config->FindB("Debug::Synaptic::Xapian", false))
-            cerr << i.get_rank() + 1 << ": " << i.get_percent()
-                 << "% docid=" << *i << "	[" << i.get_document().get_data()
-                 << "]" << endl;
          _viewPackages.push_back(pkg);
       }
       // re-apply sort criteria only if an explicit search is set

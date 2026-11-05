@@ -123,19 +123,15 @@ const char *RPackage::section()
    return _("Unknown");
 }
 
-const char *RPackage::srcPackage()
+std::string RPackage::srcPackage() const
 {
-   static string _srcPkg;
-
-   pkgCache::VerIterator ver =
-      (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if (!ver.end()) {
       pkgRecords::Parser &parser = _records->Lookup(ver.FileList());
-      _srcPkg = parser.SourcePkg().empty() ? name() : parser.SourcePkg();
-      return _srcPkg.c_str();
+      return (parser.SourcePkg().empty()) ? name() : parser.SourcePkg();
+   } else {
+      return name();
    }
-
-   return name();
 }
 
 

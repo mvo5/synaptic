@@ -271,9 +271,8 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
    }
 
    me->setPixmap("image_state", RGPackageStatus::pkgStatus.getPixbuf(pkg));
-   me->setLabel("label_state",
-                RGPackageStatus::pkgStatus.getLongStatusString(pkg));
-   me->setLabel("label_priority", pkg->priority());
+   me->setLabel("label_state", RGPackageStatus::pkgStatus.getLongStatusString(pkg));
+   me->setLabel("label_priority", pkg->priority().c_str());
    me->setLabel("label_section", trans_section(pkg->section()).c_str());
    me->setLabel("label_installed_version", pkg->installedVersion());
    me->setLabel("label_installed_size", pkg->installedSize());

@@ -403,11 +403,6 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    _checkSigsB = GTK_WIDGET(
       gtk_builder_get_object(_builder, "checkbutton_check_signatures"));
    assert(_checkSigsB);
-#ifdef HAVE_RPM
-   bool check = _config->FindB("RPM::GPG-Check", true);
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(_checkSigsB), check);
-   gtk_widget_show(_checkSigsB);
-#endif
 
    button =
       GTK_WIDGET(gtk_builder_get_object(_builder, "togglebutton_details"));
@@ -539,12 +534,6 @@ bool RGSummaryWindow::showAndConfirm()
                 gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_dlonlyB))
                    ? "true"
                    : "false");
-#ifdef HAVE_RPM
-   _config->Set("RPM::GPG-Check",
-                gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(_checkSigsB))
-                   ? "true"
-                   : "false");
-#endif
 
    return confirmed;
 }

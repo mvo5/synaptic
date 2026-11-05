@@ -31,37 +31,56 @@
 
 class RGWindow
 {
+ private:
+
+   static GtkWidget *newWindow(RGWindow *parent, const std::string &name);
+
  protected:
+
    GtkWidget *_win;
+   const gulong _onDeleteEventHandlerId;
 
-   static gboolean windowCloseCallback(GtkWidget *widget,
-                                       GdkEvent *event,
-                                       gpointer data);
-   virtual void close();
+   static gboolean onDeleteEventCallback(GtkWidget *widget, GdkEvent *event, RGWindow *self);
 
-   void init();
+   inline virtual void close()
+   {
+      hide();
+   }
 
-   RGWindow() : _win(nullptr)
+   // Constructor called by classes which create their own window object.
+   RGWindow() : _win(nullptr), _onDeleteEventHandlerId(0)
    {}
 
  public:
-   inline virtual GtkWidget *window()
+
+   explicit RGWindow(RGWindow *parent, const std::string &name);
+
+   virtual ~RGWindow()
+   {
+      if (_win != nullptr)
+      {
+         if (_onDeleteEventHandlerId != 0) g_signal_handler_disconnect(_win, _onDeleteEventHandlerId);
+         gtk_widget_destroy(_win);
+      }
+   }
+
+   inline virtual GtkWidget *window() const
    {
       return _win;
    }
 
-   virtual void setTitle(std::string title);
+   inline virtual void setTitle(const std::string &title)
+   {
+      gtk_window_set_title(GTK_WINDOW(window()), title.c_str());
+   }
 
    inline virtual void hide()
    {
-      gtk_widget_hide(_win);
+      gtk_widget_hide(window());
    }
 
    inline virtual void show()
    {
-      gtk_widget_show(_win);
+      gtk_widget_show(window());
    }
-
-   explicit RGWindow(RGWindow *parent, std::string name);
-   virtual ~RGWindow();
 };

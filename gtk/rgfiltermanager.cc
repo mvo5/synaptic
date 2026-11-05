@@ -165,7 +165,7 @@ RGFilterManagerWindow::RGFilterManagerWindow(RGWindow *win,
                     this);
 
    g_signal_connect(
-      G_OBJECT(_win), "delete_event", G_CALLBACK(deleteEventAction), this);
+      G_OBJECT(window()), "delete_event", G_CALLBACK(deleteEventAction), this);
 
 
    _filterDetailsBox =

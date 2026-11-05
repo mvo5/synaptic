@@ -65,7 +65,7 @@ RGCDScanner::RGCDScanner(RGMainWindow *main, RUserDialog *userDialog)
 
    _userDialog = userDialog;
 
-   gtk_widget_set_usize(_win, 320, 90);
+   gtk_widget_set_usize(window(), 320, 90);
 
    gtk_container_set_border_width(GTK_CONTAINER(_topBox), 10);
 
@@ -78,9 +78,9 @@ RGCDScanner::RGCDScanner(RGMainWindow *main, RUserDialog *userDialog)
    gtk_widget_set_usize(_pbar, -1, 25);
    gtk_box_pack_start(GTK_BOX(_topBox), _pbar, FALSE, TRUE, 0);
 
-   // gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), TRUE);
-   gtk_window_set_transient_for(GTK_WINDOW(_win), GTK_WINDOW(main->window()));
-   gtk_window_set_position(GTK_WINDOW(_win), GTK_WIN_POS_CENTER_ON_PARENT);
+   // gtk_window_set_skip_taskbar_hint(GTK_WINDOW(window()), TRUE);
+   gtk_window_set_transient_for(GTK_WINDOW(window()), GTK_WINDOW(main->window()));
+   gtk_window_set_position(GTK_WINDOW(window()), GTK_WIN_POS_CENTER_ON_PARENT);
 }
 
 bool RGCDScanner::run()
@@ -130,9 +130,9 @@ RGDiscName::RGDiscName(RGWindow *wwin, const string defaultName)
                     G_CALLBACK(onCancelClicked),
                     this);
 
-   // gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), TRUE);
-   gtk_window_set_transient_for(GTK_WINDOW(_win), GTK_WINDOW(wwin->window()));
-   gtk_window_set_position(GTK_WINDOW(_win), GTK_WIN_POS_CENTER_ON_PARENT);
+   // gtk_window_set_skip_taskbar_hint(GTK_WINDOW(window()), TRUE);
+   gtk_window_set_transient_for(GTK_WINDOW(window()), GTK_WINDOW(wwin->window()));
+   gtk_window_set_position(GTK_WINDOW(window()), GTK_WIN_POS_CENTER_ON_PARENT);
 }
 
 void RGDiscName::onOkClicked(GtkWidget *self, void *data)

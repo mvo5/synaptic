@@ -366,7 +366,7 @@ RGSummaryWindow::RGSummaryWindow(RGWindow *wwin, RPackageLister *lister)
    _lister = lister;
 
    setTitle(_("Summary"));
-   // gtk_window_set_default_size(GTK_WINDOW(_win), 400, 250);
+   // gtk_window_set_default_size(GTK_WINDOW(window()), 400, 250);
 
    _summaryL = GTK_WIDGET(gtk_builder_get_object(_builder, "label_summary"));
    assert(_summaryL);
@@ -525,7 +525,7 @@ bool RGSummaryWindow::showAndConfirm()
    gtk_toggle_button_set_active(
       GTK_TOGGLE_BUTTON(_dlonlyB),
       _config->FindB("Volatile::Download-Only", false));
-   int res = gtk_dialog_run(GTK_DIALOG(_win));
+   int res = gtk_dialog_run(GTK_DIALOG(window()));
    bool confirmed = (res == GTK_RESPONSE_APPLY);
 
    RGUserDialog userDialog(this);

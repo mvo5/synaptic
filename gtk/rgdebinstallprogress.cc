@@ -430,7 +430,7 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
 
    gtk_widget_show(scrollbar);
 
-   gtk_window_set_default_size(GTK_WINDOW(_win), 500, -1);
+   gtk_window_set_default_size(GTK_WINDOW(window()), 500, -1);
 
    g_signal_connect(
       _term, "contents-changed", G_CALLBACK(content_changed), this);
@@ -450,7 +450,7 @@ RGDebInstallProgress::RGDebInstallProgress(RGMainWindow *main,
       _userDialog = new RGUserDialog(this);
 
 
-   gtk_window_set_urgency_hint(GTK_WINDOW(_win), FALSE);
+   gtk_window_set_urgency_hint(GTK_WINDOW(window()), FALSE);
 
    // init the timer
    last_term_action = time(NULL);
@@ -478,7 +478,7 @@ gboolean RGDebInstallProgress::key_press_event(GtkWidget *widget,
       gchar *summary = _("Ctrl-c pressed");
       char *msg = _("This will abort the operation and may leave the system "
                     "in a broken state. Are you sure you want to do that?");
-      GtkWidget *dia = gtk_message_dialog_new(GTK_WINDOW(me->_win),
+      GtkWidget *dia = gtk_message_dialog_new(GTK_WINDOW(me->window()),
                                               GTK_DIALOG_DESTROY_WITH_PARENT,
                                               GTK_MESSAGE_WARNING,
                                               GTK_BUTTONS_YES_NO,
@@ -599,8 +599,8 @@ void RGDebInstallProgress::updateInterface()
          }
 
          // reset the urgency hint, something changed on the terminal
-         if (gtk_window_get_urgency_hint(GTK_WINDOW(_win)))
-            gtk_window_set_urgency_hint(GTK_WINDOW(_win), FALSE);
+         if (gtk_window_get_urgency_hint(GTK_WINDOW(window())))
+            gtk_window_set_urgency_hint(GTK_WINDOW(window()), FALSE);
 
          float val = atof(percent) / 100.0;
          // cout << "progress: " << val << endl;
@@ -644,7 +644,7 @@ void RGDebInstallProgress::updateInterface()
       gtk_expander_set_expanded(GTK_EXPANDER(w), TRUE);
       last_term_action = time(NULL);
       // try to get the attention of the user
-      gtk_window_set_urgency_hint(GTK_WINDOW(_win), TRUE);
+      gtk_window_set_urgency_hint(GTK_WINDOW(window()), TRUE);
    }
 
 

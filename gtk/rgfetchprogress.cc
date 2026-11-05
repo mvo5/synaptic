@@ -127,11 +127,11 @@ RGFetchProgress::RGFetchProgress(RGWindow *win)
       G_CALLBACK(stopDownload),
       this);
 
-   gtk_widget_realize(_win);
+   gtk_widget_realize(window());
 
    // reset the urgency hint here (gtk seems to like showing it for
    // dialogs that come up)
-   gtk_window_set_urgency_hint(GTK_WINDOW(_win), FALSE);
+   gtk_window_set_urgency_hint(GTK_WINDOW(window()), FALSE);
 
    // emit a signal if the user changed the cursor
    g_signal_connect(
@@ -170,7 +170,7 @@ void RGFetchProgress::cursorChanged(GtkTreeView *self, void *data)
 void RGFetchProgress::setDescription(string mainText, string secondText)
 {
    gchar *str;
-   gtk_window_set_title(GTK_WINDOW(_win), mainText.c_str());
+   gtk_window_set_title(GTK_WINDOW(window()), mainText.c_str());
    if (secondText.empty())
       str = g_strdup_printf("<big><b>%s</b></big>", mainText.c_str());
    else
@@ -274,7 +274,7 @@ bool RGFetchProgress::Pulse(pkgAcquire *Owner)
    pkgAcquireStatus::Pulse(Owner);
 
    // only show here if there is actually something to download/get
-   if (TotalBytes > 0 && !gtk_widget_get_visible(_win))
+   if (TotalBytes > 0 && !gtk_widget_get_visible(window()))
       show();
 
    float percent = long(double((CurrentBytes + CurrentItems) * 100.0) /

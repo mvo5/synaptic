@@ -43,7 +43,7 @@ class RGGtkBuilderWindow : public RGWindow
 
    void skipTaskbar(bool value)
    {
-      gtk_window_set_skip_taskbar_hint(GTK_WINDOW(_win), value);
+      gtk_window_set_skip_taskbar_hint(GTK_WINDOW(window()), value);
    }
 
    // show busy cursor over main window

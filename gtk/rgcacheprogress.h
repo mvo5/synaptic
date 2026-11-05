@@ -27,23 +27,17 @@
 #include <apt-pkg/progress.h>
 #include <gtk/gtk.h>
 
-class RGCacheProgress : public OpProgress
+class RGCacheProgress final : public OpProgress
 {
-   GtkWidget *_parent;
-   GtkWidget *_label;
-   GtkWidget *_prog;
-
+   GtkWidget *const _parent;
+   GtkWidget *const _label;
    bool _mapped;
 
  public:
+
    RGCacheProgress(GtkWidget *parent, GtkWidget *label);
-   ~RGCacheProgress();
+   ~RGCacheProgress() override;
 
-   inline GtkWidget *widget()
-   {
-      return _prog;
-   };
-
-   virtual void Update();
-   virtual void Done();
+   void Update() override;
+   void Done() override;
 };

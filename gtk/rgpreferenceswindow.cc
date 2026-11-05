@@ -328,14 +328,13 @@ void RGPreferencesWindow::saveColumnsAndFonts()
 
    // treeviewstuff
    // get from GtkListStore
-   GtkListStore *store = _listColumns;
    GtkTreeIter iter;
    int i = 0;
-   char *column_name, *config_name;
-   gboolean visible;
-   gtk_tree_model_get_iter_first(GTK_TREE_MODEL(store), &iter);
+   gtk_tree_model_get_iter_first(GTK_TREE_MODEL(_listColumns), &iter);
    do {
-      gtk_tree_model_get(GTK_TREE_MODEL(store),
+      char *column_name;
+      gboolean visible;
+      gtk_tree_model_get(GTK_TREE_MODEL(_listColumns),
                          &iter,
                          TREE_CHECKBOX_COLUMN,
                          &visible,
@@ -344,7 +343,7 @@ void RGPreferencesWindow::saveColumnsAndFonts()
                          -1);
 
       // pos
-      config_name = g_strdup_printf("Synaptic::%sColumnPos", column_name);
+      char *config_name = g_strdup_printf("Synaptic::%sColumnPos", column_name);
       _config->Set(config_name, i);
       // cout << column_name << " : " << i << endl;
       g_free(config_name);
@@ -355,7 +354,7 @@ void RGPreferencesWindow::saveColumnsAndFonts()
       g_free(config_name);
 
       i++;
-   } while (gtk_tree_model_iter_next(GTK_TREE_MODEL(store), &iter));
+   } while (gtk_tree_model_iter_next(GTK_TREE_MODEL(_listColumns), &iter));
 
    // rebuild the treeview
    _mainWin->rebuildTreeView();
@@ -813,7 +812,6 @@ void RGPreferencesWindow::show()
 
 void RGPreferencesWindow::readTreeViewValues()
 {
-
    // number of entries in columns is (sizeof(columns)/sizeof(char*))-1
    int number_of_columns = sizeof(column_names) / sizeof(char *) - 1;
 
@@ -861,27 +859,21 @@ void RGPreferencesWindow::readTreeViewValues()
       }
    }
 
-
-   // put into GtkListStore
-   GtkListStore *store = _listColumns =
-      gtk_list_store_new(3, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_STRING);
-   GtkTreeIter iter;
-   for (unsigned int i = 0; i < columns.size(); i++) {
-      gtk_list_store_append(store, &iter);
-      gtk_list_store_set(store,
+   for (const column_struct &column : columns) {
+      GtkTreeIter iter;
+      gtk_list_store_append(_listColumns, &iter);
+      gtk_list_store_set(_listColumns,
                          &iter,
                          TREE_CHECKBOX_COLUMN,
-                         columns[i].visible,
+                         column.visible,
                          TREE_NAME_COLUMN,
-                         columns[i].name,
+                         column.name,
                          TREE_VISIBLE_NAME_COLUMN,
-                         _(columns[i].visible_name),
+                         _(column.visible_name),
                          -1);
    }
 
-   // now set the model
-   gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView),
-                           GTK_TREE_MODEL(_listColumns));
+   gtk_tree_view_set_model(GTK_TREE_VIEW(_treeView), GTK_TREE_MODEL(_listColumns));
 }
 
 void RGPreferencesWindow::cbMoveColumnUp(GtkWidget *self, void *data)
@@ -1013,7 +1005,8 @@ void RGPreferencesWindow::checkbuttonUserTerminalFontToggled(GtkWidget *self,
 
 
 RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *lister)
-   : RGGtkBuilderWindow(win, "preferences"), distroChanged(false)
+   : RGGtkBuilderWindow(win, "preferences"), distroChanged(false),
+     _listColumns(gtk_list_store_new(3, G_TYPE_BOOLEAN, G_TYPE_STRING, G_TYPE_STRING))
 {
    GtkWidget *button;
    GtkCellRenderer *crt;
@@ -1247,11 +1240,6 @@ RGPreferencesWindow::RGPreferencesWindow(RGWindow *win, RPackageLister *lister)
 
    skipTaskbar(true);
    setTitle(_("Preferences"));
-}
-
-RGPreferencesWindow::~RGPreferencesWindow()
-{
-   g_object_unref(_css_provider);
 }
 
 void RGPreferencesWindow::buttonAuthenticationClicked(GtkWidget *self,

@@ -35,7 +35,7 @@ class RGMainWindow;
 class RGWindow;
 class RPackageLister;
 
-class RGPreferencesWindow : public RGGtkBuilderWindow
+class RGPreferencesWindow final : public RGGtkBuilderWindow
 {
    bool _blockAction;
 
@@ -104,7 +104,7 @@ class RGPreferencesWindow : public RGGtkBuilderWindow
 
    // treeview stuff
    void readTreeViewValues();
-   GtkListStore *_listColumns;
+   GtkListStore *const _listColumns;
    GtkWidget *_treeView;
    static void cbMoveColumnUp(GtkWidget *self, void *data);
    static void cbMoveColumnDown(GtkWidget *self, void *data);
@@ -140,9 +140,16 @@ class RGPreferencesWindow : public RGGtkBuilderWindow
    static void useProxyToggled(GtkWidget *self, void *data);
 
  public:
+
    RGPreferencesWindow(RGWindow *owner, RPackageLister *lister);
-   virtual ~RGPreferencesWindow();
-   virtual void show();
+
+   ~RGPreferencesWindow() override
+   {
+      g_object_unref(_css_provider);
+      g_object_unref(_listColumns);
+   }
+
+   void show() override;
 
    // call this to set the proxy stuff for apt
    static void applyProxySettings();

@@ -137,7 +137,15 @@ class RPackage
       return _package;
    }
 
-   const char *name();
+   const char *name() const
+   {
+      #ifdef WITH_APT_MULTIARCH_SUPPORT
+         return fullname.c_str();
+      #else
+         const char *s = _package->Name();
+         return (s != NULL) ? s : "";
+      #endif
+   }
 
    const char *section();
    const char *priority();

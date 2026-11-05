@@ -400,71 +400,84 @@ static void gtk_pkg_list_get_value(GtkTreeModel *tree_model,
 
    GtkPkgList *pkg_list = GTK_PKG_LIST(tree_model);
    int element = GPOINTER_TO_INT(iter->user_data2);
-   if (element >= pkg_list->_lister->viewPackagesSize())
-      return;
-
-   if (pkg == NULL) {
-      cout << "get_value: pkg == NULL" << endl;
+   if (element >= pkg_list->_lister->viewPackagesSize()) {
       return;
    }
 
-   std::string cppstr;
-   const gchar *str;
-   switch (column) {
-      case NAME_COLUMN:
-         str = utf8(pkg->name());
+   if (pkg == NULL) {
+      return;
+   }
+
+   switch (column)
+   {
+      case NAME_COLUMN: {
+         const gchar *str = utf8(pkg->name());
          g_value_set_string(value, str);
          break;
-      case PKG_SIZE_COLUMN:
-         if (pkg->installedVersion()) {
-            cppstr = SizeToStr(pkg->installedSize());
-            g_value_set_string(value, cppstr.c_str());
+      }
+
+      case PKG_SIZE_COLUMN: {
+         if (pkg->installedVersion() != nullptr) {
+            std::string str = SizeToStr(pkg->installedSize());
+            g_value_set_string(value, str.c_str());
          }
          break;
-      case PKG_DOWNLOAD_SIZE_COLUMN:
-         cppstr = SizeToStr(pkg->availablePackageSize());
-         g_value_set_string(value, cppstr.c_str());
+      }
+
+      case PKG_DOWNLOAD_SIZE_COLUMN: {
+         std::string str = SizeToStr(pkg->availablePackageSize());
+         g_value_set_string(value, str.c_str());
          break;
-      case SECTION_COLUMN:
-         str = pkg->section();
-         if (str != NULL)
-            g_value_set_string(value, str);
+      }
+
+      case SECTION_COLUMN: {
+         const gchar *str = pkg->section();
+         if (str != NULL) g_value_set_string(value, str);
          break;
-      case COMPONENT_COLUMN:
-         cppstr = pkg->component();
-         if (cppstr.c_str() != NULL)
-            g_value_set_string(value, cppstr.c_str());
+      }
+
+      case COMPONENT_COLUMN: {
+         std::string str = pkg->component();
+         g_value_set_string(value, str.c_str());
          break;
-      case INSTALLED_VERSION_COLUMN:
-         str = pkg->installedVersion();
+      }
+
+      case INSTALLED_VERSION_COLUMN: {
+         const gchar *str = pkg->installedVersion();
          g_value_set_string(value, str);
          break;
-      case AVAILABLE_VERSION_COLUMN:
-         str = pkg->availableVersion();
+      }
+
+      case AVAILABLE_VERSION_COLUMN: {
+         const gchar *str = pkg->availableVersion();
          g_value_set_string(value, str);
          break;
-      case DESCR_COLUMN:
-         str = utf8(pkg->summary());
+      }
+
+      case DESCR_COLUMN: {
+         const gchar *str = utf8(pkg->summary());
          g_value_set_string(value, str);
          break;
-      case PKG_COLUMN:
+      }
+
+      case PKG_COLUMN: {
          g_value_set_pointer(value, pkg);
          break;
+      }
+
       case COLOR_COLUMN: {
-         if (_config->FindB("Synaptic::UseStatusColors", TRUE) == FALSE)
-            return;
-         GdkRGBA *bg;
-         bg = RGPackageStatus::pkgStatus.getBgColor(pkg);
+         if (!_config->FindB("Synaptic::UseStatusColors", true)) return;
+         GdkRGBA *bg = RGPackageStatus::pkgStatus.getBgColor(pkg);
          g_value_set_boxed(value, bg);
          break;
       }
+
       case SUPPORTED_COLUMN: {
-         if (pkg == NULL)
-            return;
-         g_value_set_object(value,
-                            RGPackageStatus::pkgStatus.getSupportedPix(pkg));
+         if (pkg == NULL) return;
+         g_value_set_object(value, RGPackageStatus::pkgStatus.getSupportedPix(pkg));
          break;
       }
+
       case PIXMAP_COLUMN: {
          g_value_set_object(value, RGPackageStatus::pkgStatus.getPixbuf(pkg));
          break;

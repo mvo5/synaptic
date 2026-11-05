@@ -520,7 +520,6 @@ vector<DepInformation> RPackage::enumRDeps()
 {
    vector<DepInformation> deps;
    DepInformation dep;
-   pkgCache::VerIterator Cur;
 
    for (pkgCache::DepIterator D = _package->RevDependsList(); D.end() != true;
         D++) {
@@ -635,7 +634,6 @@ vector<RPackage *> RPackage::getInstalledDeps()
 /* Mostly taken from apt-get.cc:ShowBroken() */
 string RPackage::showWhyInstBroken()
 {
-   pkgCache::DepIterator depI;
    pkgCache::VerIterator Ver;
    ostringstream out;
 
@@ -1534,58 +1532,3 @@ string RPackage::origin()
 
    return res;
 }
-
-static pkgCache::PkgFileIterator _searchPkgFileIter(pkgCache::PkgIterator *Pkg,
-                                                    string label,
-                                                    string release)
-{
-   pkgCache::VerIterator Ver;
-   pkgCache::VerFileIterator VF;
-   pkgCache::PkgFileIterator PF;
-
-   for (Ver = Pkg->VersionList(); !Ver.end(); Ver++) {
-      for (VF = Ver.FileList(); !VF.end(); VF++) {
-         for (PF = VF.File(); !PF.end(); PF++) {
-            if (!PF.end() && PF.Label() && string(PF.Label()) == label &&
-                PF.Origin() && string(PF.Origin()) == label && PF.Archive() &&
-                PF.Archive() == release) {
-               // cerr << "found: " << PF.FileName() << endl;
-               return PF;
-            }
-         }
-      }
-   }
-   PF = pkgCache::PkgFileIterator(*Pkg->Cache());
-   return PF;
-}
-
-// look for a release file that matches the given label and origin string
-string RPackage::getReleaseFileForOrigin(string label, string release)
-{
-   pkgIndexFile *index;
-   pkgCache::PkgFileIterator found =
-      _searchPkgFileIter(_package, label, string(release));
-   if (found.end())
-      return "";
-
-   // search for the matching meta-index
-   pkgSourceList *list = _lister->getCache()->list();
-   if (list->FindIndex(found, index)) {
-      vector<metaIndex *>::const_iterator I;
-      for (I = list->begin(); I != list->end(); I++) {
-         vector<pkgIndexFile *> *ifv = (*I)->GetIndexFiles();
-         if (find(ifv->begin(), ifv->end(), index) != ifv->end()) {
-            string uri = _config->FindDir("Dir::State::lists");
-            uri += URItoFileName((*I)->GetURI());
-            uri += "dists_";
-            uri += (*I)->GetDist();
-            uri += "_Release";
-            return uri;
-         }
-      }
-   }
-
-   return "";
-}
-
-// vim:ts=3:sw=3:et

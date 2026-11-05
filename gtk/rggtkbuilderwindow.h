@@ -33,13 +33,37 @@
 class RGGtkBuilderWindow : public RGWindow
 {
  protected:
-   GtkBuilder *_builder;
-   GdkCursor *_busyCursor;
+
+   GtkBuilder *const _builder;
+
+ private:
+
+   GdkCursor *const _busyCursor;
+   GtkWidget *const _win;
+   const gulong onDeleteEventHandlerId;
+
+ protected:
+
+   // If there is an error locating the resource, then the program will be aborted.
+   static GtkWidget *getWindow(GtkBuilder *builder, const std::string_view name);
+
+   // If there is an error locating the resource or parsing the description, then the program will be aborted.
+   static GtkBuilder *getBuilderFromResource(const std::string_view name);
 
  public:
-   RGGtkBuilderWindow(RGWindow *parent,
-                      std::string name,
-                      std::string main_widget = "");
+
+   // The corresponding resource (file) name is window_{name}.ui, and the respective window definition
+   // name in the resource is window_{name}.
+
+   RGGtkBuilderWindow(RGWindow *parent, const std::string &name);
+
+   virtual ~RGGtkBuilderWindow()
+   {
+      g_signal_handler_disconnect(G_OBJECT(_win), onDeleteEventHandlerId);
+      gtk_widget_destroy(_win);
+      g_object_unref(_builder);
+      g_object_unref(_busyCursor);
+   };
 
    void skipTaskbar(bool value)
    {
@@ -47,21 +71,22 @@ class RGGtkBuilderWindow : public RGWindow
    }
 
    // show busy cursor over main window
-   void setBusyCursor(bool flag = true);
+   void setBusyCursor(bool isBusy = true);
 
    // functions to set various widgets
-   bool setLabel(const char *name, const char *value);
-   bool setMarkup(const char *widget_name, const char *value);
-   bool setLabel(const char *name, const long value);
-   bool setTextView(const char *widget_name,
-                    const char *value,
-                    bool useHeadline = false);
-   bool setPixmap(const char *widget_name, GdkPixbuf *value);
-   bool setTreeList(const char *widget_name,
-                    std::vector<std::string> values,
-                    bool useMarkup = false);
+   void setLabel(const char *name, const char *value);
+   void setLabel(const char *name, const long value);
+   void setMarkup(const char *widget_name, const char *value);
+   void setTextView(const char *widget_name, const char *value, bool useHeadline = false);
+   void setPixmap(const char *widget_name, GdkPixbuf *value);
+   void setTreeList(const char *widget_name, const std::vector<std::string> &values, bool useMarkup = false);
 
-   GtkBuilder *getGtkBuilder()
+   inline GtkWidget *window() const override
+   {
+      return _win;
+   }
+
+   inline GtkBuilder *getGtkBuilder() const
    {
       return _builder;
    }

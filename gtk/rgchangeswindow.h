@@ -39,11 +39,17 @@ class RGChangesWindow : public RGGtkBuilderWindow
 {
    enum { PKG_COLUMN, N_COLUMNS };
 
-   GtkWidget *_tree;
-   GtkTreeStore *_treeStore;
+   GtkWidget *const _tree;
+   GtkTreeStore *const _treeStore;
 
  public:
+
    RGChangesWindow(RGWindow *win);
+
+   ~RGChangesWindow() override
+   {
+      g_object_unref(_treeStore);
+   }
 
    void confirm(RPackageLister *lister,
                 std::vector<RPackage *> &kept,

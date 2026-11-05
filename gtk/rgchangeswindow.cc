@@ -44,16 +44,14 @@ class RPackageLister;
 using namespace std;
 
 RGChangesWindow::RGChangesWindow(RGWindow *wwin)
-   : RGGtkBuilderWindow(wwin, "changes")
+   : RGGtkBuilderWindow(wwin, "changes"),
+     _tree(GTK_WIDGET(gtk_builder_get_object(_builder, "tree"))),
+     _treeStore(gtk_tree_store_new(N_COLUMNS, G_TYPE_STRING))
 {
-   // new tree store
-   _treeStore = gtk_tree_store_new(N_COLUMNS, G_TYPE_STRING);
-   _tree = GTK_WIDGET(gtk_builder_get_object(_builder, "tree"));
    gtk_tree_view_set_model(GTK_TREE_VIEW(_tree), GTK_TREE_MODEL(_treeStore));
 
    GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
-   GtkTreeViewColumn *column;
-   column = gtk_tree_view_column_new_with_attributes(
+   GtkTreeViewColumn *column = gtk_tree_view_column_new_with_attributes(
       _("Package changes"), renderer, "markup", PKG_COLUMN, NULL);
    /* Add the column to the view. */
    gtk_tree_view_append_column(GTK_TREE_VIEW(_tree), column);

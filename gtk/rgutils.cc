@@ -30,6 +30,7 @@
 #include <cstring>
 #include <gtk/gtk.h>
 #include <iostream>
+#include <memory>
 #include <pwd.h>
 #include <string>
 #include <vector>
@@ -240,14 +241,32 @@ const char *utf8_to_locale(const char *str)
 const char *utf8(const char *str)
 {
    static char *_str = NULL;
-   if (str == NULL)
-      return NULL;
-   if (g_utf8_validate(str, -1, NULL) == true)
-      return str;
+   if (str == NULL) return NULL;
+   if (g_utf8_validate(str, -1, NULL)) return str;
    g_free(_str);
    _str = NULL;
    _str = g_locale_to_utf8(str, -1, NULL, NULL, NULL);
    return _str;
+}
+
+std::string utf8(const std::string& str)
+{
+   if (g_utf8_validate(str.c_str(), -1, NULL))
+   {  // Already a valid UFT8 string.
+      return str;
+   }
+
+   std::unique_ptr<gchar, decltype(&g_free)> utf(
+      g_locale_to_utf8(str.c_str(), -1, NULL, NULL, NULL),
+      &g_free
+   );
+
+   if (utf == nullptr)
+   {  // The locale_to_utf8 conversion failed.
+      return "";
+   }
+
+   return std::string(utf.get());
 }
 
 /*
@@ -308,4 +327,3 @@ std::string MarkupUnescapeString(std::string escaped)
    }
    return escaped;
 }
-// vim:ts=3:sw=3:et

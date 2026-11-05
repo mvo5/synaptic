@@ -339,8 +339,6 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
    //   bool and_mode = _config->FindB("Synaptic::Filters::andMode", true);
    bool globalfound = and_mode;
 
-   bool debug = _config->FindB("Debug::Synaptic::Filters", false);
-
    if (_patterns.size() == 0)
       return true;
 
@@ -393,10 +391,6 @@ bool RPatternPackageFilter::filter(RPackage *pkg)
             cerr << "unknown pattern package filter (shouldn't happen) "
                  << endl;
       }
-
-      if (found && debug)
-         clog << "RPatternPackageFilter::filter match for " << pkg->name()
-              << endl;
 
       // each filter is applied in AND fasion
       // that means a include depends "mono" and include name "sharp"

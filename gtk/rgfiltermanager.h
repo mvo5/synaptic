@@ -129,7 +129,7 @@ class RGFilterManagerWindow : public RGGtkBuilderWindow
 
    // the filter list
    GtkWidget *_filterList; /* GtkTreeView */
-   GtkListStore *_filterListStore;
+   GtkListStore *const _filterListStore;
    GtkTreePath *_selectedPath;
    RFilter *_selectedFilter;
    enum { NAME_COLUMN, FILTER_COLUMN, N_COLUMNS };
@@ -172,7 +172,7 @@ class RGFilterManagerWindow : public RGGtkBuilderWindow
    GtkWidget *_optionmenu_expand_mode;
 
    // the lister is always needed
-   RPackageViewFilter *_filterview;
+   RPackageViewFilter *const _filterview;
    std::vector<RFilter *> _saveFilters;
 
 #ifdef HAVE_DEBTAGS
@@ -198,6 +198,11 @@ class RGFilterManagerWindow : public RGGtkBuilderWindow
 
  public:
    RGFilterManagerWindow(RGWindow *win, RPackageViewFilter *filterview);
+
+   ~RGFilterManagerWindow()
+   {
+      g_object_unref(_filterListStore);
+   }
 
    // need to be called before show or run_dialog
    void readFilters();

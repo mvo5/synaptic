@@ -168,17 +168,15 @@ const char *RPackage::maintainer()
    return "";
 }
 
-const char *RPackage::homepage()
+std::string RPackage::homepage() const
 {
-   static string _homepage;
-   pkgCache::VerIterator ver =
-      (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if (!ver.end()) {
       pkgRecords::Parser &parser = _records->Lookup(ver.FileList());
-      _homepage = parser.Homepage();
-      return _homepage.c_str();
+      return parser.Homepage();
+   } else {
+      return "";
    }
-   return "";
 }
 
 

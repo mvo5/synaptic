@@ -212,27 +212,23 @@ void RGPkgDetailsWindow::cbShowChangelog(GtkWidget *button, void *data)
    ShowChangelogDialog(parent, pkg);
 }
 
-gboolean RGPkgDetailsWindow::cbOpenLink(GtkWidget *label,
-                                        gchar *uri,
-                                        void *data)
+gboolean RGPkgDetailsWindow::cbOpenLink(GtkWidget *label, gchar *uri, void *data)
 {
-   // std::cerr << "cbOpenLink: " << uri << std::endl;
-   std::vector<const gchar *> cmd;
-   cmd.push_back("xdg-open");
-   cmd.push_back(uri);
-   RunAsSudoUserCommand(cmd);
+   if (!OpenUriInBrowser(uri))
+   {
+      g_warning("Could not launch URL %s\n", uri);
+   }
 
    return TRUE;
 }
 
 gboolean RGPkgDetailsWindow::cbOpenHomepage(GtkWidget *button, void *data)
 {
-   RPackage *pkg = (RPackage *)data;
-   std::vector<const gchar *> cmd;
-   cmd.push_back("xdg-open");
-   cmd.push_back(pkg->homepage());
-   // std::cerr << "cbOpenHomepage: " << cmd[0] << std::endl;
-   RunAsSudoUserCommand(cmd);
+   RPackage *pkg = (RPackage *) data;
+   if (!OpenUriInBrowser(pkg->homepage()))
+   {
+      g_warning("Could not launch URL %s\n", pkg->homepage());
+   }
 
    return TRUE;
 }

@@ -55,6 +55,7 @@ const char *utf8_to_locale(const char *str);
 const char *utf8(const char *str);
 
 std::string SizeToStr(double Bytes);
+bool OpenUriInBrowser(const std::string &uri);
 bool RunAsSudoUserCommand(std::vector<const gchar *> cmd);
 
 std::string MarkupEscapeString(std::string str);

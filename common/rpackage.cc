@@ -72,12 +72,6 @@
 
 using namespace std;
 
-static int descrBufferSize = 4096;
-static char *descrBuffer = new char[descrBufferSize];
-
-static char *parseDescription(string descr);
-
-
 RPackage::RPackage(RPackageLister *lister,
                    pkgDepCache *depcache,
                    pkgRecords *records,
@@ -1324,128 +1318,105 @@ void RPackage::setRemoveWithDeps(bool shallow, bool purge)
    }
 }
 
-
-// description parser stuff
-static char *debParser(string descr)
+string RPackage::debParser(const string &descr)
 {
-   unsigned int i;
-   string::size_type nlpos = 0;
+   std::string_view view(descr);
 
-   nlpos = descr.find('\n');
-   // delete first line
-   if (nlpos != string::npos)
-      descr.erase(0, nlpos + 2); // del "\n " too
+   size_t line_end = view.find('\n');
+   if (line_end == std::string::npos) return ""; // Only a single line or empty string.
 
-   while (nlpos < descr.length()) {
-      nlpos = descr.find('\n', nlpos);
-      if (nlpos == string::npos)
-         break;
+   // Skip the first line and its newline.
+   view.remove_prefix(line_end + 1);
 
-      i = nlpos;
-      // del char after '\n' (always " ")
-      i++;
-      descr.erase(i, 1);
+   if (view.empty()) return ""; // Only a single line or empty string.
 
-      // delete lines likes this: " .", makeing it a \n
-      if (descr[i] == '.') {
-         descr.erase(i, 1);
-         nlpos++;
-         continue;
+   // All extended description lines are indented with a space.
+   // Skip the 1st space on the next line.
+   if (view.front() == ' ') view.remove_prefix(1);
+
+   std::string parsed;
+   parsed.reserve(view.size());
+
+   while (!view.empty())
+   {
+      if (view.front() == '\n')
+      {  // Insert the newline and parse the start of the next line.
+         parsed += '\n';
+         view.remove_prefix(1);
+         if (!view.empty() && view.front() == ' ')
+         {  // Skip the 1st space on the line.
+            view.remove_prefix(1);
+            if (!view.empty() && view.front() == '.')
+            {  // Skip the '.'
+               view.remove_prefix(1);
+            }
+         }
+      } else {
+         parsed += view.front();
+         view.remove_prefix(1);
       }
-      // skip ws
-      while (descr[++i] == ' ')
-         ;
-
-      //      // not a list, erase nl
-      //       if(!(descr[i] == '*' || descr[i] == '-' || descr[i] == 'o'))
-      //      descr.erase(nlpos,1);
-
-      nlpos++;
    }
-   strcpy(descrBuffer, descr.c_str());
-   return descrBuffer;
-}
-static char *rpmParser(string descr)
-{
-   string::size_type pos = descr.find('\n');
-   // delete first line
-   if (pos != string::npos)
-      descr.erase(0, pos + 2); // del "\n " too
 
-   strcpy(descrBuffer, descr.c_str());
-   return descrBuffer;
+   return parsed;
 }
 
-static char *stripWsParser(string descr)
+string RPackage::stripWsParser(const string &descr)
 {
-   const char *end;
-   const char *p;
+   string parsed;
+   parsed.reserve(descr.size());
 
-   p = descr.c_str();
-   end = p + descr.size(); // mvo: hackish, but works
-
-
-   int state = 0;
-   char *pp = (char *)descrBuffer;
-
-   while (p != end) {
-      switch (state) {
+   uint state = 0;
+   for (char c : descr) {
+      switch (state)
+      {
          case 0:
-            if (*p == '\n')
+         {
+            if (c == '\n') {
                state = 1;
-            else
-               *pp++ = *p;
+            } else {
+               parsed.push_back(c);
+            }
             break;
+         }
 
          case 1:
-            if (*p == ' ')
+         {
+            if (c == ' ') {
                state = 2;
-            else {
-               *pp++ = *p;
+            } else {
+               parsed.push_back(c);
                state = 0;
             }
             break;
+         }
 
          case 2:
-            if (!(*p == '\n' || *p == '.')) {
-               *pp++ = ' ';
-               *pp++ = *p;
+         {
+            if ((c != '\n') && (c != '.')) {
+               parsed.push_back(' ');
+               parsed.push_back(c);
             }
             state = 0;
             break;
+         }
       }
-      p++;
    }
-   *pp = '\0';
 
-   return descrBuffer;
+   return parsed;
 }
 
-
-static char *parseDescription(string descr)
+string RPackage::parseDescription(const string &descr)
 {
+   static int parser = _config->FindI("Synaptic::descriptionParser", DEB_PARSER);
 
-   if (descr.size() + 1 > descrBufferSize) {
-      delete[] descrBuffer;
-      descrBufferSize = descr.size() + 1;
-      descrBuffer = new char[descrBufferSize];
-   }
-#ifdef HAVE_RPM
-   int parser = _config->FindI("Synaptic::descriptionParser", NO_PARSER);
-#else
-   int parser = _config->FindI("Synaptic::descriptionParser", DEB_PARSER);
-#endif
    switch (parser) {
-      case DEB_PARSER:
-         return debParser(descr);
-      case STRIP_WS_PARSER:
-         return stripWsParser(descr);
-      case RPM_PARSER:
-         return rpmParser(descr);
+      case DEB_PARSER: { return debParser(descr); }
+      case STRIP_WS_PARSER: { return stripWsParser(descr); }
       case NO_PARSER:
       default:
-         strcpy(descrBuffer, descr.c_str());
-         return descrBuffer;
+      {
+         return descr;
+      }
    }
 }
 

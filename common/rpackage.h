@@ -262,5 +262,14 @@ class RPackage
    ~RPackage();
 
  private:
+
    std::string getChangelogURI();
+
+   static std::string debParser(const std::string &descr);
+   static std::string stripWsParser(const std::string &descr);
+   static std::string parseDescription(const std::string &descr);
+
+   // Expose these to the gtest unit tests:
+   friend class RPackageTest_debParser_Test;
+   friend class RPackageTest_stripWsParser_Test;
 };

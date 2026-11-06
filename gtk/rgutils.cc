@@ -96,6 +96,31 @@ std::string SizeToStr(double Size)
    return S;
 }
 
+bool OpenUriInBrowser(const std::string &uri)
+{
+   const gchar *user = g_getenv("SUDO_USER");
+   if ((user == nullptr) || (*user == 0))
+   {  // Not running as sudo.
+      return g_app_info_launch_default_for_uri(uri.c_str(), nullptr, nullptr);
+   }
+
+   // Running as sudo: Spawn as user (browsers shouldn't/can't be executed as sudo).
+
+   gchar *argv[] =
+   {
+      const_cast<gchar *>("runuser"),
+      const_cast<gchar *>("-u"),
+      const_cast<gchar *>(user),
+      const_cast<gchar *>("--"),
+      const_cast<gchar *>("gio"),
+      const_cast<gchar *>("open"),
+      const_cast<gchar *>(uri.c_str()),
+      nullptr
+   };
+
+   return g_spawn_async(nullptr, argv, nullptr, G_SPAWN_SEARCH_PATH, nullptr, nullptr, nullptr, nullptr);
+}
+
 bool RunAsSudoUserCommand(std::vector<const gchar *> cmd)
 {
    std::vector<const gchar *> prefix;

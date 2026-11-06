@@ -425,11 +425,11 @@ static void gtk_pkg_list_get_value(GtkTreeModel *tree_model,
          cppstr = SizeToStr(pkg->availablePackageSize());
          g_value_set_string(value, cppstr.c_str());
          break;
-      case SECTION_COLUMN:
-         str = pkg->section();
-         if (str != NULL)
-            g_value_set_string(value, str);
+      case SECTION_COLUMN: {
+         std::string str = pkg->section();
+         g_value_set_string(value, str.c_str());
          break;
+      }
       case COMPONENT_COLUMN:
          cppstr = pkg->component();
          if (cppstr.c_str() != NULL)

@@ -95,19 +95,11 @@ void RSectionPackageFilter::clear()
    _groups.clear();
 }
 
-
 bool RSectionPackageFilter::filter(RPackage *pkg)
 {
-   string sec;
+   string sec = pkg->section();
 
-   if (pkg->section() == NULL)
-      return _inclusive ? false : true;
-
-   sec = pkg->section();
-
-   for (vector<string>::const_iterator iter = _groups.begin();
-        iter != _groups.end();
-        iter++) {
+   for (vector<string>::const_iterator iter = _groups.begin(); iter != _groups.end(); iter++) {
       if (sec == (*iter)) {
          return _inclusive ? true : false;
       }
@@ -115,7 +107,6 @@ bool RSectionPackageFilter::filter(RPackage *pkg)
 
    return _inclusive ? false : true;
 }
-
 
 bool RSectionPackageFilter::write(ofstream &out, string pad)
 {

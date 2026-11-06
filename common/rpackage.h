@@ -139,7 +139,7 @@ class RPackage
 
    const char *name();
 
-   const char *section();
+   std::string section() const;
    const char *priority();
 
    const char *summary();

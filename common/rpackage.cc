@@ -218,15 +218,14 @@ pkgCache::VerIterator RPackage::availableVersionIter()
    return State.CandidateVerIter(*_depcache);
 }
 
-
-const char *RPackage::priority()
+std::string RPackage::priority() const
 {
-   pkgCache::VerIterator ver =
-      (*_depcache)[*_package].CandidateVerIter(*_depcache);
-   if (ver != 0)
+   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   if (!ver.end()) {
       return ver.PriorityType();
-   else
-      return NULL;
+   } else {
+      return _("Unknown");
+   }
 }
 
 #ifndef HAVE_RPM

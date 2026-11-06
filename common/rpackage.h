@@ -140,7 +140,7 @@ class RPackage
    const char *name();
 
    const char *section();
-   const char *priority();
+   std::string priority() const;
 
    const char *summary();
    const char *description();

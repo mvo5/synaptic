@@ -29,30 +29,14 @@
 #include <cstdlib>
 #include <cstring>
 #include <gtk/gtk.h>
-#include <iostream>
 #include <pwd.h>
 #include <string>
-#include <vector>
 
 void RGFlushInterface()
 {
    while (gtk_events_pending()) {
       gtk_main_iteration();
    }
-}
-
-static void AddRun0Environment(std::vector<const gchar *> &prefix)
-{
-   if (getenv("DISPLAY") != NULL)
-      prefix.push_back("--setenv=DISPLAY");
-   if (getenv("WAYLAND_DISPLAY") != NULL)
-      prefix.push_back("--setenv=WAYLAND_DISPLAY");
-   if (getenv("XAUTHORITY") != NULL)
-      prefix.push_back("--setenv=XAUTHORITY");
-   if (getenv("XDG_RUNTIME_DIR") != NULL)
-      prefix.push_back("--setenv=XDG_RUNTIME_DIR");
-   if (getenv("DBUS_SESSION_BUS_ADDRESS") != NULL)
-      prefix.push_back("--setenv=DBUS_SESSION_BUS_ADDRESS");
 }
 
 /*
@@ -96,82 +80,29 @@ std::string SizeToStr(double Size)
    return S;
 }
 
-bool RunAsSudoUserCommand(std::vector<const gchar *> cmd)
+bool OpenUriInDefaultApplication(const std::string &uri)
 {
-   std::vector<const gchar *> prefix;
-   gchar *sudo_user;
-   passwd *pwd;
-   if (cmd.empty()) {
-      std::cerr << "Empty command for RunAsSudoUserCommand" << std::endl;
-      return true;
-   }
-   bool getuidbyname = false;
-   // try pkexec first, then sudo, then run0
-   sudo_user = getenv("PKEXEC_UID");
-
-   if (sudo_user == NULL) {
-      sudo_user = getenv("SUDO_UID");
-   }
-   if (sudo_user == NULL) {
-      sudo_user = getenv("USER");
-      getuidbyname = true;
-   }
-   if (sudo_user == NULL) {
-      return false;
-   }
-   if (strncmp("root", sudo_user, strlen("root")) == 0) {
-      return false;
-   }
-   if (!getuidbyname) {
-      pwd = getpwuid(atoi(sudo_user));
-   } else {
-      pwd = getpwnam(sudo_user);
-   }
-   sudo_user = pwd->pw_name;
-#if 0 // does not work for some reason
-    if(FileExists("/usr/bin/pkexec") && sudo_user != NULL)
-    {
-       prefix.push_back("/usr/bin/pkexec");
-       prefix.push_back("--user");
-       prefix.push_back(sudo_user);
-    }
-#endif
-   if (FileExists("/usr/bin/sudo") && sudo_user != NULL) {
-      prefix.push_back("/usr/bin/sudo");
-      prefix.push_back("-u");
-      prefix.push_back(sudo_user);
-   } else if (FileExists("/usr/bin/run0") && sudo_user != NULL) {
-      prefix.push_back("/usr/bin/run0");
-      AddRun0Environment(prefix);
-      prefix.push_back("-u");
-      prefix.push_back(sudo_user);
-   }
-   // insert the prefix string
-   cmd.insert(cmd.begin(), prefix.begin(), prefix.end());
-
-#if 0
-    for(std::vector<const gchar*>::iterator it = cmd.begin();
-        it != cmd.end(); it++)
-       printf("cmd '%s'\n", *it);
-#endif
-
-   // build the c way to make g_spawn_async happy
-   char **c_cmd = new char *[cmd.size() + 1];
-   int i;
-   for (i = 0; i < cmd.size(); i++)
-      c_cmd[i] = (gchar *)cmd[i];
-   c_cmd[i] = NULL;
-
-   GError *error = NULL;
-   g_spawn_async("/", c_cmd, NULL, (GSpawnFlags)0, NULL, NULL, NULL, &error);
-   if (error != NULL) {
-      std::cerr << "Failed to run cmd: " << cmd[0] << std::endl;
+   const gchar *user = g_getenv("SUDO_USER");
+   if ((user == nullptr) || (*user == 0))
+   {  // Not running as sudo.
+      return g_app_info_launch_default_for_uri(uri.c_str(), nullptr, nullptr);
    }
 
-   // and free the memory again
-   delete[] c_cmd;
+   // Running as sudo: Spawn as user (browsers shouldn't/can't be executed as sudo).
 
-   return true;
+   gchar *argv[] =
+   {
+      const_cast<gchar *>("runuser"),
+      const_cast<gchar *>("-u"),
+      const_cast<gchar *>(user),
+      const_cast<gchar *>("--"),
+      const_cast<gchar *>("gio"),
+      const_cast<gchar *>("open"),
+      const_cast<gchar *>(uri.c_str()),
+      nullptr
+   };
+
+   return g_spawn_async(nullptr, argv, nullptr, G_SPAWN_SEARCH_PATH, nullptr, nullptr, nullptr, nullptr);
 }
 
 bool is_binary_in_path(const char *program)

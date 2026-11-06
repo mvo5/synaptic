@@ -2331,43 +2331,32 @@ void RGMainWindow::cbViewLogClicked(GSimpleAction *action,
    me->_logView->show();
 }
 
-void RGMainWindow::cbHelpAction(GSimpleAction *action,
-                                GVariant *parameter,
-                                gpointer data)
+void RGMainWindow::cbHelpAction(GSimpleAction *action, GVariant *parameter, gpointer data)
 {
-   RGMainWindow *me = (RGMainWindow *)data;
+   RGMainWindow *me = (RGMainWindow *) data;
 
    me->setStatusText(_("Starting help viewer..."));
 
-   // FIXME: move this into rgutils as well (or rgspawn.cc)
-   vector<const gchar *> cmd;
-   if (is_binary_in_path("yelp")) {
-      cmd.push_back("yelp");
-      cmd.push_back("ghelp:synaptic");
-   } else {
-      cmd.push_back("/usr/bin/xdg-open");
-      cmd.push_back(PACKAGE_DATA_DIR "/html/synaptic.html");
+   if (is_binary_in_path("yelp"))
+   {
+      if (!OpenUriInDefaultApplication("ghelp:synaptic"))
+      {
+         g_warning("Could not launch yelp\n");
+      }
    }
-
-   if (cmd.empty()) {
-      me->_userDialog->error(_("No help viewer is installed!\n\n"
-                               "You need either the GNOME help viewer 'yelp', "
-                               "or any browser setup to use xdg-open "
-                               "to view the synaptic manual.\n\n"
-                               "Alternatively you can open the man page "
-                               "with 'man synaptic' from the "
-                               "command line or view the html version located "
-                               "in the 'synaptic/html' folder."));
-      return;
+   else
+   {
+      if (!OpenUriInDefaultApplication(PACKAGE_DATA_DIR "/html/synaptic.html"))
+      {
+         g_warning("Could not launch %s\n", PACKAGE_DATA_DIR "/html/synaptic.html");
+      }
    }
-   RunAsSudoUserCommand(cmd);
 }
 
 void RGMainWindow::cbShowFilterManagerWindow(GSimpleAction *action,
                                              GVariant *parameter,
                                              gpointer data)
 {
-
    RGMainWindow *me = (RGMainWindow *)data;
 
    if (me->_fmanagerWin == NULL) {

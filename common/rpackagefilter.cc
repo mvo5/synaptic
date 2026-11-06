@@ -193,36 +193,38 @@ bool RPatternPackageFilter::filterVersion(Pattern pat, RPackage *pkg)
    return found;
 }
 
-bool RPatternPackageFilter::filterDescription(Pattern pat, RPackage *pkg)
+bool RPatternPackageFilter::filterDescription(Pattern pat, const RPackage *pkg)
 {
-   bool found = true;
-   const char *s1 = pkg->summary();
-   const char *s2 = pkg->description();
-   for (unsigned int i = 0; i < pat.regexps.size(); i++) {
-      if (regexec(pat.regexps[i], s1, 0, NULL, 0) == 0) {
-         found &= true;
-      } else {
-         if (regexec(pat.regexps[i], s2, 0, NULL, 0) == 0)
-            found &= true;
-         else
-            found = false;
+   std::string summary = pkg->summary();
+   std::string description = pkg->description();
+
+   for (const regex_t *regexp : pat.regexps)
+   {
+      if (regexec(regexp, summary.c_str(), 0, NULL, 0) != 0)
+      {
+         if (regexec(regexp, description.c_str(), 0, NULL, 0) != 0)
+         {  // Not found in the summary nor in the description.
+            return false;
+         }
       }
    }
-   return found;
+
+   return true;
 }
 
-bool RPatternPackageFilter::filterMaintainer(Pattern pat, RPackage *pkg)
+bool RPatternPackageFilter::filterMaintainer(Pattern pat, const RPackage *pkg)
 {
-   bool found = true;
-   const char *maint = pkg->maintainer();
-   for (unsigned int i = 0; i < pat.regexps.size(); i++) {
-      if (regexec(pat.regexps[i], maint, 0, NULL, 0) == 0) {
-         found &= true;
-      } else {
-         found = false;
+   std::string maintainer = pkg->maintainer();
+
+   for (const regex_t *regexp : pat.regexps)
+   {
+      if (regexec(regexp, maintainer.c_str(), 0, NULL, 0) != 0)
+      {  // Not found.
+         return false;
       }
    }
-   return found;
+
+   return true;
 }
 
 bool RPatternPackageFilter::filterDepends(Pattern pat,

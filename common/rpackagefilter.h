@@ -136,11 +136,9 @@ class RPatternPackageFilter : public RPackageFilter
 
    inline bool filterName(Pattern pat, RPackage *pkg);
    inline bool filterVersion(Pattern pat, RPackage *pkg);
-   inline bool filterDescription(Pattern pat, RPackage *pkg);
-   inline bool filterMaintainer(Pattern pat, RPackage *pkg);
-   inline bool filterDepends(Pattern pat,
-                             RPackage *pkg,
-                             pkgCache::Dep::DepType filterType);
+   static bool filterDescription(Pattern pat, const RPackage *pkg);
+   static bool filterMaintainer(Pattern pat, const RPackage *pkg);
+   inline bool filterDepends(Pattern pat, RPackage *pkg, pkgCache::Dep::DepType filterType);
    inline bool filterProvides(Pattern pat, RPackage *pkg);
    inline bool filterRDepends(Pattern pat, RPackage *pkg);
    inline bool filterOrigin(Pattern pat, RPackage *pkg);

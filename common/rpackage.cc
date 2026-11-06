@@ -154,18 +154,15 @@ const char *RPackage::summary()
    return "";
 }
 
-
-const char *RPackage::maintainer()
+std::string RPackage::maintainer() const
 {
-   static string _maintainer;
-   pkgCache::VerIterator ver =
-      (*_depcache)[*_package].CandidateVerIter(*_depcache);
+   pkgCache::VerIterator ver = (*_depcache)[*_package].CandidateVerIter(*_depcache);
    if (!ver.end()) {
       pkgRecords::Parser &parser = _records->Lookup(ver.FileList());
-      _maintainer = parser.Maintainer();
-      return _maintainer.c_str();
+      return parser.Maintainer();
+   } else {
+      return "";
    }
-   return "";
 }
 
 const char *RPackage::homepage()

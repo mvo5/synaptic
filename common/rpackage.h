@@ -184,7 +184,7 @@ class RPackage
    // get origin (Origin tag from the release file)
    std::string origin();
 
-   const char *maintainer();
+   std::string maintainer() const;
    const char *homepage();
 
    const char *installedVersion();

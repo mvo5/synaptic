@@ -267,7 +267,7 @@ void RGPkgDetailsWindow::fillInValues(RGGtkBuilderWindow *me,
       me->setMarkup("label_maintainer", maintainer_label);
       g_free(maintainer_label);
    } else {
-      me->setLabel("label_maintainer", pkg->maintainer());
+      me->setLabel("label_maintainer", pkg->maintainer().c_str());
    }
 
    me->setPixmap("image_state", RGPackageStatus::pkgStatus.getPixbuf(pkg));

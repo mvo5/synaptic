@@ -1365,6 +1365,8 @@ static char *debParser(string descr)
    strcpy(descrBuffer, descr.c_str());
    return descrBuffer;
 }
+
+#ifdef HAVE_RPM
 static char *rpmParser(string descr)
 {
    string::size_type pos = descr.find('\n');
@@ -1375,78 +1377,20 @@ static char *rpmParser(string descr)
    strcpy(descrBuffer, descr.c_str());
    return descrBuffer;
 }
-
-static char *stripWsParser(string descr)
-{
-   const char *end;
-   const char *p;
-
-   p = descr.c_str();
-   end = p + descr.size(); // mvo: hackish, but works
-
-
-   int state = 0;
-   char *pp = (char *)descrBuffer;
-
-   while (p != end) {
-      switch (state) {
-         case 0:
-            if (*p == '\n')
-               state = 1;
-            else
-               *pp++ = *p;
-            break;
-
-         case 1:
-            if (*p == ' ')
-               state = 2;
-            else {
-               *pp++ = *p;
-               state = 0;
-            }
-            break;
-
-         case 2:
-            if (!(*p == '\n' || *p == '.')) {
-               *pp++ = ' ';
-               *pp++ = *p;
-            }
-            state = 0;
-            break;
-      }
-      p++;
-   }
-   *pp = '\0';
-
-   return descrBuffer;
-}
-
+#endif
 
 static char *parseDescription(string descr)
 {
-
    if (descr.size() + 1 > descrBufferSize) {
       delete[] descrBuffer;
       descrBufferSize = descr.size() + 1;
       descrBuffer = new char[descrBufferSize];
    }
 #ifdef HAVE_RPM
-   int parser = _config->FindI("Synaptic::descriptionParser", NO_PARSER);
+   return rpmParser(descr);
 #else
-   int parser = _config->FindI("Synaptic::descriptionParser", DEB_PARSER);
+   return debParser(descr);
 #endif
-   switch (parser) {
-      case DEB_PARSER:
-         return debParser(descr);
-      case STRIP_WS_PARSER:
-         return stripWsParser(descr);
-      case RPM_PARSER:
-         return rpmParser(descr);
-      case NO_PARSER:
-      default:
-         strcpy(descrBuffer, descr.c_str());
-         return descrBuffer;
-   }
 }
 
 string RPackage::component()

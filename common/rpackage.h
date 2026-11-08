@@ -43,8 +43,6 @@ class pkgAcquire;
 class pkgDepCache;
 class pkgRecords;
 
-enum { NO_PARSER, DEB_PARSER, STRIP_WS_PARSER, RPM_PARSER };
-
 // taken from apt (pkgcache.cc) to make our life easier
 // (and added "RDepends" as last element)
 static const char *DepTypeStr[] = {

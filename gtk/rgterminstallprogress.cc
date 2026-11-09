@@ -58,8 +58,8 @@ RGTermInstallProgress::RGTermInstallProgress(RGMainWindow *main)
    setTitle(_("Applying Changes"));
 
    // make sure we try to get a graphical debconf
-   putenv("DEBIAN_FRONTEND=gnome");
-   putenv("APT_LISTCHANGES_FRONTEND=gtk");
+   setenv("DEBIAN_FRONTEND", "gnome", 1);        // 1 = overwrite if it exists
+   setenv("APT_LISTCHANGES_FRONTEND", "gtk", 1); // 1 = overwrite if it exists
 
    _term = vte_terminal_new();
    vte_terminal_set_size(VTE_TERMINAL(_term), 80, 23);

@@ -33,7 +33,7 @@ int main(int argc, char **argv)
    RFilter *filter, *filter_copy;
    vector<RPackage *> pkgs;
    RPackageViewFilter filter_view(pkgs);
-   for (int i = 0; i < filter_view.nrOfFilters(); i++) {
+   for (size_t i = 0; i < filter_view.nrOfFilters(); i++) {
       filter = filter_view.findFilter(i);
       std::cerr << "orig: " << filter->getName()
                 << " and-mode: " << filter->pattern.getAndMode() << std::endl;

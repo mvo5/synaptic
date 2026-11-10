@@ -470,17 +470,15 @@ void RPackageViewFilter::unregisterFilter(RFilter *filter)
    }
 }
 
-RFilter *RPackageViewFilter::findFilter(string name)
+RFilter *RPackageViewFilter::findFilter(const string &name) const
 {
-   RFilter *filter = NULL;
-   // find filter
-   for (vector<RFilter *>::iterator I = _filterL.begin(); I != _filterL.end();
-        I++) {
-      if ((*I)->getName() == name) {
-         filter = (*I);
+   for (RFilter *filter : _filterL) {
+      if (filter->getName() == name) {
+         return filter;
       }
    }
-   return filter;
+
+   return nullptr;
 }
 
 // we make only preset filters that are not covered by the status view

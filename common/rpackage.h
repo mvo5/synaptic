@@ -190,9 +190,6 @@ class RPackage
    const char *installedVersion();
    long installedSize();
 
-   // get tag from pkg record
-   std::string findTagFromPkgRecord(const char *tag);
-
    // get the raw package record
    std::string getRawRecord(bool useCandidateVersion = true);
 

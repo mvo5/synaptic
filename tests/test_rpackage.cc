@@ -24,8 +24,6 @@ int main(int argc, char **argv)
    RPackage *pkg = lister->getPackage("build-essential");
    if (pkg) {
       cerr << "pkg: " << pkg->name() << endl;
-      cerr << "Bugs: " << pkg->findTagFromPkgRecord("Bugs") << endl;
-
       vector<DepInformation> deps = pkg->enumDeps();
       for (unsigned int i = 0; i < deps.size(); i++) {
          cerr << "deps: " << deps[i].name << endl;
@@ -38,11 +36,6 @@ int main(int argc, char **argv)
    // go over the cache with findTagFromPkgRecord()
    vector<RPackage *> all = lister->getPackages();
    cerr << "All: " << all.size() << endl;
-   for (int i = 0; i < all.size(); i++) {
-      all[i]->findTagFromPkgRecord("Bugs");
-   }
-
-   // go over the cache with findTagFromPkgRecord()
    string s;
    unsigned long now = clock();
    for (int i = 0; i < all.size(); i++) {

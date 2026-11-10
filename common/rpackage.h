@@ -214,7 +214,7 @@ class RPackage
    // reverse dependencies
    std::vector<DepInformation> enumRDeps();
 
-   int getFlags();
+   int getFlags() const;
 
    bool wouldBreak();
 

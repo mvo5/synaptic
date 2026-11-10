@@ -1885,17 +1885,15 @@ void RPackageLister::refreshView()
 
 bool RPackageLister::writeSelections(ostream &out, bool fullState)
 {
-   for (unsigned i = 0; i < _packages.size(); i++) {
-      int flags = _packages[i]->getFlags();
-
+   for (const RPackage *package : _packages) {
+      int flags = package->getFlags();
       // Full state saves all installed packages.
-      if (flags & RPackage::FInstall ||
-          fullState && (flags & RPackage::FInstalled)) {
-         out << _packages[i]->name() << "\t\tinstall" << endl;
+      if ((flags & RPackage::FInstall) || (fullState && (flags & RPackage::FInstalled))) {
+         out << package->name() << "\t\tinstall" << endl;
       } else if (flags & RPackage::FPurge) {
-         out << _packages[i]->name() << "\t\tpurge" << endl;
+         out << package->name() << "\t\tpurge" << endl;
       } else if (flags & RPackage::FRemove) {
-         out << _packages[i]->name() << "\t\tdeinstall" << endl;
+         out << package->name() << "\t\tdeinstall" << endl;
       }
    }
 

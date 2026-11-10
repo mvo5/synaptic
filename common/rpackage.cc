@@ -348,7 +348,7 @@ long RPackage::availablePackageSize()
    return State.CandidateVerIter(*_depcache)->Size;
 }
 
-int RPackage::getFlags()
+int RPackage::getFlags() const
 {
    int flags = 0;
 

@@ -40,7 +40,6 @@
 #include <apt-pkg/strutl.h>
 #include <apt-pkg/version.h>
 #include <fstream>
-#include <iostream>
 #include <map>
 #include <set>
 #include <sstream>

@@ -193,9 +193,6 @@ class RPackage
    // get tag from pkg record
    std::string findTagFromPkgRecord(const char *tag);
 
-   // get the raw package record
-   std::string getRawRecord(bool useCandidateVersion = true);
-
    // sourcepkg
    const char *srcPackage();
 

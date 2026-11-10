@@ -6,7 +6,6 @@
 #include <apt-pkg/configuration.h>
 #include <apt-pkg/init.h>
 #include <apt-pkg/pkgsystem.h>
-#include <ctime>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -41,13 +40,4 @@ int main(int argc, char **argv)
    for (int i = 0; i < all.size(); i++) {
       all[i]->findTagFromPkgRecord("Bugs");
    }
-
-   // go over the cache with findTagFromPkgRecord()
-   string s;
-   unsigned long now = clock();
-   for (int i = 0; i < all.size(); i++) {
-      s = all[i]->getRawRecord();
-   }
-   cerr << "iterating each record: " << float(clock() - now) / CLOCKS_PER_SEC
-        << endl;
 }

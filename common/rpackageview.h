@@ -241,13 +241,14 @@ class RPackageViewFilter : public RPackageView
 
    void makePresetFilters();
 
-   RFilter *findFilter(std::string name);
-   unsigned int nrOfFilters()
+   RFilter *findFilter(const std::string &name) const;
+
+   size_t nrOfFilters() const
    {
       return _filterL.size();
    }
 
-   RFilter *findFilter(unsigned int index)
+   RFilter *findFilter(size_t index) const
    {
       if (index >= _filterL.size())
          return NULL;

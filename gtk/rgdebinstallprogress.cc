@@ -734,7 +734,6 @@ std::optional<pkgPackageManager::OrderResult> RGDebInstallProgress::start(
 
    _donePackages = 0;
    _numPackages = numPackages;
-   _numPackagesTotal = numPackagesTotal;
 
    return std::nullopt;
 }

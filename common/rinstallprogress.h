@@ -42,8 +42,6 @@ class RInstallProgress
 
    int _donePackages;
    int _numPackages;
-   int _donePackagesTotal;
-   int _numPackagesTotal;
 
    // update is finished, we can close the window
    bool _updateFinished;
@@ -75,6 +73,6 @@ class RInstallProgress
    {}
 
    RInstallProgress()
-      : _donePackagesTotal(0), _numPackagesTotal(0), _updateFinished(false)
+      : _updateFinished(false)
    {}
 };

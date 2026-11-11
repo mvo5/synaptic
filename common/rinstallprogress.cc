@@ -32,7 +32,6 @@
 #include <apt-pkg/packagemanager.h>
 #include <optional>
 #include <stdlib.h>
-#include <string>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -44,28 +43,23 @@
 
 using namespace std;
 
-string RInstallProgress::finishMsg =
-   _("\nSuccessfully applied all changes. You can close the window now.");
-string RInstallProgress::errorMsg =
-   _("\nNot all changes and updates succeeded. For further details of the "
-     "failure, please expand the 'Details' panel below.");
-string RInstallProgress::incompleteMsg =
-   _("\nSuccessfully installed all packages of the current medium. "
-     "To continue the installation with the next medium close "
-     "this window.");
-
 const char *RInstallProgress::getResultStr(pkgPackageManager::OrderResult res)
 {
    switch (res) {
-      case 0: // completed
-         return finishMsg.c_str();
-         break;
-      case 1: // failed
-         return errorMsg.c_str();
-         break;
-      case 2: // incomplete
-         return incompleteMsg.c_str();
-         break;
+      case 0: { // completed
+         return _("\nSuccessfully applied all changes. You can close the window now.");
+      }
+
+      case 1: { // failed
+         return _("\nNot all changes and updates succeeded. For further details of the "
+                  "failure, please expand the 'Details' panel below.");
+      }
+
+      case 2: { // incomplete
+         return _("\nSuccessfully installed all packages of the current medium. "
+                  "To continue the installation with the next medium close "
+                  "this window.");
+      }
    }
 
    return "Unknown install result.";

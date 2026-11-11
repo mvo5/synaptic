@@ -29,7 +29,6 @@
 #include <apt-pkg/packagemanager.h>
 
 #include <optional>
-#include <string>
 
 class RInstallProgress
 {
@@ -47,10 +46,6 @@ class RInstallProgress
 
    // update is finished, we can close the window
    bool _updateFinished;
-
-   static std::string finishMsg;
-   static std::string errorMsg;
-   static std::string incompleteMsg;
 
    // get a str feed to the user with the result of the install run
    virtual const char *getResultStr(pkgPackageManager::OrderResult);

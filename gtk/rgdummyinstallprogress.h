@@ -26,13 +26,13 @@
 
 #include "rinstallprogress.h"
 
-class RGDummyInstallProgress : public RInstallProgress
+class RGDummyInstallProgress final : public RInstallProgress
 {
  public:
    RGDummyInstallProgress() : RInstallProgress() {};
-   virtual ~RGDummyInstallProgress() {};
+   ~RGDummyInstallProgress() override = default;
 
-   virtual void startUpdate() override;
-   virtual void updateInterface() override;
-   virtual void finishUpdate() override;
+   void startUpdate() override;
+   void updateInterface() override;
+   void finishUpdate() override;
 };

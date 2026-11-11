@@ -36,8 +36,6 @@ class RInstallProgress
  protected:
    pid_t _child_id;
 
-   int _stdout;
-   int _stderr;
    int _childin;
 
    int _donePackages;

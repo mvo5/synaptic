@@ -43,7 +43,7 @@
 
 using namespace std;
 
-const char *RInstallProgress::getResultStr(pkgPackageManager::OrderResult res)
+const char *RInstallProgress::getResultStr(pkgPackageManager::OrderResult res) const
 {
    switch (res) {
       case 0: { // completed

@@ -141,10 +141,7 @@ class RGDebInstallProgress : public RInstallProgress, public RGGtkBuilderWindow
    RGDebInstallProgress(RGMainWindow *main, RPackageLister *lister);
    virtual ~RGDebInstallProgress();
 
-   virtual std::optional<pkgPackageManager::OrderResult> start(
-      pkgPackageManager *pm,
-      int numPackages = 0,
-      int totalPackages = 0) override;
+   virtual std::optional<pkgPackageManager::OrderResult> start(pkgPackageManager *pm, int numPackages = 0) override;
    virtual std::optional<pkgPackageManager::OrderResult> poll() override;
 
    virtual void startUpdate() override;

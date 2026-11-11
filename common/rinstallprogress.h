@@ -59,10 +59,7 @@ class RInstallProgress
    // std::nullopt means the child is still running; a plain OrderResult
    // would be ambiguous here as Incomplete is a real child result
    // (media swap needed)
-   virtual std::optional<pkgPackageManager::OrderResult> start(
-      pkgPackageManager *pm,
-      int numPackages = 0,
-      int numPackagesTotal = 0);
+   virtual std::optional<pkgPackageManager::OrderResult> start(pkgPackageManager *pm, int numPackages = 0);
    virtual std::optional<pkgPackageManager::OrderResult> poll();
    virtual void finish()
    {}

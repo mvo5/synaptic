@@ -180,19 +180,16 @@ void RGTermInstallProgress::close()
    stopShell(NULL, this);
 }
 
-
-std::optional<pkgPackageManager::OrderResult> RGTermInstallProgress::start(
-   pkgPackageManager *pm,
-   int numPackages,
-   int numPackagesTotal)
+std::optional<pkgPackageManager::OrderResult> RGTermInstallProgress::start(pkgPackageManager *pm, int numPackages)
 {
-   // cout << "RGTermInstallProgress::start()" << endl;
-
    res = pm->DoInstallPreFork();
-   if (res == pkgPackageManager::Failed)
+
+   if (res == pkgPackageManager::Failed) {
       return res;
+   }
 
    _child_id = forkpty(&master, NULL, NULL, NULL);
+
    if (_child_id < 0) {
       cerr << "Internal Error: impossible to fork children. Synaptics is going "
               "to stop. Please report."

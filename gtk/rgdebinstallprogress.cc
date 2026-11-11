@@ -657,18 +657,16 @@ void RGDebInstallProgress::updateInterface()
    }
 }
 
-std::optional<pkgPackageManager::OrderResult> RGDebInstallProgress::start(
-   pkgPackageManager *pm,
-   int numPackages,
-   int numPackagesTotal)
+std::optional<pkgPackageManager::OrderResult> RGDebInstallProgress::start(pkgPackageManager *pm, int numPackages)
 {
-   pkgPackageManager::OrderResult res;
+   pkgPackageManager::OrderResult res = pm->DoInstallPreFork();
 
-   res = pm->DoInstallPreFork();
-   if (res == pkgPackageManager::Failed)
+   if (res == pkgPackageManager::Failed) {
       return res;
+   }
 
    _child_id = forkpty(&master, NULL, NULL, NULL);
+
    if (_child_id < 0) {
       cerr << "vte_terminal_forkpty() failed. " << strerror(errno) << endl;
       res = pkgPackageManager::Failed;

@@ -37,14 +37,8 @@ class SourcesList
    enum RecType {
       Deb = 1 << 0,
       DebSrc = 1 << 1,
-      Rpm = 1 << 2,
-      RpmSrc = 1 << 3,
       Disabled = 1 << 4,
       Comment = 1 << 5,
-      RpmDir = 1 << 6,
-      RpmSrcDir = 1 << 7,
-      Repomd = 1 << 8,
-      RepomdSrc = 1 << 9
    };
 
    // record the type because deb822 is read-only for now
@@ -94,13 +88,6 @@ class SourcesList
    VendorRecord *AddVendorNode(VendorRecord &);
 
  public:
-   SourceRecord *AddSource(RecType Type,
-                           std::string VendorID,
-                           std::string URI,
-                           std::string Dist,
-                           std::string *Sections,
-                           unsigned short count,
-                           std::string SourceFile);
    SourceRecord *AddEmptySource();
    void RemoveSource(SourceRecord *&);
    void SwapSources(SourceRecord *&, SourceRecord *&);
